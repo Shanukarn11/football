@@ -1,0 +1,354 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-dim:    rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --surface:           #ffffff;
+    --surface-2:         #f8f9fb;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         22px;
+    --shadow-sm:         0 2px 8px rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md:         0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg:         0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  .ikf-wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .ikf-section { padding: 36px 0 44px; }
+  .ikf-section + .ikf-section { padding-top: 18px; }
+
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px;
+    position: relative;
+  }
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 28px;
+    right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  .ikf-h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 18px;
+    letter-spacing: -.3px;
+  }
+  .ikf-h2 span { color: var(--ikf-yellow); }
+
+  p, .ikf-p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .i360-hero { padding-top: 24px; }
+  .i360-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .i360-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .i360-hero__left { display: flex; flex-direction: column; }
+  .i360-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .i360-hero__eyebrow::before {
+    content: '';
+    width: 22px;
+    height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .i360-hero__title {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    margin: 0 0 12px;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+  .i360-hero__title span { color: var(--ikf-yellow); }
+  .i360-hero__lead {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.7;
+    color: var(--muted);
+    margin: 0 0 20px;
+    max-width: 62ch;
+  }
+  .i360-hero__media {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 4 / 2.5;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .i360-hero__media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .i360-hero__media:hover img { transform: scale(1.02); }
+  .i360-hero__caption {
+    position: absolute;
+    right: 14px;
+    bottom: 12px;
+    z-index: 2;
+    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    text-align: right;
+    max-width: 85%;
+    pointer-events: none;
+  }
+  .i360-hero__caption::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+    background: rgba(0,0,0,.5);
+    z-index: -1;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  .i360-ctas {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .i360-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    padding: 0 28px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: var(--shadow-sm);
+    transition: background .2s ease, transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .i360-btn.primary,
+  .i360-btn:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    color: #000;
+    box-shadow: 0 4px 14px rgba(255,195,0,.35);
+  }
+  .i360-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.45);
+  }
+
+  .i360-grid,
+  .i360-pillars,
+  .i360-map {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .i360-grid,
+  .i360-pillars { margin-top: 14px; }
+
+  .i360-card,
+  .i360-map__node {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 26px 22px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+  }
+  .i360-card::before,
+  .i360-map__node::before {
+    content: attr(data-step);
+    position: absolute;
+    bottom: 12px;
+    right: 18px;
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 800;
+    color: rgba(0,0,0,.05);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .i360-card:hover,
+  .i360-map__node:hover,
+  .i360-map__node.is-center {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+    color: #000;
+  }
+  .i360-card:hover *,
+  .i360-map__node:hover *,
+  .i360-map__node.is-center * { color: #000 !important; }
+
+  .i360-card__kicker,
+  .i360-map__label {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ikf-yellow);
+    margin: 0 0 8px;
+  }
+  .i360-card__title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px;
+    line-height: 1.25;
+  }
+  .i360-card__desc,
+  .i360-map__desc {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin: 0;
+  }
+  .i360-card__cta {
+    display: inline-flex;
+    margin-top: 16px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .i360-bullets {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .i360-bullets li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .i360-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #facc15;
+    box-shadow: 0 0 0 3px rgba(250,204,21,.25);
+  }
+  .i360-bullets li strong { color: var(--ink-2); }
+
+  .i360-banner {
+    text-align: center;
+    background:
+      radial-gradient(600px 220px at 10% -10%, rgba(255,195,0,.1), transparent 60%),
+      radial-gradient(600px 220px at 90% 110%, rgba(255,195,0,.1), transparent 60%),
+      var(--surface);
+  }
+  .i360-banner h2 {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px;
+    letter-spacing: -.3px;
+    line-height: 1.25;
+  }
+  .i360-banner h2 span { color: var(--ikf-yellow); }
+  .i360-banner p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin: 0 auto 20px;
+    max-width: 62ch;
+  }
+  .i360-banner .i360-ctas { justify-content: center; }
+
+  @media (max-width: 900px) {
+    .ikf-wrap { padding: 0 18px; }
+    .ikf-soft { padding: 22px 18px; }
+    .i360-hero__title { font-size: 38px; letter-spacing: -1px; }
+  }
+
+  @media (max-width: 640px) {
+    .i360-hero__title { font-size: 32px; }
+    .i360-ctas { align-items: stretch; flex-direction: column; }
+    .i360-btn { width: 100%; }
+    .i360-banner h2 { font-size: 23px; }
+  }
+</style>

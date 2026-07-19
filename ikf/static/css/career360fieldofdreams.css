@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: white;
+    color: #000;
+  }
+  
+  .value-section {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+  
+  .top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .main-heading {
+    font-size: 36px;
+    font-weight: bold;
+  }
+  
+  .quote {
+    font-style: italic;
+    max-width: 500px;
+    text-align: right;
+  }
+  
+  .image-container {
+    margin: 30px 0;
+    text-align: center;
+  }
+  
+  .image-container img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #007bff; /* optional: matches the image frame in screenshot */
+    border-radius: 4px;
+  }
+  
+  .bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  
+  .left-text {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .left-text h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .left-text h3 {
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 10px;
+  }
+  
+  .left-text p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  .right-box {
+    flex-shrink: 0;
+    width: 220px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+  }
+  

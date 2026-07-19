@@ -1,0 +1,656 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}IKF Academy Partners | Growing Talent Together - India Khelo Football{% endblock title %}
+
+{% block meta_description %}
+Partner with India Khelo Football (IKF) as an Academy Partner. Work with IKF Regional Engagement Partners (REPs) to build transparent, merit-based pathways for player development, structured trials access, and long-term growth.
+{% endblock meta_description %}
+
+{% block meta_keywords %}
+IKF Academy Partners, India Khelo Football academy partnership, football academies India, IKF trials, scouting pathway, Regional Engagement Partners REP, grassroots football development, merit based selection
+{% endblock meta_keywords %}
+
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-dim:    rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --surface:           #ffffff;
+    --surface-2:         #f8f9fb;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         22px;
+    --shadow-sm:         0 2px 8px  rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md:         0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg:         0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  /* ── Layout ── */
+  .ikf-wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .ikf-section { padding: 36px 0 44px; }
+  .ikf-section + .ikf-section { padding-top: 18px; }
+
+  /* ── Soft panel ── */
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 28px;
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* ── Headings ── */
+  .ikf-h2 {
+    font-family: var(--font-display);
+    margin-top: 30px;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 46px 0 18px;
+    letter-spacing: -.3px;
+  }
+  .section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  /* ── Body copy ── */
+  p, li {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  /* ── Yellow-dot bullets ── */
+  .two-col-bullets,
+  .ikf-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0 0 10px;
+  }
+  .two-col-bullets li,
+  .ikf-list li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .two-col-bullets li::before,
+  .ikf-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #facc15;
+    box-shadow: 0 0 0 3px rgba(250,204,21,.25);
+    transition: background .25s ease, box-shadow .25s ease;
+  }
+  /* two-col layout on desktop */
+  .two-col-bullets {
+    column-count: 2;
+    column-gap: 40px;
+  }
+  @media (max-width: 900px) {
+    .two-col-bullets { column-count: 1; }
+  }
+
+  /* ═══════════════════════
+     HERO — Season 6 layout
+  ════════════════════════ */
+  .trials-hero { padding-top: 24px; }
+
+  .trials-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .trials-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .trials-hero__left { display: flex; flex-direction: column; }
+
+  /* eyebrow dash */
+  .trials-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .trials-hero__eyebrow::before {
+    content: '';
+    width: 22px;
+    height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .trials-hero__title {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    margin: 0 0 10px;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .trials-hero__subtitle {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0;
+    color: var(--muted);
+  }
+
+  /* hero media */
+  .trials-hero__right { width: 100%; }
+
+  .trials-hero__media {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .trials-hero__img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .trials-hero__media:hover .trials-hero__img { transform: scale(1.02); }
+
+  .ikf-caption {
+    position: absolute;
+    right: 14px;
+    bottom: 12px;
+    z-index: 2;
+    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    text-align: right;
+    max-width: 85%;
+    pointer-events: none;
+  }
+  .ikf-caption::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+    background: rgba(0,0,0,.5);
+    z-index: -1;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ═══════════════════════
+     TEXT + IMAGE (model section)
+  ════════════════════════ */
+  .model-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    align-items: center;
+  }
+  .model-text { flex: 1 1 360px; }
+  .model-img {
+    flex: 0 0 280px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    aspect-ratio: 4 / 3;
+  }
+  .model-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .model-text h3 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink-2);
+    margin: 0 0 10px;
+  }
+
+  /* ═══════════════════════
+     WHAT YOU GAIN — 3 cards
+  ════════════════════════ */
+  .gain-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+  @media (max-width: 900px) {
+    .gain-grid { grid-template-columns: 1fr; }
+  }
+
+  .gain-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+  }
+  .gain-card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .gain-card:hover * { color: #000 !important; }
+  .gain-card:hover li::before {
+    background: #000 !important;
+    box-shadow: 0 0 0 3px rgba(0,0,0,.12) !important;
+  }
+
+  .gain-card__head {
+    background: var(--ikf-yellow-dim);
+    border-bottom: 1px solid var(--ikf-yellow-border);
+    padding: 14px 18px;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink-2);
+    text-align: center;
+    transition: background .25s ease, border-color .25s ease;
+  }
+  .gain-card:hover .gain-card__head {
+    background: rgba(0,0,0,.08);
+    border-color: rgba(0,0,0,.1);
+  }
+
+  .gain-card ul {
+    list-style: none;
+    padding: 18px 18px 18px 18px;
+    margin: 0;
+    flex: 1;
+  }
+  .gain-card li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .gain-card li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #facc15;
+    box-shadow: 0 0 0 2px rgba(250,204,21,.25);
+    transition: background .25s ease, box-shadow .25s ease;
+  }
+
+  /* ═══════════════════════
+     ACADEMY PARTNERS GRID
+  ════════════════════════ */
+  .ikf-partner-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+  @media (max-width: 1100px) { .ikf-partner-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 850px)  { .ikf-partner-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 520px)  { .ikf-partner-grid { grid-template-columns: 1fr; } }
+
+  .ikf-partner-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+  }
+  .ikf-partner-card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .ikf-partner-card:hover .ikf-partner-name { color: #000 !important; }
+
+  .ikf-partner-logo {
+    width: 100%;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+  }
+  .ikf-partner-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 14px;
+    display: block;
+  }
+
+  .ikf-partner-name {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink-2);
+    text-align: center;
+    transition: color .2s ease;
+  }
+
+  /* ═══════════════════════
+     CTA highlight text
+  ════════════════════════ */
+  .cta-bold {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  /* ═══════════════════════
+     RESPONSIVE
+  ════════════════════════ */
+  @media (max-width: 900px) {
+    .ikf-wrap { padding: 0 18px; }
+    .trials-hero__title { font-size: 38px; letter-spacing: -1px; }
+    .ikf-soft { padding: 22px 18px; }
+    .model-img { flex: 1 1 100%; }
+  }
+  @media (max-width: 640px) {
+    .trials-hero__title { font-size: 32px; }
+  }
+</style>
+
+<div class="page-content">
+
+  <!-- ======= HERO ======= -->
+  <section class="ikf-section trials-hero">
+    <div class="ikf-wrap">
+      <div class="trials-hero__grid">
+        <div class="trials-hero__left">
+          
+          <h1 class="trials-hero__title">IKF Academy Partners</h1>
+          <p class="trials-hero__subtitle">Growing Talent Together. Creating Pathways That Matter.</p>
+        </div>
+        <div class="trials-hero__right">
+          <div class="trials-hero__media ikf-media">
+            <img loading="lazy"
+                 src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/academy7.png' %}{% endif %}"
+                 alt="IKF Academy Partners"
+                 class="trials-hero__img" />
+            <div class="ikf-caption">
+              {% if hero_image and hero_image.caption %}
+                {{ hero_image.caption }}
+              {% else %}
+                IKF Academy Partners
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ikf-wrap">
+
+    <!-- ===== INTRO ===== -->
+    <h2 class="ikf-h2">Academy Partner</h2>
+    <div class="ikf-soft">
+      <p class="m-b10">
+        India Khelo Football (IKF) recognizes football academies as the first builders of a player's dream.
+        Our Academy Partners are not just feeders into trials—they are strategic collaborators who work closely with IKF's
+        Regional Engagement Partners (REPs) to ensure talent development, fair access, and long-term player growth.
+      </p>
+      <p style="margin: 0;">
+        This partnership is designed to be clear, transparent, and mutually empowering, where academies retain their identity
+        while gaining access to national opportunities.
+      </p>
+    </div>
+
+    <!-- ===== MODEL + ECOSYSTEM ===== -->
+     <h2 class="ikf-h2">The IKF Academy Partnership Model</h2>
+    <div class="ikf-soft">
+      <div class="model-grid">
+        <div class="model-text">
+          
+          <p style="margin-bottom: 10px;">
+            IKF follows a collaborative, on-ground partnership model where Academy Partners and REPs work in sync—each with defined roles,
+            shared objectives, and aligned outcomes.
+          </p>
+          <h3 style="margin-top: 16px;">How the Ecosystem Works</h3>
+          <p style="margin-bottom: 10px;"><strong>Academy Partner ↔ REP ↔ IKF Trials</strong></p>
+          <ul class="ikf-list">
+            <li>Academy Partners focus on training, discipline, and day-to-day player development</li>
+            <li>REPs act as the local bridge—coordinating trials, communication, and compliance</li>
+            <li>IKF provides the national platform, structured trials, and professional scouting access</li>
+          </ul>
+          <p style="margin-top: 10px; margin-bottom: 0;">This ensures clarity, fairness, and seamless execution across regions.</p>
+        </div>
+        <div class="model-img">
+          <div class="ikf-media" style="height: 100%; position: relative; border-radius: var(--radius-md); overflow: hidden;">
+            <img loading="lazy"
+                 src="{% static 'images/banners/academy1.png' %}"
+                 alt="Academy Partnership Model"
+                 style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+            <div class="ikf-caption">
+              {% if page_images|length > 1 and page_images.1.caption %}
+                {{ page_images.1.caption }}
+              {% else %}
+                Academy Partnership Model
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ROLE OF ACADEMY PARTNERS ===== -->
+    <h2 class="ikf-h2">Role of Academy Partners</h2>
+    <div class="ikf-soft">
+      <p style="margin-bottom: 10px;">
+        As an IKF Academy Partner, your academy plays a central role in identifying, preparing, and supporting players.
+      </p>
+      <p style="margin-bottom: 10px;"><strong>Academy Partners:</strong></p>
+      <ul class="two-col-bullets">
+        <li>Nominate and recommend players for IKF Trials through the assigned REP</li>
+        <li>Prepare players according to IKF trial standards and age criteria</li>
+        <li>Support ethical, merit-based selection—free from favoritism</li>
+        <li>Act as long-term development centers for identified players</li>
+        <li>Align with IKF values of inclusion, transparency, and opportunity</li>
+      </ul>
+    </div>
+
+    <!-- ===== ROLE OF REPs ===== -->
+    <h2 class="ikf-h2">Role of REPs (Regional Engagement Partners)</h2>
+    <div class="ikf-soft">
+      <p style="margin-bottom: 10px;">REPs ensure smooth coordination and fairness on the ground by:</p>
+      <ul class="two-col-bullets">
+        <li>Acting as the official IKF point of contact for academies</li>
+        <li>Facilitating academy access to IKF Trials and trial information</li>
+        <li>Coordinating logistics, timelines, and documentation</li>
+        <li>Ensuring transparent communication between academies and IKF</li>
+        <li>Supporting academies in aligning with IKF processes</li>
+      </ul>
+      <p style="margin-top: 10px; margin-bottom: 0;">This structure removes ambiguity and ensures equal access for all partner academies.</p>
+    </div>
+
+    <!-- ===== WHAT ACADEMY PARTNERS GAIN — 3 cards ===== -->
+    <h2 class="ikf-h2">What Academy Partners Gain</h2>
+    <div class="ikf-soft">
+      <p style="margin-bottom: 14px;">IKF Academy Partners are valued contributors to the ecosystem and benefit from:</p>
+      <div class="gain-grid">
+
+        <div class="gain-card">
+          <div class="gain-card__head">Access &amp; Opportunity</div>
+          <ul>
+            <li>Direct access to IKF State, Zonal, and National Trials via REPs</li>
+            <li>Exposure to ISL, I-League, and professional club scouts</li>
+            <li>A clear and recognized pathway from academy to national platform</li>
+          </ul>
+        </div>
+
+        <div class="gain-card">
+          <div class="gain-card__head">Recognition &amp; Visibility</div>
+          <ul>
+            <li>Featured as an Official IKF Academy Partner</li>
+            <li>Visibility across IKF digital platforms and events</li>
+            <li>Opportunity to showcase academy success stories</li>
+          </ul>
+        </div>
+
+        <div class="gain-card">
+          <div class="gain-card__head">Development &amp; Support</div>
+          <ul>
+            <li>Alignment with IKF Pathway 360 (life skills, education, mental conditioning)</li>
+            <li>Exposure to national best practices in talent identification</li>
+            <li>Long-term engagement beyond one-off trials</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== MERIT PATHWAY ===== -->
+    <h2 class="ikf-h2">A Transparent &amp; Merit-Based Pathway</h2>
+    <div class="ikf-soft">
+      <p style="margin-bottom: 10px;">IKF maintains a non-exclusive, merit-first approach:</p>
+      <ul class="two-col-bullets">
+        <li>Selection is based solely on player performance</li>
+        <li>No guaranteed selections—only fair opportunity</li>
+        <li>Clear eligibility, trial processes, and evaluation criteria</li>
+        <li>Open communication with academies via REPs</li>
+      </ul>
+      <p style="margin-bottom: 0;">This ensures trust, credibility, and sustainability for all partners.</p>
+    </div>
+
+    <!-- ===== PARTNERS GRID (commented out) =====
+    <h2 class="ikf-h2">Our Academy Partners</h2>
+    <div class="ikf-soft">
+      <div class="ikf-partner-grid">
+        {% for club in PartnerSeasonSupportIKF %}
+          <div class="ikf-partner-card">
+            <div class="ikf-partner-logo">
+              <img loading="lazy" src="/{{ club.pic }}" alt="{{ club.name }}" />
+            </div>
+            <div class="ikf-partner-name">{{ club.name }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    ===== END PARTNERS GRID ===== -->
+
+    <!-- ===== WHY CHOOSE IKF ===== -->
+    <h2 class="ikf-h2">Why Academies Choose IKF</h2>
+    <div class="ikf-soft">
+      <ul class="two-col-bullets">
+        <li>Respect for academy identity and autonomy</li>
+        <li>No bypassing—engagement happens through REPs</li>
+        <li>Nationwide reach without losing local control</li>
+        <li>Focus on long-term player journeys, not one-day outcomes</li>
+        <li>Trusted national platform with proven scouting credibility</li>
+      </ul>
+    </div>
+
+    <!-- ===== CTA ===== -->
+    <h2 class="ikf-h2">Become an IKF Academy Partner</h2>
+    <div class="ikf-soft">
+      <p style="margin-bottom: 10px;">
+        If your academy is committed to ethical development, player-first values, and structured opportunity,
+        IKF welcomes you into its growing Academy Partner network.
+      </p>
+      <p class="cta-bold">
+        Together, we strengthen the grassroots.<br>
+        Together, we open national doors.<br>
+        Together, we build football futures.
+      </p>
+    </div>
+
+  </div><!-- /ikf-wrap -->
+
+</div><!-- /page-content -->
+{% endblock content %}

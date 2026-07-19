@@ -1,0 +1,78 @@
+{% extends 'base.html' %} {% load static %} 
+
+{% block title %}India Khelo Football Tournament Videos | Highlights, Player Profiles & More{% endblock title %}
+
+{% block meta_description %}Watch exciting highlights, player profiles, and exclusive moments from IndiaKhelo football tournaments. Explore video content that captures the energy, skill, and passion driving Indian football forward.{% endblock meta_description%}
+
+{% block meta_keywords %}India Khelo football videos, football tournament highlights, Indian football players, IndiaKhelo player profiles, football match videos, Indian sports tournaments, football video content, player highlights, IndiaKhelo tournaments{% endblock meta_keywords%} 
+
+{% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content">
+    <div style="height: 120px; background-color: white;"></div>
+    
+    <!-- contact area -->
+    <div class="container m-t40">
+        <div class="section-content">
+            <div class="text-justify">
+                <div class="col-lg-12 text-center section-head m-0">
+                    <h1 class="h4">Check out our Videos
+                    </h1>
+                    <div class="dez-separator bg-primary"></div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 1rem;" class="m-b60 m-t30">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/MnlrmQ9Lvd0?si=ZYYbv3I-pImlDvD3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <p class="flex-grow-1">
+                        Discover thrilling highlights, in-depth player profiles, and exclusive behind-the-scenes moments from IndiaKhelo football tournaments. Dive into a collection of video content that showcases the incredible energy, skill, and passion fueling the growth of Indian football. Whether you're a fan of breathtaking goals, strategic plays, or heartwarming stories of dedication, these videos bring you closer to the action. Explore interviews with rising stars, analysis of key plays, and memorable moments that celebrate the journey of Indian football players and teams pushing boundaries on the field.
+                    </p>
+                </div>
+
+                <div class="p-b30">
+                    <div class="section-content">
+                        <ul class="row gap-3 p-2 d-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;">
+                            {% for Ytube in youtube %}
+                                <div class="col d-flex flex-column h-100">
+                                    <div class="ow-event-media dez-img-effect zoom-slow">
+                                        <img loading="lazy" src="{{ Ytube.pic }}" alt="ytube" loading="lazy"/>
+                                    </div>
+                                    <div class="ow-event-info flex-grow-1 d-flex flex-column">
+                                        <div class="ow-event-title">
+                                            <h4 class="event-title">
+                                                {{ Ytube.heading }}
+                                            </h4>
+                                        </div>
+                                        <div class="ow-event-text flex-grow-1">
+                                            <p>{{ Ytube.description }}</p>
+                                        </div>
+                                        <div class="ow-event-readmore mt-auto">
+                                            <a href="{{ Ytube.attr1 }}" target="_blank" title="READ MORE" rel="bookmark" class="site-button-link">
+                                                {{ Ytube.button_text }}
+                                                <i class="fa fa-angle-double-right"></i>
+                                            </a>
+                                        </div>
+                                        <div class="ow-event-meta">
+                                            <ul class="icon-list">
+                                                <li class="event-date">
+                                                    <i class="fa fa-calendar"></i>{{ Ytube.date }}{{ Ytube.year }}
+                                                </li>
+                                                <li class="event-address">
+                                                    <i class="fa fa-map-marker"></i>{{ Ytube.name }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </ul>
+                        
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+        <!-- contact area END -->
+</div>
+    <!-- Content END-->
+    {% endblock content %}

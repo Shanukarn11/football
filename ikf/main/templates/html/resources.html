@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content bg-white">
+    <!-- inner page banner -->
+    <div class="dez-bnr-inr overlay-black-middle" style="background-image:url('{{ikftrialsimages.Banner}}');">
+        <div class="container">
+            <div class="dez-bnr-inr-entry">
+                <h1 class="text-white">{{ Heading_Resources }}</h1>
+            </div>
+        </div>
+    </div>
+    <!-- inner page banner END -->
+    <!-- Breadcrumb row -->
+    <div class="breadcrumb-row">
+        <div class="container">
+            <ul class="list-inline">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>{{ Heading_Resources }}</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Breadcrumb row END -->
+    <!-- contact area -->
+
+ 
+             <!-- Clubs -->
+	    <div class="p-b30">
+			<div class="section-head text-center " style="padding-bottom:20px ; padding-top:20px ;">
+				<h2 class="h2 text-uppercase"> {{ Resource_Document_Heading}} </h2>
+				<div class="dez-separator-outer ">
+
+					<div class="dez-separator bg-primary style-liner"></div>
+				</div>
+			</div>
+			<div class="section-content" >
+                <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                    {% for resource in resources %}
+                        {% if resource.document %}
+                            <a href="{{ resource.document.url }}" target="_blank" style="text-decoration: none; color: inherit; width: 100%; display: block;">
+                                <div style="width: calc(100% - 40px); max-width: 960px; margin: 10px 20px; background-color: #f9f9f9; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-radius: 8px; cursor: pointer;">
+                                    <h2 style="margin: 0; padding: 0; color: blue;">{{ resource.name }}</h2>
+                                </div>
+                            </a>
+                        {% else %}
+                            <div style="width: calc(100% - 40px); max-width: 960px; margin: 10px 20px; background-color: #f9f9f9; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-radius: 8px;">
+                                <h2 style="margin: 0; padding: 0; color: grey;">{{ resource.name }}</h2>
+                                <p style="color: grey; padding-top: 10px;">No document available</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                
+ 
+			  <!-- <div
+				class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr"
+			  >
+			  {% for clubs in clubs_partner_home %}
+				<div class="item">
+				  <div class="ow-carousel-entry">
+					<div class="ow-entry-media dez-img-effect zoom-slow">
+					  <a href="#"><img loading="lazy" src="{{ clubs.pic }}" alt="" /></a>
+					</div>
+					<div class="ow-entry-content">
+					  <div class="ow-entry-title">
+						<a href="#">{{ clubs.name }}</a>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				{% endfor %}
+			  </div>
+			</div>
+		  </div> -->
+		  <!-- Clubs END -->
+          <!-- <div class="section-full bg-white content-inner">
+            <div class="container">
+                <div class="section-head text-center ">
+                    <h2 class="h2">{{ winners_season1|safe }} </h2>
+                    <div class="dez-separator-outer ">
+                        <div class="dez-separator bg-primary style-liner"></div>
+                    </div>
+                    <p> {{ winners_paragraph|safe }}
+                    </p>
+                </div>
+                <div class="section-content text-center ">
+                    <div class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr">
+                        {% for winner in winners %}
+                        <div class="item">
+                            <div class="dez-box m-b30 dez-img-effect vertical-pan dez-staff">
+                                <div class="dez-media vertical-pan dez-img-effect">
+                                    <a href="javascript:;">
+                                        <img loading="lazy" src="{{winner.pic}}" alt="" width="358" height="460">
+                                    </a>
+                                </div>
+                                <div class="p-a15 bg-primary text-white dez-team">
+                                    <h4 class="dez-title text-capitalize m-t0">{{ winner.name|safe }}</h4>
+                                    <div class="dez-separator-outer ">
+                                        <div class="dez-separator bg-white style-liner"></div>
+                                    </div>
+                                    <span class="dez-member-position">{{winner.category_id}}</span>
+                                    
+                                    <div class="m-t10">
+                                        <ul class="dez-social-icon dez-social-icon-lg border"> 
+                                           
+                                            <li><a href="{{winner.attr1}}" class="fa fa-facebook text-white"></a>
+                                            </li>
+                                            <li><a href="{{winner.attr2}}" class="fa fa-instagram text-white"></a>
+                                        </ul>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>  -->
+        <!-- winner end -->
+       
+<!-- Product details -->
+</div>
+<!-- contact area  END -->
+</div>
+<!-- Content END-->
+<!-- Footer -->
+{% endblock content %}

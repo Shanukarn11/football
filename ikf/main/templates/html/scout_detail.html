@@ -1,0 +1,374 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="scout-profile-page">
+  <div class="scout-profile-wrap">
+    <a class="scout-back" href="{% url 'scout_index' %}">All Scout Profiles</a>
+
+    <section class="scout-profile-hero">
+      <div class="scout-profile-mark">
+        {% if scout.photo_url %}
+          <img src="{{ scout.photo_url }}" alt="{{ scout.name }}">
+        {% else %}
+          {{ scout.name|slice:":1" }}
+        {% endif %}
+      </div>
+      <div class="scout-profile-main">
+        <span class="scout-kicker">Certified scout profile</span>
+        <h1>{{ scout.name }}</h1>
+        <p>{{ scout.city }}{% if scout.state %}, {{ scout.state }}{% endif %}</p>
+        <div class="scout-chips">
+          {% if scout.certification %}<span>{{ scout.certification }}</span>{% endif %}
+          {% if scout.experience %}<span>{{ scout.experience }}</span>{% endif %}
+          {% if scout.age_groups %}<span>{{ scout.age_groups }}</span>{% endif %}
+        </div>
+        <div class="scout-contact-actions">
+          {% if scout.email %}<a href="mailto:{{ scout.email }}">Email scout</a>{% endif %}
+          {% if scout.phone %}<a href="tel:{{ scout.phone }}">Call scout</a>{% endif %}
+        </div>
+      </div>
+      <aside class="scout-profile-summary">
+        <dl>
+          {% if scout.players_assessed %}
+            <div>
+              <dt>Players assessed</dt>
+              <dd>{{ scout.players_assessed }}</dd>
+            </div>
+          {% endif %}
+          {% if scout.shortlisted %}
+            <div>
+              <dt>Players shortlisted</dt>
+              <dd>{{ scout.shortlisted }}</dd>
+            </div>
+          {% endif %}
+          {% if scout.languages %}
+            <div>
+              <dt>Languages</dt>
+              <dd>{{ scout.languages }}</dd>
+            </div>
+          {% endif %}
+          {% if scout.age_date_of_birth %}
+            <div>
+              <dt>Age / Date of birth</dt>
+              <dd>{{ scout.age_date_of_birth }}</dd>
+            </div>
+          {% endif %}
+          {% if scout.willingness_to_travel %}
+            <div>
+              <dt>Willingness to travel</dt>
+              <dd>{{ scout.willingness_to_travel }}</dd>
+            </div>
+          {% endif %}
+        </dl>
+      </aside>
+    </section>
+
+    <section class="scout-detail-grid">
+      {% if scout.strengths %}
+        <article class="scout-info-card scout-info-wide">
+          <h2>Technical Strengths</h2>
+          <p>{{ scout.strengths }}</p>
+        </article>
+      {% endif %}
+      {% if scout.types %}
+        <article class="scout-info-card">
+          <h2>Scouting Experience</h2>
+          <p>{{ scout.types }}</p>
+        </article>
+      {% endif %}
+      {% if scout.regions or scout.age_groups %}
+        <article class="scout-info-card">
+          <h2>Regions and Age Groups</h2>
+          {% if scout.regions %}<p><strong>Regions:</strong> {{ scout.regions }}</p>{% endif %}
+          {% if scout.age_groups %}<p><strong>Age groups:</strong> {{ scout.age_groups }}</p>{% endif %}
+        </article>
+      {% endif %}
+      {% if scout.competitions or scout.events %}
+        <article class="scout-info-card scout-info-wide">
+          <h2>Competitions and Events</h2>
+          {% if scout.competitions %}<p>{{ scout.competitions }}</p>{% endif %}
+          {% if scout.events %}<p>{{ scout.events }}</p>{% endif %}
+        </article>
+      {% endif %}
+      {% if scout.level1_completion_date or scout.level2_completion_date %}
+        <article class="scout-info-card scout-info-wide">
+          <h2>IKF Certification Credentials</h2>
+          {% if scout.level1_completion_date %}<p><strong>IKF CFSA Level 1 (Talent Identification):</strong> {{ scout.level1_completion_date }}</p>{% endif %}
+          {% if scout.level2_completion_date %}<p><strong>IKF CFSA Level 2 (Positional Scouting):</strong> {{ scout.level2_completion_date }}</p>{% endif %}
+        </article>
+      {% endif %}
+      {% if scout.playing %}
+        <article class="scout-info-card scout-info-wide">
+          <h2>Football Background</h2>
+          <p>{{ scout.playing }}</p>
+        </article>
+      {% endif %}
+      {% if scout.achievements %}
+        <article class="scout-info-card scout-info-wide">
+          <h2>Achievements and Recognition</h2>
+          <p>{{ scout.achievements }}</p>
+        </article>
+      {% endif %}
+      <article class="scout-info-card">
+        <h2>Contact Details</h2>
+        {% if scout.email %}<p><strong>Email:</strong> <a href="mailto:{{ scout.email }}">{{ scout.email }}</a></p>{% endif %}
+        {% if scout.phone %}<p><strong>Phone:</strong> <a href="tel:{{ scout.phone }}">{{ scout.phone }}</a></p>{% endif %}
+      </article>
+    </section>
+
+    {% if related_scouts %}
+      <section class="related-scouts">
+        <div class="related-head">
+          <span class="scout-kicker">Same state</span>
+          <h2>Related Scout Profiles</h2>
+        </div>
+        <div class="related-grid">
+          {% for item in related_scouts %}
+            <a href="{% url 'scout_detail' item.slug %}">
+              <strong>{{ item.name }}</strong>
+              <span>{{ item.city }}, {{ item.state }}</span>
+            </a>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  :root{
+    --scout-ink:#101828;
+    --scout-muted:#5a6575;
+    --scout-yellow:#ffc300;
+    --scout-line:#f2df91;
+    --scout-soft:#fff9df;
+  }
+  .scout-profile-page{
+    background:
+      radial-gradient(520px 320px at 0 0, rgba(255,195,0,.18), transparent 70%),
+      radial-gradient(520px 320px at 100% 0, rgba(255,225,110,.14), transparent 72%),
+      #fff;
+    color:var(--scout-ink);
+    font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+    padding:26px 0 72px;
+  }
+  .scout-profile-wrap{
+    width:min(1100px, 92vw);
+    margin:0 auto;
+  }
+  .scout-back{
+    display:inline-flex;
+    color:var(--scout-ink);
+    font-weight:850;
+    text-decoration:none;
+    border-bottom:3px solid var(--scout-yellow);
+    padding-bottom:4px;
+    margin-bottom:18px;
+  }
+  .scout-profile-hero,
+  .scout-info-card,
+  .related-scouts{
+    background:#fff;
+    border:1px solid rgba(255,195,0,.36);
+    border-radius:8px;
+    box-shadow:0 16px 40px rgba(16,24,40,.08);
+  }
+  .scout-profile-hero{
+    display:grid;
+    grid-template-columns:230px minmax(0, 1fr) minmax(240px, 320px);
+    gap:24px;
+    align-items:center;
+    padding:28px;
+  }
+  .scout-profile-mark{
+    width:230px;
+    height:230px;
+    border-radius:8px;
+    display:grid;
+    place-items:center;
+    background:#fff;
+    border:1px solid #f1e6b1;
+    font-size:70px;
+    font-weight:950;
+    color:#111;
+    overflow:hidden;
+  }
+  .scout-profile-mark img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+    background:#fff;
+  }
+  .scout-kicker{
+    color:#9a7100;
+    font-size:12px;
+    font-weight:850;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .scout-profile-main h1{
+    margin:8px 0 6px;
+    font-size:clamp(34px, 5vw, 58px);
+    line-height:1.04;
+  }
+  .scout-profile-main p{
+    color:var(--scout-muted);
+    margin:0 0 16px;
+    font-size:17px;
+  }
+  .scout-chips,
+  .scout-contact-actions{
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+  }
+  .scout-chips span{
+    background:var(--scout-soft);
+    border:1px solid var(--scout-line);
+    border-radius:999px;
+    color:#725300;
+    font-size:12px;
+    font-weight:850;
+    padding:7px 10px;
+  }
+  .scout-contact-actions{
+    margin-top:18px;
+  }
+  .scout-contact-actions a{
+    min-height:44px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:8px;
+    padding:0 16px;
+    background:var(--scout-yellow);
+    color:var(--scout-ink);
+    font-weight:850;
+    text-decoration:none;
+  }
+  .scout-contact-actions a:last-child{
+    background:#fff;
+    border:1px solid var(--scout-line);
+  }
+  .scout-profile-summary{
+    background:var(--scout-soft);
+    border:1px solid var(--scout-line);
+    border-radius:8px;
+    padding:18px;
+  }
+  .scout-profile-summary dl{
+    margin:0;
+    display:grid;
+    gap:14px;
+  }
+  .scout-profile-summary dt{
+    color:#8a6d00;
+    font-size:12px;
+    font-weight:850;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .scout-profile-summary dd{
+    margin:0;
+    color:var(--scout-ink);
+    line-height:1.5;
+    font-weight:750;
+  }
+  .scout-detail-grid{
+    margin-top:20px;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:18px;
+  }
+  .scout-info-card{
+    padding:24px;
+  }
+  .scout-info-wide{
+    grid-column:1 / -1;
+  }
+  .scout-info-card h2,
+  .related-head h2{
+    margin:0 0 10px;
+    font-size:24px;
+  }
+  .scout-info-card p{
+    margin:0 0 10px;
+    color:var(--scout-muted);
+    line-height:1.7;
+  }
+  .scout-info-card p:last-child{
+    margin-bottom:0;
+  }
+  .scout-info-card a{
+    color:#765600;
+    font-weight:850;
+    word-break:break-word;
+  }
+  .related-scouts{
+    margin-top:20px;
+    padding:24px;
+  }
+  .related-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:12px;
+  }
+  .related-grid a{
+    background:var(--scout-soft);
+    border:1px solid var(--scout-line);
+    border-radius:8px;
+    color:var(--scout-ink);
+    text-decoration:none;
+    padding:16px;
+  }
+  .related-grid strong,
+  .related-grid span{
+    display:block;
+  }
+  .related-grid span{
+    color:var(--scout-muted);
+    margin-top:4px;
+    font-size:14px;
+  }
+  @media (max-width: 900px){
+    .scout-profile-hero{
+      grid-template-columns:110px minmax(0, 1fr);
+    }
+    .scout-profile-mark{
+      width:160px;
+      height:160px;
+      font-size:52px;
+    }
+    .scout-profile-summary{
+      grid-column:1 / -1;
+    }
+  }
+  @media (max-width: 640px){
+    .scout-profile-hero,
+    .scout-detail-grid,
+    .related-grid{
+      grid-template-columns:1fr;
+    }
+    .scout-profile-hero{
+      padding:22px;
+      align-items:start;
+    }
+    .scout-profile-mark{
+      width:150px;
+      height:150px;
+      font-size:42px;
+    }
+    .scout-info-wide{
+      grid-column:auto;
+    }
+    .scout-contact-actions a{
+      flex:1 1 150px;
+    }
+  }
+</style>
+
+{% endblock %}

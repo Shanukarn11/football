@@ -1,0 +1,623 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow: #ffc300;
+    --ikf-yellow-dim: rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink: #0b1120;
+    --ink-2: #1e293b;
+    --muted: #5a6478;
+    --muted-2: #8896aa;
+    --line: #e8ecf2;
+    --surface: #ffffff;
+    --surface-2: #f8f9fb;
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
+    --shadow-sm: 0 2px 8px rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md: 0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg: 0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Lato', sans-serif;
+  }
+
+  .ikf-wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .ikf-section { padding: 36px 0 44px; }
+
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 28px;
+    position: relative;
+  }
+
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  .ikf-h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 18px;
+    text-align: left;
+    letter-spacing: -.3px;
+  }
+
+  .ikf-label {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ikf-yellow);
+    background: var(--ikf-yellow-dim);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: 20px;
+    padding: 3px 12px;
+    margin-bottom: 10px;
+  }
+
+  /* ── HERO ── */
+  .trials-hero { padding-top: 24px; }
+
+  .trials-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  @media (min-width: 900px) {
+    .trials-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .trials-hero__left { display: flex; flex-direction: column; }
+
+  .trials-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .trials-hero__eyebrow::before {
+    content: '';
+    width: 22px;
+    height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .trials-hero__title {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    margin: 0 0 10px;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .trials-hero__title em {
+    font-style: normal;
+    color: var(--ikf-yellow);
+  }
+
+  .trials-hero__subtitle {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0 0 14px;
+    color: var(--muted);
+  }
+
+  .trials-hero__lead {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 12px;
+  }
+
+  .trials-hero__actions {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Buttons ── */
+  .career360-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    text-decoration: none;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+
+  .yellow-btn {
+    background: var(--ikf-yellow);
+    color: #000 !important;
+    padding: 0 28px;
+    font-size: 15px;
+    letter-spacing: .01em;
+    min-width: 200px;
+    box-shadow: 0 4px 14px rgba(255,195,0,.35);
+  }
+
+  .yellow-btn:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.45);
+    text-decoration: none;
+    color: #000 !important;
+  }
+
+  /* ── Hero image ── */
+  .trials-hero__right { width: 100%; }
+
+  .trials-hero__media {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+
+  .trials-hero__img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform .4s ease;
+  }
+
+  .trials-hero__media:hover .trials-hero__img { transform: scale(1.02); }
+
+  .trials-hero__caption {
+    position: absolute;
+    right: 14px;
+    bottom: 12px;
+    z-index: 2;
+    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    text-align: right;
+    max-width: 85%;
+    pointer-events: none;
+  }
+
+  .trials-hero__caption::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+    background: rgba(0,0,0,.5);
+    z-index: -1;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ── TWO COL ── */
+  .trials-two-col {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: space-between;
+  }
+
+  .trials-two-col .trials-col {
+    flex: 1 1 48%;
+    min-width: 280px;
+  }
+
+  .ikf-p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .pillar {
+    margin-bottom: 22px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .pillar:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .pillar h4 {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    color: var(--ink-2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pillar h4::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--ikf-yellow);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── OPTIONS GRID (3 col) ── */
+  .pf-options-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .pf-option-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 32px 26px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pf-option-card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+
+  .pf-option-card:hover * { color: #000 !important; }
+
+  .pf-option-card h4 {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink-2);
+    margin: 0 0 8px;
+  }
+
+  .pf-option-card p {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ── TRUST GRID ── */
+  .pf-trust-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .pf-trust-item {
+    padding: 22px 20px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+  }
+
+  .pf-trust-item h4 {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink-2);
+    margin: 0 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pf-trust-item h4::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--ikf-yellow);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .pf-trust-item p {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ── CLOSING QUOTE ── */
+  .pf-closing {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 52px 48px;
+    text-align: center;
+    margin-top: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pf-closing::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, var(--ikf-yellow) 50%, transparent 100%);
+  }
+
+  .pf-closing::after {
+    content: '\201C';
+    position: absolute;
+    top: 12px;
+    left: 36px;
+    font-family: var(--font-display);
+    font-size: 120px;
+    line-height: 1;
+    color: var(--ikf-yellow-dim);
+    pointer-events: none;
+    font-weight: 800;
+  }
+
+  .pf-closing__text {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 2.8vw, 28px);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.55;
+    margin: 0 auto;
+    max-width: 560px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .pf-closing__text em {
+    font-style: normal;
+    color: var(--ikf-yellow);
+    position: relative;
+  }
+
+  .pf-closing__line {
+    width: 48px;
+    height: 3px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    margin: 20px auto 0;
+  }
+
+  /* ── CTA BAR ── */
+  .pf-cta-bar {
+    background: var(--ikf-yellow-dim);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    padding: 40px 36px;
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  .pf-cta-bar h3 {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 800;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+
+  .pf-cta-bar p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--muted);
+    margin: 0 0 24px;
+    line-height: 1.6;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .ikf-wrap { padding: 0 18px; }
+    .trials-hero__title { font-size: 38px; letter-spacing: -1px; }
+    .trials-two-col .trials-col { flex: 1 1 100%; }
+    .pf-options-grid { grid-template-columns: 1fr; }
+    .pf-trust-grid { grid-template-columns: 1fr; }
+    .ikf-soft { padding: 22px 18px; }
+    .pf-closing { padding: 28px 20px; }
+    .pf-cta-bar { padding: 28px 20px; }
+  }
+
+  @media (max-width: 768px) {
+    .trials-hero__title { font-size: 32px; }
+  }
+</style>
+
+<!-- ── HERO ── -->
+<section class="ikf-section trials-hero">
+  <div class="ikf-wrap">
+    <div class="trials-hero__grid">
+      <div class="trials-hero__left">
+        <span class="trials-hero__eyebrow">Non-Profit Initiative</span>
+        <h1 class="trials-hero__title">Parent <br> Fuelling IKF</h1>
+        <p class="trials-hero__subtitle">Sustaining the Ecosystem Together</p>
+        <p class="trials-hero__lead">If you feel that IKF is building something meaningful…</p>
+        <p class="trials-hero__lead">If you believe these pathways matter for your child and many others…</p>
+        <p class="trials-hero__lead">Then we invite you to <strong>support this journey.</strong></p>
+        <p class="trials-hero__lead">Because for IKF to continue supporting players, <strong>IKF itself needs to stay in the ecosystem.</strong></p>
+        <div class="trials-hero__actions">
+          <a href="{% url 'Donate' %}" class="career360-btn yellow-btn">Donate Now</a>
+        </div>
+      </div>
+
+      <div class="trials-hero__right">
+        <div class="trials-hero__media">
+          <img loading="lazy"
+            src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/about1.png' %}{% endif %}"
+            alt="{% if hero_image and hero_image.caption %}{{ hero_image.caption }}{% else %}Parent Fuelling IKF{% endif %}"
+            class="trials-hero__img" />
+          <div class="trials-hero__caption">
+            {% if hero_image and hero_image.caption %}{{ hero_image.caption }}{% else %}Parent Fuelling IKF{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── A NOTE TO PARENTS + WHY THIS MATTERS ── -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <div class="trials-two-col">
+
+      <div class="trials-col">
+        <span class="ikf-label">For Parents</span>
+        <h2 class="ikf-h2">IKF Journey</h2>
+        <div class="ikf-soft">
+          <div class="pillar">
+            <p class="ikf-p">IKF is a <strong>non-profit initiative</strong> with no revenue model. Everything we do is driven by one belief — <strong>building a strong, inclusive football ecosystem where every player gets a fair chance to grow and stay in the game.</strong></p>
+          </div>
+          <div class="pillar" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">
+            <p class="ikf-p">We are not just running programs; we are <strong>creating pathways</strong>. Pathways for players to discover football, to continue playing, and to access opportunities that otherwise may not exist.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="trials-col">
+        <span class="ikf-label">The Challenge</span>
+        <h2 class="ikf-h2">Why This Matters</h2>
+        <div class="ikf-soft">
+          <p class="ikf-p">Many players start their journey — but very few are able to <strong>stay in the ecosystem</strong> due to lack of support, structure, or resources.</p>
+          <p class="ikf-p" style="margin-top: 14px;">IKF is working to change that. We are ensuring that:</p>
+          <div style="margin-top: 18px;">
+            <div class="pillar">
+              <h4>Players don't drop off after initial exposure</h4>
+              <p class="ikf-p">Structured programs and consistent touchpoints keep players engaged beyond their first trial.</p>
+            </div>
+            <div class="pillar">
+              <h4>Opportunities are consistently available</h4>
+              <p class="ikf-p">Regular trials, pathways and mentorship ensure there is always a next step for every player.</p>
+            </div>
+            <div class="pillar">
+              <h4>The ecosystem continues to grow stronger and more inclusive</h4>
+              <p class="ikf-p">Every season, IKF expands reach — from 17 cities to 135+ — ensuring no talent goes unseen.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SUPPORTING OPTIONS ── -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Supporting Options (Simple &amp; Transparent)</h2>
+    <div class="ikf-soft">
+      <div class="pf-options-grid">
+        <div class="pf-option-card">
+          <h4>Your Comfort, Your Choice</h4>
+          <p>Contribute any amount that you feel comfortable with</p>
+        </div>
+        <div class="pf-option-card">
+          <h4>One-Time or Monthly</h4>
+          <p>Choose a one-time or monthly contribution based on what works for your family</p>
+        </div>
+        <div class="pf-option-card">
+          <h4>For Your Child's Ecosystem</h4>
+          <p>Support the ecosystem that supports your child — every rupee goes directly towards player programs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CLOSING QUOTE + CTA ── -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <div class="pf-closing">
+      <p class="pf-closing__text">
+        If IKF should continue this journey,<br>
+        <em>your support can make that possible.</em>
+      </p>
+      <div class="pf-closing__line"></div>
+    </div>
+
+    <div class="pf-cta-bar">
+      <h3>Ready to Fuel the Ecosystem?</h3>
+      <p>Every contribution keeps the journey going for thousands of young players across India.</p>
+      <a href="{% url 'Donate' %}" class="career360-btn yellow-btn">Donate Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUST & COMMITMENT ── -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <span class="ikf-label">Our Promise</span>
+    <h2 class="ikf-h2">Trust &amp; Commitment</h2>
+    <div class="ikf-soft">
+      <div class="pf-trust-grid">
+        <div class="pf-trust-item">
+          <h4>100% Towards Programs</h4>
+          <p>100% of contributions go towards sustaining programs that keep players in the game</p>
+        </div>
+        <div class="pf-trust-item">
+          <h4>Long-Term Development</h4>
+          <p>Focused on long-term player development — not short-term events or one-off camps</p>
+        </div>
+        <div class="pf-trust-item">
+          <h4>Regular Updates</h4>
+          <p>Regular updates on how the ecosystem is growing, so you always know where your support goes</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

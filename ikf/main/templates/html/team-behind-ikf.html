@@ -1,0 +1,701 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-dim:    rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --surface:           #ffffff;
+    --surface-2:         #f8f9fb;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         22px;
+    --shadow-sm:         0 2px 8px  rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md:         0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg:         0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  /* ── Layout ── */
+  .ikf-wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  .ikf-section { padding: 36px 0 44px; }
+  .ikf-section + .ikf-section { padding-top: 18px; }
+
+  /* ── Soft panel ── */
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 28px;
+    position: relative;
+  }
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* ── Headings ── */
+  .ikf-h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 14px;
+    letter-spacing: -.3px;
+  }
+  .ikf-h2:first-child { margin-top: 0; }
+
+  /* ── Body copy ── */
+  p, li {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  /* ═══════════════════════
+     HERO — Season 6 layout
+  ════════════════════════ */
+  .about-hero { padding-top: 24px; }
+
+  .about-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .about-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .about-hero-text { display: flex; flex-direction: column; }
+
+  .about-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .about-hero__eyebrow::before {
+    content: '';
+    width: 22px; height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .about-hero-text h1 {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    margin: 0 0 14px;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .about-hero-text p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 10px;
+    max-width: 70ch;
+  }
+
+  /* hero media */
+  .about-hero-img {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .about-hero-img img {
+    width: 100%; height: 100%;
+    display: block; object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .about-hero-img:hover img { transform: scale(1.02); }
+
+  .ikf-media { position: relative; }
+
+  .ikf-caption {
+    position: absolute;
+    right: 14px; bottom: 12px; z-index: 2;
+    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    text-align: right;
+    max-width: 85%;
+    pointer-events: none;
+  }
+  .ikf-caption::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+    background: rgba(0,0,0,.5);
+    z-index: -1;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ═══════════════════════
+     MISSION & VISION — two standalone ikf-soft cards
+  ════════════════════════ */
+  .mission-vision {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 768px) { .mission-vision { grid-template-columns: 1fr; } }
+
+  .mission-box h3,
+  .vision-box h3 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 14px;
+    color: var(--ink-2);
+  }
+  .mission-box p,
+  .vision-box p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ═══════════════════════
+     APPROACH CARDS — 3 flip cards
+  ════════════════════════ */
+  .approach-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 20px;
+    align-items: start;
+    perspective: 1400px;
+  }
+  @media (max-width: 900px) { .approach-cards { grid-template-columns: 1fr; } }
+
+  .approach-card.flip-card {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    height: 300px;
+    perspective: 1400px;
+    cursor: pointer;
+  }
+  .approach-card.flip-card::before { display: none; }
+
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform .75s cubic-bezier(.4,0,.2,1);
+  }
+  .approach-card.flip-card:hover .flip-card-inner,
+  .approach-card.flip-card.is-flipped .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 26px 26px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .flip-card-face::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 26px; right: 26px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  .flip-card-front {
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .flip-card-front .flip-num {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ikf-yellow);
+    letter-spacing: .18em;
+    margin-bottom: 14px;
+  }
+  .flip-card-front h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 800;
+    margin: 0 0 14px;
+    color: var(--ink);
+    letter-spacing: -.3px;
+    line-height: 1.2;
+  }
+  .flip-card-front .flip-hint {
+    margin-top: auto;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .flip-card-front .flip-hint::after {
+    content: '↻';
+    font-size: 14px;
+    color: var(--ikf-yellow);
+  }
+
+  .flip-card-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(135deg, #fffbe6 0%, #ffffff 60%);
+    justify-content: center;
+  }
+  .flip-card-back h3 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 10px;
+    color: var(--ink-2);
+  }
+  .flip-card-back p {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ═══════════════════════
+     MYFIRSTKICK
+  ════════════════════════ */
+  .myfirstkick-section p.intro {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 14px;
+    max-width: 900px;
+  }
+  .mfk-conclusion {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--muted);
+    margin: 10px 0 0;
+  }
+  .mfk-conclusion a {
+    color: var(--ikf-yellow);
+    font-weight: 700;
+    text-decoration: none;
+    transition: opacity .2s ease;
+  }
+  .mfk-conclusion a:hover { opacity: .8; }
+
+  /* ═══════════════════════
+     TEAM CARDS
+  ════════════════════════ */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0,1fr));
+    gap: 20px;
+  }
+  .team-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 20px;
+  }
+
+  .team-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 16px 12px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+  }
+  .team-card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-4px);
+  }
+  .team-card:hover h4,
+  .team-card:hover p { color: #000 !important; }
+
+  .team-card img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    display: block;
+  }
+  .team-card h4 {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    margin: 12px 0 4px;
+    color: var(--ink-2);
+  }
+  .team-card p {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--muted-2);
+    margin: 0;
+  }
+
+  @media (max-width: 992px) {
+    .team-grid   { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .team-grid-4 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  }
+  @media (max-width: 768px) {
+    .team-grid   { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .team-grid-4 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  }
+  @media (max-width: 520px) {
+    .team-grid,
+    .team-grid-4 { grid-template-columns: 1fr; }
+  }
+
+  /* ═══════════════════════
+     COMMUNITY / VIDEO CAROUSELS
+  ════════════════════════ */
+  .ow-carousel-entry {
+    text-align: center;
+    border-radius: var(--radius-md);
+    padding: 10px;
+    background: transparent;
+    transition: transform .2s ease;
+  }
+  .ow-carousel-entry:hover { transform: translateY(-4px); }
+
+  .ow-entry-media img {
+    width: 100%;
+    height: auto;
+    max-height: 260px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+  }
+
+  .dez-info {
+    padding: 10px 0 0;
+    background: transparent;
+    box-shadow: none;
+    border: none !important;
+  }
+  .dez-info h4 {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink-2);
+    margin: 0 0 4px;
+  }
+
+  /* ═══════════════════════
+     RESPONSIVE
+  ════════════════════════ */
+  @media (max-width: 900px) {
+    .ikf-wrap { padding: 0 18px; }
+    .about-hero-text h1 { font-size: 38px; letter-spacing: -1px; }
+    .ikf-soft { padding: 22px 18px; }
+  }
+  @media (max-width: 640px) {
+    .about-hero-text h1 { font-size: 30px; }
+  }
+</style>
+
+
+<!-- =============== HERO =============== -->
+<section class="ikf-section about-hero">
+  <div class="ikf-wrap">
+    <div class="about-hero__grid">
+      <div class="about-hero-text">
+       
+        <h1>About Us</h1>
+        <p>
+          India Khelo Football (IKF) is a non-profit initiative dedicated to transforming the landscape of Indian football.
+          We are not a club, academy, or agent; instead, we serve as a platform that democratizes football by connecting
+          grassroots talent with professional opportunities.
+        </p>
+        <p>
+          Our mission is to discover and nurture football talent across India, providing structured career paths that
+          integrate educational and professional opportunities.
+        </p>
+      </div>
+
+      <div class="about-hero-img ikf-media">
+        <img loading="lazy"
+             src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/about1.png' %}{% endif %}"
+             alt="India Khelo Football">
+        <div class="ikf-caption">
+          {% if hero_image and hero_image.caption %}{{ hero_image.caption }}{% else %}India Khelo Football{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== MISSION & VISION =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Mission &amp; Vision</h2>
+    <div class="mission-vision">
+      <div class="ikf-soft mission-box">
+        <h3>Our Mission</h3>
+        <p>
+          To discover and nurture football talent across India, providing structured career paths that integrate
+          educational and professional opportunities. We aim to equip players with the skills needed for both
+          athletic and personal success, ensuring they can contribute positively to their communities.
+        </p>
+      </div>
+      <div class="ikf-soft vision-box">
+        <h3>Our Vision</h3>
+        <p>
+          We envision India as a leading nation in global football, recognized for its comprehensive development of
+          athletes who excel in both sports and academics. Our goal is to transform the landscape of Indian football
+          by making it accessible and inclusive, using the sport as a powerful tool for societal change and empowerment.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== OUR APPROACH =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Our Approach</h2>
+    <div class="approach-cards">
+      <div class="approach-card flip-card" tabindex="0">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <span class="flip-num">01</span>
+            <h3>Modern Platform</h3>
+            <span class="flip-hint">Hover to learn more</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <h3>Modern Platform</h3>
+            <p>
+              IKF stands as a platform that blends physical trials with digital technology to scout and connect amateur
+              football players with global opportunities. This approach ensures that talent from even the most remote
+              areas can be discovered and nurtured.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="approach-card flip-card" tabindex="0">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <span class="flip-num">02</span>
+            <h3>Holistic Development</h3>
+            <span class="flip-hint">Hover to learn more</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <h3>Holistic Development</h3>
+            <p>
+              Beyond athletic prowess, we focus on the holistic development of our players. This includes academic
+              excellence, community engagement, and inclusivity. We believe in nurturing well-rounded individuals who
+              can excel both on and off the field.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="approach-card flip-card" tabindex="0">
+        <div class="flip-card-inner">
+          <div class="flip-card-face flip-card-front">
+            <span class="flip-num">03</span>
+            <h3>Global Collaborations</h3>
+            <span class="flip-hint">Hover to learn more</span>
+          </div>
+          <div class="flip-card-face flip-card-back">
+            <h3>Global Collaborations</h3>
+            <p>
+              Our strategic international collaborations with renowned football academies and organizations provide
+              our players with exposure to global standards and opportunities. These partnerships are pivotal in
+              showcasing the potential of Indian football on an international scale.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.querySelectorAll('.approach-card.flip-card').forEach(card => {
+        card.addEventListener('click', () => card.classList.toggle('is-flipped'));
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            card.classList.toggle('is-flipped');
+          }
+        });
+      });
+    </script>
+  </div>
+</section>
+
+
+<!-- =============== MYFIRSTKICK =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">
+      MyFirstKick x India Khelo Football –<br>
+      Powering India's Largest Grassroots Scouting Movement
+    </h2>
+    <div class="ikf-soft myfirstkick-section">
+      <p class="intro">
+        🚀 <strong>The Digital Engine Behind IKF's Scouting &amp; Showcasing</strong><br>
+        India Khelo Football's nationwide talent discovery ecosystem is built on a strong digital backbone —
+        MyFirstKick (MFK).
+      </p>
+      <p class="mfk-conclusion">
+        <a href="https://indiakhelofootball.com/myfirstkick">Learn more</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== OUR TEAM =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Our Team</h2>
+    <div class="ikf-soft">
+      <div class="team-grid">
+        {% for member in about_team2 %}
+          {% if member.attr1 %}
+            <a href="{{ member.attr1 }}" target="_blank" rel="noopener noreferrer" class="team-card">
+          {% else %}
+            <div class="team-card">
+          {% endif %}
+            <img loading="lazy" src="{{ member.pic.url }}" alt="{{ member.name }}">
+            <h4>{{ member.name }}</h4>
+            <p>{% if member.post %}{{ member.post }}{% endif %}</p>
+          {% if member.attr1 %}
+            </a>
+          {% else %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== OUR ADVISORS =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Our Advisors</h2>
+    <div class="ikf-soft">
+      <div class="team-grid team-grid-4">
+        {% for member in about_team1 %}
+          {% if member.attr1 %}
+            <a href="{{ member.attr1 }}" target="_blank" rel="noopener noreferrer" class="team-card">
+          {% else %}
+            <div class="team-card">
+          {% endif %}
+            <img loading="lazy" src="{{ member.pic.url }}" alt="{{ member.name }}">
+            <h4>{{ member.name }}</h4>
+            <p>{% if member.post %}{{ member.post }}{% endif %}</p>
+          {% if member.attr1 %}
+            </a>
+          {% else %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== IKF COMMUNITY =============== -->
+{% if about_team3 %}
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">IKF Community</h2>
+    <div class="ikf-soft">
+      <div class="p-b30">
+        <div class="section-content">
+          <div class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr">
+            {% for finalist in about_team3 %}
+            <div class="item">
+              <div class="ow-carousel-entry">
+                <div class="ow-entry-media">
+                  <img loading="lazy" src="{{ finalist.pic }}" alt="{{ finalist.name }}">
+                </div>
+                <div class="dez-info">
+                  <h4 class="dez-title m-tb0">{{ finalist.name }}</h4>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+
+<!-- =============== VIDEO HIGHLIGHTS (removed per request) =============== -->
+
+
+{% endblock content %}

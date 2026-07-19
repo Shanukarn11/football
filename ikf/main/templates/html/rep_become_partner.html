@@ -1,0 +1,366 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow: #ffc300;
+    --ikf-yellow-dim: rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink: #0b1120;
+    --ink-2: #1e293b;
+    --muted: #5a6478;
+    --muted-2: #8896aa;
+    --line: #e8ecf2;
+    --surface: #ffffff;
+    --surface-2: #f8f9fb;
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
+    --shadow-sm: 0 2px 8px rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md: 0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg: 0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Lato', sans-serif;
+  }
+
+  .bp-wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .bp-section {
+    padding: 36px 0 44px;
+  }
+
+  /* ── Soft card ── */
+  .bp-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 36px 36px;
+    position: relative;
+  }
+
+  .bp-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* ── Page header ── */
+  .bp-page-header {
+    padding: 32px 0 8px;
+  }
+
+  .bp-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .bp-eyebrow::before {
+    content: '';
+    width: 22px;
+    height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .bp-page-title {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--ink);
+    margin: 0 0 12px;
+    letter-spacing: -1px;
+    line-height: 1.1;
+  }
+
+  .bp-page-subtitle {
+    font-family: var(--font-body);
+    font-size: 17px;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ── Opportunity intro box ── */
+  .bp-intro-box {
+    text-align: left;
+    padding: 40px 48px;
+  }
+
+  .bp-intro-box h2 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 18px;
+    letter-spacing: -.3px;
+  }
+
+  .bp-intro-box p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* ── Section heading (outside card) ── */
+  .bp-h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 18px;
+    letter-spacing: -.3px;
+  }
+
+  /* ── Cities grid ── */
+  .bp-states-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .bp-state-card {
+    background: var(--surface);
+    border: 1.5px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-md);
+    padding: 20px 18px 18px;
+    transition: background .22s ease, border-color .22s ease, box-shadow .22s ease, transform .18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bp-state-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--ikf-yellow);
+    border-radius: 2px 2px 0 0;
+  }
+
+  .bp-state-card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+
+  .bp-state-card:hover .bp-state-name,
+  .bp-state-card:hover .bp-city-item {
+    color: #000;
+  }
+
+  .bp-state-name {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin: 0 0 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    transition: color .22s, border-color .22s;
+  }
+
+  .bp-state-card:hover .bp-state-name {
+    border-bottom-color: rgba(0,0,0,.18);
+  }
+
+  .bp-cities-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .bp-city-item {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: color .22s;
+  }
+
+  .bp-city-item::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    background: var(--ikf-yellow);
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: background .22s;
+  }
+
+  .bp-state-card:hover .bp-city-item::before {
+    background: rgba(0,0,0,.4);
+  }
+
+  /* ── Empty state ── */
+  .bp-empty {
+    text-align: center;
+    padding: 48px 0;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--muted-2);
+  }
+
+  /* ── CTA box ── */
+  .bp-cta-box {
+    text-align: center;
+    padding: 44px 48px;
+  }
+
+  .bp-cta-box h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 12px;
+    letter-spacing: -.3px;
+  }
+
+  .bp-cta-box p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto 28px;
+    line-height: 1.7;
+  }
+
+  .bp-apply-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+    padding: 0 40px;
+    background: var(--ikf-yellow);
+    color: #000;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(255,195,0,.38);
+    transition: background .2s, transform .2s, box-shadow .2s;
+    letter-spacing: .01em;
+  }
+
+  .bp-apply-btn:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255,195,0,.5);
+  }
+
+  /* ── Back link ── */
+  .bp-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 6px;
+    transition: color .15s;
+  }
+
+  .bp-back:hover { color: var(--ink); }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .bp-page-title { font-size: 30px; }
+    .bp-intro-box { padding: 28px 20px; }
+    .bp-cta-box { padding: 32px 20px; }
+    .bp-soft { padding: 24px 18px; }
+    .bp-states-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  }
+
+  @media (max-width: 480px) {
+    .bp-states-grid { grid-template-columns: 1fr 1fr; }
+    .bp-page-title { font-size: 26px; }
+  }
+</style>
+
+<!-- ── Page Header ── -->
+<section class="bp-section bp-page-header">
+  <div class="bp-wrap">
+    <a href="{% url 'rep_landing' %}" class="bp-back">&#8592; Back to REP</a>
+    
+    <h1 class="bp-page-title">Become an IKF Regional Partner</h1>
+    <p class="bp-page-subtitle">Help us build structured football in cities still waiting for the game.</p>
+  </div>
+</section>
+
+<!-- ── Cities Grid ── -->
+<section class="bp-section" style="padding-top:0;">
+  <div class="bp-wrap">
+    <h2 class="bp-h2">Looking For Partners in:</h2>
+    {% if cities_by_state %}
+    <div class="bp-states-grid">
+      {% for state, cities in cities_by_state %}
+      <div class="bp-state-card">
+        <div class="bp-state-name">{{ state }}</div>
+        <ul class="bp-cities-list">
+          {% for city in cities %}
+          <li class="bp-city-item">{{ city }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="bp-empty">
+      <p>No open cities listed at this time. Please check back soon.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="bp-section" style="padding-top:0;">
+  <div class="bp-wrap">
+    <div class="bp-soft bp-cta-box">
+      <h2>Ready to Grow Football in Your Region?</h2>
+      <p>
+        If you meet the eligibility criteria and share our vision, apply now to become an
+        official IKF Regional Execution Partner.
+      </p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfqF8vhpVEvs_dSS03f9Tx5a4_U8xaoRrMaomlya8dRZRVfAQ/viewform"
+         target="_blank" rel="noopener" class="bp-apply-btn">
+        Apply Now
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

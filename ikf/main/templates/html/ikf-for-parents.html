@@ -1,0 +1,1738 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}IKF for Parents | How India Khelo Football Supports Football Families{% endblock %}
+
+{% block meta_description %}IKF for Parents explains how India Khelo Football works for families — what to expect from trials, how to support your child, and how IKF keeps the process safe, transparent, and merit-based.{% endblock %}
+{% block meta_keywords %}IKF for parents, India Khelo Football parents, football trials India parents guide, how to support child football, IKF parent SOP, parent fuelling IKF{% endblock %}
+
+{% block og_title %}IKF for Parents | India Khelo Football{% endblock %}
+{% block og_description %}India Khelo Football explains every step of the trial process for parents — what happens, what it costs, how your child is evaluated, and how to protect your family from fraud.{% endblock %}
+{% block og_url %}https://indiakhelofootball.com/ikf-for-parents{% endblock %}
+
+{% block twitter_title %}IKF for Parents | India Khelo Football{% endblock %}
+{% block twitter_description %}India Khelo Football explains every step of the trial process for parents — what happens, what it costs, how your child is evaluated, and how to protect your family from fraud.{% endblock %}
+
+{% block content %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is IKF and how does it help my child?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "IKF (India Khelo Football) is a not-for-profit platform that gives grassroots footballers a structured, merit-based pathway to get evaluated by scouts and coaches. As a parent, IKF gives your child a fair, safe, and transparent environment where talent — not connections or money — determines opportunity."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does IKF cost for my child to participate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "IKF trials are free for girls. For boys, a nominal registration fee may apply. IKF will never charge for selection, club placement, or guaranteed advancement. Any person asking for money in exchange for these is committing fraud — report it immediately."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my child safe at IKF trials?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. IKF trials are conducted in structured, supervised environments with trained staff. For girls, IKF runs dedicated girls-only trials with women-led environments under Project IKF Naari Shakti."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if my child is not selected?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Non-selection is not failure — it is an honest benchmark. Your child becomes part of the IKF ecosystem with a clear picture of where they stand. They can return for future trials with better preparation. The door is always open."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does IKF guarantee my child will get into a football club?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. IKF creates the platform and maximum visibility. Clubs make all final decisions based purely on performance and merit. IKF does not sell selection or promise outcomes. Any such promise from anyone is fraud."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I as a parent support my child through the IKF process?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Read the IKF Parent SOP to understand the full process. Encourage your child to give their best without pressure. Trust the evaluation process. And most importantly — never pay anyone who promises a guaranteed outcome in IKF's name."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://indiakhelofootball.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "IKF for Parents",
+        "item": "https://indiakhelofootball.com/ikf-for-parents"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "IKF for Parents | How India Khelo Football Supports Football Families",
+    "url": "https://indiakhelofootball.com/ikf-for-parents",
+    "description": "IKF for Parents explains how India Khelo Football works for families — what to expect from trials, how to support your child, and how IKF keeps the process safe, transparent, and merit-based.",
+    "inLanguage": "en",
+    "isPartOf": { "@id": "https://indiakhelofootball.com/" },
+    "about": {
+      "@type": "SportsOrganization",
+      "name": "India Khelo Football",
+      "alternateName": "IKF"
+    },
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "Parents of grassroots football players in India"
+    },
+    "mainEntity": { "@type": "FAQPage" },
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".pp-hero-sub", ".pp-pullquote", ".pp-faq-item p"]
+    }
+  }
+]
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+  /* ─── TOKENS ───────────────────────────────────────── */
+  :root {
+    --gold:       #ffc300;
+    --gold-dim:   #d9a600;
+    --gold-soft:  rgba(255,195,0,0.10);
+    --gold-pale:  #fffbea;
+    --ink:        #111318;
+    --ink-2:      #1e2230;
+    --white:      #ffffff;
+    --off-white:  #f9f8f5;
+    --surface:    #f3f1ec;
+    --muted:      #6b7280;
+    --text-body:  #374151;
+    --line:       #e5e0d4;
+
+    --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --r-card:  16px;
+    --r-pill:  999px;
+    --r-block: 24px;
+  }
+
+  .pp * { box-sizing: border-box; margin: 0; padding: 0; }
+  .pp { font-family: var(--font-body); color: var(--ink); background: var(--white); overflow-x: hidden; }
+
+  .pp-shell {
+    width: min(1160px, calc(100% - 40px));
+    margin-inline: auto;
+  }
+
+  /* ═══ HERO ═══════════════════════════════════════════ */
+  .pp-hero {
+    position: relative;
+    background: linear-gradient(90deg, var(--white) 0%, var(--white) 58%, var(--gold-pale) 58%, var(--gold-pale) 100%);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 70px 0 62px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .pp-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(90deg, rgba(255,195,0,0.18), rgba(255,195,0,0));
+    opacity: .45;
+    pointer-events: none;
+  }
+
+  .pp-hero-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(340px, 0.75fr);
+    gap: 64px;
+    align-items: center;
+  }
+
+  .pp-hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(17,19,24,0.55);
+    margin-bottom: 16px;
+  }
+
+  .pp-hero-label span {
+    display: inline-block;
+    width: 22px;
+    height: 2px;
+    background: var(--ink);
+    border-radius: 2px;
+    opacity: 0.4;
+  }
+
+  .pp-hero-h1 {
+    max-width: 720px;
+    font-size: clamp(44px, 6vw, 82px);
+    font-weight: 800;
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .pp-hero-h1 em {
+    font-style: normal;
+    color: #ffc300;
+  }
+
+  .pp-hero-sub {
+    margin-top: 16px;
+    font-size: 17px;
+    line-height: 1.78;
+    color: rgba(17,19,24,0.68);
+    max-width: 500px;
+  }
+
+  .pp-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  /* ─── BUTTONS ───────────────────────────────────────── */
+  .pp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 22px;
+    border-radius: var(--r-pill);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    font-family: var(--font-body);
+  }
+
+  .pp-btn--gold {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--gold);
+  }
+  .pp-btn--gold:hover {
+    color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(17,19,24,0.28);
+  }
+
+  .pp-btn--ghost-light {
+    background: var(--white);
+    border-color: var(--line);
+    color: var(--ink);
+  }
+  .pp-btn--ghost-light:hover {
+    color: var(--ink);
+    background: var(--gold-soft);
+    border-color: rgba(255,195,0,0.55);
+  }
+
+  .pp-btn--ghost-dark {
+    background: transparent;
+    border-color: var(--line);
+    color: var(--ink);
+  }
+  .pp-btn--ghost-dark:hover {
+    border-color: var(--gold-dim);
+    background: var(--gold-soft);
+    color: var(--ink);
+  }
+
+  /* ─── HERO VISUAL CARD ──────────────────────────────── */
+  .pp-hero-visual { position: relative; align-self: flex-end; }
+
+  .pp-hero-card {
+    background: var(--white);
+    border: 1px solid rgba(255,195,0,0.55);
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 26px 60px rgba(17,19,24,0.10);
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .pp-hero-card img {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%;
+    max-width: 440px;
+    display: block;
+  }
+
+  .pp-hero-stat {
+    display: flex;
+    gap: 0;
+    max-width: 470px;
+    margin-top: 26px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--white);
+  }
+
+  .pp-hero-stat-item {
+    flex: 1;
+    border-right: 1px solid var(--line);
+    padding: 16px 18px;
+    background: var(--white);
+  }
+  .pp-hero-stat-item:last-child { border-right: 0; }
+
+  .pp-hero-stat-num {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .pp-hero-stat-lbl {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ═══ QUICK TABS ══════════════════════════════════════ */
+  .pp-tabs {
+    background: var(--off-white);
+    border-bottom: 1px solid var(--line);
+    padding: 0;
+  }
+
+  .pp-tabs-inner {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .pp-tab-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 28px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    transition: color .15s, border-color .15s, background .15s;
+    white-space: nowrap;
+  }
+
+  .pp-tab-link:hover {
+    color: var(--ink);
+    border-bottom-color: var(--gold);
+    background: var(--gold-pale);
+  }
+
+  .pp-tab-link.active {
+    color: var(--ink);
+    border-bottom-color: var(--gold);
+    font-weight: 800;
+  }
+
+  .pp-tab-icon {
+    width: 28px;
+    height: 28px;
+    background: var(--gold);
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  /* ═══ PROBLEM ══════════════════════════════════════════ */
+  .pp-problem {
+    background: var(--white);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 76px 0;
+  }
+
+  .pp-problem-inner {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(0,1.15fr);
+    gap: 52px;
+    align-items: center;
+  }
+
+  .pp-problem-kicker {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 14px;
+  }
+
+  .pp-problem-h2 {
+    font-size: clamp(26px, 3.2vw, 38px);
+    font-weight: 800;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .pp-problem-h2 em {
+    font-style: normal;
+    color: var(--gold-dim);
+  }
+
+  .pp-problem-body {
+    font-size: 15px;
+    line-height: 1.78;
+    color: var(--text-body);
+    margin-top: 16px;
+  }
+
+  .pp-problem-list {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .pp-problem-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text-body);
+    line-height: 1.65;
+  }
+
+  .pp-problem-list li::before {
+    content: "—";
+    color: var(--gold-dim);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .pp-pullquote {
+    border-left: 4px solid var(--gold);
+    padding: 16px 22px;
+    background: var(--gold-pale);
+    border-radius: 0 16px 16px 0;
+    font-size: clamp(16px, 1.8vw, 20px);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.45;
+    margin-top: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  /* ═══ WHAT IS IKF ══════════════════════════════════════ */
+  .pp-what {
+    background: var(--white);
+    padding: 76px 0;
+  }
+
+  .pp-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 10px;
+  }
+
+  .pp-section-h2 {
+    font-size: clamp(24px, 3vw, 34px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .pp-section-lead {
+    font-size: 15px;
+    color: var(--text-body);
+    line-height: 1.75;
+    max-width: 580px;
+    margin-bottom: 32px;
+  }
+
+  .pp-what-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .pp-what-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-top: 0;
+    border-left: 4px solid var(--gold);
+    border-radius: var(--r-card);
+    padding: 26px 22px 22px;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+
+  .pp-what-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(17,19,24,0.08);
+  }
+
+  .pp-what-num {
+    font-size: 36px;
+    font-weight: 800;
+    color: rgba(255,195,0,0.3);
+    margin-bottom: 12px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .pp-what-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+
+  .pp-what-card p {
+    font-size: 13px;
+    color: var(--text-body);
+    line-height: 1.72;
+  }
+
+  /* ═══ PATHWAY ══════════════════════════════════════════ */
+  .pp-pathway {
+    background: var(--gold-pale);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 64px 0;
+  }
+
+  .pp-pathway-head {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .pp-pathway-head .pp-section-h2,
+  .pp-pathway-head .pp-section-label { text-align: center; }
+
+  .pp-pathway-head p {
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 480px;
+    margin-inline: auto;
+    line-height: 1.72;
+  }
+
+  .pp-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .pp-step {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 22px 20px 20px;
+    position: relative;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+
+  .pp-step:hover {
+    border-color: rgba(255,195,0,0.5);
+    box-shadow: 0 8px 24px rgba(17,19,24,0.07);
+  }
+
+  .pp-step-n {
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1;
+    color: rgba(255,195,0,0.15);
+    position: absolute;
+    right: 16px;
+    top: 10px;
+    letter-spacing: -0.03em;
+    user-select: none;
+  }
+
+  .pp-step-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--gold);
+    color: var(--ink);
+    font-weight: 800;
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+
+  .pp-step h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+    line-height: 1.35;
+  }
+
+  .pp-step p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.68;
+  }
+
+  .pp-steps-gap {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  /* ═══ PARENT SOP JOURNEY ═════════════════════════════════ */
+  .pp-sop {
+    background: linear-gradient(180deg, #fffaf0 0%, #ffffff 100%);
+    padding: 64px 0 72px;
+    border-top: 1px solid #f3e9c8;
+  }
+  .pp-sop-head {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 32px;
+  }
+  .pp-sop-head p { color: var(--muted); margin: 8px auto 0; max-width: 640px; }
+  .pp-sop-map {
+    max-width: 920px;
+    margin: 0 auto 40px;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 0 18px 40px -22px rgba(0,0,0,.15);
+  }
+  .pp-sop-map img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+  .pp-sop-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    max-width: 1080px;
+    margin: 0 auto 36px;
+  }
+  .pp-sop-step {
+    position: relative;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    padding: 28px 24px 24px;
+    box-shadow: 0 6px 18px -12px rgba(0,0,0,.10);
+    transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .pp-sop-step:hover {
+    transform: translateY(-3px);
+    border-color: #f0d97a;
+    box-shadow: 0 18px 36px -18px rgba(255,195,0,.35);
+  }
+  .pp-sop-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: #fff8e1;
+    color: #7a5a00;
+    font-weight: 800;
+    font-size: 14px;
+    margin-bottom: 14px;
+    border: 1px solid #f0d97a;
+  }
+  .pp-sop-step h3 {
+    font-size: 18px;
+    font-weight: 800;
+    margin: 0 0 8px;
+    color: var(--ink, #1a1a1a);
+    line-height: 1.3;
+  }
+  .pp-sop-step p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.65;
+    font-size: 14.5px;
+  }
+  .pp-sop-cta-wrap {
+    text-align: center;
+    margin-top: 8px;
+  }
+  .pp-btn--xl {
+    font-size: 15px;
+    padding: 16px 32px;
+    border-radius: 999px;
+    box-shadow: 0 14px 28px -12px rgba(255,195,0,.65);
+    letter-spacing: .3px;
+  }
+  .pp-btn--xl:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px -14px rgba(255,195,0,.75);
+  }
+  @media (max-width: 900px) {
+    .pp-sop { padding: 48px 0 56px; }
+    .pp-sop-steps { grid-template-columns: 1fr; gap: 14px; }
+    .pp-sop-map { padding: 14px; border-radius: 16px; }
+  }
+
+  /* ═══ FLOATING PARENT SOP CTA ═════════════════════════════ */
+  .pp-float-cta {
+    position: fixed;
+    left: 20px;
+    bottom: 24px;
+    z-index: 1200;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    background: var(--ikf-yellow, #ffc107);
+    color: #1a1a1a;
+    font-weight: 800;
+    font-size: 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 14px 30px -10px rgba(255,195,0,.6), 0 6px 14px rgba(0,0,0,.12);
+    border: 1.5px solid #e0a800;
+    transform: translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .25s ease, opacity .25s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .pp-float-cta.show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .pp-float-cta:hover {
+    background: #ffd23a;
+    box-shadow: 0 20px 40px -12px rgba(255,195,0,.7), 0 8px 16px rgba(0,0,0,.15);
+    color: #1a1a1a;
+  }
+  .pp-float-cta::before {
+    content: "";
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    box-shadow: 0 0 0 4px rgba(26,26,26,.12);
+    flex-shrink: 0;
+  }
+  .pp-float-cta-arrow {
+    font-size: 16px;
+    line-height: 1;
+  }
+  /* On mobile / tablet the site shows a fixed 4-button bottom bar (.ikf-qab-fixed-wrap).
+     Lift the floating CTA above it so it doesn't overlap. */
+  @media (max-width: 768px) {
+    .pp-float-cta {
+      left: 14px;
+      right: 14px;
+      bottom: calc(140px + env(safe-area-inset-bottom));
+      padding: 12px 18px;
+      font-size: 13px;
+      justify-content: center;
+    }
+  }
+  @media (max-width: 420px) {
+    .pp-float-cta {
+      bottom: calc(150px + env(safe-area-inset-bottom));
+    }
+  }
+
+  /* ═══ TRUST ════════════════════════════════════════════ */
+  .pp-trust {
+    background: var(--white);
+    padding: 64px 0;
+  }
+
+  .pp-trust-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-top: 30px;
+  }
+
+  .pp-trust-card {
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--r-card);
+    padding: 22px 20px;
+    background: var(--white);
+    transition: box-shadow .2s ease;
+  }
+
+  .pp-trust-card:hover {
+    box-shadow: 0 8px 28px rgba(17,19,24,0.07);
+  }
+
+  .pp-trust-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 7px;
+  }
+
+  .pp-trust-card p {
+    font-size: 13px;
+    color: var(--text-body);
+    line-height: 1.72;
+  }
+
+  .pp-fraud-banner {
+    margin-top: 20px;
+    background: #fefaf0;
+    border: 1px solid rgba(255,195,0,0.4);
+    border-left: 4px solid var(--gold-dim);
+    border-radius: var(--r-card);
+    padding: 22px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .pp-fraud-icon {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(255,195,0,0.18);
+    border: 1px solid rgba(255,195,0,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+  }
+
+  .pp-fraud-text strong {
+    display: block;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+
+  .pp-fraud-text p {
+    color: var(--text-body);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  /* ═══ BEYOND ════════════════════════════════════════════ */
+  .pp-beyond {
+    background: var(--white);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 64px 0;
+    text-align: center;
+  }
+
+  .pp-beyond-inner {
+    max-width: 740px;
+    margin-inline: auto;
+  }
+
+  .pp-beyond h2 {
+    font-size: clamp(24px, 3vw, 34px);
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+
+  .pp-beyond h2 em {
+    font-style: normal;
+    color: var(--gold-dim);
+  }
+
+  .pp-beyond-body {
+    font-size: 15px;
+    color: var(--text-body);
+    line-height: 1.78;
+    margin-bottom: 36px;
+  }
+
+  .pp-beyond-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    text-align: left;
+  }
+
+  .pp-beyond-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 20px 18px;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+
+  .pp-beyond-card:hover {
+    border-color: rgba(255,195,0,0.45);
+    box-shadow: 0 6px 18px rgba(255,195,0,0.08);
+  }
+
+  .pp-beyond-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold-dim);
+    margin-bottom: 7px;
+  }
+
+  .pp-beyond-card p {
+    font-size: 13px;
+    color: var(--text-body);
+    line-height: 1.68;
+  }
+
+  /* ═══ GIRLS ═════════════════════════════════════════════ */
+  .pp-girls {
+    background: var(--white);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 64px 0;
+  }
+
+  .pp-girls-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: 44px;
+    align-items: center;
+  }
+
+  .pp-girls-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: var(--r-pill);
+    margin-bottom: 14px;
+  }
+
+  .pp-girls-inner h2 {
+    font-size: clamp(22px, 2.8vw, 32px);
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  .pp-girls-inner p {
+    font-size: 14px;
+    color: var(--text-body);
+    line-height: 1.75;
+    margin-bottom: 22px;
+  }
+
+  .pp-girls-cards { display: grid; gap: 12px; }
+
+  .pp-girls-card {
+    background: var(--white);
+    border: 1px solid rgba(255,195,0,0.3);
+    border-radius: var(--r-card);
+    padding: 18px 20px;
+    box-shadow: 0 4px 14px rgba(255,195,0,0.08);
+  }
+
+  .pp-girls-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 5px;
+  }
+
+  .pp-girls-card p {
+    font-size: 13px;
+    color: var(--text-body);
+    line-height: 1.68;
+    margin: 0;
+  }
+
+  /* ═══ FAQ ════════════════════════════════════════════════ */
+  .pp-faq {
+    background: var(--white);
+    padding: 64px 0;
+  }
+
+  .pp-faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .pp-faq-item {
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 22px 20px;
+    background: var(--white);
+    transition: border-color .18s ease, box-shadow .18s ease;
+  }
+
+  .pp-faq-item:hover {
+    border-color: rgba(255,195,0,0.45);
+    box-shadow: 0 4px 16px rgba(255,195,0,0.07);
+  }
+
+  .pp-faq-item h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.42;
+  }
+
+  .pp-faq-item p {
+    font-size: 13px;
+    color: var(--text-body);
+    line-height: 1.72;
+  }
+
+  .pp-faq-grid .pp-faq-item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  /* ═══ CTA ════════════════════════════════════════════════ */
+  .pp-cta {
+    background: var(--white);
+    border-top: 1px solid var(--line);
+    padding: 64px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pp-cta::before {
+    content: "";
+    position: absolute;
+    right: -60px;
+    top: -60px;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: rgba(255,195,0,0.18);
+    pointer-events: none;
+  }
+
+  .pp-cta-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 36px;
+    align-items: center;
+  }
+
+  .pp-cta-kicker {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(17,19,24,0.5);
+    margin-bottom: 10px;
+  }
+
+  .pp-cta h2 {
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+
+  .pp-cta-body {
+    font-size: 15px;
+    color: rgba(17,19,24,0.65);
+    line-height: 1.72;
+    max-width: 480px;
+    margin-bottom: 24px;
+  }
+
+  .pp-cta-panel {
+    background: var(--gold-pale);
+    border: 1px solid rgba(255,195,0,0.42);
+    border-radius: var(--r-block);
+    padding: 24px 26px;
+    min-width: 260px;
+    text-align: center;
+  }
+
+  .pp-cta-panel strong {
+    display: block;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 7px;
+    line-height: 1.3;
+  }
+
+  .pp-cta-panel p {
+    font-size: 13px;
+    color: rgba(17,19,24,0.6);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .pp-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .pp-btn--cta-dark {
+    background: var(--ink);
+    color: var(--gold);
+    border-color: var(--ink);
+    justify-content: center;
+  }
+
+  .pp-cta-panel .pp-btn--cta-dark { width: 100%; }
+
+  .pp-btn--cta-dark:hover {
+    color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.2);
+  }
+
+  .pp-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line), transparent);
+  }
+
+  @keyframes pp-fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .pp-hero-inner > * { animation: pp-fade-up .6s ease both; }
+  .pp-hero-inner > *:nth-child(2) { animation-delay: .1s; }
+
+  /* ─── RESPONSIVE ────────────────────────────────────── */
+  @media (max-width: 940px) {
+    .pp-hero::before { display: none; }
+    .pp-hero { background: var(--white); }
+
+    .pp-hero-inner,
+    .pp-problem-inner,
+    .pp-girls-inner,
+    .pp-cta-inner { grid-template-columns: 1fr; }
+
+    .pp-hero-card { min-height: 320px; }
+
+    .pp-what-grid,
+    .pp-steps,
+    .pp-steps-gap,
+    .pp-beyond-cards,
+    .pp-trust-grid,
+    .pp-faq-grid { grid-template-columns: 1fr; }
+
+    .pp-cta-panel { min-width: 0; }
+  }
+
+  @media (max-width: 560px) {
+    .pp-shell { width: calc(100% - 28px); }
+    .pp-hero { padding: 48px 0 40px; }
+    .pp-tab-link { padding: 14px 16px; font-size: 12px; }
+  }
+</style>
+
+<div class="pp">
+
+  <!-- ═══ HERO ═══════════════════════════════════════════ -->
+  <section class="pp-hero" aria-label="IKF for parents hero">
+    <div class="pp-shell">
+      <div class="pp-hero-inner">
+
+        <div>
+          <p class="pp-hero-label"><span></span> For Parents</p>
+          <h1 class="pp-hero-h1">
+            Your Child
+            <em>Deserves a <br> Fair Shot.</em>
+          </h1>
+          <p class="pp-hero-sub">
+            You believed in them before anyone else. IKF is the platform that finally gives that belief a structure — transparent trials, real scouts, and zero room for shortcuts.
+          </p>
+          <div class="pp-hero-actions">
+            <a class="pp-btn pp-btn--gold" href="{% url 'career360parentsplayers' %}">Parent SOP &amp; Guidelines</a>
+            <a class="pp-btn pp-btn--ghost-light" href="{% url 'parent-fuelling-ikf' %}">Fuelling IKF</a>
+          </div>
+        </div>
+
+        <div class="pp-hero-visual" aria-hidden="true">
+          <div class="pp-hero-card">
+            <img src="{% static 'images/homegrid/fam.png' %}" alt="Parent supporting their child's football journey" loading="eager">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PROBLEM ══════════════════════════════════════════ -->
+  <section class="pp-problem" aria-labelledby="problem-h2">
+    <div class="pp-shell">
+      <div class="pp-problem-inner">
+
+        <div>
+          <p class="pp-problem-kicker">The Real Challenge</p>
+          <h2 class="pp-problem-h2" id="problem-h2">
+            You Invested.<br>
+            The System<br>
+            <em>Let You Down.</em>
+          </h2>
+        </div>
+
+        <div>
+          <p class="pp-problem-body">
+            As a parent, you have put real time, money, and belief into your child's football dream. But the system in India has made it nearly impossible to know if your child is being evaluated fairly — or whether someone is simply taking advantage of your family's hope.
+          </p>
+          <ul class="pp-problem-list">
+            <li>No clear process — just vague promises and expensive "academies".</li>
+            <li>Agents charging fees with no guarantee of outcome.</li>
+            <li>No way to know if your child is actually being seen by the right people.</li>
+            <li>Fear of exploitation disguised as opportunity.</li>
+          </ul>
+          <div class="pp-pullquote">
+            Your child's talent deserves a system that is honest with both of you.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WHAT IS IKF ══════════════════════════════════════ -->
+  <section class="pp-what" aria-labelledby="what-h2">
+    <div class="pp-shell">
+      <p class="pp-section-label">What IKF Pathway 360 Means for Your Family</p>
+      <h2 class="pp-section-h2" id="what-h2">A Platform Built on Transparency.</h2>
+      <p class="pp-section-lead">
+        IKF is not an academy. Not an agent. Not a promise-machine. IKF is a structured, merit-based pathway where your child's performance — and nothing else — determines their opportunity.
+      </p>
+      <div class="pp-what-grid">
+        <article class="pp-what-card">
+          <div class="pp-what-num">01</div>
+          <h3>You know exactly what happens</h3>
+          <p>The IKF process is fully documented. You can read every step — from registration to evaluation to shortlisting — before your child sets foot on the pitch.</p>
+        </article>
+        <article class="pp-what-card">
+          <div class="pp-what-num">02</div>
+          <h3>No one asks for money for selection</h3>
+          <p>IKF will never charge for advancement, club placement, or guaranteed outcomes. If anyone does so in IKF's name, it is fraud. Full stop.</p>
+        </article>
+        <article class="pp-what-card">
+          <div class="pp-what-num">03</div>
+          <h3>Your child is evaluated fairly</h3>
+          <p>Trained scouts assess every player through the same structured criteria. No favourites. No side deals. Pure performance — witnessed by people who matter.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="pp-divider"></div>
+
+  <!-- ═══ PATHWAY ══════════════════════════════════════════ -->
+  <section class="pp-pathway" id="how-ikf-works" aria-labelledby="pathway-h2">
+    <div class="pp-shell">
+      <div class="pp-pathway-head">
+        <p class="pp-section-label" style="text-align:center;">The IKF Pathway — A Parent's View</p>
+        <h2 class="pp-section-h2" style="text-align:center;" id="pathway-h2">What Happens, Step by Step</h2>
+        <p>Here is what the IKF process looks like from registration to evaluation — so you are never left guessing.</p>
+      </div>
+
+      <div class="pp-steps">
+        <article class="pp-step">
+          <div class="pp-step-n" aria-hidden="true">01</div>
+          <div class="pp-step-badge">1</div>
+          <h3>Register your child for a city trial</h3>
+          <p>Your child registers for the nearest IKF city trial. The process is simple, transparent, and starts with a nominal (or zero) registration fee.</p>
+        </article>
+        <article class="pp-step">
+          <div class="pp-step-n" aria-hidden="true">02</div>
+          <div class="pp-step-badge">2</div>
+          <h3>They play in a real, structured environment</h3>
+          <p>Your child performs in a proper match environment in front of trained scouts. You know when, where, and what criteria are being used.</p>
+        </article>
+        <article class="pp-step">
+          <div class="pp-step-n" aria-hidden="true">03</div>
+          <div class="pp-step-badge">3</div>
+          <h3>Honest evaluation — permanently on record</h3>
+          <p>Every player's performance is assessed and recorded in the IKF system. This is not a one-off event — it is a permanent part of their football identity.</p>
+        </article>
+      </div>
+      <div class="pp-steps-gap">
+        <article class="pp-step">
+          <div class="pp-step-n" aria-hidden="true">04</div>
+          <div class="pp-step-badge">4</div>
+          <h3>Shortlisted players advance to zonals</h3>
+          <p>If selected, your child progresses to zonal rounds where the level rises and club visibility increases significantly.</p>
+        </article>
+        <article class="pp-step">
+          <div class="pp-step-n" aria-hidden="true">05</div>
+          <div class="pp-step-badge">5</div>
+          <h3>Top performers reach the national stage</h3>
+          <p>National finals are where professional clubs are watching in person. This is the real opportunity — earned entirely through performance.</p>
+        </article>
+        <article class="pp-step">
+          <div class="pp-step-n" aria-hidden="true">06</div>
+          <div class="pp-step-badge">6</div>
+          <h3>Clubs decide — IKF never sells the outcome</h3>
+          <p>All final decisions belong to the clubs. IKF's role ends at creating maximum visibility. What happens next is based only on your child's game.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PARENT SOP JOURNEY ═════════════════════════════════ -->
+  <section class="pp-sop" id="parent-sop-journey" aria-labelledby="sop-h2">
+    <div class="pp-shell">
+      <div class="pp-sop-head">
+        <p class="pp-section-label" style="text-align:center;">Parent SOP</p>
+        <h2 class="pp-section-h2" style="text-align:center;" id="sop-h2">Let's begin with how you can help your child</h2>
+      </div>
+
+      <div class="pp-sop-map">
+        <img src="{% static 'images/ParentMap.png' %}" alt="Parent SOP Journey Map — six areas IKF supports: Awareness of Football Pathways, Decision-Making Guidance, Education Balance, IKF Pathway 360 Parent and Player, Emotional Support, Financial Planning." loading="lazy">
+      </div>
+
+      <div class="pp-sop-steps">
+        <article class="pp-sop-step">
+          <div class="pp-sop-num">01</div>
+          <h3>Fill the Parent SOP</h3>
+          <p>Your child is doing their best — let us support your journey to make your choices easier, at zero cost.</p>
+        </article>
+        <article class="pp-sop-step">
+          <div class="pp-sop-num">02</div>
+          <h3>Get an understanding</h3>
+          <p>After filling the form, you'll get an idea of which direction you can take to support your child's journey.</p>
+        </article>
+        <article class="pp-sop-step">
+          <div class="pp-sop-num">03</div>
+          <h3>IKF's Due Diligence</h3>
+          <p>After understanding and evaluating, we'll come back to you with suggested solutions to support your child's journey.</p>
+        </article>
+      </div>
+
+      <div class="pp-sop-cta-wrap">
+        <a class="pp-btn pp-btn--gold pp-btn--xl" href="{% url 'career360parentsplayers' %}">Fill the Parent SOP &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TRUST ════════════════════════════════════════════ -->
+  <section class="pp-trust" aria-labelledby="trust-h2">
+    <div class="pp-shell">
+      <p class="pp-section-label">Why Parents Trust IKF</p>
+      <h2 class="pp-section-h2" id="trust-h2">Safe. Transparent. Family-First.</h2>
+      <p class="pp-section-lead">
+        IKF is built to protect players and their families — not to profit from your hope. Every safeguard in the IKF process exists because parents deserve the truth.
+      </p>
+      <div class="pp-trust-grid">
+        <article class="pp-trust-card">
+          <h3>A published, readable process</h3>
+          <p>The full IKF Parent SOP is available online. You can read exactly what will happen before you register — no hidden steps, no fine print.</p>
+        </article>
+        <article class="pp-trust-card">
+          <h3>Zero payment for selection</h3>
+          <p>IKF will never charge your family for club placement or guaranteed advancement. A nominal trial registration fee is the only legitimate cost.</p>
+        </article>
+        <article class="pp-trust-card">
+          <h3>Girls participate free</h3>
+          <p>IKF removes the financial barrier entirely for girls so that a family's economic situation never becomes the reason a girl's football dream ends early.</p>
+        </article>
+        <article class="pp-trust-card">
+          <h3>Structured, supervised trials</h3>
+          <p>Every IKF trial runs with trained staff, clear protocols, and a safe environment. For girls, dedicated women-led spaces are provided under Project IKF Naari Shakti.</p>
+        </article>
+      </div>
+
+      <div class="pp-fraud-banner" role="alert" aria-label="Fraud warning for parents">
+        <div class="pp-fraud-icon" aria-hidden="true">⚠</div>
+        <div class="pp-fraud-text">
+          <strong>Critical Warning for Parents</strong>
+          <p>
+            If anyone — coach, agent, or "IKF representative" — asks your family for money in exchange for selection, club placement, or guaranteed advancement in IKF, that is fraud. IKF will never make such an offer. Report it immediately at indiakhelofootball.com. Protect your family and protect other families.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ NOT SELECTED ════════════════════════════════════ -->
+  <section class="pp-beyond" aria-labelledby="beyond-h2">
+    <div class="pp-shell">
+      <div class="pp-beyond-inner">
+        <p class="pp-section-label" style="text-align:center;">If Your Child Is Not Shortlisted</p>
+        <h2 id="beyond-h2">
+          Not Selected Today.
+          <em>Not the End<br>of the Story.</em>
+        </h2>
+        <p class="pp-beyond-body">
+          Non-selection is honest feedback — not a verdict. Your child has been evaluated fairly, they know exactly where they stand, and they are now part of the IKF ecosystem. That is a foundation, not a failure.
+        </p>
+        <div class="pp-beyond-cards">
+          <article class="pp-beyond-card">
+            <h3>A real benchmark, not a dismissal</h3>
+            <p>IKF gives your child a clear picture of their current level compared to peers across India — something no academy or local coach can provide.</p>
+          </article>
+          <article class="pp-beyond-card">
+            <h3>They can come back stronger</h3>
+            <p>IKF seasons are ongoing. Non-selection this round is not permanent. Thousands of players returned in a later season and progressed further.</p>
+          </article>
+          <article class="pp-beyond-card">
+            <h3>Part of something larger</h3>
+            <p>Every player who participates becomes part of the IKF ecosystem — with access to resources, events, and a community of serious football families.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ GIRLS ════════════════════════════════════════════ -->
+  <section class="pp-girls" aria-labelledby="girls-h2">
+    <div class="pp-shell">
+      <div class="pp-girls-inner">
+
+        <div>
+          <div class="pp-girls-badge">
+            ♀ Project IKF Naari Shakti
+          </div>
+          <h2 id="girls-h2">Your Daughter Belongs on the Pitch.</h2>
+          <p>
+            IKF believes every girl who loves football deserves the same fair evaluation and the same shot at a career — regardless of where she lives or what her family can afford. Project IKF Naari Shakti makes this real.
+          </p>
+          <a class="pp-btn pp-btn--ghost-dark" href="{% url 'naari_shakti' %}">Learn About Project IKF Naari Shakti</a>
+        </div>
+
+        <div class="pp-girls-cards">
+          <article class="pp-girls-card">
+            <h3>Free participation for all girls</h3>
+            <p>No registration fee for girls — ever. IKF removes cost as a barrier so that every girl's trial depends only on her performance, not her family's income.</p>
+          </article>
+          <article class="pp-girls-card">
+            <h3>Women-led, safe environments</h3>
+            <p>Girls' trials under Project IKF Naari Shakti are run with dedicated women staff, safety protocols, and an environment designed to make every girl feel secure and respected.</p>
+          </article>
+          <article class="pp-girls-card">
+            <h3>Equal visibility, equal opportunity</h3>
+            <p>Girls are evaluated with the same rigour and the same structured process as boys. IKF does not treat girls' football as secondary — and neither should anyone else.</p>
+          </article>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FAQ ════════════════════════════════════════════════ -->
+  <section class="pp-faq" aria-labelledby="faq-h2">
+    <div class="pp-shell">
+      <p class="pp-section-label">Parent Questions, Answered</p>
+      <h2 class="pp-section-h2" id="faq-h2">Everything You Need to Know Before You Register Your Child</h2>
+      <p class="pp-section-lead">
+        Straight answers for football families. No jargon. No vague promises.
+      </p>
+      <div class="pp-faq-grid">
+        <article class="pp-faq-item">
+          <h3>What is IKF and how does it help my child?</h3>
+          <p>IKF (India Khelo Football) is a not-for-profit platform that gives grassroots footballers a structured, merit-based pathway to be evaluated by real scouts. Your child gets a fair, transparent environment where talent — not money or connections — determines their opportunity.</p>
+        </article>
+        <article class="pp-faq-item">
+          <h3>How much does it cost for my child to participate?</h3>
+          <p>IKF trials are free for girls. For boys, a nominal registration fee may apply. IKF will never charge for selection, club placement, or guaranteed advancement. Any request for such payment is fraud.</p>
+        </article>
+        <article class="pp-faq-item">
+          <h3>Is my child safe at IKF trials?</h3>
+          <p>Yes. All IKF trials run in structured, supervised environments with trained staff. Girls have dedicated girls-only trials with women-led environments under Project IKF Naari Shakti.</p>
+        </article>
+        <article class="pp-faq-item">
+          <h3>Does IKF guarantee my child will get into a club?</h3>
+          <p>No. IKF creates the platform and maximum visibility. All final selection decisions are made by clubs based on merit. IKF does not sell selection — anyone who claims otherwise is not representing IKF.</p>
+        </article>
+        <article class="pp-faq-item">
+          <h3>What happens if my child is not selected?</h3>
+          <p>Non-selection is an honest benchmark, not a verdict. Your child is now part of the IKF ecosystem with a clear picture of where they stand. They can return for future editions better prepared — the door stays open.</p>
+        </article>
+        <article class="pp-faq-item">
+          <h3>Where can I read the full process before registering?</h3>
+          <p>The IKF Parent SOP is available at indiakhelofootball.com/parent_sop — it covers every step from registration to evaluation to what happens after. Read it before your child's first trial.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ════════════════════════════════════════════════ -->
+  <section class="pp-cta" aria-labelledby="cta-h2">
+    <div class="pp-shell">
+      <div class="pp-cta-inner">
+
+        <div>
+          <p class="pp-cta-kicker">Your family's next step</p>
+          <h2 id="cta-h2">Read the Process.<br>Register Your Child.<br>Trust the System.</h2>
+          <p class="pp-cta-body">
+            IKF will not promise your child a club. It will promise your family something better — a fair, transparent chance. Everything is documented. Everything is accountable. The rest is up to them.
+          </p>
+          <div class="pp-cta-actions">
+            <a class="pp-btn pp-btn--cta-dark" href="{% url 'career360parentsplayers' %}">Read Parent SOP</a>
+            <a class="pp-btn pp-btn--ghost-dark" href="{% url 'parent-fuelling-ikf' %}">Fuelling IKF</a>
+            <a class="pp-btn pp-btn--ghost-dark" href="{% url 'naari_shakti' %}">Project IKF Naari Shakti</a>
+            <a class="pp-btn pp-btn--ghost-dark" href="{% url 'season5' %}">Register for Trials</a>
+          </div>
+        </div>
+
+        <div class="pp-cta-panel">
+          <strong>Your child's talent is real.<br>Now give it a real platform.</strong>
+          <p>Read the full IKF process for parents — transparent, documented, and designed to protect your family at every step.</p>
+          <a class="pp-btn pp-btn--cta-dark" href="{% url 'career360parentsplayers' %}">Parent SOP &amp; Guidelines →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- IKF Floating Sidebar -->
+<div class="ikf-float-sidebar" id="ikfFloatSidebar">
+  <button class="ikf-float-toggle" id="ikfFloatToggle" aria-label="IKF Parent Quick Links">
+    <span class="ikf-float-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </span>
+    <span class="ikf-float-label">Parents</span>
+  </button>
+  <div class="ikf-float-menu" id="ikfFloatMenu">
+    <div class="ikf-float-menu-header">For Parents</div>
+    <a class="ikf-float-link" href="{% url 'career360parentsplayers' %}">
+      <span class="ikf-float-link-icon">&#9654;</span> Parent SOP
+    </a>
+    <a class="ikf-float-link" href="{% url 'parent-fuelling-ikf' %}">
+      <span class="ikf-float-link-icon">&#9654;</span> Fuelling IKF
+    </a>
+    <a class="ikf-float-link" href="{% url 'naari_shakti' %}">
+      <span class="ikf-float-link-icon">&#9654;</span> Project IKF Naari Shakti
+    </a>
+    <a class="ikf-float-link" href="{% url 'season5' %}">
+      <span class="ikf-float-link-icon">&#9654;</span> Register for Trials <span class="ikf-badge">Open</span>
+    </a>
+    <a class="ikf-float-link" href="{% url 'noticeboard_home' %}">
+      <span class="ikf-float-link-icon">&#9654;</span> Noticeboard
+    </a>
+  </div>
+</div>
+
+<style>
+  .ikf-float-sidebar {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  .ikf-float-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #ffc300;
+    color: #111318;
+    border: none;
+    cursor: pointer;
+    padding: 14px 10px;
+    border-radius: 10px 0 0 10px;
+    box-shadow: -3px 0 18px rgba(0,0,0,0.18);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transition: background 0.2s;
+    min-height: 120px;
+  }
+
+  .ikf-float-toggle:hover { background: #e6af00; }
+
+  .ikf-float-icon {
+    writing-mode: horizontal-tb;
+    margin-bottom: 4px;
+  }
+
+  .ikf-float-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: 800;
+  }
+
+  .ikf-float-menu {
+    background: #111318;
+    border-radius: 10px 0 0 10px;
+    box-shadow: -4px 0 24px rgba(0,0,0,0.25);
+    overflow: hidden;
+    width: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: width 0.3s cubic-bezier(.4,0,.2,1), opacity 0.25s;
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+  }
+
+  .ikf-float-sidebar.open .ikf-float-menu {
+    width: 210px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .ikf-float-menu-header {
+    background: #ffc300;
+    color: #111318;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 12px 18px;
+  }
+
+  .ikf-float-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    color: #f0ead0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .ikf-float-link:last-child { border-bottom: none; }
+  .ikf-float-link:hover { background: rgba(255,195,0,0.13); color: #ffc300; }
+
+  .ikf-float-link-icon { color: #ffc300; font-size: 9px; flex-shrink: 0; }
+
+  .ikf-badge {
+    background: #ffc300;
+    color: #111318;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    padding: 1px 5px;
+    margin-left: 4px;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+
+  @media (max-width: 600px) {
+    .ikf-float-toggle { padding: 10px 8px; min-height: 90px; font-size: 10px; }
+    .ikf-float-sidebar.open .ikf-float-menu { width: 180px; }
+  }
+</style>
+
+<a class="pp-float-cta" id="ppFloatCta" href="{% url 'career360parentsplayers' %}" aria-label="Fill the Parent SOP">
+  Fill the Parent SOP
+  <span class="pp-float-cta-arrow" aria-hidden="true">&rarr;</span>
+</a>
+
+<script>
+  (function() {
+    var sidebar = document.getElementById('ikfFloatSidebar');
+    var toggle = document.getElementById('ikfFloatToggle');
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      sidebar.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!sidebar.contains(e.target)) {
+        sidebar.classList.remove('open');
+      }
+    });
+
+    /* Floating Fill-the-Parent-SOP CTA: fade in after the user scrolls past the hero. */
+    var floatCta = document.getElementById('ppFloatCta');
+    if (floatCta) {
+      var onScroll = function() {
+        if (window.scrollY > 220) floatCta.classList.add('show');
+        else floatCta.classList.remove('show');
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+  })();
+</script>
+
+{% endblock %}

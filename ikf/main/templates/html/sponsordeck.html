@@ -1,0 +1,562 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<!-- header END -->
+<!-- Content -->
+<!-- <style>
+  .pdf-container {
+      width: 100%;
+      height: 100vh; /* Full screen height */
+      max-height: 90vh; /* Adjust based on viewport */
+  }
+
+  .pdf-container object,
+  .pdf-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+  }
+
+  @media (max-width: 768px) {
+      .pdf-container {
+          height: 70vh; /* Adjust height for tablets */
+      }
+  }
+
+  @media (max-width: 480px) {
+      .pdf-container {
+          height: 60vh; /* Adjust height for mobile */
+      }
+  }
+</style> -->
+<style>
+/* Ensure full-page width & height for PDF */
+.pdf-container {
+    width: 100vw;  /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    overflow: hidden; /* Prevent internal scrolling */
+}
+
+.pdf-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Ensure mobile responsiveness */
+@media (max-width: 768px) { 
+    .pdf-container {
+        height: 90vh; /* Reduce height slightly for mobile screens */
+    }
+}
+</style>
+<div class="page-content bg-white">
+<div style="height: 120px; background-color: white;"></div>
+
+  <div class="section-full content-inner">
+    
+
+             
+
+    <div class="container">
+      <!-- slide one-->
+      <div class="m-b15">
+        <div class="section-head inner-haed">
+            <h2 class="text-uppercase">125+ city talent hunt for exceptional footballers</h2>
+        </div>
+        <div class="section-content">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="pdf-container">
+                    <object data="{% static 'pdf/sponsordeck.pdf' %}" type="application/pdf">
+                        <!-- <iframe src="{% static 'pdf/sponsordeck.pdf' %}"></iframe> -->
+                    </object>
+                </div>
+            </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="icon-bx-wraper bx-style-2 m-l40 m-b30 p-a30 left">
+                        <div class="icon-bx-sm radius bg-primary"> <a href="#" class="icon-cell"><i class="fa fa-user"></i></a> </div>
+                        <div class="icon-content p-l40">
+                            <h5 class="dez-tilte text-uppercase">Content title</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing  sed diam nibh euismod [...]</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="icon-bx-wraper bx-style-2 m-l40 m-b30 p-a30 left">
+                      <div class="icon-bx-sm radius bg-primary"> <a href="#" class="icon-cell"><i class="fa fa-map-marker"></i></a> </div>
+                      <div class="icon-content p-l40">
+                          <h5 class="dez-tilte text-uppercase">Content title</h5>
+                          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing  sed diam nibh euismod [...]</p>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="icon-bx-wraper bx-style-2 m-l40 m-b30 p-a30 left">
+                      <div class="icon-bx-sm radius bg-primary"> <a href="#" class="icon-cell"><i class="fa fa-bullhorn"></i></a> </div>
+                      <div class="icon-content p-l40">
+                          <h5 class="dez-tilte text-uppercase">Content title</h5>
+                          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing  sed diam nibh euismod [...]</p>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="icon-bx-wraper bx-style-2 m-l40 m-b30 p-a30 left">
+                      <div class="icon-bx-sm radius bg-primary"> <a href="#" class="icon-cell"><i class="fa fa-calendar-check-o"></i></a> </div>
+                      <div class="icon-content p-l40">
+                          <h5 class="dez-tilte text-uppercase">Content title</h5>
+                          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing  sed diam nibh euismod [...]</p>
+                      </div>
+                  </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- slide one end -->
+      <div class=" m-b30">
+        <div class="row blog-post blog-md date-style-2">
+          <div class="col-lg-4 col-md-4  col-sm-5 m-b30"> <img loading="lazy"
+                src="{{ sponsordeckimages.WorkShopsSideImage }}" alt=""> </div>
+          <div class="col-lg-8 col-md-8 col-sm-7">
+            <div class="dez-post-title ">
+              <h2 class="post-title">{{ Heading_Workshops2 }}</h2>
+            </div>
+            <div class="dez-post-text">
+              <p class="m-b10">{{ Paragraph_Workshops2 }}</p>
+            </div>
+            <table class="table table-bordered">
+              {% for workshop in Workshops %}
+              <tr>
+                <td>{{workshop.First_Column}}</td>
+                <td>{{workshop.Second_Column | safe}}</td>
+              </tr>
+              {% endfor %}
+            </table>
+            <form method="post" class="cart"> {% csrf_token %}
+              <div class="m-tb30">
+                <a id="anchorforregister"  target=”_blank” style="color:#000000;" class="site-button">Register</a>
+                <a class="site-button text-dark " href="/main/media/ui/download/workshopfaqs.pdf"
+                                    download="workshopfaqs.pdf">FAQs
+                                    </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="section-full bg-img-fix content-inner overlay-black-middle our-projects-galery"
+        style="background-image:url('{{workshopsimages.WorkShopsFeatureBG}}'); background-position:center;">
+        <div class="container">
+          <div class="row">
+            {% for feature in featurestrips %}
+            <div class="col-lg-3 col-sm-6 m-b30">
+              <div class="border-1 p-a15 text-center text-white skew-triangle left-top hvr-wobble-horizontal">
+                <div class="sports-icon ">
+                  <img loading="lazy" width="85" height="85" src="{{ feature.pic }}" alt="" />
+                </div>
+                <h4 class="text-capitalize">{{ feature.heading }}</h4>
+                <div class="dez-separator-outer ">
+                  <div class="dez-separator bg-primary style-liner"></div>
+                </div>
+                <p class="m-b0">{{ feature.paragraph }}
+                </p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="section-full content-inner">
+        <!-- winner -->
+        <!-- <div class="container woo-entry">
+          <div class=" m-b30">
+            <div class="row blog-post blog-md date-style-2">
+              <div class="col-lg-4 col-md-4  col-sm-5 m-b30"> <a href="#"><img
+                    src="{{ workshopsimages.WorkShopsWinnerIMG }}" alt=""></a> </div>
+              <div class="col-lg-8 col-md-8 col-sm-7">
+                <div class="dez-post-title ">
+                  <h2 class="post-title"><a href="#">{{ Heading_WorkshopsWinner }}</a></h2>
+                </div>
+                <div class="dez-post-text">
+                  <p class="m-b10">{{ Paragraph_WorkshopsWinner }}</p>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <div class="section-full bg-white content-inner our-achievements">
+            <div class="container">
+              <div class="section-head text-center ">
+                <h2 class="h2 text-uppercase"> {{Heading_Workshops3}}</h2>
+                <div class="dez-separator-outer ">
+                  <div class="dez-separator bg-primary style-liner"></div>
+                </div>
+                <p>{{Paragraph_Workshops3}}</p>
+              </div>
+              <div class="section-content text-center ">
+                <div class="row m-lr0">
+                  {%for learn in learnfromexperts %}
+                  <div class="col-lg-3 col-sm-6 p-a0 m-b30" style="padding-right:20px ;">
+                    <div class="dez-box dez-media">
+                      <img loading="lazy" width="292" height="292" src="{{learn.pic}}" alt="">
+                      <div class="dez-info-has p-a20 bg-primary text-left skew-triangle right-top text-center">
+                        <h4 class="text-capitalize">{{learn.heading1}}</h4>
+                        <div class="dez-info-has-text">{{learn.paragraph}}</div>
+                        <div class="m-tb30"><a href="{{ learn.attr1 }}" target=”_blank”
+                            class="site-button outline white border-1">{{learn.button_text}}</a>
+                        </div>
+                      </div>
+                      <div class="dez-title-bx bg-gray p-a20 text-left skew-triangle left-top">
+                        <h4 class="m-a0 text-capitalize"> {{learn.heading2}}</h4>
+                      </div>
+                    </div>
+                  </div>
+                  {%endfor%}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-content" >
+            <div class="section-head text-center ">
+              <h2 class="h2 text-uppercase">Academy Partners</h2>
+              <div class="dez-separator-outer ">
+                <div class="dez-separator bg-primary style-liner"></div>
+              </div>
+            </div>
+            <div
+            class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr"
+            >
+            {% for clubs in clubs_partner_home %}
+            <div class="item">
+              <div class="ow-carousel-entry  ">
+                <div class="ow-entry-media dez-img-effect zoom-slow d-flex justify-content-center">
+                  <img loading="lazy" style="width: 250px; height: 250px; " src="{{ clubs.pic }}" alt="{{clubs.keydata}}" />
+                </div>
+                <div class="ow-entry-content">
+                  <div class="ow-entry-title text-center h5">
+                  {{ clubs.attr1 }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            </div>
+          </div>
+          </div>
+          <!-- Clubs END -->
+              <div class="section-full bg-white content-inner">
+                <div class="container">
+                  <div class="section-head text-center">
+                    <h2 class="h2">{{ workshop_winners_home }}</h2>
+                    <div class="dez-separator-outer">
+                      <div class="dez-separator bg-primary style-liner"></div>
+                    </div>
+                    <p>{{ winners_paragraph }}</p>
+                  </div>
+                  <div class="section-content text-center">
+                    <div
+                      class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr"
+                    >
+                      {% for winner in winners %}
+                      <div class="item">
+                        <div class="dez-box m-b30 dez-img-effect vertical-pan dez-staff">
+                          <div class="dez-media vertical-pan dez-img-effect">
+                            <a href="javascript:;">
+                              <img loading="lazy" src="{{winner.pic}}" alt="" width="358" height="460" />
+                            </a>
+                          </div>
+                          <div class="p-a15 bg-primary text-white dez-team">
+                            <h4 class="dez-title text-capitalize m-t0">
+                              {{ winner.name|safe }}
+                            </h4>
+                            <div class="dez-separator-outer">
+                              <div class="dez-separator bg-white style-liner"></div>
+                            </div>
+                            <!-- <span class="dez-member-position"
+                              >{{winner.category_id}}</span
+                            > -->
+                            
+                                              <!-- <div class="m-t10">
+                                                  <ul class="dez-social-icon dez-social-icon-lg border">
+                                                      <li><a href="{{winner.attr1}}" class="fa fa-facebook text-white"></a>
+                                                      </li>
+                                                      <li><a href="{{winner.attr2}}" class="fa fa-instagram text-white"></a>
+                                                  </ul>
+                                              </div> -->
+                                          
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- winner end -->
+          <!-- Photos of previous workshop-->
+          <div class="Section-full">
+            <div class="Section-full">
+              <div class="section-head text-center ">
+                <h2 class="h2">{{ Previous_Workshop }} </h2>
+                <div class="dez-separator-outer ">
+                  <div class="dez-separator bg-primary style-liner"></div>
+                </div>
+              </div>
+              <div class="section-content text-center">
+                <div
+                  class="owl-carousel img-carousel-content owl-dots-none owl-btn-1 primary lightgallery owl-btn-center-lr">
+                  {% for Previous in previous_workshop %}
+                  <div class="item">
+                    <div class="dez-box dez-gallery-box">
+                      <div class="dez-thum dez-img-overlay1 dez-img-effect zoom-slow">
+                        <a href="javascript:void(0);">
+                          <img loading="lazy" src={{ Previous.pic}} alt="" />
+                        </a>
+                        <div class="overlay-bx">
+                          <div class="overlay-icon">
+                            <span data-exthumbimage={{ Previous.pic}} data-src={{ Previous.pic}}
+                              class="icon-bx-xs check-km" title="Light Gallery Carousel 1">
+                              <i class="fa fa-picture-o"></i>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {%endfor%}
+                </div>
+              </div>
+    <!-- News -->
+    <div class="p-b30">
+      <div class="section-head inner-haed">
+        <h2 class="text-uppercase section-head text-center mt-5">
+          {{ news_home }}
+        </h2>
+      </div>
+      <div class="section-content">
+        <div
+          class="owl-carousel owl-theme blog-carousel mfp-gallery gallery owl-btn-center-lr"
+        >
+          {% for headlines in news %}
+          <div class="item">
+            <div class="ow-event-post date-style-2">
+              <div class="ow-event-media dez-img-effect zoom-slow">
+                <img loading="lazy" src="{{ headlines.pic }}" alt="" />
+              </div>
+              <div class="ow-event-info">
+                <div class="ow-event-title">
+                  <h4 class="event-title">
+                    <a href="#" title="Video post">{{ headlines.heading }}</a>
+                  </h4>
+                </div>
+                <div class="ow-event-text">
+                  <p>{{ headlines.description }}</p>
+                </div>
+                <div class="ow-event-readmore">
+                  <a
+                    href="{{ headlines.attr1}}"
+                    target="_blank"
+                    title="READ MORE"
+                    rel="bookmark"
+                    class="site-button-link"
+                  >
+                    {{headlines.button_text}}
+                    <i class="fa fa-angle-double-right"></i
+                  ></a>
+                </div>
+                <div class="ow-event-meta">
+                  <ul class="icon-list">
+                    <li class="event-date">
+                      <i class="fa fa-calendar"></i>{{headlines.date}}
+                    </li>
+                    <li class="event-address">
+                      <i class="fa fa-map-marker"></i>{{headlines.name}}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+              <!-- Photos of previous workshop -->
+              <!-- Winners of previous workshop
+                        <div class="Section-full">
+                          <div class="Section-full">
+                            <div class="section-head text-center ">
+                              <h2 class="h2">{{ Winners_Workshop }} </h2>
+                              <div class="dez-separator-outer ">
+                                <div class="dez-separator bg-primary style-liner"></div>
+                              </div>
+                            </div>
+                            <div class="section-content text-center">
+                              <div
+                                class="owl-carousel img-carousel-content owl-dots-none owl-btn-1 primary lightgallery owl-btn-center-lr"
+                              >
+                                {% for winners in winners_workshop %}
+                                <div class="item">
+                                  <div class="dez-box dez-gallery-box">
+                                    <div class="dez-thum dez-img-overlay1 dez-img-effect zoom-slow">
+                                      <a href="javascript:void(0);">
+                                        <img loading="lazy" src={{winners.pic}} alt="" />
+                                      </a>
+                                      <div class="overlay-bx">
+                                        <div class="overlay-icon">
+                                          <span
+                                            data-exthumbimage={{winners.pic}}
+                                            data-src={{winners.pic}}
+                                            class="icon-bx-xs check-km"
+                                            title="Light Gallery Carousel 1"
+                                          >
+                                            <i class="fa fa-picture-o"></i>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                {%endfor%}
+                              </div>
+                        </div>
+                          -- Winners of previous workshop END -->
+              <!-- Testimonials --->
+              <div class="clearfix">
+                <!-- content start -->
+                <!-- What people are saying style 1 -->
+                <div class="section-full bg-white bg-img-fix content-inner-1">
+                  <div class="container">
+                    <div class="section-head text-center">
+                      <h2 class="text-uppercase">{{Testimonials_Workshop}}</h2>
+                      <div class="dez-separator bg-primary"></div>
+                    </div>
+                    <div class="section-content">
+                      <div class="owl-carousel owl-theme testimonial-one">
+                        {% for testimonial in testimonials %}
+                        <div class="item">
+                          <div class="testimonial-1">
+                            <div class="testimonial-pic quote-left radius shadow">
+                              <img
+                              loading="lazy"
+                                src="{{testimonial.pic}}"
+                                width="100"
+                                height="100"
+                                alt="ikf workshops testimoniol"
+                              />
+                            </div>
+                            <div class="testimonial-text" id="workshopTestimonials">
+                              {% if testimonial.description|striptags|length > 300 %}
+                              <p class="short-text">
+                                {{ testimonial.description|truncatechars:300|safe }}...
+                              </p>
+                              <p class="full-text" style="display: none">
+                                {{ testimonial.description|safe }}
+                              </p>
+                              <button
+                                style="
+                                  background: #f3bb0171;
+                                  color: #585858;
+                                  padding: 5px 10px;
+                                  font-weight: 500;
+                                "
+                                class="read-more-btn border-0 px-3 rounded text-dark"
+                              >
+                                Read more
+                              </button>
+                              <button
+                                style="
+                                  background: #f3bb0171;
+                                  color: #585858;
+                                  padding: 5px 10px;
+                                  font-weight: 500;
+                                  display: none;
+                                "
+                                class="read-less-btn border-0 px-3 rounded text-dark"
+                              >
+                                Read less
+                              </button>
+                              {% else %}
+                              <p>{{ testimonial.description|safe }}</p>
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--- Testimonials END --->
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="dez-tabs border-tp product-description bg-tabs" style="padding-top:20px ;">
+                    <ul class="nav nav-tabs">
+                      <!-- <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#web-design-1"><i class="fa fa-globe"></i><span class="title-head"> Description</span></a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#graphic-design-1"><i class="fa fa-photo"></i> <span class="title-head">Additional Information</span></a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#developement-1"><i class="fa fa-cog"></i><span class="title-head"> Product Review</span></a></li> -->
+                      {% for tab in TrialsAndInitiativeNav %}
+                      <li class="nav-item"><a class="nav-link {{ tab.activestatus_id}}" data-toggle="tab"
+                          href="#{{ tab.href }}" target=”_blank”><i class="fa fa-globe"></i><span
+                            class="title-head">{{tab.name}}</span></a>
+                      </li>
+
+                      {% endfor %}
+                    </ul>
+
+                    <div class="tab-content">
+                      {% for tab in TrialsAndInitiativeNav %}
+                      <div id="{{ tab.href }}" class="tab-pane {{ tab.activestatus_id}}">
+                        <p class="m-b10">{{ tab.description|safe }}</p>
+                        <p>{{tab.listtext|safe}}</p>
+                        <p>{{ tab.bottomtext|safe }}</p>
+                        {% if tab.attr2 %}
+                        <div class="m-tb30">
+                          <a href="{{tab.attr3}}" target=”_blank” class="site-button">{{ tab.attr2 }}</a>
+                        </div>
+                        {%endif%}
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Product details -->
+          </div>
+          <!-- contact area  END -->
+        </div>
+        <!-- Content END-->
+        <!-- Footer -->
+        <script src="{% static 'js/workshops.js' %}"></script>
+        <script>
+          window.onload= function (){
+            // Get the current URL's query parameters
+const urlParams = new URLSearchParams(window.location.search);
+
+// Extract the 'refer' parameter
+const refer = urlParams.get('refer');
+
+// Extract the 'type' parameter (even though it's always 'workshop', let's keep it flexible)
+const type = urlParams.get('type') || 'workshop';
+
+const registerButton = document.getElementById('anchorforregister');
+
+// Check if 'refer' is present
+if (refer) {
+    // If 'refer' is present, update the link with the parameters
+    registerButton.href = `https://openinapp.link/m6b42?refer=${refer}&type=workshop`;
+} else {
+    // If 'refer' is not present, use the default link
+    registerButton.href = `https://openinapp.link/m6b42?type=workshop`;
+}
+          }
+        </script>
+        {% endblock content %}

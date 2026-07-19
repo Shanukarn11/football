@@ -1,0 +1,59 @@
+{% extends 'base.html' %} {% load static %} 
+
+{% block title %}India Khelo Football Partners | National & International Scouting Partners{% endblock title %}
+
+{% block meta_description %}Explore India Khelo Football's partnerships with national and international organizations committed to scouting and supporting players from IKF events. Discover the collaborative network advancing Indian football.{% endblock meta_description %}
+
+{% block meta_keywords %}India Khelo partners, IKF scouting partners, football talent scouting, Indian football partnerships, national and international football organizations, sports scouting partnerships, football development India, India Khelo Football collaborations{% endblock meta_keywords %}
+
+{% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content">
+    <div style="height: 120px; background-color: white;"></div>
+    
+    <!-- contact area -->
+    <div class="container m-t40">
+        <div class="section-content">
+            <div class="text-justify">
+                <div class="col-lg-12 text-center section-head m-0">
+                    <h1 class="h4">Partners who scout players from IKF events
+                    </h1>
+                    <div class="dez-separator bg-primary"></div>
+                </div>
+
+                <div class="p-b30">
+                    <div class="section-content">
+                        <ul class="row gap-3 p-2 d-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;">
+                            {% for clubs in clubs_partner_home %}
+                                <div class="item">
+                                    <div
+                                    class="ow-carousel-entry d-flex flex-column align-items-center; justify-content-center text-center"
+                                    >
+                                    <div
+                                        class="ow-entry-media dez-img-effect zoom-slow d-flex justify-content-center"
+                                    >
+                                        <img
+                                        src="{{ clubs.pic }}"
+                                        alt="{{ clubs.name }}"
+                                        style="width: 200px; height: 200px"
+                                        loading="lazy"
+                                        />
+                                    </div>
+                                    <div class="ow-entry-content">
+                                        <div class="ow-entry-title">{{ clubs.name }}</div>
+                                    </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                        </ul>
+                        
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+        <!-- contact area END -->
+</div>
+    <!-- Content END-->
+    {% endblock content %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}    
+	<!-- header END -->
+    <!-- Content -->
+    <div class="page-content">
+        <!-- inner page banner -->
+        <div class="dez-bnr-inr overlay-black-middle" style="background-image:url(images/background/bg4.jpg);">
+            <div class="container">
+                <div class="dez-bnr-inr-entry">
+                    <h1 class="text-white">{{PG_Heading1}}</h1>
+                </div>
+            </div>
+        </div>
+        <!-- inner page banner END -->
+        <!-- Breadcrumb row -->
+        <div class="breadcrumb-row">
+            <div class="container">
+                <ul class="list-inline">
+                    <li><a href="#">Home</a></li>
+                    <li>{{PG_Heading1}}</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Breadcrumb row END -->
+        <!-- contact area -->
+        <div class="content-area">
+            <!-- Portfolio -->
+            <div class="container">
+                <div class="site-filters clearfix center  m-b40">
+                    <ul class="filters" data-toggle="buttons">
+                        {%for button in PGButtons %}
+                        <li data-filter="{{button.BCity}}" class="btn {{button.BBehavsior}}">
+                            <input type="radio">
+                            <a href="#" class="site-button-secondry"><span>{{button.Bname}}</span></a> </li>
+                        {%endfor%}
+                    </ul>
+                </div>
+                <div class="clearfix">
+                    <ul id="masonry" class="row dez-gallery-listing gallery-grid-4 m-b0 mfp-gallery">
+                        {%for button in PGButtons %}
+                        <li class="card-container col-lg-3 col-sm-6 m-b30 {{button.Bcity}}">
+                            <div class="dez-box dez-gallery-bx">
+                                <div class="dez-thum-bx dez-img-overlay1 dez-img-effect zoom-slow"> <a href="javascript:void(0);"> <img loading="lazy" src="{{button.Image}}"  alt=""> </a>
+                                    <div class="overlay-bx">
+                                        <div class="overlay-icon"> <a href="javascript:void(0);"> <i class="fa fa-link icon-bx-xs"></i> </a> <a href="button.Image" class="mfp-link"  title="DexignZone"> <i class="fa fa-picture-o icon-bx-xs"></i> </a> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {%endfor%}
+                    </ul>
+                </div>
+                <!-- Pagination start -->
+                <div class="pagination-bx  clearfix ">
+                    <ul class="pagination">
+                        <li class="previous"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li class="next"><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                    </ul>
+                </div>
+                <!-- Pagination END -->
+            </div>
+            <!-- Portfolio END-->
+        </div>
+        <!-- contact END -->
+    </div>
+    <!-- Content END-->
+    <!-- Footer -->
+{% endblock content %}    

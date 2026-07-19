@@ -1,0 +1,299 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content bg-white">
+  <div style="height: 120px; background-color: white;"></div>
+  <!-- <div
+    class="dez-bnr-inr overlay-black-middle"
+    style="background-image:url('{{season3images.bannerimageofseason3}}');"
+  >
+    <div class="container">
+      <div class="dez-bnr-inr-entry">
+        <h1 class="text-white">{{ Heading_season3 }}</h1>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="breadcrumb-row">
+    <div class="container">
+      <ul class="list-inline">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li>{{ Heading_season3 }}</li>
+      </ul>
+    </div>
+  </div> -->
+
+  <!-- contact area -->
+  <div class="section-full content-inner">
+    <!-- Product details -->
+    <div class="container woo-entry">
+      <div class="m-b30">
+        <div class="row blog-post blog-md date-style-2">
+          <div class="align-self-end col-lg-4 col-md-4 col-sm-5 m-b30">
+            <img loading="lazy" src="{{season3images.tabelimageofseason3}}" alt="season4"/>
+          </div>
+          <div class="col-lg-8 col-md-8 col-sm-7">
+            <div class="dez-post-title">
+              <h2 class="post-title">{{ Heading_season3 }}</h2>
+            </div>
+            <div class="dez-post-text">
+              <p class="m-b10">{{1stparagraph_season3}}</p>
+            </div>
+            <table class="table table-bordered">
+              {%for tabels in tabel_season3 %}
+              <tr>
+                <td>{{tabels.First_Column }}</td>
+                <td>{{tabels.Second_Column }}</td>
+              </tr>
+              {%endfor%}
+            </table>
+                        <form method="post" class="cart"> {% csrf_token %}
+                            <div class="m-tb30 d-flex flex-column flex-lg-row  align-items-center">
+                                <a href="https://www.youtube.com/watch?v=sDUx88UuOsU"
+                                target="_blank" style="background-color: rgb(227, 227, 227); height: 44px;" class="popup-youtube video w-100 w-lg-auto site-button text-dark d-flex align-items-center justify-content-center mr-lg-3 mb-3 mb-lg-0">
+                                  <i class="fa fa-play-circle-o mr-1" aria-hidden="true" style="font-size: 20px;"></i>
+                                  How to Register?</a>
+
+                                <a target="_blank" style="height: 44px;" id="anchorforregister" target="_blank" class="w-100 w-lg-auto site-button text-dark d-flex align-items-center justify-content-center">Register Now </a>
+                            </div>
+                        </form> 
+          </div>
+        </div>
+      </div>
+      -
+      <!-- User Flow -->
+      <div class="section-full bg-white content-inner">
+        <div class="container">
+          <div class="section-content">
+            <div class="row">
+              <div class="col-lg-12 text-center section-head">
+                <h3 class="h3">{{ userflow_heading2 }}</h3>
+                <div class="dez-separator bg-primary"></div>
+                <div class="clear"></div>
+              </div>
+            </div>
+
+            <div class="row" >
+              <div class="col-lg-4 col-md-6">
+                {% for userflow in UserFlow %}
+                <div class="icon-bx-wraper bx-style-2 m-b30 p-a20 right m-r50">
+                  <div class="icon-bx-md radius bg-primary">
+                    <a href="#" class="icon-cell"
+                      ><i class="fa fa-futbol-o"></i
+                    ></a>
+                  </div>
+                  <div class="icon-content p-r40">
+                    <h5 class="dez-tilte">{{userflow.heading1}}</h5>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+
+              <div
+                class="col-lg-4 text-center align-self-center d-md-none d-lg-block"
+              >
+                <div class="worker">
+                  <img loading="lazy" src="{{season3images.user_Flow_image}}" alt="" />
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-6">
+                {% for userflow in UserFlow %}
+                <div class="icon-bx-wraper bx-style-2 m-b30 p-a20 left m-l50">
+                  <div class="icon-bx-md radius bg-primary">
+                    <a href="#" class="icon-cell"
+                      ><i class="fa fa-calendar"></i
+                    ></a>
+                  </div>
+                  <div class="icon-content p-l40">
+                    <h5 class="dez-tilte">{{userflow.heading2}}</h5>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- User Flow  End -->
+      <!-- calendar -->
+      <!-- <div class="section-full  bg-gray bg-img-fix content-inner-1 testimonials">
+                <div class="container"  >
+                    <div class="section-head text-center">
+                        <h2 class="text-uppercase">{{calendar_heading1}}</h2>
+                        <div class="dez-separator bg-primary"></div>
+                         <p>{{calendar_paragraph1}}</p>
+                    </div>
+                    <div class="section-content"  >
+                        <div class="owl-carousel owl-theme testimonial-five">
+                          {% for Calendar in Information %}
+                            <div class="item">
+                                <div class="testimonial-6">
+                                    <div class="testimonial-text bg-white quote-left quote-right">
+                                        <p>{{Calendar.Description|safe}}</p>
+                                    </div>
+                                    <div class="testimonial-detail clearfix bg-primary text-white">
+                                        <h4 class="testimonial-name m-tb0">{{ Calendar.Month }}</h4>
+                                        <span class="testimonial-position">IKF S4</span>
+                                        <div class="testimonial-pic radius"><img loading="lazy" src="media/ui/masterikfseasonui/50x50.jpg" alt="" width="100" height="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endfor%}
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+       <!--calendarend END-->
+          <div
+            class="section-full bg-img-fix content-inner overlay-black-middle our-projects-galery"
+            style= "background-image:url('{{season3images.Season3FeatureBG}}'); background-position:center;">
+            
+            <div class="container" >
+              <div class="row">
+                {% for season3_feature in Featurestrip_Season3 %}
+                <div class="col-lg-3 col-sm-6 m-b30">
+                  <div
+                    class="border-1 p-a15 text-center text-white skew-triangle left-top hvr-wobble-horizontal"
+                  >
+                    <div class="sports-icon">
+                      <img
+                      loading="lazy"
+                        width="85"
+                        height="85"
+                        src="{{ season3_feature.pic }}"
+                        alt=""
+                      />
+                    </div>
+                    <h4 class="text-capitalize">{{ season3_feature.name }}</h4>
+                    <div class="dez-separator-outer">
+                      <div class="dez-separator bg-primary style-liner"></div>
+                    </div>
+                    <p class="m-b0">{{ season3_feature.description }}</p>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <!-- Club Media --
+        <div class="p-b30">
+							<div class="section-head text-center" style="ing-bottom:padd 20px""padding-top: 20px">
+								<h3 class="m-a0">Club Media</h3>
+                <div class="dez-separator-outer">
+                  <div class="dez-separator bg-primary style-liner"></div>
+                </div>
+							</div>
+          <div class="section-content">
+            <div class="owl-carousel owl-theme img-carousel-content owl-btn-center-lr">
+              <div class="row dez-club-media">
+								<div class="col-lg-4 col-sm-6 m-b20">
+									<div class="dez-box">
+										<div class="dez-media dez-img-overlay2 dez-img-effect zoom"> <img width="350"
+												height="314" src="images/gallery/middle/pic1.jpg" alt="">
+											<div class="dez-info-has p-a20  no-hover">
+												<a href="">We have the expertise to create just the right..</a>
+												<a class="site-button button-sm radius-sm m-t5" href="">5+ Images </a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+            </div>
+          </div>
+        </div>
+							--- Club Media END ---->
+          <div class="row">
+            <div class="col-lg-12">
+              <div
+                class="dez-tabs border-tp product-description bg-tabs"
+                style="padding-top: 20px"
+              >
+                <ul class="nav nav-tabs">
+                  <!-- <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#web-design-1"><i class="fa fa-globe"></i><span class="title-head"> Description</span></a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#graphic-design-1"><i class="fa fa-photo"></i> <span class="title-head">Additional Information</span></a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#developement-1"><i class="fa fa-cog"></i><span class="title-head"> Product Review</span></a></li> -->
+                  {% for tab in TrialsAndInitiativeNav %}
+                  <li class="nav-item">
+                    <a
+                      class="nav-link {{ tab.activestatus_id}}"
+                      data-toggle="tab"
+                      href="#{{ tab.href }}"
+                      ><i class="fa fa-globe"></i
+                      ><span class="title-head">{{tab.name}}</span></a
+                    >
+                  </li>
+
+                  {% endfor %}
+                </ul>
+
+                <div class="tab-content">
+                  {% for tab in TrialsAndInitiativeNav %}
+                  <div
+                    id="{{ tab.href }}"
+                    class="tab-pane {{ tab.activestatus_id}}"
+                  >
+                    <p class="m-b10">{{ tab.description|safe}}</p>
+                    <p>{{tab.listtext|safe}}</p>
+                    <p>{{ tab.bottomtext }}</p>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Product details -->
+      </div>
+      <!-- contact area  END -->
+      <div class="fixed-bottom text-center bottom-0 bg-white w-100 d-lg-none" >
+        <a target="_blank" class="m-3 btn site-button text-dark w-75" style="height: 44px;" id="anchorforregisterr">
+         Register Now
+        </a>
+      </div>
+    </div>
+    <!-- Content END-->
+    <!-- Footer -->
+
+    <script>
+      window.onload= function (){
+        // Get the current URL's query parameters
+const urlParams = new URLSearchParams(window.location.search);
+
+// Extract the 'refer' parameter
+const refer = urlParams.get('refer');
+
+// Extract the 'type' parameter (even though it's always 'workshop', let's keep it flexible)
+
+
+const registerButton = document.getElementById('anchorforregister');
+const registerButton2 = document.getElementById('anchorforregisterr');
+
+// Check if 'refer' is present
+console.log("refer",refer)
+if (refer) {
+// If 'refer' is present, update the link with the parameters
+
+registerButton.href =`https://openinapp.link/m6b42?refer=${refer}`
+registerButton2.href=`https://openinapp.link/m6b42?refer=${refer}`
+
+//registerButton.href =`https://app.myfirstkick.com/sign-in?refer=${refer}`
+//registerButton2.href=`https://app.myfirstkick.com/sign-in?refer=${refer}`
+
+
+// registerButton.href = `https://openinapp.link/m6b42?refer=${refer}`;
+} else {
+// If 'refer' is not present, use the default link
+registerButton.href = `https://openinapp.link/m6b42`;
+registerButton2.href=`https://openinapp.link/m6b42`;
+
+//registerButton.href = `https://app.myfirstkick.com/sign-in`;
+//registerButton2.href=`https://app.myfirstkick.com/sign-in`;
+}
+      }
+    </script>
+    {% endblock content %}
+  </div>
+</div>
+

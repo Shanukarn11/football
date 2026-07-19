@@ -1,0 +1,1221 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root{
+    --yellow:#ffc300;
+    --yellow-soft: rgba(255,195,0,.10);
+    --yellow-border: rgba(255,195,0,.30);
+    --pink:#e91e63;
+    --pink-soft: rgba(233,30,99,.10);
+    --pink-border: rgba(233,30,99,.30);
+    --ink:#111318;
+    --muted:#6b7280;
+    --border:#e8e8e8;
+    --white:#ffffff;
+    --light:#f9f9f9;
+    --radius:14px;
+    --shadow: 0 18px 45px rgba(15,23,42,.08);
+    --shadow-sm: 0 4px 14px rgba(15,23,42,.05);
+  }
+
+  /* When the Naari Shakti project filter is active, swap yellow theme → pink */
+  .upcoming-trials-page.naari-theme{
+    --yellow: var(--pink);
+    --yellow-soft: var(--pink-soft);
+    --yellow-border: var(--pink-border);
+  }
+
+  /* Individual Naari Shakti cards get pink top-bar/accents even on "All Projects" view */
+  .trial-card.naari-theme{
+    --yellow: var(--pink);
+    --yellow-soft: var(--pink-soft);
+    --yellow-border: var(--pink-border);
+  }
+
+  /* Naari Shakti option always highlighted pink in the dropdown */
+  .dd-item.naari-shakti-item{
+    color: var(--pink);
+    font-weight:700;
+  }
+  .dd-item.naari-shakti-item:hover{
+    background: var(--pink-soft);
+    color: var(--pink);
+  }
+
+  .upcoming-trials-page{
+    font-family:'Sora', system-ui, -apple-system, sans-serif;
+    background:#fff;
+    color:var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .upcoming-trials-page .nice-select,
+  .upcoming-trials-page .select2,
+  .upcoming-trials-page .select2-container{
+    display:none !important;
+  }
+
+  .scout-header{ display:none; }
+
+  .tr-topbar{
+    max-width:1120px;
+    margin:0 auto;
+    padding: 16px 8px 14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+    border-bottom:1px solid var(--border);
+  }
+
+  .tr-back-link{
+    font-size:12px;
+    font-weight:700;
+    color:var(--muted);
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 12px;
+    border:1px solid var(--border);
+    border-radius:999px;
+    background:rgba(255,255,255,.9);
+    transition:border-color .15s,color .15s,background .15s;
+  }
+  .tr-back-link:hover{
+    border-color:var(--yellow);
+    color:var(--ink);
+    background:rgba(255,249,230,.85);
+  }
+
+  .page-wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding: 20px 8px 0;
+    background:#fff;
+  }
+
+  .ng-banner-img{
+    width:100%;
+    display:block;
+    border-radius:var(--radius);
+    border:1px solid var(--border);
+    background:var(--light);
+    box-shadow:var(--shadow);
+    margin-bottom:22px;
+    height:340px;
+    object-fit:cover;
+    object-position:center;
+  }
+  @media (max-width:900px){
+    .ng-banner-img{ height:220px; object-fit:cover; }
+  }
+  @media (max-width:600px){
+    .ng-banner-img{ height:auto; object-fit:contain; background:#fff; }
+  }
+
+  .head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+  .title{
+    margin:0;
+    color:var(--ink);
+    font-size:40px;
+    font-weight:900;
+    letter-spacing:-.5px;
+  }
+  .updated-at{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 12px;
+    background:var(--yellow-soft);
+    border:1px solid var(--yellow-border);
+    border-radius:999px;
+    font-size:12px;
+    color:var(--ink);
+    font-weight:700;
+    white-space:nowrap;
+  }
+  .updated-at .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--yellow);
+    flex-shrink:0;
+  }
+  .updated-at .val{
+    font-weight:700;
+    color:var(--ink);
+    text-transform:none;
+    max-width:340px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  @media (max-width:980px){
+    .head{ align-items:flex-start; flex-direction:column; gap:10px; }
+    .updated-at{ width:100%; }
+    .updated-at .val{ max-width:100%; }
+  }
+  @media (max-width:820px){
+    .page-wrap{ padding:16px 16px 0; }
+    .title{ font-size:26px; }
+  }
+
+  .filters{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:10px;
+    margin:14px 0 10px;
+    align-items:start;
+  }
+  @media (max-width:820px){ .filters{ grid-template-columns:1fr; } }
+
+  .chosen-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+    margin:6px 0 18px;
+  }
+  .chip{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:#fff;
+    box-shadow:var(--shadow-sm);
+    font-weight:800;
+    color:var(--ink);
+    font-size:12px;
+    letter-spacing:.2px;
+    text-transform:uppercase;
+  }
+  .chip.count{
+    background:var(--yellow-soft);
+    border-color:var(--yellow-border);
+  }
+  .chip .dot{
+    width:8px; height:8px; border-radius:999px;
+    background:#a1a1aa;
+    flex:0 0 auto;
+  }
+  .chip.count .dot{ background:var(--yellow); }
+
+  .dd{ position:relative; width:100%; }
+  .dd-btn{
+    width:100%;
+    padding:10px 14px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    background:var(--light);
+    font-family:'Sora', system-ui, sans-serif;
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    cursor:pointer;
+    user-select:none;
+    min-width:0;
+    transition:border-color .15s, box-shadow .15s, background .15s;
+  }
+  .dd-btn small{ color:var(--muted); font-weight:600; margin-right:2px; }
+  .dd-btn:focus{
+    outline:none;
+    border-color:var(--yellow);
+    box-shadow:0 0 0 3px rgba(255,195,0,.18);
+    background:rgba(255,249,230,.6);
+  }
+
+  .dd-menu{
+    position:absolute;
+    z-index:9999;
+    top:calc(100% + 5px);
+    left:0; right:0;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:10px;
+    box-shadow:0 12px 32px rgba(15,23,42,.12);
+    max-height:260px;
+    overflow:auto;
+    display:none;
+  }
+  .dd.open .dd-menu{ display:block; }
+  .dd-item{
+    padding:9px 14px;
+    font-size:13px;
+    font-weight:500;
+    color:#374151;
+    cursor:pointer;
+  }
+  .dd-item:hover{ background:var(--yellow-soft); color:var(--ink); }
+
+  .caret{ font-size:10px; color:var(--muted); }
+
+  .cards-section{
+    width:100%;
+    padding: 20px 16px 80px;
+    background:#fff;
+  }
+
+  .cards-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    padding: 0;
+  }
+  @media (max-width:1100px){ .cards-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:620px){  .cards-grid{ grid-template-columns:1fr; } }
+
+  .trial-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow-sm);
+    overflow:hidden;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    display:flex;
+    flex-direction:column;
+  }
+  .trial-card:hover{
+    transform:translateY(-2px);
+    border-color:var(--yellow-border);
+    box-shadow:var(--shadow);
+  }
+  .trial-card::before{
+    content:"";
+    display:block;
+    height:4px;
+    background:var(--yellow);
+    flex-shrink:0;
+  }
+
+  /* Coming Soon card gets a grey top bar instead of yellow */
+  .trial-card.is-coming-soon::before{
+    background:#d1d5db;
+  }
+
+  /* ── Completed / Registrations-Closed card ─────────── */
+  .trial-card.is-complete{
+    position:relative;
+    background:#fff5f5;
+    border-color:rgba(230,57,70,.30);
+  }
+  .trial-card.is-complete::before{
+    background:linear-gradient(90deg,#e63946,#b91c1c);
+  }
+  .trial-card.is-complete .side.statusbox{
+    background:rgba(230,57,70,.08);
+    border-color:rgba(230,57,70,.30);
+  }
+  .trial-card.is-complete .side.statusbox .side-title{ color:#9f1239; }
+  .trial-card.is-complete .side.statusbox .side-value{ color:#7f1d1d; }
+
+  /* Fade content under the stamp so it pops */
+  .trial-card.is-complete .card-body{ opacity:.45; }
+
+  /* Circular EVENT CLOSED stamp — centered, large, spans card */
+  .event-closed-stamp{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:min(78%, 260px);
+    aspect-ratio:1 / 1;
+    border-radius:50%;
+    border:5px double #8b0000;
+    box-shadow:inset 0 0 0 3px rgba(139,0,0,.28);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-family:'Sora',system-ui,sans-serif;
+    font-weight:900;
+    letter-spacing:.10em;
+    line-height:1.05;
+    color:#8b0000;
+    text-transform:uppercase;
+    transform:translate(-50%, -50%) rotate(-12deg);
+    opacity:1;
+    pointer-events:none;
+    background:transparent;
+    z-index:5;
+    text-shadow:0 1px 0 rgba(139,0,0,.25);
+  }
+  .event-closed-stamp .top{ font-size:22px; letter-spacing:.22em; }
+  .event-closed-stamp .big{ font-size:36px; letter-spacing:.14em; margin-top:4px; }
+
+  @media (max-width:600px){
+    .event-closed-stamp{ width:min(72%, 200px); }
+    .event-closed-stamp .top{ font-size:17px; }
+    .event-closed-stamp .big{ font-size:28px; }
+  }
+
+  .trial-inner{
+    padding:14px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+  }
+
+  .loc-row{
+    padding-bottom:12px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:12px;
+  }
+  .loc{
+    font-size:17px;
+    font-weight:800;
+    color:var(--ink);
+    text-transform:uppercase;
+    line-height:1.2;
+    letter-spacing:-.01em;
+  }
+  .loc.nowrap{
+    white-space:nowrap;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .loc.nowrap::-webkit-scrollbar{ display:none; }
+  .loc.wrap{ white-space:normal; word-break:break-word; overflow-wrap:anywhere; }
+
+  .state-under{
+    margin-top:3px;
+    font-weight:700;
+    color:var(--muted);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+  }
+  .proj-line{
+    margin-top:6px;
+    font-weight:700;
+    color:#4b5563;
+    font-size:13px;
+    line-height:1.3;
+    word-break:break-word;
+    overflow-wrap:anywhere;
+  }
+  .proj-line.naari-shakti{
+    color:#e91e63;
+  }
+
+  .card-body{
+    display:grid;
+    grid-template-columns: 1fr 0.75fr;
+    gap:10px;
+    align-items:start;
+    flex:1;
+  }
+
+  @media (max-width:480px){
+    .card-body{ grid-template-columns:1fr; }
+  }
+
+  .col-left{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    min-width:0;
+  }
+
+  .detail{
+    display:flex;
+    gap:9px;
+    padding:10px;
+    border-radius:10px;
+    background:var(--white);
+    border:1px solid var(--border);
+    min-width:0;
+    align-items:flex-start;
+  }
+
+  .ico{
+    width:32px; height:32px;
+    border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid rgba(255,195,0,.25);
+    background:rgba(255,195,0,.12);
+    flex:0 0 auto;
+    font-size:15px;
+  }
+  .ico.green{ background:rgba(16,185,129,.10); border-color:rgba(16,185,129,.18); }
+  .ico.rose{  background:rgba(244,63,94,.10);  border-color:rgba(244,63,94,.18);  }
+
+  .k{
+    margin:0;
+    font-size:10px;
+    font-weight:800;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.06em;
+  }
+  .v{
+    margin:3px 0 0;
+    font-size:12px;
+    font-weight:700;
+    color:var(--ink);
+    line-height:1.35;
+    word-break:break-word;
+    overflow-wrap:anywhere;
+  }
+  .v a{ color:var(--ink); text-decoration:underline; font-weight:800; }
+
+  .timing-block{
+    padding:10px;
+    border-radius:10px;
+    background:rgba(255,195,0,.06);
+    border:1px solid rgba(255,195,0,.22);
+  }
+
+  .col-right{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    min-width:0;
+  }
+
+  .side{
+    border-radius:10px;
+    padding:10px;
+    background:#fff;
+    border:1px solid var(--border);
+    min-width:0;
+  }
+  .side-title{
+    margin:0;
+    font-size:10px;
+    font-weight:800;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+  }
+  .side-value{
+    margin:5px 0 0;
+    font-size:12px;
+    font-weight:800;
+    color:var(--ink);
+    line-height:1.3;
+    word-break:break-word;
+    overflow-wrap:anywhere;
+  }
+
+  .side.statusbox{
+    background:rgba(255,195,0,.07);
+    border-color:rgba(255,195,0,.28);
+  }
+  .side.statusbox .side-title{ color:#92640a; }
+
+  /* Coming Soon status box gets grey styling */
+  .side.statusbox.coming-soon-status{
+    background:rgba(107,114,128,.07);
+    border-color:rgba(107,114,128,.25);
+  }
+  .side.statusbox.coming-soon-status .side-title{ color:#4b5563; }
+
+  .side.gender{
+    background:rgba(16,185,129,.06);
+    border-color:rgba(16,185,129,.20);
+  }
+  .side.gender .side-title{ color:#065f46; }
+
+  .side.otherinfo{
+    background:rgba(14,165,233,.05);
+    border-color:rgba(14,165,233,.18);
+  }
+  .side.otherinfo .side-title{ color:#0369a1; }
+  .side.otherinfo .side-value{
+    max-height:120px;
+    overflow-y:auto;
+    padding-right:2px;
+  }
+
+  .btn-row{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    margin-top:14px;
+    padding-top:12px;
+    border-top:1px solid var(--border);
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    padding:9px 16px;
+    border-radius:999px;
+    font-weight:800;
+    font-size:11px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    text-decoration:none;
+    border:1px solid var(--border);
+    background:#fff;
+    color:var(--ink);
+    box-shadow:var(--shadow-sm);
+    transition:border-color .15s, background .15s;
+    white-space:nowrap;
+  }
+  .btn:hover{ border-color:var(--yellow); background:rgba(255,249,230,.75); }
+
+  .btn.primary{
+    background:var(--yellow);
+    color:var(--ink);
+    border-color:rgba(255,195,0,.55);
+    box-shadow:0 8px 20px rgba(255,195,0,.22);
+  }
+  .btn.primary:hover{ background:#e6af00; border-color:rgba(255,195,0,.8); }
+
+  .btn.is-disabled,
+  .btn[aria-disabled="true"]{
+    background:#e5e7eb !important;
+    color:#6b7280 !important;
+    border-color:#d1d5db !important;
+    box-shadow:none !important;
+    cursor:not-allowed !important;
+    pointer-events:none !important;
+  }
+
+  /* Coming Soon button — grey, clickable (shows toast) */
+  .btn.coming-soon-btn{
+    background:#e5e7eb;
+    color:#6b7280;
+    border-color:#d1d5db;
+    box-shadow:none;
+    cursor:pointer;
+    pointer-events:auto;
+  }
+  .btn.coming-soon-btn:hover{
+    background:#d1d5db;
+    border-color:#9ca3af;
+    color:#374151;
+  }
+
+  .skeleton{
+    border-radius:var(--radius);
+    border:1px solid var(--border);
+    background:linear-gradient(90deg, rgba(255,255,255,.6), rgba(249,250,251,.95), rgba(255,255,255,.6));
+    background-size:200% 100%;
+    animation:shimmer 1.1s infinite;
+    height:260px;
+  }
+  @keyframes shimmer{
+    0%{ background-position:0% 0; }
+    100%{ background-position:-200% 0; }
+  }
+
+  .empty{
+    grid-column:1 / -1;
+    font-weight:700;
+    color:var(--muted);
+    padding:40px 0;
+    text-align:center;
+  }
+
+  .tr-float-back{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:50;
+    text-decoration:none;
+    background:#0f172a;
+    color:#fff;
+    border-radius:999px;
+    padding:10px 18px;
+    font-size:13px;
+    font-weight:700;
+    box-shadow:0 8px 24px rgba(0,0,0,.2);
+    transition:background .15s, transform .15s;
+  }
+  .tr-float-back:hover{ background:#1f2937; transform:translateY(-1px); }
+
+  /* ── Coming Soon Toast ── */
+  .cs-toast{
+    position:fixed;
+    bottom:80px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+    z-index:9999;
+    background:#1f2937;
+    color:#fff;
+    border-radius:14px;
+    padding:14px 20px;
+    font-family:'Sora', system-ui, sans-serif;
+    font-size:13px;
+    font-weight:600;
+    line-height:1.5;
+    max-width:360px;
+    width:calc(100vw - 40px);
+    text-align:center;
+    box-shadow:0 12px 32px rgba(0,0,0,.25);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+  }
+  .cs-toast.visible{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+    pointer-events:auto;
+  }
+
+  @media (max-width:980px){
+    .trial-inner{ padding:12px; }
+    .loc{ font-size:15px; }
+    .detail{ padding:9px; }
+    .side{ padding:9px; }
+    .btn{ padding:9px 13px; font-size:11px; }
+  }
+</style>
+
+<div class="upcoming-trials-page">
+
+  <!-- top bar -->
+  <div class="tr-topbar">
+    <a class="tr-back-link" href="https://indiakhelofootball.com/noticeboard">← Notice Board</a>
+  </div>
+
+  <!-- banner + head + filters -->
+  <div class="page-wrap">
+
+    <img class="ng-banner-img"
+         src="{% static 'images/noticeboard3.jpeg' %}"
+         alt="IKF Notice Board Upcoming Trials">
+
+    <div class="head">
+      <h1 class="title">Trial Calendar</h1>
+      <div class="updated-at" title="Last updated">
+        <span class="dot"></span>
+        <span>Updated:</span>
+        <span class="val" id="lastUpdatedText">—</span>
+      </div>
+    </div>
+
+    <div class="filters">
+      <div class="dd" id="ddProject">
+        <div class="dd-btn" tabindex="0">
+          <span id="lblProject"><small>Project:</small> All Projects</span>
+          <span class="caret">▾</span>
+        </div>
+        <div class="dd-menu" id="menuProject"></div>
+      </div>
+
+      <div class="dd" id="ddState">
+        <div class="dd-btn" tabindex="0">
+          <span id="lblState"><small>State:</small> All States</span>
+          <span class="caret">▾</span>
+        </div>
+        <div class="dd-menu" id="menuState"></div>
+      </div>
+
+      <div class="dd" id="ddStatus">
+        <div class="dd-btn" tabindex="0">
+          <span id="lblStatus"><small>Status:</small> All Status</span>
+          <span class="caret">▾</span>
+        </div>
+        <div class="dd-menu" id="menuStatus"></div>
+      </div>
+    </div>
+
+    <div class="chosen-row" id="chosenRow" style="display:none;">
+      <span class="chip count" id="chipCount"><span class="dot"></span><span id="countText">0 Trials</span></span>
+      <span class="chip" id="chipProject" style="display:none;"><span class="dot"></span><span id="chipProjectText"></span></span>
+      <span class="chip" id="chipState" style="display:none;"><span class="dot"></span><span id="chipStateText"></span></span>
+      <span class="chip" id="chipStatus" style="display:none;"><span class="dot"></span><span id="chipStatusText"></span></span>
+    </div>
+
+  </div>
+
+  <!-- cards -->
+  <div class="cards-section">
+    <div id="cardsContainer" class="cards-grid">
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Coming Soon toast notification -->
+<div class="cs-toast" id="csToast" role="alert" aria-live="polite">
+  Trial Registration for this city has not started, explore other cities or check after sometime.
+</div>
+
+<a class="tr-float-back" href="https://indiakhelofootball.com/noticeboard">← Notice Board</a>
+
+<script>
+  const FILTERS_URL       = "/api/upcoming-trials/filters/";
+  const CITIES_URL        = "/api/upcoming-trials/cities/";
+  const LAST_MODIFIED_URL = "/api/upcoming-trials/last-modified/";
+
+  const selected     = { projectId: "", stateId: "", statusOfTrial: "" };
+  const selectedText = { project: "", state: "", status: "" };
+
+  /* ── CACHE: filters never change during a session ── */
+  let filtersCache = null;
+
+  /* ── ABORT: cancel stale city requests ── */
+  let activeController = null;
+
+  /* ── DEBOUNCE: avoid firing on every rapid click ── */
+  let debounceTimer = null;
+
+  /* ── TOAST: auto-hide timer ── */
+  let toastTimer = null;
+
+  /* ───────────────────────────────────────────────
+     COMING SOON TOAST
+  ─────────────────────────────────────────────── */
+  function showComingSoonToast(){
+    const toast = document.getElementById("csToast");
+    if (!toast) return;
+    clearTimeout(toastTimer);
+    toast.classList.add("visible");
+    toastTimer = setTimeout(() => toast.classList.remove("visible"), 3500);
+  }
+
+  /* ───────────────────────────────────────────────
+     HELPERS
+  ─────────────────────────────────────────────── */
+  function esc(s){
+    if (s === null || s === undefined) return "";
+    return String(s)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function formatMultiline(text){
+    return esc(text).replace(/\r?\n/g, "<br>");
+  }
+
+  function hasText(v){
+    return v !== null && v !== undefined && String(v).trim() !== "";
+  }
+
+  /* Mirror Django's slugify(): lowercase, ASCII-fold, replace non-alphanumeric with hyphens, trim. */
+  function slugifyForUrl(s){
+    return String(s || "")
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
+  function trialResultUrlFor(city){
+    const citySlug    = slugifyForUrl(city.cityName);
+    const projectSlug = slugifyForUrl(city.projectName);
+    if (!citySlug || !projectSlug) return "";
+    return "/noticeboard/ikftrialresults/" + citySlug + "/" + projectSlug + "/";
+  }
+
+  function setLoading(n){
+    const c = document.getElementById("cardsContainer");
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < n; i++){
+      const div = document.createElement("div");
+      div.className = "skeleton";
+      frag.appendChild(div);
+    }
+    c.replaceChildren(frag);
+  }
+
+  /* fetchJSON now accepts an optional AbortSignal */
+  async function fetchJSON(url, signal){
+    const res  = await fetch(url, { method: "GET", credentials: "same-origin", signal });
+    const text = await res.text();
+    if (!res.ok) throw new Error("HTTP " + res.status + " " + text);
+    return JSON.parse(text);
+  }
+
+  function closeAllDropdowns(){
+    document.querySelectorAll(".dd.open").forEach(d => d.classList.remove("open"));
+  }
+
+  /* ───────────────────────────────────────────────
+     DROPDOWN WIRING
+  ─────────────────────────────────────────────── */
+  function wireDropdown(ddId, menuId, btnLabelId, labelPrefix, onPick){
+    const dd    = document.getElementById(ddId);
+    const menu  = document.getElementById(menuId);
+    const btn   = dd.querySelector(".dd-btn");
+    const label = document.getElementById(btnLabelId);
+
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = dd.classList.contains("open");
+      closeAllDropdowns();
+      if (!isOpen) dd.classList.add("open");
+    });
+
+    btn.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " "){ e.preventDefault(); btn.click(); }
+      if (e.key === "Escape") closeAllDropdowns();
+    });
+
+    menu.addEventListener("click", (e) => {
+      const item = e.target.closest(".dd-item");
+      if (!item) return;
+      const value = item.getAttribute("data-value");
+      const text  = item.getAttribute("data-text") || item.textContent || "";
+      onPick(value, text);
+      label.innerHTML = "<small>" + labelPrefix + ":</small> " + esc(text);
+      closeAllDropdowns();
+    });
+
+    return {
+      setItems(items, allText){
+        const frag = document.createDocumentFragment();
+        const all = document.createElement("div");
+        all.className = "dd-item";
+        all.setAttribute("data-value", "");
+        all.setAttribute("data-text", allText);
+        all.textContent = allText;
+        frag.appendChild(all);
+        items.forEach(it => frag.appendChild(it));
+        menu.replaceChildren(frag);
+      },
+      setLabel(text){
+        label.innerHTML = "<small>" + labelPrefix + ":</small> " + esc(text);
+      }
+    };
+  }
+
+  function buildMenuItem(value, text){
+    const div = document.createElement("div");
+    div.className = "dd-item";
+    if (/naari\s*shakti/i.test(text)) div.classList.add("naari-shakti-item");
+    div.setAttribute("data-value", value);
+    div.setAttribute("data-text", text);
+    div.textContent = text;
+    return div;
+  }
+
+  function applyNaariTheme(isNaari){
+    const root = document.querySelector(".upcoming-trials-page");
+    if (!root) return;
+    root.classList.toggle("naari-theme", !!isNaari);
+  }
+
+  /* ───────────────────────────────────────────────
+     CHIPS
+  ─────────────────────────────────────────────── */
+  function updateChosenChips(count){
+    const row             = document.getElementById("chosenRow");
+    const countText       = document.getElementById("countText");
+    const chipProject     = document.getElementById("chipProject");
+    const chipState       = document.getElementById("chipState");
+    const chipStatus      = document.getElementById("chipStatus");
+    const chipProjectText = document.getElementById("chipProjectText");
+    const chipStateText   = document.getElementById("chipStateText");
+    const chipStatusText  = document.getElementById("chipStatusText");
+
+    row.style.display = "flex";
+    const n = (count || 0);
+    countText.textContent = n + " Trial" + (n === 1 ? "" : "s");
+
+    if (selected.projectId){
+      chipProject.style.display = "inline-flex";
+      chipProjectText.textContent = selectedText.project || "Project";
+    } else chipProject.style.display = "none";
+
+    if (selected.stateId){
+      chipState.style.display = "inline-flex";
+      chipStateText.textContent = selectedText.state || "State";
+    } else chipState.style.display = "none";
+
+    if (selected.statusOfTrial){
+      chipStatus.style.display = "inline-flex";
+      chipStatusText.textContent = selectedText.status || "Status";
+    } else chipStatus.style.display = "none";
+  }
+
+  /* ───────────────────────────────────────────────
+     CARD BUILDER — returns a real DOM node
+     (avoids large string concatenation + innerHTML parse)
+  ─────────────────────────────────────────────── */
+  function buildCardNode(city){
+    /* -- derive values -- */
+    const cityName        = (city.cityName || "").trim();
+    const isMultiWordCity = /\s+/.test(cityName);
+    const cityClass       = isMultiWordCity ? "loc wrap" : "loc nowrap";
+    const statusRaw       = (city.statusOfTrial || "").trim().toLowerCase();
+    const isComplete      = statusRaw === "complete" || statusRaw === "completed";
+    const isComingSoon    = statusRaw === "coming soon";
+    const isResultAnnounced = statusRaw === "result announced" || statusRaw === "results announced";
+    const projectNameRaw  = (city.projectName || "");
+    const isNaariShakti   = /naari\s*shakti/i.test(projectNameRaw);
+
+    /* -- placeholders: Google Map → TBD, all others → To Be Announced -- */
+    const mapHTML = hasText(city.googleMapLink)
+      ? '<a href="' + esc(city.googleMapLink) + '" target="_blank" rel="noopener noreferrer">Open Map</a>'
+      : "TBD";
+
+    const hasYearWise  = hasText(city.yearWiseAgeGroupTiming);
+    const yearWiseHTML = hasYearWise ? formatMultiline(city.yearWiseAgeGroupTiming) : "";
+
+    const dateDisplay   = hasText(city.date)          ? esc(city.date)          : "To Be Announced";
+    const venueDisplay  = hasText(city.venueAddress)  ? esc(city.venueAddress)  : "To Be Announced";
+
+    /* -- status box extra class for coming soon -- */
+    const statusBoxClass = isComingSoon ? "side statusbox coming-soon-status" : "side statusbox";
+
+    /* -- card top-bar class -- */
+    let cardClass = "trial-card";
+    if (isComingSoon)                            cardClass += " is-coming-soon";
+    else if (isComplete || isResultAnnounced)    cardClass += " is-complete";
+    if (isNaariShakti)                           cardClass += " naari-theme";
+
+    /* -- btn-row: coming soon hides Guidelines; complete disables register -- */
+    /* When result is announced (or trial complete + result available), hide Register/Guidelines */
+    const hideRegisterAndGuidelines = isResultAnnounced || (isComplete && hasText(city.trialResult));
+    let btnRowHTML = "";
+    if (isComingSoon){
+      /* Coming Soon: grey "Coming Soon" button only (no Guidelines) */
+      btnRowHTML =
+        '<button class="btn coming-soon-btn" type="button" onclick="showComingSoonToast()">Coming Soon</button>';
+    } else if (hideRegisterAndGuidelines){
+      /* Results announced: no Register / Guidelines — just Result / Video below */
+      btnRowHTML = "";
+    } else if (isComplete){
+      btnRowHTML =
+        '<a class="btn primary is-disabled" href="javascript:void(0)" aria-disabled="true" tabindex="-1">Trial Completed</a>';
+    } else {
+      btnRowHTML =
+        '<a class="btn primary" href="https://app.myfirstkick.com/sign-in" target="_blank" rel="noopener noreferrer">Register Now</a>' +
+        '<a class="btn" href="https://indiakhelofootball.com/noticeboard/trialguidelinesinstructions" target="_blank" rel="noopener noreferrer">Guidelines</a>';
+    }
+
+    /* append Result / Video buttons regardless of registration state (but not for coming soon) */
+    if (!isComingSoon){
+      const resultUrl     = trialResultUrlFor(city);
+      const listingUrl    = "https://indiakhelofootball.com/noticeboard/ikftrialresults";
+      const resultHref    = resultUrl || listingUrl;
+      if (hasText(city.trialResult)){
+        btnRowHTML += '<a class="btn" href="' + esc(resultHref) + '" target="_blank" rel="noopener noreferrer">Result</a>';
+      } else if (isResultAnnounced){
+        btnRowHTML += '<a class="btn" href="' + esc(resultHref) + '" target="_blank" rel="noopener noreferrer">Result</a>';
+      }
+      if (hasText(city.videoLink)){
+        btnRowHTML += '<a class="btn" href="' + esc(city.videoLink) + '" target="_blank" rel="noopener noreferrer">Video</a>';
+      }
+    }
+
+    /* -- assemble html string for this single card -- */
+    const stampHTML = (isComplete || isResultAnnounced)
+      ? '<div class="event-closed-stamp" aria-hidden="true">' +
+          '<span class="top">Trial</span>' +
+          '<span class="big">Completed</span>' +
+        '</div>'
+      : '';
+
+    const html =
+      '<div class="' + cardClass + '">' +
+        stampHTML +
+        '<div class="trial-inner">' +
+
+          '<div class="loc-row">' +
+            '<div class="' + cityClass + '">' + esc(cityName) + '</div>' +
+            '<div class="state-under">' + esc(city.stateName || "—") + '</div>' +
+            '<div class="proj-line' + (isNaariShakti ? ' naari-shakti' : '') + '">' + esc(projectNameRaw) + '</div>' +
+          '</div>' +
+
+          '<div class="card-body">' +
+
+            '<div class="col-left">' +
+              '<div class="detail">' +
+                '<div class="ico">📅</div>' +
+                '<div><p class="k">Date</p><p class="v">' + dateDisplay + '</p></div>' +
+              '</div>' +
+
+              '<div class="detail">' +
+                '<div class="ico rose">📍</div>' +
+                '<div><p class="k">Google Map</p><p class="v">' + mapHTML + '</p></div>' +
+              '</div>' +
+
+              '<div class="detail">' +
+                '<div class="ico green">🏟️</div>' +
+                '<div><p class="k">Venue</p><p class="v">' + venueDisplay + '</p></div>' +
+              '</div>' +
+
+              (hasYearWise
+                ? ('<div class="timing-block">' +
+                     '<p class="k">Year-wise Timing</p>' +
+                     '<p class="v">' + yearWiseHTML + '</p>' +
+                   '</div>')
+                : "") +
+            '</div>' +
+
+            '<div class="col-right">' +
+              '<div class="' + statusBoxClass + '">' +
+                '<p class="side-title">Status</p>' +
+                '<p class="side-value">' + esc(city.statusOfTrial || "Coming Soon") + '</p>' +
+              '</div>' +
+              '<div class="side gender">' +
+                '<p class="side-title">Category</p>' +
+                '<p class="side-value">For ' + esc(city.gender || "—") + '</p>' +
+              '</div>' +
+              (hasText(city.otherImportantInformation)
+                ? '<div class="side otherinfo"><p class="side-title">Other Information</p><p class="side-value">' + formatMultiline(city.otherImportantInformation) + '</p></div>'
+                : '') +
+            '</div>' +
+
+          '</div>' +
+
+          '<div class="btn-row">' + btnRowHTML + '</div>' +
+
+        '</div>' +
+      '</div>';
+
+    /* parse once into a real node and return it */
+    const tpl = document.createElement("template");
+    tpl.innerHTML = html;
+    return tpl.content.firstElementChild;
+  }
+
+  /* ───────────────────────────────────────────────
+     LAST MODIFIED
+  ─────────────────────────────────────────────── */
+  async function loadLastModified(){
+    try{
+      const data = await fetchJSON(LAST_MODIFIED_URL);
+      const el   = document.getElementById("lastUpdatedText");
+      if (el) el.textContent = (data && hasText(data.lastModifiedAt)) ? data.lastModifiedAt : "—";
+    }catch(e){
+      const el = document.getElementById("lastUpdatedText");
+      if (el) el.textContent = "—";
+    }
+  }
+
+  /* ───────────────────────────────────────────────
+     FILTERS  (cached — only fetched once)
+  ─────────────────────────────────────────────── */
+  async function loadFilters(ddProject, ddState, ddStatus){
+    if (!filtersCache){
+      filtersCache = await fetchJSON(FILTERS_URL);
+    }
+    const data = filtersCache;
+
+    const projItems   = (data.projects      || []).map(p => buildMenuItem(p.projectId, p.projectName));
+    ddProject.setItems(projItems, "All Projects");
+
+    const stateItems  = (data.states        || []).map(s => buildMenuItem(s.stateId, s.stateName));
+    ddState.setItems(stateItems, "All States");
+
+    const statusItems = (data.statusOfTrial || []).map(s => buildMenuItem(s, s));
+    ddStatus.setItems(statusItems, "All Status");
+
+    ddProject.setLabel("All Projects");
+    ddState.setLabel("All States");
+    ddStatus.setLabel("All Status");
+  }
+
+  /* ───────────────────────────────────────────────
+     CITIES  (debounced + abortable)
+  ─────────────────────────────────────────────── */
+  function debouncedLoadCities(){
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(loadCities, 200);
+  }
+
+  async function loadCities(){
+    /* abort any in-flight request */
+    if (activeController) activeController.abort();
+    activeController = new AbortController();
+    const signal = activeController.signal;
+
+    setLoading(3);
+
+    /* build URL */
+    const u = new URL(CITIES_URL, window.location.origin);
+    if (selected.projectId)     u.searchParams.set("projectId",     selected.projectId);
+    if (selected.stateId)       u.searchParams.set("stateId",       selected.stateId);
+    if (selected.statusOfTrial) u.searchParams.set("statusOfTrial", selected.statusOfTrial);
+
+    try{
+      const data  = await fetchJSON(u.toString(), signal);
+      const list  = Array.isArray(data) ? data : (data && Array.isArray(data.results) ? data.results : []);
+      const count = (data && typeof data.count === "number") ? data.count : list.length;
+
+      updateChosenChips(count);
+
+      const c = document.getElementById("cardsContainer");
+
+      if (!list.length){
+        c.innerHTML = '<div class="empty">No upcoming trials found for selected filters.</div>';
+        return;
+      }
+
+      /* build all nodes into a fragment — ONE reflow */
+      const frag = document.createDocumentFragment();
+      list.forEach(city => frag.appendChild(buildCardNode(city)));
+
+      requestAnimationFrame(() => {
+        c.replaceChildren(frag);
+      });
+
+    }catch(e){
+      if (e.name === "AbortError") return; /* ignore cancelled requests */
+      console.error(e);
+      updateChosenChips(0);
+      document.getElementById("cardsContainer").innerHTML =
+        '<div class="empty">Failed to load trials. Please refresh.</div>';
+    }
+  }
+
+  /* ───────────────────────────────────────────────
+     INIT
+  ─────────────────────────────────────────────── */
+  document.addEventListener("click", closeAllDropdowns);
+
+  document.addEventListener("DOMContentLoaded", async function(){
+
+    /* wire dropdowns — use debounced loader on pick */
+    const ddProject = wireDropdown("ddProject","menuProject","lblProject","Project", (val, text) => {
+      selected.projectId   = val;
+      selectedText.project = val ? text : "";
+      applyNaariTheme(val && /naari\s*shakti/i.test(text));
+      debouncedLoadCities();
+    });
+    const ddState = wireDropdown("ddState","menuState","lblState","State", (val, text) => {
+      selected.stateId   = val;
+      selectedText.state = val ? text : "";
+      debouncedLoadCities();
+    });
+    const ddStatus = wireDropdown("ddStatus","menuStatus","lblStatus","Status", (val, text) => {
+      selected.statusOfTrial = val;
+      selectedText.status    = val ? text : "";
+      debouncedLoadCities();
+    });
+
+    /* ── PARALLEL: fire all three requests at once ── */
+    await Promise.all([
+      loadFilters(ddProject, ddState, ddStatus),
+      loadLastModified(),
+      loadCities()
+    ]);
+  });
+</script>
+
+{% endblock %}

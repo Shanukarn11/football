@@ -1,0 +1,398 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --yellow:        #ffc300;
+    --yellow-soft:   rgba(255,195,0,0.10);
+    --yellow-mid:    rgba(255,195,0,0.22);
+    --yellow-border: rgba(255,195,0,0.35);
+    --ink:           #111318;
+    --muted:         #6b7280;
+    --border:        #e8e8e8;
+    --white:         #ffffff;
+    --light:         #f9f9f9;
+    --radius:        14px;
+    --shadow-sm:     0 4px 16px rgba(15,23,42,.06);
+    --shadow-md:     0 12px 40px rgba(15,23,42,.09);
+  }
+
+  .ocd-page {
+    font-family: 'Sora', system-ui, sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Breadcrumb bar ── */
+  .ocd-topbar {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .ocd-breadcrumb-link {
+    color: var(--muted);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    transition: border-color .15s, background .15s, color .15s;
+  }
+  .ocd-breadcrumb-link:hover {
+    border-color: var(--yellow);
+    background: rgba(255,249,230,0.85);
+    color: var(--ink);
+  }
+  .ocd-breadcrumb-sep { color: #ccc; }
+  .ocd-breadcrumb-current { color: var(--ink); font-weight: 700; }
+
+  /* ── Outer ── */
+  .ocd-outer {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+
+  /* ── Page header ── */
+  .ocd-header {
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .ocd-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #b38a00;
+    margin-bottom: 10px;
+  }
+  .ocd-page-title {
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    margin: 0 0 10px;
+    line-height: 1.2;
+  }
+  .ocd-page-desc {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 500;
+    line-height: 1.7;
+    max-width: 620px;
+    margin: 0;
+  }
+
+  /* Items grid */
+  .ocd-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    gap: 18px;
+  }
+
+  @media (max-width: 980px) {
+    .ocd-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 640px) {
+    .ocd-list { grid-template-columns: 1fr; }
+  }
+
+  /* Item card */
+  .ocd-item {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 260px;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color .2s, box-shadow .2s, transform .18s;
+    position: relative;
+    overflow: hidden;
+  }
+  .ocd-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--yellow);
+    border-radius: 3px 0 0 3px;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform .22s ease;
+  }
+  .ocd-item:hover {
+    border-color: var(--yellow-border);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .ocd-item:hover::before { transform: scaleY(1); }
+
+  /* ── Item image ── */
+  .ocd-item-img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    background: var(--light);
+  }
+
+  /* ── Item body ── */
+  .ocd-item-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+  }
+  .ocd-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .ocd-item-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--yellow-soft);
+    border: 1px solid var(--yellow-mid);
+    color: #8a6300;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+  .ocd-item-date {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .ocd-item-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.4;
+    margin: 0;
+  }
+  .ocd-item-body-text {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+    line-height: 1.65;
+    margin: 0;
+    white-space: pre-wrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .ocd-item.is-expanded .ocd-item-body-text {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+  .ocd-read-toggle {
+    align-self: flex-start;
+    background: transparent;
+    border: 0;
+    color: #9a7300;
+    cursor: pointer;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    margin: 0;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .ocd-read-toggle:hover { color: var(--ink); }
+  .ocd-read-toggle[hidden] { display: none; }
+
+  /* ── Item actions ── */
+  .ocd-item-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    flex-wrap: wrap;
+  }
+  .ocd-item-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background .15s, color .15s;
+  }
+  .ocd-item-btn-primary {
+    background: var(--yellow);
+    color: #000;
+    border: 1px solid var(--yellow);
+  }
+  .ocd-item-btn-primary:hover { background: #e6ac00; border-color: #e6ac00; }
+  .ocd-item-btn-outline {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .ocd-item-btn-outline:hover {
+    border-color: var(--yellow);
+    color: var(--ink);
+    background: var(--yellow-soft);
+  }
+
+  /* ── Arrow on right ── */
+  .ocd-item-arrow {
+    align-self: flex-end;
+    margin-top: auto;
+    flex-shrink: 0;
+    color: #ccc;
+    transition: color .2s, transform .2s;
+  }
+  .ocd-item:hover .ocd-item-arrow {
+    color: var(--yellow);
+    transform: translateX(3px);
+  }
+
+  /* ── Empty state ── */
+  .ocd-empty {
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 60px 32px;
+    text-align: center;
+    background: var(--light);
+  }
+  .ocd-empty-icon { font-size: 36px; margin-bottom: 14px; }
+  .ocd-empty-title { font-size: 18px; font-weight: 800; color: var(--ink); margin: 0 0 8px; }
+  .ocd-empty-text  { font-size: 14px; color: var(--muted); font-weight: 500; margin: 0; line-height: 1.7; }
+
+  /* ── Mobile ── */
+  @media (max-width: 600px) {
+    .ocd-outer { padding: 20px 16px 60px; }
+    .ocd-item  { gap: 14px; }
+    .ocd-item-img { aspect-ratio: 16 / 10; }
+    .ocd-item-arrow { display: none; }
+  }
+</style>
+
+<div class="ocd-page">
+
+  <!-- Breadcrumb -->
+  <div class="ocd-topbar">
+    <a class="ocd-breadcrumb-link" href="{% url 'noticeboard_home' %}">← Notice Board</a>
+    <span class="ocd-breadcrumb-sep">/</span>
+    <a class="ocd-breadcrumb-link" href="{% url 'noticeboard_slug' 'officialcircularsnoticesannouncements' %}">Official Circulars</a>
+    <span class="ocd-breadcrumb-sep">/</span>
+    <span class="ocd-breadcrumb-current">{{ card.title }}</span>
+  </div>
+
+  <div class="ocd-outer">
+
+    <!-- Page header -->
+    <div class="ocd-header">
+      <p class="ocd-eyebrow">Official Circulars &amp; Notices</p>
+      <h1 class="ocd-page-title">{{ card.title }}</h1>
+      {% if card.description %}
+      <p class="ocd-page-desc">{{ card.description }}</p>
+      {% endif %}
+    </div>
+
+    {% if items %}
+    <div class="ocd-list">
+      {% for item in items %}
+
+      <div class="ocd-item">
+
+        {% if item.image %}
+        <img class="ocd-item-img" src="{{ item.image.url }}" alt="{{ item.title }}" loading="lazy">
+        {% endif %}
+
+        <div class="ocd-item-body">
+          <div class="ocd-item-meta">
+            {% if item.tag %}<span class="ocd-item-tag">{{ item.tag }}</span>{% endif %}
+            {% if item.date %}<span class="ocd-item-date">{{ item.date|date:"d M Y" }}</span>{% endif %}
+          </div>
+
+          <p class="ocd-item-title">{{ item.title }}</p>
+
+          {% if item.body %}
+          <p class="ocd-item-body-text">{{ item.body }}</p>
+          <a class="ocd-read-toggle"
+             href="{% url 'ikf_broadcast' %}"
+             target="_blank"
+             rel="noopener noreferrer">
+            Read More ↗
+          </a>
+          {% endif %}
+
+          {% if item.external_link or item.attachment %}
+          <div class="ocd-item-actions">
+            {% if item.external_link %}
+            <a class="ocd-item-btn ocd-item-btn-primary"
+               href="{{ item.external_link }}"
+               target="_blank"
+               rel="noopener noreferrer">
+              Read More
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            {% endif %}
+            {% if item.attachment %}
+            <a href="{{ item.attachment.url }}" download
+               class="ocd-item-btn ocd-item-btn-outline"
+               onclick="event.stopPropagation()">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download
+            </a>
+            {% endif %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="ocd-item-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+
+      </div>
+
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="ocd-empty">
+      <div class="ocd-empty-icon">📋</div>
+      <p class="ocd-empty-title">Nothing here yet</p>
+      <p class="ocd-empty-text">
+        Content for <strong>{{ card.title }}</strong> will appear here once published.<br>
+        Check back soon.
+      </p>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

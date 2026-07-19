@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{{ page.title }}</title>
+
+  <style>
+    :root{
+      --bar-blue: #3b78a8;
+      --title-blue: #5f93c7;
+      --text: #111;
+    }
+
+    body{
+      margin:0;
+      background:#2f2f2f;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+    }
+
+    /* ===== A4 Page ===== */
+    .paper{
+      width: 210mm;
+      min-height: 297mm;
+      margin: 18px auto;
+      background:#fff;
+      position: relative;
+      box-sizing: border-box;
+
+      /* ✅ key fix: wider text column like your PDF */
+      padding: 18mm 14mm 18mm;
+
+      overflow: hidden;
+      border-radius: 6px;
+    }
+
+    /* Watermark */
+    .watermark{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      pointer-events:none;
+      user-select:none;
+      z-index:0;
+    }
+    .watermark img{
+      width: 145mm;
+      max-width: 85%;
+      opacity: 0.14;
+      transform: translateY(10mm);
+    }
+
+    .content{ position:relative; z-index:1; }
+
+    .title{
+      text-align:center;
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--title-blue);
+      letter-spacing: 0.5px;
+      margin: 0 0 40px 0;
+    }
+
+    .meta{
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 0;
+      margin-bottom: 10px;
+    }
+    .meta b{ font-weight: 700; }
+
+    .para{
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 10px 0 20px 0;
+      
+    }
+
+    .bar{
+      margin-top: 16px;
+      margin-bottom: 10px;
+      background: var(--bar-blue);
+      color:#fff;
+      padding: 6px 10px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      border: 1px solid #2f6896;
+    }
+
+    /* Player details list */
+    ul.fields{
+      margin: 6px 0 5px;
+      padding-left: 22px;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+    ul.fields li{ margin: 0 0 15px 0; }
+
+    .lead{
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.45;
+      
+    }
+
+    /* Declaration numbered list */
+    ol.decl{
+      margin: 15px 0 6px;
+      padding-left: 20px;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    ol.decl li{
+      margin: 0 0 15px 0px;
+    }
+    ol.decl li::marker{
+      font-weight: 700;
+    }
+
+    /* Print A4 exactly */
+    @page{ size: A4; margin: 0; }
+    @media print{
+      body{ background:#fff; }
+      .paper{
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 900px){
+      body{ background:#fff; }
+      .paper{
+        width:auto;
+        min-height:auto;
+        margin:0;
+        border-radius:0;
+        padding: 18px 14px;
+      }
+      .watermark img{
+        width: 90%;
+        opacity: 0.10;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="paper">
+
+    <!-- ✅ watermark from backend -->
+    {% if page.watermark_logo_url %}
+      <div class="watermark">
+        <img src="{{ page.watermark_logo_url }}" alt="Watermark">
+      </div>
+    {% endif %}
+
+    <div class="content">
+      <!-- ✅ title from backend -->
+      <div class="title">{{ page.title }}</div>
+
+      <!-- ✅ event name + venue/date from backend -->
+      {% if page.event_name %}
+        <p class="meta"><b>{{ page.event_name }}</b></p>
+      {% endif %}
+
+      {% if page.venue_value %}
+        <p class="meta"><b>{{ page.venue_label }}</b> {{ page.venue_value }}</p>
+      {% endif %}
+
+      {% if page.date_value %}
+        <p class="meta"><b>{{ page.date_label }}</b> {{ page.date_value }}</p>
+      {% endif %}
+
+      <!-- ✅ intro from backend -->
+      {% if page.intro_text %}
+        <p class="para">{{ page.intro_text }}</p>
+      {% endif %}
+
+      <!-- ✅ PLAYER DETAILS -->
+      <div class="bar">{{ page.player_details_heading }}</div>
+      <ul class="fields">
+        {% for f in page.player_field_lines %}
+          <li><b>{{ f }}</b></li>
+        {% endfor %}
+      </ul>
+
+      <!-- ✅ DECLARATION -->
+      <div class="bar">{{ page.declaration_heading }}</div>
+
+      {% if page.declaration_lead %}
+        <div class="lead">{{ page.declaration_lead }}</div>
+      {% endif %}
+
+      <ol class="decl">
+        {% for item in page.declaration_items %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ol>
+
+      <!-- ✅ GUARDIAN -->
+      <div class="bar">{{ page.guardian_heading }}</div>
+
+      {% if page.guardian_text %}
+        <div class="lead">{{ page.guardian_text }}</div>
+      {% endif %}
+
+      <ul class="fields" style="margin-top: 8px;">
+        {% for s in page.signature_field_lines %}
+          <li><b>{{ s }}</b></li>
+        {% endfor %}
+      </ul>
+
+    </div>
+  </div>
+</body>
+</html>

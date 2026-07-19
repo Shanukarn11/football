@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}IKF Pathway 360 Player: Beyond the Game | India Khelo Football{% endblock %}
+
+{% block content %}
+{% include 'html/ikf360/_base_styles.html' %}
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="ikf-section i360-hero">
+  <div class="ikf-wrap">
+    <div class="i360-hero__grid">
+      <div class="i360-hero__left">
+        <div class="i360-hero__eyebrow">IKF Pathway 360 · Player</div>
+        <h1 class="i360-hero__title">
+          More Than Football. A Complete Player Journey to <span>Stay in the Game</span>
+        </h1>
+        <p class="i360-hero__lead">
+          For IKF, a player's journey is not defined only by matches, trials, or exposure.
+        </p>
+        <div class="i360-ctas">
+          <a class="i360-btn primary" href="#player-map">Start Exploring</a>
+          <a class="i360-btn" href="{% url 'season5' %}">Register for Trials only</a>
+          <a class="i360-btn" href="#join-360">Become a 360 Player</a>
+        </div>
+      </div>
+      <div class="i360-hero__right">
+        <div class="i360-hero__media">
+          <img src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/ikf360.jpg' %}{% endif %}"
+               alt="IKF Pathway 360 Player"
+               loading="eager" />
+          {% if hero_image and hero_image.caption %}
+            <div class="i360-hero__caption">{{ hero_image.caption }}</div>
+          {% else %}
+            <div class="i360-hero__caption">IKF Pathway 360 Player</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ WHAT WE FOCUS ON ═══════════════════════ -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">We focus on what truly matters</h2>
+    <div class="ikf-soft">
+      <p style="margin-bottom:12px;">
+        <strong>IKF Pathway 360 Player is about building complete individuals who are ready for professional football and for life.</strong>
+      </p>
+      <ul class="i360-bullets">
+        <li><strong>Football Clinics:</strong> Structured exposure, trials, and pathways.</li>
+        <li><strong>Mental Fitness:</strong> Building resilience, confidence, and decision-making ability.</li>
+        <li><strong>Life Skills:</strong> Communication, discipline, and self-belief.</li>
+        <li><strong>Nutrition and Health Guidance:</strong> Fueling performance and long-term wellbeing.</li>
+      </ul>
+      <p style="margin-top:12px;"><strong>Right Guidance at the Right Time:</strong> So you can become an IKF Pathway 360 Player.</p>
+      <p style="margin-top:12px;"><em>Because talent without direction often fades, and direction at the right time can change everything.</em></p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ PLAYER MAP ═══════════════════════ -->
+<section class="ikf-section" id="player-map">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">The IKF Pathway 360 <span>Player Map</span></h2>
+    <div class="i360-map">
+      <div class="i360-map__node" data-step="01"><p class="i360-map__label">Player Map</p><p class="i360-map__desc">Mental Fitness</p></div>
+      <div class="i360-map__node" data-step="02"><p class="i360-map__label">Player Map</p><p class="i360-map__desc">Life Skills</p></div>
+      <div class="i360-map__node is-center" data-step="03"><p class="i360-map__label">Core</p><p class="i360-map__desc">IKF Pathway 360 Player</p></div>
+      <div class="i360-map__node" data-step="04"><p class="i360-map__label">Player Map</p><p class="i360-map__desc">Nutrition</p></div>
+      <div class="i360-map__node" data-step="05"><p class="i360-map__label">Player Map</p><p class="i360-map__desc">Guidance</p></div>
+      <div class="i360-map__node" data-step="06"><p class="i360-map__label">Player Map</p><p class="i360-map__desc">Football Training</p></div>
+      <div class="i360-map__node" data-step="07"><p class="i360-map__label">Player Map</p><p class="i360-map__desc">Opportunities</p></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ BOTTOM CTA ═══════════════════════ -->
+<section class="ikf-section" id="join-360">
+  <div class="ikf-wrap">
+    <div class="i360-banner">
+      <div class="i360-ctas">
+        <a class="i360-btn primary" href="{% url 'season5' %}">Join IKF Pathway 360 Player Network</a>
+        <a class="i360-btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=connect@indiakhelofootball.com&su=IKF%20Mentor%20Talk" target="_blank" rel="noopener">Talk to a IKF Mentor</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,142 @@
+.title_database {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.download-links {
+  margin-top: 20px;
+  gap: 2rem;
+}
+
+.download-links a {
+  display: inline-block;
+  background-color: #ffc300;
+  color: black;
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.download-links a:hover {
+  background-color: #e6ac00;
+}
+
+.table-scroll-window {
+  max-height: 400px; /* adjust height as needed */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.table-scroll-window table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-scroll-window th,
+.table-scroll-window td {
+  padding: 5px;
+  text-align: left;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.minmax-group {
+  display: flex;
+  gap: 5px;
+}
+
+.filter-item select,
+.filter-item input[type="number"] {
+  padding: 5px;
+  min-width: 100px;
+  box-sizing: border-box;
+}
+
+.ikf-button {
+  background-color: #ffc300; /* IKF yellow */
+  color: black;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.ikf-button:hover {
+  background-color: #e6b800;
+}
+
+.logout-button {
+  max-width: fit-content;
+  max-height: fit-content;
+  background-color: #ffc300;
+  padding: 8px 12px;
+  border-radius: 4px;
+  color: black;
+  text-decoration: none;
+  text-align: right;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .title_database {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .title_database h1 {
+    font-size: 1.5rem; /* smaller title on small screens */
+  }
+
+  .logout-button {
+    font-size: 1rem; /* smaller logout text */
+    width: auto;
+  }
+}
+
+.dashboard-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* center buttons horizontally */
+  gap: 15px; /* spacing between buttons */
+  width: 100%;
+  padding: 20px 0;
+  box-sizing: border-box;
+}
+
+.dashboard-buttons-container a {
+  text-decoration: none; /* remove underline from links */
+}
+
+.view-pwv-btn {
+  background-color: #ffc300;
+  color: black;
+  padding: 10px 20px;
+  font-size: 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  min-width: 220px; /* consistent button width */
+}

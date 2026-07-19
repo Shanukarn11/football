@@ -1,0 +1,1151 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  :root{
+    --ikf-yellow:#ffc300;
+    --ikf-ink:#0f172a;
+    --ikf-muted:#475569;
+    --ikf-line:#e5e7eb;
+    --ikf-butter:#fffef2;
+    --ikf-shadow: 0 18px 45px rgba(15,23,42,.08);
+  }
+
+  /* page wrapper */
+  .invictus-page{
+    background:#fff;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--ikf-ink);
+  }
+
+  /* IMPORTANT: use unique container names to avoid clashing with base.html .container */
+  .inv-container{
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+  }
+  .inv-container-wide{
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+  }
+
+  /* HERO */
+  
+.inv-hero{
+  padding: 28px 0 18px;
+  background:#fff;
+}
+
+.inv-hero-banner-full{
+  width: 100%;
+  height: 460px;              /* desktop banner height */
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+  border: 1px solid rgba(15,23,42,.08);
+  box-shadow: 0 10px 28px rgba(15,23,42,.08);
+}
+
+/* Tablet */
+@media(max-width: 900px){
+  .inv-hero-banner-full{
+    height: 260px;
+    border-radius: 16px;
+  }
+}
+
+/* Mobile */
+@media(max-width: 520px){
+  .inv-hero-banner-full{
+    height: 200px;
+    border-radius: 14px;
+  }
+}
+
+
+  .inv-hero .inv-container{
+    max-width: 920px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .inv-hero h1{
+    font-size: 46px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    margin: 0 0 14px;
+    color: var(--ikf-ink);
+  }
+  .inv-hero-subtitle{
+    font-size: 18px;
+    font-weight: 600;
+    color: #64748b;
+    margin: 0 0 30px;
+  }
+
+  .inv-btn{
+    display:inline-flex;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:10px;
+    padding: 14px 34px;
+    background: var(--ikf-yellow);
+    color: #000;
+    font-weight: 800;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: .2s ease;
+    box-shadow: 0 10px 25px rgba(255,195,0,.25);
+  }
+  .inv-btn:hover{
+    transform: translateY(-2px);
+    background:#000;
+    color:#fff;
+  }
+
+  /* SECTIONS */
+  .inv-section{
+    padding: 40px 0;
+    background: #fff;
+  }
+
+  .inv-card{
+    background:#fff;
+    border-radius: 18px;
+    padding: 42px;
+    border: 1px solid rgba(255,195,0,.28);
+    
+  }
+
+  .inv-title{
+    font-size: 26px;
+    font-weight: 900;
+    margin: 0 0 20px;
+    text-align:left;
+  }
+
+  .inv-text p{
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--ikf-muted);
+    margin: 0 0 14px;
+  }
+
+  /* Belief box */
+  .belief-box{
+    background: var(--ikf-butter);
+    padding: 22px;
+    border-radius: 14px;
+    border-left: 5px solid var(--ikf-yellow);
+    margin: 26px 0;
+  }
+  .belief-box p{
+    margin: 0 0 10px;
+    font-weight: 700;
+    color: var(--ikf-ink);
+  }
+  .belief-box p:last-child{ margin-bottom:0; }
+
+  /* Timeline */
+  .timeline p{
+    margin: 0 0 10px;
+    padding-left: 18px;
+    position: relative;
+    color: var(--ikf-muted);
+    font-weight: 600;
+  }
+  .timeline p:before{
+    content:"•";
+    position:absolute;
+    left:0;
+    top:0;
+    color: var(--ikf-yellow);
+    font-weight: 900;
+  }
+
+  /* Stats */
+  .stats-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin: 26px 0 10px;
+  }
+  .stat{
+    background: var(--ikf-butter);
+    border: 1px solid rgba(255,195,0,.22);
+    border-radius: 14px;
+    padding: 18px 14px;
+    text-align:center;
+  }
+  .stat-number{
+    display:block;
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--ikf-ink);
+    margin-bottom: 6px;
+  }
+  .stat-label{
+    font-size: 12px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: 800;
+  }
+
+  /* Initiatives */
+  .initiatives-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+    margin-top: 18px;
+  }
+  .initiative-card{
+    background: var(--ikf-butter);
+    border-radius: 16px;
+    padding: 28px;
+    border: 1px solid rgba(255,195,0,.22);
+  }
+  .initiative-card h3{
+    font-size: 20px;
+    font-weight: 900;
+    margin: 0 0 12px;
+    color: var(--ikf-ink);
+  }
+  .initiative-card p{
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ikf-muted);
+    margin: 0 0 12px;
+  }
+  .initiative-card ul{
+    margin: 0;
+    padding-left: 18px;
+  }
+  .initiative-card li{
+    margin: 0 0 8px;
+    color: var(--ikf-muted);
+    line-height: 1.6;
+    font-weight: 600;
+  }
+  .impact-statement{
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(15,23,42,.08);
+  }
+
+  /* Impact section */
+  .impact-reasons p{
+    margin: 0 0 12px;
+    padding-left: 20px;
+    position: relative;
+    color: var(--ikf-muted);
+    font-weight: 700;
+  }
+  .impact-reasons p:before{
+    content:"→";
+    position:absolute;
+    left:0;
+    color: var(--ikf-yellow);
+    font-weight: 900;
+  }
+
+  .donation-process{
+    background: var(--ikf-butter);
+    padding: 22px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,195,0,.22);
+    margin-top: 18px;
+  }
+  .donation-process h4{
+    margin: 0 0 12px;
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--ikf-ink);
+  }
+  .donation-process p{
+    margin: 0 0 10px;
+    color: var(--ikf-muted);
+    font-weight: 600;
+  }
+
+  /* Team */
+  .team-section-title{
+    margin: 26px 0 19px;
+    font-size: 20px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: 900;
+  }
+  .team-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  .team-member{
+    
+    border: 1px solid rgba(255,195,0,.22);
+    border-radius: 14px;
+    padding: 16px;
+    text-align:center;
+  }
+  .team-member img{
+    width:100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    background: #f3f4f6;
+  }
+  .team-member h4{
+    margin: 0 0 4px;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--ikf-ink);
+  }
+  .team-member p{
+    margin: 0;
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 700;
+  }
+  .team-member a{
+    display:inline-block;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--ikf-ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ikf-ink);
+  }
+
+  /* Thoughts */
+  .thought-item{
+    display:grid;
+    grid-template-columns: 220px 1fr;
+    gap: 22px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--ikf-line);
+  }
+  .thought-item:last-child{ border-bottom: none; }
+  .thought-item img{
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 14px;
+    background: #f3f4f6;
+  }
+  .thought-content h4{
+    margin: 0 0 4px;
+    font-size: 16px;
+    font-weight: 900;
+  }
+  .thought-content .role{
+    margin: 0 0 10px;
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 700;
+  }
+  .thought-content p{
+    margin: 0;
+    color: var(--ikf-muted);
+    line-height: 1.75;
+    font-weight: 600;
+  }
+
+  /* Responsive */
+  @media(max-width: 900px){
+    .inv-hero{ padding: 110px 0 70px; }
+    .inv-hero h1{ font-size: 40px; }
+    .inv-card{ padding: 28px; }
+    .stats-grid{ grid-template-columns: repeat(2, 1fr); }
+    .initiatives-grid{ grid-template-columns: 1fr; }
+    .team-grid{ grid-template-columns: repeat(2, 1fr); }
+    .thought-item{ grid-template-columns: 1fr; }
+  }
+  @media(max-width: 600px){
+    .inv-hero h1{ font-size: 34px; }
+    .team-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* HARD OVERRIDE: if base.html hides hero headings */
+  .invictus-page .inv-hero h1{
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    color: var(--ikf-ink) !important;
+    -webkit-text-fill-color: currentColor !important;
+  }
+  /* LinkedIn icon button */
+.team-member .li-icon{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--ikf-butter);
+  border: 1px solid rgba(255,195,0,.30);
+  color: var(--ikf-ink);
+  text-decoration: none;
+  transition: .2s ease;
+}
+.team-member .li-icon:hover{
+  transform: translateY(-2px);
+  background: #0A66C2; /* LinkedIn blue */
+  color: #fff;
+  border-color: rgba(10,102,194,.35);
+}
+.team-member .li-icon svg{
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+.inv-banner-wrap{
+  max-width: 1150px !important;   /* same as inv-container-wide */
+  margin: 28px auto 0;
+  padding: 0 20px;
+}
+
+.inv-banner-wrap{
+  margin: 28px auto 0;
+}
+
+
+/* HERO section spacing (if you removed earlier) */
+.inv-hero{
+  padding: 60px 0 40px;
+  background:#fff;
+}
+
+/* Split layout */
+.hero-split{
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;  /* left text, right image */
+  gap: 10px;
+  align-items: center;
+}
+
+/* Left text */
+.hero-left{
+  text-align: left;
+}
+.hero-left h1{
+  margin: 0 0 12px;
+}
+.hero-left .inv-hero-subtitle{
+  margin: 0;
+}
+
+/* Right image */
+.hero-right{
+  display: flex;
+  justify-content: flex-end;
+}
+.inv-hero-banner{
+  width: 100%;
+  max-width: 520px;     /* increase/decrease as you like */
+  height: 320px;        /* control height */
+  object-fit: cover;  /* ✅ shows full image */
+  background: #fff;     /* optional */
+  border-radius: 16px;
+  border: 1px solid rgba(15,23,42,.08);
+  box-shadow: 0 10px 28px rgba(15,23,42,.08);
+}
+
+/* Responsive */
+@media(max-width: 900px){
+  .hero-split{
+    grid-template-columns: 1fr;
+  }
+  .hero-left{
+    text-align: center;
+  }
+  .hero-right{
+    justify-content: center;
+  }
+  .inv-hero-banner{
+    max-width: 700px;
+    height: 260px;
+  }
+}
+/* Carousel section spacing */
+.inv-carousel-section{
+  padding-top: 22px;   /* more breathing room */
+  padding-bottom: 22px;
+}
+.inv-carousel-section .inv-container-wide{
+  max-width: 1280px;   /* was 1150 */
+}
+/* Carousel wrapper */
+.inv-carousel{
+  position: relative;
+  border-radius: 22px;
+  padding: 18px;
+  overflow: hidden;
+
+  /* ✅ IKF soft border */
+  border: 1px solid rgba(255,195,0,.28);
+  box-shadow: 0 10px 28px rgba(15,23,42,.08);
+}
+
+
+/* Viewport */
+.inv-car-viewport{
+  overflow: hidden;
+}
+
+/* Track */
+.inv-car-track{
+  display: flex;
+  transition: transform 600ms cubic-bezier(.22,.61,.36,1);
+  will-change: transform;
+}
+
+
+
+
+/* Buttons */
+.inv-car-btn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(15,23,42,.12);
+  background: #ffc300;
+  cursor: pointer;
+  font-size: 28px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  z-index: 5;
+  transition: .2s ease;
+}
+.inv-car-btn:hover{
+  transform: translateY(-50%) scale(1.06);
+  background: #0f172a;
+  color: #fff;
+}
+.inv-car-btn.prev{ left: 12px; }
+.inv-car-btn.next{ right: 12px; }
+
+/* Dots */
+.inv-car-dots{
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  padding: 12px 0 16px;
+  background: #fff;
+}
+.inv-car-dot{
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(15,23,42,.25);
+  background: transparent;
+  cursor: pointer;
+  transition: .2s ease;
+}
+.inv-car-dot.active{
+  background: var(--ikf-yellow);
+  border-color: rgba(255,195,0,.9);
+  transform: scale(1.2);
+}
+
+
+/* Viewport */
+.inv-car-viewport{
+  overflow: hidden;
+}
+
+/* Track */
+.inv-car-track{
+  display: flex;
+  transition: transform 600ms cubic-bezier(.22,.61,.36,1);
+  will-change: transform;
+}
+
+/* Each slide becomes 1/4 width */
+.inv-car-slide{
+  flex: 0 0 25%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.inv-car-slide img{
+  width: 100%;
+  height: 280px;          /* adjust */
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+}
+
+/* 2 per row on tablets */
+@media(max-width: 900px){
+  .inv-car-slide{ flex: 0 0 50%; }
+  .inv-car-slide img{ height: 200px; }
+}
+
+/* 1 per row on mobile */
+@media(max-width: 520px){
+  .inv-car-slide{ flex: 0 0 100%; }
+  .inv-car-slide img{ height: 220px; }
+}
+/* Quotes (replaces thoughts with images) */
+.quotes-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.quote-card{
+  position: relative;
+  background: #fff;
+  border: 1px solid rgba(255,195,0,.22);
+  border-radius: 16px;
+  padding: 22px 22px 18px;
+}
+
+.quote-mark{
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  font-size: 54px;
+  line-height: 1;
+  font-weight: 900;
+  color: rgba(255,195,0,.65);
+}
+
+.quote-text{
+  margin: 0;
+  padding-top: 18px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--ikf-ink);
+  font-weight: 650;
+}
+
+.quote-footer{
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(15,23,42,.08);
+}
+
+.quote-name{
+  font-weight: 900;
+  color: var(--ikf-ink);
+  font-size: 14px;
+}
+
+.quote-role{
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #64748b;
+  letter-spacing: .02em;
+}
+
+/* Responsive */
+@media(max-width: 900px){
+  .quotes-grid{ grid-template-columns: 1fr; }
+}
+
+
+
+</style>
+
+<div class="invictus-page">
+
+  <!-- HERO -->
+<section class="inv-hero">
+  <div class="inv-container-wide">
+    <img class="inv-hero-banner-full"
+         src="{% static 'images/inv/bann.png' %}"
+         alt="Invictus × IKF banner">
+  </div>
+</section>
+
+
+
+
+
+
+  <!-- CALL FROM INVICTUS -->
+  <section class="inv-section">
+    <div class="inv-container">
+      <div class="inv-card">
+        <h2 class="inv-title">Invictus iCare Campaign</h2>
+        <div class="inv-text">
+  
+
+  <p style="font-weight:900;color:var(--ikf-ink);margin-bottom:14px;">
+    An Invitation to Support Opportunity Through Football
+  </p>
+
+  <p style="font-weight:900;color:var(--ikf-ink);margin-bottom:6px;">
+    When OP Jindal Students, Alumini are brought together by Invictus, change accelerates
+  </p>
+
+  <p>
+    Every great institution is defined not just by what happens inside its classrooms - but by what its alumni choose to build outside them.
+  </p>
+
+  <p>
+    Today, a group of young students from O.P. Jindal Global University, through Team Invictus, invite you to become part of a movement that is quietly transforming the football ecosystem of India.
+  </p>
+
+  <p style="font-weight:900;color:var(--ikf-ink);margin-top:16px;margin-bottom:6px;">
+    This is not just about sport.
+  </p>
+  <p style="font-weight:900;color:var(--ikf-ink);margin:0;">
+    It is about access, dignity, and opportunity.
+  </p>
+</div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY THIS MATTERS -->
+<section class="inv-section">
+  <div class="inv-container">
+    <div class="inv-card">
+      <h2 class="inv-title">Why This Matters</h2>
+
+      <div class="inv-text">
+        <p>
+          Across India, talent in football is abundant — in small towns, government schools, tribal belts, and underserved communities.
+        </p>
+
+        <p style="font-weight:900;color:var(--ikf-ink);margin-top:14px;">
+          What is scarce is structured opportunity.
+        </p>
+
+        <p>
+          India Khelo Football (IKF) is a national not-for-profit movement working across 135+ cities, connecting grassroots footballers with:
+        </p>
+
+        <div class="timeline">
+          <p>professional clubs</p>
+          <p>scholarships</p>
+          <p>structured career pathways</p>
+          <p>and life opportunities beyond sport</p>
+        </div>
+
+        <p style="font-weight:900;color:var(--ikf-ink);margin-top:16px;margin-bottom:8px;">
+          IKF operates on one uncompromising principle:
+        </p>
+
+        <p style="font-weight:900;color:var(--ikf-ink);">
+          No player or parent should ever have to pay to be seen.
+        </p>
+
+        <p>
+          To protect this neutrality and trust, IKF does not monetise players, parents, academies, or clubs.
+        </p>
+
+        <p style="margin-bottom:0;">
+          Instead, it relies on institutions and individuals who believe that talent deserves access, not barriers.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  
+
+  <!-- WHY WE'RE RAISING -->
+  <section class="inv-section">
+  <div class="inv-container">
+    <div class="inv-card">
+      <h2 class="inv-title">Why We Are Raising Funds</h2>
+      <div class="inv-text">
+        <p>As student-athletes, we understand what sport gives us:</p>
+        <p style="font-weight:900;color:var(--ikf-ink);margin-bottom:6px;">Discipline. Belonging. Resilience. Identity.</p>
+        <p>But across India, thousands of talented footballers drop out — not because they lack ability, but because they lack access.</p>
+        <p style="font-weight:900;color:var(--ikf-ink);">We want to change that.</p>
+        <p>We are using our platform at O.P. Jindal Global University to mobilize students, alumni, CSR leaders, and businesses to support grassroots football — and to give back to the sport that has given us everything.</p>
+
+        <p style="margin-top:16px;font-weight:900;color:var(--ikf-ink);">
+          This is why Invictus is inviting the O.P. Jindal alumni community to come together and support IKF through iCare.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- INITIATIVES -->
+  <!-- WHAT YOUR SUPPORT ENABLES -->
+<section class="inv-section">
+  <div class="inv-container">
+    <div class="inv-card">
+      <h2 class="inv-title">What Your Support Enables</h2>
+
+      <div class="inv-text">
+        <p>Your support through iCare will help IKF:</p>
+
+        <div class="timeline">
+          <p>Conduct grassroots trials across underserved regions</p>
+          <p>Identify and support talented boys and girls</p>
+          <p>Provide structured assessments and exposure</p>
+          <p>Connect deserving players with clubs and pathways</p>
+          <p>Expand Project IKF Naari Shakti to empower more girls through football</p>
+          <p>Build a transparent, neutral football ecosystem for India</p>
+        </div>
+
+        <p style="font-weight:900;color:var(--ikf-ink);margin-top:18px;margin-bottom:6px;">
+          This is not charity.
+        </p>
+        <p style="font-weight:900;color:var(--ikf-ink);margin:0;">
+          This is nation-building through sport.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="inv-section inv-carousel-section">
+  <div class="inv-container-wide">
+
+    <div class="inv-carousel" id="invCarousel">
+      <button class="inv-car-btn prev" type="button" aria-label="Previous slide">‹</button>
+
+      <div class="inv-car-viewport">
+        <div class="inv-car-track">
+          {% for slide in carousel_images %}
+            <div class="inv-car-slide">
+              {% if slide.image %}
+                <img src="{{ slide.image.url }}" alt="{{ slide.alt_text|default:'Carousel image' }}">
+              {% else %}
+                <img src="" alt="Carousel image">
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <button class="inv-car-btn next" type="button" aria-label="Next slide">›</button>
+
+      
+    </div>
+  </div>
+</section>
+  
+  <!-- A PERSONAL INVITATION -->
+<section class="inv-section">
+  <div class="inv-container">
+    <div class="inv-card">
+      <h2 class="inv-title">A Personal Invitation from Invictus</h2>
+
+      <div class="inv-text">
+        <p>
+          As alumni of O.P. Jindal, you understand the power of education, networks, and opportunity.
+        </p>
+
+        <p>
+          Today, you have a chance to extend that power beyond campus —
+          to thousands of young footballers who only need one fair chance.
+        </p>
+
+        <p style="font-weight:900;color:var(--ikf-ink);margin-top:16px;margin-bottom:6px;">
+          We invite you to stand with us.
+        </p>
+        <p style="font-weight:900;color:var(--ikf-ink);margin:0;">
+          To stand with IKF.<br>
+          To stand with merit and access.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="inv-section">
+    <div class="inv-container">
+      <div class="inv-card">
+        <h2 class="inv-title">iCare</h2>
+
+        <div class="impact-reasons">
+          <p>Be part of something larger than a campaign.</p>
+          <p>Be part of a movement that bridges campuses and communities.</p>
+          <p>Be part of the generation that strengthens Indian football at its roots.</p>
+          
+        </div>
+
+        
+        <h2 class="inv-title"></h2>
+        <a href="{% url 'invictus_donate' %}" class="inv-btn">Support the Mission Today</a>
+        
+        <div class="donation-process">
+          <h4>How It Works</h4>
+          <p><strong>Step 1:</strong> Make your contribution through the payment gateway.</p>
+          <p><strong>Step 2:</strong> Email confirmation to nirja@indiakhelofootball.com</p>
+          <p><strong>Step 3:</strong> Receive your official donation certificate.</p>
+          <p style="margin-top:14px;font-weight:900;color:var(--ikf-ink);">Every contribution counts. Every contribution creates impact.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+ <section class="inv-section">
+    <div class="inv-container-wide">
+      <div class="inv-card">
+        <h2 class="inv-title">Meet the Team</h2>
+
+        <div class="team-section-title">India Khelo Football</div>
+        <div class="team-grid">
+          {% for member in ikf_team %}
+          <div class="team-member">
+            {% if member.image %}
+              <img src="{{ member.image.url }}" alt="{{ member.name }}">
+            {% else %}
+              <img src="" alt="{{ member.name }}">
+            {% endif %}
+            <h4>{{ member.name }}</h4>
+            <p>{{ member.designation }}</p>
+            {% if member.linkedin %}
+  <a href="{{ member.linkedin }}" target="_blank" rel="noopener noreferrer"
+     class="li-icon" aria-label="LinkedIn profile">
+    
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M19 3A2 2 0 0 1 21 5v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14ZM8.34 18.34V10.5H5.67v7.84h2.67ZM7 9.29c.86 0 1.39-.57 1.39-1.29-.02-.74-.53-1.29-1.37-1.29-.84 0-1.39.55-1.39 1.29 0 .72.53 1.29 1.35 1.29H7Zm11.34 9.05v-4.45c0-2.38-1.27-3.48-2.97-3.48-1.37 0-1.98.75-2.32 1.28V10.5h-2.67c.03.78 0 7.84 0 7.84h2.67v-4.38c0-.23.02-.46.09-.62.18-.46.6-.94 1.3-.94.92 0 1.29.71 1.29 1.74v4.2h2.61Z"/>
+    </svg>
+  </a>
+{% endif %}
+
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="team-section-title">Invictus – O.P. Jindal Global University</div>
+        <div class="team-grid">
+          {% for member in invictus_team %}
+          <div class="team-member">
+            {% if member.image %}
+              <img src="{{ member.image.url }}" alt="{{ member.name }}">
+            {% else %}
+              <img src="" alt="{{ member.name }}">
+            {% endif %}
+            <h4>{{ member.name }}</h4>
+            <p>{{ member.designation }}</p>
+            {% if member.linkedin %}
+  <a href="{{ member.linkedin }}" target="_blank" rel="noopener noreferrer"
+     class="li-icon" aria-label="LinkedIn profile">
+    
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M19 3A2 2 0 0 1 21 5v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14ZM8.34 18.34V10.5H5.67v7.84h2.67ZM7 9.29c.86 0 1.39-.57 1.39-1.29-.02-.74-.53-1.29-1.37-1.29-.84 0-1.39.55-1.39 1.29 0 .72.53 1.29 1.35 1.29H7Zm11.34 9.05v-4.45c0-2.38-1.27-3.48-2.97-3.48-1.37 0-1.98.75-2.32 1.28V10.5h-2.67c.03.78 0 7.84 0 7.84h2.67v-4.38c0-.23.02-.46.09-.62.18-.46.6-.94 1.3-.94.92 0 1.29.71 1.29 1.74v4.2h2.61Z"/>
+    </svg>
+  </a>
+{% endif %}
+
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section> 
+
+
+  <section class="inv-section">
+  <div class="inv-container">
+    <div class="inv-card">
+      <h2 class="inv-title">Connect with us</h2>
+
+      <div class="inv-text">
+        <p style="font-weight:800;color:var(--ikf-ink);margin-bottom:8px;">
+          For queries, collaborations, or to support the mission:
+        </p>
+
+        <p style="margin:0;">
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=invictusxiclub@gmail.com" target="_blank" rel="noopener"
+             style="font-weight:900;color:var(--ikf-ink);text-decoration:none;border-bottom:2px solid var(--ikf-yellow);">
+            invictusxiclub@gmail.com
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- THOUGHTS -->
+ <section class="inv-section">
+    <div class="inv-container">
+      <div class="inv-card">
+        <h2 class="inv-title">Our Thoughts</h2>
+
+        {% for thought in thoughts %}
+        <div class="thought-item">
+          <img src="{{ thought.image.url }}" alt="{{ thought.name }}">
+          <div class="thought-content">
+            <h4>{{ thought.name }}</h4>
+            <p class="role">{{ thought.designation }}</p>
+            <p>{{ thought.content }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+ 
+
+
+</div>
+<script>
+(function(){
+  const root = document.getElementById("invCarousel");
+  if(!root) return;
+
+  const viewport = root.querySelector(".inv-car-viewport");
+  const track = root.querySelector(".inv-car-track");
+  const prevBtn = root.querySelector(".inv-car-btn.prev");
+  const nextBtn = root.querySelector(".inv-car-btn.next");
+
+  if(!viewport || !track) return;
+
+  let autoplay = null;
+  let perView = 4;
+  let index = 0;              // index inside the "track children" including clones
+  let slideW = 0;
+  let isAnimating = false;
+
+  // Save original slides (only real ones)
+  const originalSlides = Array.from(track.children).map(node => node.cloneNode(true));
+  const originalCount = originalSlides.length;
+
+  if(originalCount === 0) return;
+
+  function calcPerView(){
+    const w = window.innerWidth;
+    if(w <= 520) return 1;
+    if(w <= 900) return 2;
+    return 4;
+  }
+
+  function buildInfinite(){
+    perView = calcPerView();
+
+    // If less than perView images, just show them without looping logic
+    if(originalCount <= perView){
+      track.innerHTML = "";
+      originalSlides.forEach(s => track.appendChild(s.cloneNode(true)));
+      track.style.transform = "translateX(0px)";
+      stopAutoplay();
+      return;
+    }
+
+    // Rebuild track: [last perView clones] + [originals] + [first perView clones]
+    track.innerHTML = "";
+
+    const headClones = originalSlides.slice(0, perView).map(s => s.cloneNode(true));
+    const tailClones = originalSlides.slice(-perView).map(s => s.cloneNode(true));
+
+    tailClones.forEach(s => track.appendChild(s));
+    originalSlides.forEach(s => track.appendChild(s.cloneNode(true)));
+    headClones.forEach(s => track.appendChild(s));
+
+    // Start at first real slide block
+    index = perView;
+
+    // compute slide width in px (based on viewport)
+    slideW = viewport.clientWidth / perView;
+
+    // Jump to start position without animation
+    track.style.transition = "none";
+    track.style.transform = `translateX(-${index * slideW}px)`;
+    // force reflow then restore transition
+    track.offsetHeight;
+    track.style.transition = "transform 600ms cubic-bezier(.22,.61,.36,1)";
+  }
+
+  function goTo(newIndex){
+    if(isAnimating) return;
+    isAnimating = true;
+    index = newIndex;
+    track.style.transform = `translateX(-${index * slideW}px)`;
+  }
+
+  function next(){ goTo(index + 1); }
+  function prev(){ goTo(index - 1); }
+
+  track.addEventListener("transitionend", () => {
+    // After moving, if we are in clones, snap back to real slides (seamless)
+    const totalWithClones = track.children.length;
+    const firstReal = perView;
+    const lastReal = perView + originalCount - 1;
+
+    track.style.transition = "none";
+
+    if(index > lastReal){
+      // jumped past end clones -> snap to first real
+      index = firstReal;
+      track.style.transform = `translateX(-${index * slideW}px)`;
+    } else if(index < firstReal){
+      // jumped before start clones -> snap to last real
+      index = lastReal;
+      track.style.transform = `translateX(-${index * slideW}px)`;
+    }
+
+    // restore transition
+    track.offsetHeight;
+    track.style.transition = "transform 600ms cubic-bezier(.22,.61,.36,1)";
+    isAnimating = false;
+  });
+
+  prevBtn && prevBtn.addEventListener("click", prev);
+  nextBtn && nextBtn.addEventListener("click", next);
+
+  // Autoplay
+  function startAutoplay(){
+    stopAutoplay();
+    autoplay = setInterval(next, 3000);
+  }
+  function stopAutoplay(){
+    if(autoplay) clearInterval(autoplay);
+    autoplay = null;
+  }
+
+  root.addEventListener("mouseenter", stopAutoplay);
+  root.addEventListener("mouseleave", startAutoplay);
+
+  // Swipe
+  let startX = 0;
+  root.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, {passive:true});
+  root.addEventListener("touchend", (e) => {
+    const endX = e.changedTouches[0].clientX;
+    const diff = endX - startX;
+    if(Math.abs(diff) > 40){
+      diff < 0 ? next() : prev();
+    }
+  }, {passive:true});
+
+  // Resize rebuild (important because perView changes)
+  window.addEventListener("resize", () => {
+    clearTimeout(window.__invResT);
+    window.__invResT = setTimeout(() => {
+      buildInfinite();
+      // restart autoplay after rebuild
+      startAutoplay();
+    }, 150);
+  });
+
+  buildInfinite();
+  startAutoplay();
+})();
+</script>
+
+
+
+
+{% endblock %}

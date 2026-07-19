@@ -1,0 +1,606 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.trusted-network-page {
+  padding: 0 150px;
+  box-sizing: border-box;
+}
+
+.trusted-network-page h2 {
+  font-size: 28px;
+  font-weight: 400;
+  text-align: left;
+  margin-top: 70px;
+  margin-bottom: 40px;
+}
+
+.rep-paragraphs {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.rep-paragraphs p {
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: left;
+  flex: 1;
+}
+
+/* Partner Grid Section */
+.regional-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px 90px; /* row and column gap both 90px */
+  margin-top: 50px;
+}
+
+.regional-card {
+  display: flex;
+  align-items: stretch;  /* was flex-start */
+  gap: 20px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  min-height: 340px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+
+.regional-left {
+  display: flex;
+  align-items: flex-start;
+}
+
+.regional-left img {
+  width: 320px;
+  height: 320px;
+  object-fit: contain;
+  border-radius: 8px;
+
+  border-left: 5px solid #ffc300;
+  border-top: 2px solid #ffe073;
+  border-right: 2px solid #ffe073;
+  border-bottom: 2px solid #ffe073;
+}
+
+
+.regional-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 340px; /* consistent layout across cards */
+  padding-bottom: 10px;
+}
+
+
+
+.regional-right h4 {
+  font-size: 25px;
+  font-weight: 300;
+  margin-bottom: 7px;
+}
+
+.regional-right hr {
+  margin: 8px 0 4px 0;
+  border: none;
+  height: 1px;
+  background-color: #999; /* darker gray */
+  width: 90%;             /* makes it longer */
+}
+
+
+
+.regional-bottom p {
+  font-size: 14px !important;
+  line-height: 1.8;
+  margin-bottom: 4px;  /* tightened spacing */
+  max-width: 600px;
+}
+
+.regional-bottom p:last-of-type {
+  margin-bottom: 0;
+}
+
+
+
+
+
+
+
+.social-icons {
+  display: flex;
+  gap: 24px;
+  margin-top: auto;
+  padding-top: 0;
+  margin-bottom: 10px; /* 🟡 reduce from 20px to 10px */
+}
+
+
+.social-icon-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+
+
+.execution-partner-section {
+  padding: 0 0; /* Remove side padding */
+  margin-top: 80px;
+  font-family: 'Inter', sans-serif;
+}
+
+.execution-partner-section h2 {
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 18px;
+  text-align: left; /* Align to left */
+}
+
+.execution-partner-section p.intro,
+.execution-partner-section .footer-note {
+  font-size: 16px;
+  margin-bottom: 40px;
+  line-height: 1.6;
+  text-align: left; /* Align to left */
+}
+
+.execution-grid {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.execution-grid ul {
+  flex: 1;
+  min-width: 280px;
+  padding-left: 20px;
+}
+
+.execution-grid li {
+  font-size: 18px;
+  margin-bottom: 26px; /* Increased spacing between list items */
+  line-height: 1.6;
+}
+.trusted-network-page p {
+  font-size: 18px; /* Increased from 16px */
+  line-height: 1.6;
+  text-align: left;
+  margin-bottom: 20px;
+}
+.partner-why-section {
+  padding-right: 350px; /* Increased right padding */
+}
+
+.partner-why-section h2,
+.partner-why-section p {
+  text-align: left;
+}
+.role-benefits-section {
+  padding: 0 150px;
+  font-family: 'Inter', sans-serif;
+}
+
+.role-benefits-section h2 {
+  font-size: 28px;
+  font-weight: 400;
+  margin-top: 70px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.role-benefits-section p.intro {
+  font-size: 16px;
+  margin-bottom: 40px;
+  text-align: left;
+  line-height: 1.6;
+}
+
+.role-benefits-grid {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+  text-align: left;
+}
+
+.role-benefits-grid ul {
+  flex: 1;
+  min-width: 280px;
+  padding-left: 20px;
+}
+
+.role-benefits-grid li {
+  font-size: 16px;
+  margin-bottom: 20px; /* increased spacing */
+  line-height: 1.6;
+}
+.apply-section {
+  text-align: center;
+  margin: 80px 0;
+}
+
+.apply-section h2 {
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.apply-section p {
+  font-size: 16px;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.apply-button {
+  background-color: #ffc300;
+  color: black;
+  padding: 14px 40px;
+  font-size: 18px;
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.apply-button:hover {
+  background-color: #e6b200;
+}
+
+
+
+.rep-cta-section {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.rep-cta-section h2 {
+  font-size: 26px;
+  font-weight: 400;
+  margin-top: 0; /* ✅ reduced from default */
+  margin-bottom: 20px;
+}
+
+
+.rep-cta-section p {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #444;
+}
+
+.apply-button {
+  background-color: #ffc300;
+  color: black;
+  font-weight: 500;
+  padding: 14px 40px;
+  font-size: 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.apply-button:hover {
+  background-color: #e6b100;
+}
+@media (max-width: 768px) {
+  .trusted-network-page {
+    padding: 0 20px;
+  }
+
+  .rep-paragraphs {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .regional-grid {
+    grid-template-columns: 1fr;
+    gap: 40px 0;
+  }
+
+  .regional-card {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+    min-height: 480px; /* ensures all cards have same height */
+    box-sizing: border-box;
+  }
+
+  .regional-left img {
+    max-width: 90%;
+    max-height: 240px;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .regional-right h4 {
+    font-size: 20px;
+  }
+
+  .regional-right {
+    width: 100%;
+    padding: 0 10px;
+    text-align: left;
+  }
+
+  .regional-bottom p {
+    font-size: 15px;
+  }
+  .regional-left {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+  }
+
+
+  .execution-grid {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .execution-grid ul {
+    padding-left: 16px;
+  }
+
+  .partner-why-section,
+  .role-benefits-section {
+    padding: 0 20px !important;
+  }
+
+  .partner-why-section h2,
+  .partner-why-section p,
+  .role-benefits-section h2 {
+    font-size: 20px;
+    line-height: 1.5;
+  }
+
+  .role-benefits-section h2 {
+    margin-top: 40px;
+    margin-bottom: 16px;
+  }
+
+  .role-benefits-section p.intro {
+    font-size: 15px;
+    margin-bottom: 30px;
+  }
+
+  .role-benefits-grid {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .role-benefits-grid ul {
+    padding-left: 16px;
+  }
+
+  .role-benefits-grid li {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .apply-button {
+    font-size: 16px;
+    padding: 12px 30px;
+  }
+
+  .rep-cta-section h2 {
+    font-size: 22px;
+    margin-top: 40px;
+  }
+
+  .trusted-network-page p,
+  .execution-partner-section p,
+  .rep-cta-section p,
+  .role-benefits-section p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+.fab-top-button {
+  position: fixed;
+  top: 100px;     /* adjust based on your header height */
+  right: 30px;    /* aligns with Support IKF button */
+  background-color: #ffc300;
+  color: black;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.fab-top-button:hover {
+  background-color: #e6b100;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .fab-top-button {
+    top: 80px;
+    right: 20px;
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}
+.scrollable-text {
+  max-height: 100px;       /* adjust height as needed */
+  overflow-y: auto;
+  padding-right: 8px;      /* space for scrollbar */
+  margin-top: 8px;
+}
+
+.scrollable-text p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.scrollable-text::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable-text::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 3px;
+}
+
+.partner-summary {
+  margin: 6px 0 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+
+
+
+
+
+
+
+
+</style>
+<a href="https://forms.gle/S9ru4WnYsuscY9i37" class="fab-top-button">Become REP</a>
+<div class="trusted-network-page">
+  <h2>Regional Execution Partner</h2>
+  
+
+  <div class="rep-paragraphs">
+    <p>
+      At India Khelo Football (IKF), we believe that real change happens on the ground — city by city, community by community.
+      That’s why our Regional Execution Partners (REPs) play a vital role in turning our vision into action.
+    </p>
+    <p>
+      REPs help us identify hidden talent, engage local communities, and ensure smooth, on-ground execution. With their passion and commitment, we’re able to take football to places it’s never been before — truly democratizing the sport.
+    </p>
+  </div>
+
+  <h2>Our Regional Partners For Season 5</h2>
+  <div class="regional-grid">
+    {% for partner in regional_partners1 %}
+    <div class="regional-card">
+      <div class="regional-left">
+        {% if partner.pic %}
+        <img src="{{ partner.pic.url }}" alt="{{ partner.heading }}" loading="lazy">
+        {% endif %}
+
+      </div>
+      <div class="regional-right">
+        <h4>{{ partner.heading }}</h4>
+      
+        <div class="regional-bottom">
+          <hr />
+          <p class="partner-summary"><strong>{{ partner.paragraph }}</strong></p>
+        
+          {% if partner.button1_text %}
+          <div class="scrollable-text">
+            <p>{{ partner.button1_text }}</p>
+          </div>
+          {% endif %}
+        </div>
+        
+        
+      
+        <div class="social-icons"> <!-- ✅ stays outside -->
+          {% if partner.attr1 %}
+            <a href="{{ partner.attr1 }}"><img src="{% static 'images/network/insta.png' %}" class="social-icon-img" /></a>
+          {% endif %}
+          {% if partner.attr2 %}
+            <a href="{{ partner.attr2 }}"><img src="{% static 'images/network/linkd.png' %}" class="social-icon-img" /></a>
+          {% endif %}
+          {% if partner.attr3 %}
+            <a href="{{ partner.attr3 }}"><img src="{% static 'images/network/face.png' %}" class="social-icon-img" /></a>
+          {% endif %}
+        </div>
+      </div>
+      
+      
+    </div>
+    {% endfor %}
+  </div>
+  <div class="trusted-network-page execution-partner-section">
+    <h2>Who Can Become a Regional Execution Partner?</h2>
+    <p class="intro">
+      We collaborate with partners who share similar vision of developing Indian Football Grassroots system.
+    </p>
+  
+    <div class="execution-grid">
+      <ul>
+        <li>Have your own football ground for hosting trials and training</li>
+        <li>Run a football academy or be actively engaged with the footballing community</li>
+        <li>Have a minimum of 3+ years of experience in football development</li>
+      </ul>
+      <ul>
+        <li>Have an operational team of at least 5–6 members</li>
+        <li>Have a minimum of 3+ years of experience in football development</li>
+      </ul>
+    </div>
+  
+    <p class="footer-note">
+      If you meet these criteria and want to grow football in your region, IKF is your ideal partner.
+    </p>
+  </div>
+</div>
+<div class="trusted-network-page partner-why-section">
+    <h2>Why Partner with IKF?</h2>
+    <p>
+      With a presence in over 125 cities, IKF is India’s leading grassroots football platform, offering structured trials, 
+      talent scouting, and the revolutionary IKF Pathway 360 program. As a Regional Partner, you become part of a national 
+      movement that is changing how football dreams are nurtured in India.
+    </p>
+  </div>
+  <div class="trusted-network-page">
+  <div class="trusted-network-page execution-partner-section">
+    <h2>Role & Benefits of a Regional Partner</h2>
+    <p class="intro">
+      As an IKF Regional Execution Partner, you will:
+    </p>
+  
+    <div class="execution-grid">
+      <ul>
+        <li>Host IKF Football Trials in your region</li>
+        <li>Help talented players from your region access real football career pathways with IKF Pathway 360</li>
+      </ul>
+      <ul>
+        <li>Get access to exclusive IKF resources and support</li>
+        <li>Collaborate with IKF’s central team for seamless execution for football-related activities to grow your brand.</li>
+      </ul>
+    </div>
+  </div>
+  </div>
+  <div class="rep-cta-section">
+    <h2>Ready to Grow Football in Your Region?</h2>
+    <p>
+        If you meet the eligibility criteria and share our vision,<br />
+        apply now to become an official IKF Regional Execution Partner.
+      </p>
+      
+    <a href="https://forms.gle/S9ru4WnYsuscY9i37" class="apply-button">Apply Now</a>
+  </div>
+  
+  
+  
+   
+  
+  
+
+{% endblock %}

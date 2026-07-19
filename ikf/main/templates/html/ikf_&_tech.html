@@ -1,0 +1,1534 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .parallax-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* You can adjust 0.4 for more/less darkness */
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.carousel-container {
+  position: relative;
+  max-width: 1400px;
+  height: 85vh;
+  margin: 20px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+  z-index: 0;
+  
+}
+
+.carousel-slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+}
+
+.parallax-wrapper {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.2s ease-out;
+  will-change: transform;
+  position: relative;
+  
+  
+  
+}
+.carousel-character,
+.character-slide-img {
+  z-index: 2;
+  position: absolute;
+}
+.carousel-content {
+  
+  top: 45%;
+  right: 50px;
+  color: white;
+  text-align: right;
+  font-family: 'Inter', sans-serif;
+  z-index: 2;
+  position: relative;
+}
+
+.carousel-content h1 {
+  font-size: 38px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.carousel-content p {
+  font-size: 16px;
+  margin: 5px 0 0 0;
+  color: white; /* 👈 this makes the paragraph text white */
+}
+
+
+.carousel-dots {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 2;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  background: #999;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.carousel-dot.active {
+  background: white;
+}
+.stats-wrapper {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 30px;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  box-sizing: border-box;
+  align-items: stretch;
+}
+
+.stat-card {
+  flex: 1;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 30px 20px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  max-width: 250px;
+  box-sizing: border-box;
+}
+
+.stat-card::before,
+.stat-card::after {
+  content: '';
+  width: 50px;
+  height: 4px;
+  background-color: #ffc300;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+}
+
+.stat-card::before {
+  top: 10px;
+}
+.stat-card::after {
+  bottom: 10px;
+}
+
+.stat-number {
+  font-size: 48px;
+  font-weight: 700;
+  color: #1f1f1f;
+}
+
+.stat-label {
+  margin-top: 8px;
+  font-size: 15px;
+  color: #666;
+}
+.stat-separator {
+  width: 1px;
+  background-color: #e5e7eb;
+  margin: 0 20px;
+  height: auto;
+}
+.custom-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(12, 140px); /* 140px per row, adjust as needed */
+  gap: 20px;
+  padding: 40px 150px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Optional: wider cards for more flexibility */
+.card-wide {
+  height: 100%;
+}
+@media (max-width: 768px) {
+  .custom-grid {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .card {
+    height: 400px !important;
+    width: 100%;
+  }
+
+  .card-overlay {
+    font-size: 14px;
+  }
+}
+.card-hover {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.card-hover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+/* ⬇️ Yellow box overlay */
+.card-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 80px;
+  right: 80px;
+  height: 120px; /* Initial height for pill */
+  background: rgba(255, 195, 0, 0.7); /* Start as yellow pill */
+  border-radius: 12px;
+  padding: 12px 20px;
+  transition: all 0.5s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+
+
+.card-overlay h3,
+.card-overlay p {
+  margin: 0;
+  
+}
+/* DEFAULT STATE */
+.card-overlay h3 {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.2s ease-in-out;  /* ⏩ faster */
+}
+
+/* ONLY fade in the paragraph + buttons later */
+.card-overlay p,
+.card-overlay .cta-buttons {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;  /* ⏩ faster */
+}
+.card-hover:hover .card-overlay p,
+.card-hover:hover .card-overlay .cta-buttons {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;  /* 🔄 shorter delay */
+}
+
+.card-hover:hover .card-overlay {
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 20px;
+  padding: 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background: linear-gradient(to top, rgba(255, 195, 0, 0.6), rgba(255, 255, 255, 0.1));
+  backdrop-filter: blur(5px);
+  transition: all 0.4s ease-in-out;
+}
+
+.card-hover:hover .card-overlay h3,
+.card-hover:hover .card-overlay p,
+.card-hover:hover .card-overlay .cta-buttons {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+
+
+.card-overlay h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid black; /* 👈 separator line */
+  width: fit-content;
+}
+
+
+.card-overlay p {
+  font-size: 13px;
+  margin-left: 0;
+  color: #111;
+}
+.card-overlay p {
+  opacity: 1;
+  transform: translateY(0);
+  transition: none;
+  align-items: flex-start;
+}
+
+/* ⬆️ Arrow Icon */
+.arrow-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  
+  color: black;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.4s ease;
+  z-index: 2;
+}
+
+/* 🌀 Hover State */
+.card-hover:hover img {
+  transform: scale(1.2);
+}
+
+.arrow-icon img {
+  width: 60px !important;
+  height: 60px !important;
+  display: block;
+}
+
+
+.card-hover:hover .arrow-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card-hover {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.card-hover img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.6s ease;
+}
+
+.card-hover:hover img {
+  transform: scale(1.1);
+}
+
+
+
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.card-content h3 {
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0;
+}
+
+.card-content p {
+  font-size: 13px;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.cta-buttons {
+  display: none;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.cta-buttons button {
+  background: #fff;
+  color: black;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* Arrow Icon */
+.arrow-icon {
+  display: none;
+  font-size: 40px;
+  font-weight: 800;
+  margin-bottom: auto;
+}
+
+/* Hover Effect */
+
+.card-hover:hover .card-text-container {
+  width: 280px; /* smaller width like in screenshot 1 */
+  height: auto;
+  background-color: rgba(255, 255, 255, 0.2); /* more transparent */
+  border-radius: 10px;
+  padding: 16px 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+
+  position: absolute;
+  bottom: 30px;  /* ⬅️ bring closer to yellow area */
+  left: 24px;    /* ⬅️ move more left */
+  transform: none;
+}
+
+
+
+
+.cta-buttons {
+  display: none;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.card-hover:hover .cta-buttons,
+.card-hover:hover .arrow-icon {
+  display: flex;
+}
+
+.card-hover:hover .card-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+.card-hover:hover .card-buttons button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+
+
+
+.card-text-container h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 0;
+}
+
+.card-text-container p {
+  font-size: 13px;
+  margin: 4px 0 0;
+  line-height: 1.4;
+}
+.carousel-character {
+  position: absolute;
+  z-index: 5;
+  max-height: 450px;
+  pointer-events: none;
+}
+
+.left-character {
+  bottom: 0;
+  left: 0;
+}
+
+.right-character {
+  bottom: 0;
+  right: 0;
+}
+
+.bottom-character {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-height: 290px !important;
+}
+
+.character-slide-img {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  max-height: 400px; /* 🔥 bigger size */
+}
+
+.left-character {
+  bottom: 0;
+  left: 0;
+}
+
+.right-character {
+  bottom: 0;
+  right: 0;
+}
+
+.bottom-character {
+  bottom: 0;
+  left: 5%;
+  transform: translateX(-5%);
+}
+
+
+@media (max-width: 768px) {
+  .character-slide-img {
+    max-height: 100px;
+  }
+}
+.starburst-wrapper {
+  position: relative;
+  display: inline-block;
+  margin: 100px auto;
+}
+
+.starburst-button {
+  padding: 16px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: #ffc300;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  z-index: 2;
+  position: relative;
+  animation: pop-scale 1.8s infinite ease-in-out;
+  transition: transform 0.3s ease;
+}
+
+@keyframes pop-scale {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+.star {
+  position: absolute;
+  font-size: 18px;
+  opacity: 0;
+  animation: sparkle 1.8s infinite ease-in-out;
+  color: #ffc300;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.star1 {
+  top: -20px;
+  left: 30%;
+  animation-delay: 0s;
+  font-size: 16px;
+}
+
+.star2 {
+  top: 50%;
+  left: 110%;
+  animation-delay: 0.3s;
+  font-size: 20px;
+}
+
+.star3 {
+  top: 100%;
+  left: 60%;
+  animation-delay: 0.6s;
+  font-size: 14px;
+}
+
+.star4 {
+  top: 40%;
+  left: -40%;
+  animation-delay: 0.9s;
+  font-size: 22px;
+}
+
+@keyframes sparkle {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) translateY(-20px) rotate(15deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) translateY(-40px) rotate(-15deg);
+  }
+}
+
+/* marqee events */
+.marquee-events-section {
+  display: flex;
+  gap: 60px;
+  justify-content: space-between;
+  padding: 60px 150px;
+  font-family: 'Inter', sans-serif;
+}
+
+.marquee-left {
+  flex: 1;
+  max-width: 400px;
+}
+
+.marquee-left h2 {
+  font-size: 48px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.marquee-left p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.marquee-right {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.event-card {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 15px 20px;
+  border-radius: 10px;
+  background-color: white;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 0 0 1px #f0f0f0;
+  transition: background-color 0.3s ease;
+}
+
+.event-card:hover {
+  background-color: rgba(255, 195, 0, 0.2); /* transparent yellow */
+}
+
+.event-card img {
+  width: 110px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.event-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.event-content h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.event-content p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.event-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ddd;
+}
+
+.dot.yellow {
+  background-color: #ffc300;
+}
+
+.dot.gray {
+  background-color: #ddd;
+}
+.join-movement-section {
+  padding: 60px 0;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  margin-top: -30px;
+}
+
+.join-content h2 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.join-content h2 span {
+  font-weight: 800;
+}
+
+.join-content p {
+  font-size: 35px;
+  color: #999999;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.join-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.join-btn {
+  background-color: #ffc300;
+  color: #000;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.join-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.card-text-container .preview-text {
+  display: block;
+  transition: opacity 0.3s ease;
+}
+
+.card-text-container .full-text {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-hover:hover .card-text-container .preview-text {
+  display: none;
+}
+
+.card-hover:hover .card-text-container .full-text {
+  display: block;
+  opacity: 1;
+}
+
+/* responsiveness */
+@media (max-width: 1200px) {
+  .custom-grid {
+    padding: 40px 40px;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .custom-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-grid {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .card {
+    height: auto !important;
+    width: 100%;
+  }
+
+  .card-overlay {
+    flex-direction: column;
+    padding: 16px;
+    height: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .card-text-container h3 {
+    font-size: 15px;
+  }
+
+  .card-text-container p {
+    font-size: 12px;
+  }
+
+  .cta-buttons button {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .arrow-icon img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+@media (max-width: 768px) {
+  .carousel-content {
+    top: 50%;
+    right: 20px;
+    left: 20px;
+    text-align: center;
+  }
+
+  .carousel-content h1 {
+    margin-top: -30px;
+    font-size: 20px;
+    
+    padding-right: 60px ;
+  }
+
+  .carousel-content p {
+    font-size: 12px;
+    line-height: 1.0;
+    padding-right: 50px ;
+  }
+
+  .carousel-character {
+    max-height: 200px;
+  }
+  .bottom-character{
+    max-height: 100px !important;
+  }
+}
+@media (max-width: 768px) {
+  .stats-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .stat-card {
+    max-width: none;
+    width: 100%;
+  }
+
+  .stat-separator {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .marquee-events-section {
+    flex-direction: column;
+    padding: 40px 20px;
+    gap: 30px;
+  }
+
+  .marquee-left h2 {
+    font-size: 28px;
+  }
+
+  .marquee-left p {
+    font-size: 14px;
+  }
+
+  .event-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .event-card img {
+    width: 100%;
+    height: auto;
+  }
+
+  .event-content {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+@media (max-width: 768px) {
+  .join-content h2 {
+    font-size: 28px;
+  }
+
+  .join-content p {
+    font-size: 20px;
+  }
+
+  .join-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .owl-carousel .item img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+/* 1. Expand overlay on hover or active */
+.card-hover:hover .card-overlay,
+.card-hover.active .card-overlay {
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 20px;
+  padding: 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background: linear-gradient(to top, rgba(255, 195, 0, 0.6), rgba(255, 255, 255, 0.1));
+  backdrop-filter: blur(5px);
+  transition: all 0.4s ease-in-out;
+}
+
+/* 2. Zoom image */
+.card-hover:hover img,
+.card-hover.active img {
+  transform: scale(1.1);
+}
+
+/* 3. Show arrow icon */
+.card-hover:hover .arrow-icon,
+.card-hover.active .arrow-icon {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 4. Show CTA buttons */
+.card-hover:hover .cta-buttons,
+.card-hover.active .cta-buttons {
+  display: flex;
+}
+
+/* 5. Reveal full text and hide preview text */
+.card-hover:hover .card-text-container .preview-text,
+.card-hover.active .card-text-container .preview-text {
+  display: none;
+}
+
+.card-hover:hover .card-text-container .full-text,
+.card-hover.active .card-text-container .full-text {
+  display: block;
+  opacity: 1;
+}
+
+/* 6. Animate text in overlay */
+.card-hover:hover .card-overlay p,
+.card-hover.active .card-overlay p,
+.card-hover:hover .card-overlay .cta-buttons,
+.card-hover.active .card-overlay .cta-buttons,
+.card-hover:hover .card-overlay h3,
+.card-hover.active .card-overlay h3 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+/* 7. Style the .card-text-container on hover or active */
+.card-hover:hover .card-text-container,
+.card-hover.active .card-text-container {
+  width: 280px;
+  height: auto;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 16px 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  position: absolute;
+  bottom: 30px;
+  left: 24px;
+  transform: none;
+}
+
+
+
+</style>
+
+<div class="carousel-container">
+  <div class="carousel-slide active">
+    <div class="parallax-wrapper" style="background-image: url('{% static 'images/banners/about1.png' %}')">
+      <div class="carousel-content">
+        <h1>India Khelo Football <br />Bharat’s Largest Phygital Scouting Ecosystem</h1>
+
+        <p>Connecting grassroots talent with real opportunities in professional football</p>
+      </div>
+        <img src="{% static 'images/home4/left.png' %}" class="carousel-character left-character" alt="Left Character" />
+    </div>
+  </div>
+  <div class="carousel-slide">
+    <div class="parallax-wrapper" style="background-image: url('{% static 'images/banners/req.png' %}')">
+      <div class="carousel-content">
+        <h1>Aap Khelo, Mauka Hum Denge</h1>
+        <p>Empowering young footballers across Bharat with the support, structure, and stage they deserve.</p>
+      </div>
+      <img src="{% static 'images/home4/right.png' %}" class="carousel-character left-character" alt="Left Character" />
+    </div>
+  </div>
+  <div class="carousel-slide">
+    <div class="parallax-wrapper" style="background-image: url('{% static 'images/banners/no.png' %}')">
+      <div class="carousel-content">
+        <h1>IKF Pathway 360 <br />Because Every Player Needs a Safety Net</h1>
+        <p>Because every child deserves a future in football — <br /> even if not as a player. We equip families with career clarity, so talent never goes to waste.</p>
+      </div>
+      <img src="{% static 'images/home4/bottom.png' %}" class="character-slide-img bottom-character" alt="Bottom Character" />
+    </div>
+  </div>
+  
+  
+  
+
+  <div class="carousel-dots">
+    <div class="carousel-dot active" onclick="goToSlide(0)"></div>
+    <div class="carousel-dot" onclick="goToSlide(1)"></div>
+    <div class="carousel-dot" onclick="goToSlide(2)"></div>
+  </div>
+</div>
+<section class="stats-wrapper">
+    <div class="stat-card">
+      <div class="stat-number" data-start="2400" data-target="2500">0</div>
+      <div class="stat-label">Participants</div>
+    </div>
+  
+    <div class="stat-separator"></div>
+  
+    <div class="stat-card">
+      <div class="stat-number" data-start="1400" data-target="1500">0</div>
+      <div class="stat-label">Scouted Players</div>
+    </div>
+  
+    <div class="stat-separator"></div>
+  
+    <div class="stat-card">
+      <div class="stat-number" data-start="197" data-target="297">0</div>
+      <div class="stat-label">Cities Covered</div>
+    </div>
+  </section>
+  <section class="custom-grid">
+    <!-- Row 1–3 -->
+<div class="card card-hover" style="grid-column: 1/span 2; grid-row: 1 / span 3;">
+  <img src="{% static 'images/homeillustration2/71.svg' %}" alt="Card 1" />
+  <div class="card-overlay">
+   <div class="card-text-container">
+  <h3>IKF Trials</h3>
+
+  <!-- Short version (shown before hover) -->
+  <p class="preview-text">Opening Doors...</p>
+
+  <!-- Full version (shown on hover) -->
+  <p class="full-text">Opening Doors to Football Dreams</p>
+
+    <div class="cta-buttons">
+  <a href="https://indiakhelofootball.com/season5" class="cta-link-button"><button> Tyger Season 5</button> </a>
+
+  
+  <a href="https://indiakhelofootball.com/calendar" class="cta-link-button"><button> IKF Calender</button> </a>
+</div>
+</div>
+
+  </div>
+  <div class="arrow-icon">
+  <img src="{% static 'images/home4/arrow.png' %}" alt="arrow" />
+</div>
+
+</div>
+
+<div class="card card-hover" style="grid-column: 3; grid-row: 1 / span 3;">
+  <img src="{% static 'images/homeillustration2/62.svg' %}" alt="Card 2" />
+  <div class="card-overlay">
+    <div class="card-text-container">
+  <h3>Pathway 360</h3>
+
+  <!-- Short version (shown before hover) -->
+  <p class="preview-text">Less than 1%...</p>
+
+  <!-- Full version (shown on hover) -->
+  <p class="full-text">Less than 1% of players make it to the professional level, leaving behind a majority of kids and parents unsure of what’s next.</p>
+
+    <div class="cta-buttons">
+  <a href="https://indiakhelofootball.com/field_of_dreams" class="cta-link-button"><button> Know More</button> </a>
+</div>
+</div>
+
+  </div>
+    <div class="arrow-icon">
+  <img src="{% static 'images/home4/arrow.png' %}" alt="arrow" />
+</div>
+</div>
+
+<!-- Row 4–6 -->
+<div class="card card-hover" style="grid-column: 1; grid-row: 4 / span 3;">
+  <img src="{% static 'images/homeillustration2/68.svg' %}" alt="Card 3" />
+  <div class="card-overlay">
+    <div class="card-text-container">
+  <h3>Scouting Certification</h3>
+
+  <!-- Short version (shown before hover) -->
+  <p class="preview-text">The program is beginner-friendly...</p>
+
+  <!-- Full version (shown on hover) -->
+  <p class="full-text">The program is beginner-friendly yet rigorous; a passion for football analysis is key.</p>
+
+    <div class="cta-buttons">
+  <a href="https://indiakhelofootball.com/scoutingcertification" class="cta-link-button"><button> Know More</button> </a>
+</div>
+</div>
+
+  </div>
+    <div class="arrow-icon">
+  <img src="{% static 'images/home4/arrow.png' %}" alt="arrow" />
+</div>
+</div>
+
+<div class="card card-hover" style="grid-column: 2; grid-row: 4 / span 3;">
+  <img src="{% static 'images/homeillustration2/66.svg' %}" alt="Card 4" />
+  <div class="card-overlay">
+    <div class="card-text-container">
+  <h3>Scouting as a Service</h3>
+
+  <!-- Short version (shown before hover) -->
+  <p class="preview-text">IKF scouts identify...</p>
+
+  <!-- Full version (shown on hover) -->
+  <p class="full-text">IKF scouts identify, assess, and elevate top performers while providing data-driven reports that aid in talent development and recruitment.</p>
+
+   <div class="cta-buttons">
+  <a href="https://indiakhelofootball.com/scoutingasservice" class="cta-link-button"><button> Know More</button> </a>
+</div>
+</div>
+
+  </div>
+    <div class="arrow-icon">
+  <img src="{% static 'images/home4/arrow.png' %}" alt="arrow" />
+</div>
+</div>
+
+<div class="card card-hover" style="grid-column: 3; grid-row: 4 / span 3;">
+  <img src="{% static 'images/homeillustration2/60.svg' %}" alt="Card 5" />
+  <div class="card-overlay">
+    <div class="card-text-container">
+  <h3>International Workshop</h3>
+
+  <!-- Short version (shown before hover) -->
+  <p class="preview-text">Indian football has the potential...</p>
+
+  <!-- Full version (shown on hover) -->
+  <p class="full-text">Indian football has the potential to grow significantly, but this growth can be achieved through two primary pathways – organic and inorganic.</p>
+
+    <div class="cta-buttons">
+  <a href="https://indiakhelofootball.com/workshops" class="cta-link-button"><button> Know More</button> </a>
+</div>
+</div>
+
+  </div>
+    <div class="arrow-icon">
+  <img src="{% static 'images/home4/arrow.png' %}" alt="arrow" />
+</div>
+</div>
+
+<!-- Row 7–9 -->
+<div class="card card-hover" style="grid-column: 1; grid-row: 7 / span 3;">
+  <img src="{% static 'images/homeillustration2/61.svg' %}" alt="Card 6" />
+  <div class="card-overlay">
+    <div class="card-text-container">
+  <h3>Impact Delivered</h3>
+
+  <!-- Short version (shown before hover) -->
+  <p class="preview-text">A page to celebrate...</p>
+
+  <!-- Full version (shown on hover) -->
+  <p class="full-text">A page to celebrate our talents' victories.</p>
+
+    <div class="cta-buttons">
+  <a href="https://indiakhelofootball.com/ikf-winners" class="cta-link-button"><button> Know More</button> </a>
+</div>
+</div>
+
+  </div>
+    <div class="arrow-icon">
+  <img src="{% static 'images/home4/arrow.png' %}" alt="arrow" />
+</div>
+</div>
+
+<div class="card card-wide card-hover" style="grid-column: 2 / span 2; grid-row: 7 / span 3;">
+  <img src="{% static 'images/homeillustration2/64.svg' %}" alt="Card 7" />
+  <div class="card-overlay">
+    <div class="card-text-container">
+  <h3>Empowering Woman</h3>
+
+  <!-- Short version (shown before hover) -->
+  <p class="preview-text">Through structured programs...</p>
+
+  <!-- Full version (shown on hover) -->
+  <p class="full-text">Through structured programs, nationwide trials, and mentorship, we’re using the beautiful game to empower girls across India — one kick at a time.</p>
+
+    <div class="cta-buttons">
+  <a href="https://indiakhelofootball.com/woman-empowerment" class="cta-link-button"><button> Know More</button> </a>
+</div>
+</div>
+
+  </div>
+    <div class="arrow-icon">
+  <img src="{% static 'images/home4/arrow.png' %}" alt="arrow" />
+</div>
+</div>
+
+<!-- Row 10–12 -->
+<div class="card card-hover" style="grid-column: 1; grid-row: 10 / span 3;">
+  <img src="{% static 'images/homeillustration2/67.svg' %}" alt="Card 8" />
+  <div class="card-overlay">
+    <div class="card-text-container">
+  <h3>Regional Executive Partner</h3>
+
+  <!-- Short version (shown before hover) -->
+  <p class="preview-text">REPs help us identify hidden talent...</p>
+
+  <!-- Full version (shown on hover) -->
+  <p class="full-text">REPs help us identify hidden talent, engage local communities, and ensure smooth, on-ground execution.</p>
+
+    <div class="cta-buttons">
+  <a href="https://indiakhelofootball.com/regional-execution-partners" class="cta-link-button"><button> Know More</button> </a>
+</div>
+</div>
+
+  </div>
+    <div class="arrow-icon">
+  <img src="{% static 'images/home4/arrow.png' %}" alt="arrow" />
+</div>
+</div>
+
+<div class="card card-hover" style="grid-column: 2; grid-row: 10 / span 3;">
+  <img src="{% static 'images/homeillustration2/65.svg' %}" alt="Card 9" />
+  <div class="card-overlay">
+    <div class="card-text-container">
+  <h3>Partner Clubs</h3>
+
+  <!-- Short version (shown before hover) -->
+  <p class="preview-text">We partner with top-tier Indian clubs...</p>
+
+  <!-- Full version (shown on hover) -->
+  <p class="full-text">
+We partner with top-tier Indian clubs and football academies to create a robust talent pipeline and professional development ecosystem.</p>
+
+    <div class="cta-buttons">
+  <a href="https://indiakhelofootball.com/indian-clubs-academies" class="cta-link-button"><button> Know More</button> </a>
+</div>
+</div>
+
+  </div>
+    <div class="arrow-icon">
+  <img src="{% static 'images/home4/arrow.png' %}" alt="arrow" />
+</div>
+</div>
+
+<div class="card card-hover" style="grid-column: 3; grid-row: 10 / span 3;">
+  <img src="{% static 'images/homeillustration2/69.svg' %}" alt="Card 10" />
+  <div class="card-overlay">
+    <div class="card-text-container">
+  <h3>Sponsors</h3>
+
+  <!-- Short version (shown before hover) -->
+  <p class="preview-text">A list of a Partners...</p>
+
+  <!-- Full version (shown on hover) -->
+  <p class="full-text">A list of a Partners that help us do what we do best.</p>
+
+  <div class="cta-buttons">
+  <a href="https://indiakhelofootball.com/annual_impact" class="cta-link-button"><button> Know More</button> </a>
+</div>
+
+</div>
+
+  </div>
+    <div class="arrow-icon">
+  <img src="{% static 'images/home4/arrow.png' %}" alt="arrow" />
+</div>
+</div>
+</section>
+
+
+<section class="marquee-events-section">
+  <div class="marquee-left">
+    <h2>Marquee Events</h2>
+    <p>
+      These flagship events bring together the finest talent, top scouts, and global opportunities under one roof.
+      From high-stakes trials to national showcases, each event is designed to spotlight rising stars and propel them
+      toward professional football pathways.
+    </p>
+  </div>
+
+  <div class="marquee-right">
+    <!-- Card 1 -->
+    <a href="https://indiakhelofootball.com/IkfTrials" class="event-card">
+      <img src="{% static 'images/banners/about1.png' %}" alt="IKF Trials">
+      <div class="event-content">
+        <div>
+          <h3>IKF Trials</h3>
+          <p>Opening Doors to Football Dreams</p>
+        </div>
+        <div class="event-dots">
+          <span class="dot yellow"></span>
+          <span class="dot gray"></span>
+          <span class="dot gray"></span>
+          <span class="dot gray"></span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Card 2 -->
+    <a href="https://indiakhelofootball.com/workshops" class="event-card">
+      <img src="{% static 'images/banners/c3.png' %}" alt="International Workshop">
+      <div class="event-content">
+        <div>
+          <h3>International Workshop</h3>
+          <p>Why IKF's International Workshops Are Essential</p>
+        </div>
+        <div class="event-dots">
+          <span class="dot yellow"></span>
+          <span class="dot yellow"></span>
+          <span class="dot gray"></span>
+          <span class="dot gray"></span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Card 3 -->
+    <a href="https://indiakhelofootball.com/scoutingcertification" class="event-card">
+      <img src="{% static 'images/banners/scout.png' %}" alt="Scouting">
+      <div class="event-content">
+        <div>
+          <h3>Scouting</h3>
+          <p>IKF is revolutionizing football scouting in India by offering a structured pathway for aspiring scouts</p>
+        </div>
+        <div class="event-dots">
+          <span class="dot yellow"></span>
+          <span class="dot yellow"></span>
+          <span class="dot yellow"></span>
+          <span class="dot gray"></span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+<section class="join-movement-section">
+  <div class="join-content">
+    <h2>Join the <span>Movement</span>.</h2>
+    <p>Let’s build the future of football.</p>
+    <div class="join-buttons">
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=career360@indiakhelofootball.com" target="_blank" rel="noopener" class="join-btn">Mail</a>
+      <a href="https://wa.me/918850119762" target="_blank" class="join-btn">Whatsapp</a>
+    </div>
+  </div>
+</section>
+
+{% if clubs_partner_home %}
+  <div class="p-b30">
+    
+    <div class="section-content">
+      <div class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr">
+        {% for club in clubs_partner_home %}
+        <div class="item">
+          <div class="ow-carousel-entry">
+            <div class="ow-entry-media dez-img-effect zoom-slow">
+              <img loading="lazy" src="{{ club.pic.url }}" alt="" />
+            </div>
+            <!-- <div class="dez-info p-a20 p-t40 border-1">
+              <h4 class="dez-title m-tb0">{{ finalist.name }}</h4>
+              <div class="bg-primary skew-content-box">
+                <ul class="dez-social-icon">
+                  <li>
+                    <a class="fa fa-linkedin" href="{{ finalist.link }}" target="_blank"></a>
+                  </li>
+                </ul>
+              </div>
+              <p class="m-t10 m-b0">{{ Team1.about }}</p>
+            </div> -->
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+
+
+
+
+  
+  
+  
+  
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.carousel-dot');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+        dots[i].classList.toggle('active', i === index);
+      });
+      currentSlide = index;
+    }
+
+    window.goToSlide = function(index) {
+      showSlide(index);
+    };
+
+    setInterval(() => {
+      let next = (currentSlide + 1) % slides.length;
+      showSlide(next);
+    }, 5000);
+
+    // 🌀 Parallax on hover
+    const carousel = document.querySelector('.carousel-container');
+
+    carousel.addEventListener('mousemove', (e) => {
+      const { offsetX, offsetY } = e;
+      const { offsetWidth, offsetHeight } = carousel;
+
+      const moveX = (offsetX / offsetWidth - 0.5) * 20;
+      const moveY = (offsetY / offsetHeight - 0.5) * 20;
+
+      document.querySelectorAll('.parallax-wrapper').forEach(wrapper => {
+        wrapper.style.transform = `translate(${-moveX}px, ${-moveY}px)`;
+      });
+    });
+
+    carousel.addEventListener('mouseleave', () => {
+      document.querySelectorAll('.parallax-wrapper').forEach(wrapper => {
+        wrapper.style.transform = `translate(0, 0)`;
+      });
+    });
+  });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const duration = 5000;
+      const numbers = document.querySelectorAll(".stat-number");
+    
+      numbers.forEach(number => {
+        const finalValue = parseInt(number.getAttribute("data-target"));
+        const startValue = parseInt(number.getAttribute("data-start"));
+        let startTime = null;
+    
+        function animateNumber(timestamp) {
+          if (!startTime) startTime = timestamp;
+          const progress = timestamp - startTime;
+          const progressRatio = Math.min(progress / duration, 1);
+    
+          const fluctuation = Math.floor(Math.random() * 10) - 5;
+          const currentValue = Math.floor(
+            startValue + (finalValue - startValue) * progressRatio + fluctuation
+          );
+    
+          number.textContent = (currentValue > 0 ? currentValue : 0).toLocaleString() + "+";
+    
+          if (progress < duration) {
+            requestAnimationFrame(animateNumber);
+          } else {
+            number.textContent = finalValue.toLocaleString() + "+";
+          }
+        }
+    
+        requestAnimationFrame(animateNumber);
+      });
+    });
+    </script>
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Apply only on mobile
+    if (window.innerWidth <= 768) {
+      document.querySelectorAll(".card-hover").forEach(card => {
+        card.addEventListener("click", function (e) {
+          // Remove active from other cards
+          document.querySelectorAll(".card-hover.active").forEach(c => {
+            if (c !== card) c.classList.remove("active");
+          });
+
+          // Toggle current card
+          card.classList.toggle("active");
+        });
+      });
+    }
+  });
+  document.addEventListener("click", function (e) {
+  if (!e.target.closest(".card-hover")) {
+    document.querySelectorAll(".card-hover.active").forEach(card => card.classList.remove("active"));
+  }
+});
+
+</script>
+
+
+{% endblock content %}

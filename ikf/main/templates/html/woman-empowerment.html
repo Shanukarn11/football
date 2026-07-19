@@ -1,0 +1,832 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Woman Empowerment - India Khelo Football{% endblock title %}
+
+{% block meta_description %}
+Empowering women through football at India Khelo Football. We are dedicated to providing opportunities, resources, and support to female athletes, fostering growth, equality, and excellence in the sport. Join us in championing women's empowerment in football.
+{% endblock meta_description%}
+
+{% block meta_keywords %}
+Woman Prefrence, Football, India Khelo Football, Education, International Football
+{% endblock meta_keywords%}
+
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-dim:    rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --surface:           #ffffff;
+    --surface-2:         #f8f9fb;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         22px;
+    --shadow-sm:         0 2px 8px  rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md:         0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg:         0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  /* ── Layout ── */
+  .ikf-wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  .ikf-section { padding: 36px 0 44px; }
+  .ikf-section + .ikf-section { padding-top: 18px; }
+
+  /* ── Soft panel ── */
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 28px;
+    position: relative;
+  }
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* ── Section heading ── */
+  .ikf-h2, .emp-section-title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 14px;
+    letter-spacing: -.3px;
+  }
+  .ikf-h2:first-child,
+  .emp-section-title:first-child { margin-top: 0; }
+
+  /* ── Body copy ── */
+  p, li {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  .emp-section-intro {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 62ch;
+    margin: 0 0 18px;
+  }
+
+  /* ── Button ── */
+  .ikf-btn {
+    appearance: none;
+    border: none;
+    border-radius: var(--radius-sm);
+    height: 50px;
+    padding: 0 28px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+    transition: all .2s ease;
+  }
+  .ikf-btn--primary {
+    background: var(--ikf-yellow);
+    color: #000;
+    box-shadow: 0 4px 14px rgba(255,195,0,.35);
+  }
+  .ikf-btn--primary:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.45);
+  }
+
+  /* ═══════════════════════
+     HERO — Season 6 layout
+  ════════════════════════ */
+  .emp-hero { padding-top: 24px; }
+
+  .emp-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .emp-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .emp-hero__left { display: flex; flex-direction: column; }
+
+  /* eyebrow dash */
+  .emp-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .emp-hero__eyebrow::before {
+    content: '';
+    width: 22px; height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .emp-hero__title {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -1.5px;
+    line-height: 1.05;
+    margin: 0 0 14px;
+  }
+
+  .emp-hero__lead {
+    font-family: var(--font-body);
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.75;
+    margin: 0 0 10px;
+  }
+
+  .emp-hero__cta { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+  .emp-hero__right { width: 100%; }
+
+  .emp-hero__media {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .emp-hero__img {
+    width: 100%; height: 100%;
+    display: block; object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .emp-hero__media:hover .emp-hero__img { transform: scale(1.02); }
+
+  /* caption */
+  .ikf-caption {
+    position: absolute;
+    right: 14px; bottom: 12px; z-index: 2;
+    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    text-align: right;
+    max-width: 85%;
+    pointer-events: none;
+  }
+  .ikf-caption::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+    background: rgba(0,0,0,.5);
+    z-index: -1;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ═══════════════════════
+     TABLE
+  ════════════════════════ */
+  .table-soft { padding: 0; overflow: hidden; }
+  .table-soft::before { left: 0; right: 0; border-radius: 0; }
+
+  .emp-benefits__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body);
+    font-size: 15px;
+  }
+  .emp-benefits__table th,
+  .emp-benefits__table td {
+    padding: 16px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .emp-benefits__table th {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    background: var(--surface);
+  }
+  .emp-benefits__table td { color: var(--muted); }
+  .emp-benefits__table td:first-child {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--ink-2);
+    width: 32%;
+  }
+  .emp-benefits__table tr:last-child td { border-bottom: none; }
+
+  .emp-benefits__table tbody tr {
+    transition: background .2s ease;
+    cursor: default;
+  }
+  .emp-benefits__table tbody tr:hover td {
+    background: var(--ikf-yellow) !important;
+    color: #000 !important;
+  }
+
+  /* ═══════════════════════
+     SPLIT SECTIONS (text + image)
+  ════════════════════════ */
+  .emp-split {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  @media (min-width: 900px) {
+    .emp-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+      gap: 36px;
+      align-items: center;
+    }
+  }
+
+  .emp-split__text h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 10px;
+    color: var(--ink-2);
+  }
+  .emp-split__text h3 {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 600;
+    margin: 18px 0 8px;
+    color: var(--ink-2);
+  }
+  .emp-split__text p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+
+  /* yellow-dot bullets inside split */
+  .emp-split__text ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 8px 0;
+  }
+  .emp-split__text ul li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 8px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .emp-split__text ul li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 8px;
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: #facc15;
+    box-shadow: 0 0 0 3px rgba(250,204,21,.25);
+  }
+
+  /* split image */
+  .emp-media { position: relative; }
+  .emp-split__media img,
+  .emp-media img {
+    width: 100%;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    display: block;
+    box-shadow: var(--shadow-md);
+  }
+
+  /* ═══════════════════════
+     MISSION CARDS
+  ════════════════════════ */
+  .emp-mission__cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 14px;
+  }
+  .emp-mission__card {
+    flex: 1 1 220px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 22px 20px;
+    box-shadow: var(--shadow-sm);
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+  }
+  .emp-mission__card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .emp-mission__card:hover h3,
+  .emp-mission__card:hover p { color: #000 !important; }
+  .emp-mission__card h3 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: var(--ink-2);
+  }
+  .emp-mission__card p {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ═══════════════════════
+     CTA CENTER
+  ════════════════════════ */
+  .emp-cta-center { text-align: center; }
+  .emp-cta-center p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    max-width: 60ch;
+    margin: 0 auto 20px;
+  }
+
+  /* ═══════════════════════
+     SDG ICONS
+  ════════════════════════ */
+  .emp-sdg__icons {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+  .emp-sdg__icons img {
+    height: 84px;
+    width: auto;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .emp-sdg__icons img:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 22px rgba(255,195,0,.35);
+  }
+  .emp-sdg__divider { width: 1px; height: 80px; background: var(--line); }
+
+  /* ═══════════════════════
+     FAQ (exact Trials pattern)
+  ════════════════════════ */
+  .faq-container { display: flex; flex-direction: column; margin-top: 14px; }
+  .faq-item { border-bottom: 1px solid var(--line); }
+
+  .faq-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 4px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left;
+    color: var(--ink-2);
+    transition: color .15s ease;
+    gap: 16px;
+  }
+  .faq-icon {
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--muted-2);
+    flex-shrink: 0;
+    width: 24px;
+    text-align: center;
+    transition: transform .25s ease, color .15s ease;
+  }
+  .faq-question:hover { color: var(--ink); }
+  .faq-question:hover .faq-icon { color: var(--ikf-yellow); }
+  .faq-question.open { color: var(--ink); }
+  .faq-question.open .faq-icon {
+    color: var(--ikf-yellow);
+    transform: rotate(45deg);
+  }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s ease;
+  }
+  .faq-answer p {
+    margin: 4px 4px 14px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* ═══════════════════════
+     RESPONSIVE
+  ════════════════════════ */
+  @media (max-width: 900px) {
+    .ikf-wrap { padding: 0 18px; }
+    .emp-hero__title { font-size: 38px; letter-spacing: -1px; }
+    .ikf-soft { padding: 22px 18px; }
+  }
+  @media (max-width: 640px) {
+    .emp-hero__title { font-size: 30px; }
+    .emp-sdg__icons img { height: 70px; }
+    .emp-sdg__divider { height: 60px; }
+  }
+
+  /* Visit Anaya's Goal button */
+  .emp-anaya-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+    padding: 12px 24px;
+    background: #ffc300;
+    color: #0b1120 !important;
+    border-radius: 999px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: .02em;
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(255,195,0,.35);
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .emp-anaya-btn:hover {
+    transform: translateY(-2px);
+    background: #ffd23f;
+    box-shadow: 0 10px 24px rgba(255,195,0,.45);
+    color: #0b1120 !important;
+    text-decoration: none;
+  }
+</style>
+
+
+<!-- =============== HERO =============== -->
+<section class="emp-hero ikf-section">
+  <div class="ikf-wrap">
+    <div class="emp-hero__grid">
+      <div class="emp-hero__left">
+       
+        <h1 class="emp-hero__title">Empowering Her Through Football</h1>
+        <p class="emp-hero__lead">
+          In a country where societal norms often confine girls to traditional roles, football is becoming a tool of freedom.
+          At India Khelo Football (IKF), we believe that every girl deserves a chance to lead — not just in sport, but in life.
+        </p>
+        <p class="emp-hero__lead">
+          Through structured programs, nationwide trials, and mentorship, we're using the beautiful game to empower girls across
+          India — one kick at a time.
+        </p>
+        <div class="emp-hero__cta">
+          <a href="{% url 'Donate' %}" target="_blank" rel="noopener noreferrer" class="ikf-btn ikf-btn--primary">Donate</a>
+        </div>
+      </div>
+
+      <div class="emp-hero__right">
+        <div class="emp-hero__media ikf-media">
+          <img class="emp-hero__img" loading="lazy"
+               src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/woman1.png' %}{% endif %}"
+               alt="Empowering Girls Through Football">
+          <div class="ikf-caption">
+            {% if hero_image and hero_image.caption %}{{ hero_image.caption }}{% else %}Empowering Girls Through Football{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== WHY FOOTBALL FOR EMPOWERMENT =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="emp-section-title">Why Football for Empowerment?</h2>
+    <div class="ikf-soft table-soft">
+      <table class="emp-benefits__table">
+        <thead>
+          <tr>
+            <th>Benefit</th>
+            <th>Impact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Physical &amp; Mental Strength</td>
+            <td>Builds discipline, fitness, and resilience to overcome life's challenges.</td>
+          </tr>
+          <tr>
+            <td>Teamwork &amp; Leadership</td>
+            <td>Enhances communication, collaboration, and confidence.</td>
+          </tr>
+          <tr>
+            <td>Shattering Stereotypes</td>
+            <td>Challenges gender norms and opens access to male-dominated spaces.</td>
+          </tr>
+          <tr>
+            <td>Building Confidence</td>
+            <td>Each goal and tackle fuels self-belief and ambition.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== IKF'S COMMITMENT =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="emp-section-title">IKF's Commitment: Beyond the Game</h2>
+    <div class="ikf-soft">
+      <div class="emp-split">
+        <div class="emp-split__text">
+          <p>We go further than just training — we're building systems that uplift, protect, and empower girls at every level.</p>
+          <h3>Free Trials for Girls Across India</h3>
+          <p>We waive all trial fees for girls — so no financial barrier can stop her dream.</p>
+          <ul>
+            <li>Encourages first-time participation</li>
+            <li>Increases access in underserved areas</li>
+            <li>Brings us closer to a pro-footballing India where no girl is left behind</li>
+          </ul>
+        </div>
+        <div class="emp-split__media">
+          <div class="emp-media ikf-media">
+            <img loading="lazy"
+                 src="{% if page_images|length > 1 and page_images.1.image %}{{ page_images.1.image.url }}{% else %}{% static 'images/socialinitiatives/new1.png' %}{% endif %}"
+                 alt="{% if page_images|length > 1 and page_images.1.caption %}{{ page_images.1.caption|striptags }}{% else %}Free trials for girls{% endif %}">
+            <div class="ikf-caption">
+              {% if page_images|length > 1 and page_images.1.caption %}{{ page_images.1.caption }}{% else %}Free trials for girls{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== TRIALS BY WOMEN =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="emp-section-title">Trials By Women, For Women</h2>
+    <div class="ikf-soft">
+      <div class="emp-split">
+        <div class="emp-split__text">
+          <p>
+            From the ground to the goalpost, female leadership is front and center.
+            Our women-led trials prove that empowerment isn't just about playing — it's about leading.
+          </p>
+          <p>You can be a:</p>
+          <ul>
+            <li>Player</li>
+            <li>Coach</li>
+            <li>Referee</li>
+            <li>Operations Manager</li>
+          </ul>
+        </div>
+        <div class="emp-split__media">
+          <div class="emp-media ikf-media">
+            <img loading="lazy"
+                 src="{% if page_images|length > 2 and page_images.2.image %}{{ page_images.2.image.url }}{% else %}{% static 'images/socialinitiatives/new3.png' %}{% endif %}"
+                 alt="{% if page_images|length > 2 and page_images.2.caption %}{{ page_images.2.caption|striptags }}{% else %}Women-led trials{% endif %}">
+            <div class="ikf-caption">
+              {% if page_images|length > 2 and page_images.2.caption %}{{ page_images.2.caption }}{% else %}Women-led trials{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== MAIDAAN KI RANI =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="emp-section-title">Maidaan Ki Rani</h2>
+    <div class="ikf-soft">
+      <div class="emp-split">
+        <div class="emp-split__text">
+          <p>
+            A flagship initiative under IKF's Field of Dreams campaign — this program helps female players train as professionals
+            while receiving life skills, mentoring, and safety-net support.
+          </p>
+          <a href="{% url 'Donate' %}" class="ikf-btn ikf-btn--primary" target="_blank" rel="noopener noreferrer">Donate</a>
+        </div>
+        <div class="emp-split__media">
+          <div class="emp-media ikf-media">
+            <img loading="lazy"
+                 src="{% if page_images|length > 3 and page_images.3.image %}{{ page_images.3.image.url }}{% else %}{% static 'images/socialinitiatives/new2.png' %}{% endif %}"
+                 alt="{% if page_images|length > 3 and page_images.3.caption %}{{ page_images.3.caption|striptags }}{% else %}Maidaan Ki Rani{% endif %}">
+            <div class="ikf-caption">
+              {% if page_images|length > 3 and page_images.3.caption %}{{ page_images.3.caption }}{% else %}Maidaan Ki Rani{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== ANAYA'S GOAL =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="emp-section-title">Anaya's Goal: Empowering Underprivileged Girls Through Football</h2>
+    <div class="ikf-soft">
+      <div class="emp-split">
+        <div class="emp-split__text">
+          <p>
+            Anaya Sehgal, a 17-year-old midfielder in the Singapore Women's Premier League (WPL), is using her goals to ignite hope and opportunity for girls in India who lack basic equipment.
+          </p>
+          <ul>
+            <li><strong>Proven Performer:</strong> In 2024 Anaya scored 14 goals for BG Tampines Rovers and her high school team and raised Rs 1 Lac. In 2025 she played for Lion City Sailors in the WPL and her high school team and scored 16 goals.</li>
+          </ul>
+
+          <h3 style="margin-top: 20px;">How You Can Support</h3>
+          <div class="faq-container">
+            <div class="faq-item">
+              <button class="faq-question">
+                <span class="faq-title">Pledge by the Goal</span>
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Commit to donating for every goal Anaya scores.</p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">
+                <span class="faq-title">Spread the Word</span>
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Amplify the campaign via social media and your network.</p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">
+                <span class="faq-title">Connect with Us</span>
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Reach out at +65 8586 3761 for participation and updates.</p>
+              </div>
+            </div>
+          </div>
+
+          <a href="{% url 'anaya_goal' %}" class="emp-anaya-btn">
+            Visit Anaya's Goal
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+        <div class="emp-split__media">
+          <div class="emp-media ikf-media">
+            <img loading="lazy"
+                 src="{% if page_images|length > 4 and page_images.4.image %}{{ page_images.4.image.url }}{% else %}{% static 'images/banners/a3.png' %}{% endif %}"
+                 alt="{% if page_images|length > 4 and page_images.4.caption %}{{ page_images.4.caption|striptags }}{% else %}Anaya Sehgal playing football{% endif %}">
+            <div class="ikf-caption">
+              {% if page_images|length > 4 and page_images.4.caption %}{{ page_images.4.caption }}{% else %}Anaya Sehgal playing football{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== JOIN THE MISSION =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="emp-section-title">Join the Mission</h2>
+    <div class="ikf-soft">
+      <p class="emp-section-intro">Empowering girls isn't charity — it's nation-building. IKF invites:</p>
+      <div class="emp-mission__cards">
+        <div class="emp-mission__card">
+          <h3>Corporate Partners</h3>
+          <p>Fund scholarships, training, and travel for talented girls across India.</p>
+        </div>
+        <div class="emp-mission__card">
+          <h3>NGOs</h3>
+          <p>Co-create regional programs that meet girls where they are.</p>
+        </div>
+        <div class="emp-mission__card">
+          <h3>Government Bodies</h3>
+          <p>Help shape inclusive policies for a thriving girls' football ecosystem.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== INVEST IN HER FUTURE =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="emp-section-title">Invest in Her Future</h2>
+    <div class="ikf-soft emp-cta-center">
+      <p>
+        Together, we can imagine a future where every girl in India has the chance to chase a ball — and a dream.
+        Together, we can raise a generation of strong, confident, empowered women who lead with purpose.
+      </p>
+      <a href="{% url 'Donate' %}" class="ikf-btn ikf-btn--primary" target="_blank" rel="noopener noreferrer">Donate</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== SDGs =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="emp-section-title">Our Commitment to the SDGs</h2>
+    <div class="ikf-soft">
+      <div class="emp-sdg__icons">
+        <img loading="lazy" src="{% static 'images/socialinitiatives/sdgmain.png' %}" alt="SDG Main" />
+        <div class="emp-sdg__divider"></div>
+        <img loading="lazy" src="{% static 'images/socialinitiatives/sdg4.png' %}" alt="SDG 4" />
+        <img loading="lazy" src="{% static 'images/socialinitiatives/sdg5.png' %}" alt="SDG 5" />
+        <img loading="lazy" src="{% static 'images/socialinitiatives/sdg10.png' %}" alt="SDG 10" />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const faqItems = document.querySelectorAll(".faq-item");
+    faqItems.forEach((item) => {
+      const questionBtn = item.querySelector(".faq-question");
+      const answer = item.querySelector(".faq-answer");
+      const icon = item.querySelector(".faq-icon");
+
+      questionBtn.addEventListener("click", function () {
+        const isOpen = answer.style.maxHeight && answer.style.maxHeight !== "0px";
+        document.querySelectorAll(".faq-answer").forEach((el) => { el.style.maxHeight = null; });
+        document.querySelectorAll(".faq-icon").forEach((ic) => { ic.textContent = "+"; ic.style.transform = ""; });
+        document.querySelectorAll(".faq-question").forEach((q) => { q.classList.remove("open"); });
+        if (!isOpen) {
+          answer.style.maxHeight = answer.scrollHeight + "px";
+          icon.textContent = "+";
+          icon.style.transform = "rotate(45deg)";
+          questionBtn.classList.add("open");
+        }
+      });
+    });
+  });
+</script>
+
+{% endblock content %}

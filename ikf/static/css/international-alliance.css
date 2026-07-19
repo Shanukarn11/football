@@ -1,0 +1,35 @@
+.detail-text{
+    font-size: 16px ;
+}
+
+.internation-alliance-heading span{
+    color: #E4AE00;
+}
+
+.ia-team-container{
+    display: flex;
+    gap: 20px;
+    width: 60%;
+    align-items: center;
+}
+
+@media all and (max-width: 991.98px){
+    .ia-team-container{
+        width: auto;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.ia-team-img{
+    width: 400px;
+    height: 300px;
+}
+
+.ganguly-container-highlight{
+    background:#e4af0017;;
+}
+
+.link-text-email{
+    color: blue !important;
+}

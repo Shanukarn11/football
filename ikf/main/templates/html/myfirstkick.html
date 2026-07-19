@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  :root{
+    --ikf-yellow:#ffc300;
+    --ikf-ink:#0f172a;
+    --ikf-muted:#4b5563;
+    --ikf-line:#e5e7eb;
+    --ikf-ring:rgba(15,23,42,.10);
+    --ikf-butter:#fffef2;
+  }
+
+  .ikf-wrap{
+    max-width:1100px;
+    margin:10px auto 0;
+    padding:0 10px;
+    font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+    color:var(--ikf-ink);
+  }
+
+  .ikf-section{
+    padding:26px 0 32px;
+  }
+
+  .ikf-soft{
+    background:#fff;
+    border:1px solid rgba(255,195,0,.35);
+    border-radius:16px;
+    box-shadow:0 14px 34px rgba(15,23,42,.06);
+    padding:18px 20px;
+  }
+
+  .ikf-hero{
+    padding-top:18px;
+  }
+
+  .ikf-hero-card{
+    background:#fff;
+    border:1px solid rgba(255,195,0,.35);
+    border-radius:18px;
+    box-shadow:0 18px 44px rgba(15,23,42,.08);
+    padding:22px 22px;
+  }
+
+  .ikf-h1{
+    margin:0 0 10px;
+    font-size:34px;
+    font-weight:800;
+    line-height:1.15;
+    color:#111827;
+  }
+
+  .ikf-sub{
+    margin:0;
+    font-size:18px;
+    font-weight:800;
+    color:#111827;
+  }
+
+  @media(max-width:900px){
+    .ikf-h1{ font-size:28px; }
+    .ikf-sub{ font-size:16px; }
+  }
+
+  .ikf-block{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .ikf-title{
+    margin:0;
+    font-size:22px;
+    font-weight:900;
+    color:#111827;
+    line-height:1.25;
+  }
+
+  .ikf-para{
+    margin:0;
+    color:var(--ikf-muted);
+    font-size:15.5px;
+    line-height:1.75;
+  }
+
+  .ikf-list{
+    margin:0;
+    padding-left:18px;
+    color:var(--ikf-muted);
+    font-size:15.5px;
+    line-height:1.75;
+  }
+
+  .ikf-list li{ margin:8px 0; }
+
+  .ikf-grid{
+  display:grid;
+  grid-template-columns: 1fr;  /* ✅ always single column */
+  gap:16px;
+}
+
+
+  @media(max-width:900px){
+    .ikf-grid{ grid-template-columns:1fr; }
+  }
+.ikf-hero-row{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.mfk-logo{
+  width:120px;      /* change size if needed */
+  height:120px;
+  object-fit:contain;
+  flex:0 0 auto;
+}
+
+.ikf-hero-text{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+@media(max-width:650px){
+  .ikf-hero-row{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .mfk-logo{
+    width:64px;
+    height:64px;
+  }
+}
+
+
+</style>
+
+<section class="ikf-section ikf-hero">
+  <div class="ikf-wrap">
+    
+
+      <div class="ikf-hero-row">
+        <img
+          class="mfk-logo"
+          src="{% static 'images/logo/mfklogo.png' %}"
+          alt="MyFirstKick logo"
+          loading="lazy"
+        />
+
+        <div class="ikf-hero-text">
+          <h1 class="ikf-h1" style="margin:0;">MyFirstKick x India Khelo Football </h1>
+          <p class="ikf-sub" style="margin:0;">Powering India’s Largest Grassroots Scouting Movement</p>
+        </div>
+      </div>
+
+    
+  </div>
+</section>
+
+
+
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <div class="ikf-grid">
+
+      <div class="ikf-soft ikf-block">
+        <h2 class="ikf-title"> The Digital Engine Behind IKF’s Scouting &amp; Showcasing</h2>
+        <p class="ikf-para">India Khelo Football’s nationwide talent discovery ecosystem is built on a strong digital backbone — MyFirstKick (MFK).</p>
+        <p class="ikf-para">MFK provides IKF with a robust, endtoend platform to manage every stage of scouting and showcasing, ensuring transparency, efficiency, and scale across India.</p>
+        <p class="ikf-para">From player registration to profile creation, from rating systems to showcasing talent to clubs — everything flows seamlessly through MyFirstKick.</p>
+      </div>
+
+      <div class="ikf-soft ikf-block">
+        <h2 class="ikf-title"> Powering Asia’s Largest Talent Hunt</h2>
+        <p class="ikf-para">India Khelo Football’s scouting program is now recognized as Asia’s largest grassroots talent hunt.</p>
+        <p class="ikf-para">MyFirstKick plays a pivotal role by:</p>
+        <ul class="ikf-list">
+          <li>Managing registrations at scale</li>
+          <li>Digitizing the entire scouting workflow</li>
+          <li>Ensuring transparent, datadriven player ratings</li>
+          <li>Showcasing top performers to clubs worldwide</li>
+        </ul>
+        <p class="ikf-para">Together, IKF and MFK are building a future where every talented child — from any corner of India — gets a fair chance to be discovered.</p>
+      </div>
+
+      <div class="ikf-soft ikf-block">
+        <h2 class="ikf-title"> A LinkedIn for Footballers</h2>
+        <p class="ikf-para">MyFirstKick functions as India’s first professional networking platform dedicated to footballers.</p>
+        <p class="ikf-para">It enables players to:</p>
+        <ul class="ikf-list">
+          <li>Register and build verified football profiles</li>
+          <li>Upload performance data, videos, and achievements</li>
+          <li>Receive objective ratings from IKF scouts</li>
+          <li>Get showcased directly to clubs and academies</li>
+        </ul>
+        <p class="ikf-para">For players, it’s a digital identity.</p>
+        <p class="ikf-para">For clubs, it’s a trusted talent database.</p>
+        <p class="ikf-para">For Indian football, it’s a gamechanging ecosystem.</p>
+      </div>
+
+      <div class="ikf-soft ikf-block">
+        <h2 class="ikf-title"> Helping Clubs Discover Talent Faster &amp; Smarter</h2>
+        <p class="ikf-para">Scouting undiscovered grassroots talent is timeconsuming and expensive.</p>
+        <p class="ikf-para">MFK solves this by giving clubs and academies:</p>
+        <ul class="ikf-list">
+          <li>Access to thousands of verified players</li>
+          <li>A first level of evaluation through IKF’s rating system</li>
+          <li>Tools to shortlist, filter, and track players</li>
+          <li>Significant savings in time, effort, and scouting costs</li>
+        </ul>
+        <p class="ikf-para">Clubs simply log in, explore talent, and identify prospects — all before stepping onto the field.</p>
+      </div>
+
+      <div class="ikf-soft ikf-block">
+        <h2 class="ikf-title"> 50,000+ Players. Growing Every Day.</h2>
+        <p class="ikf-para">MyFirstKick is one of India’s largest digital football talent pools with:</p>
+        <ul class="ikf-list">
+          <li>50,000+ registered players</li>
+          <li>Multiple professional clubs using the Club Login</li>
+          <li>Verified player data from IKF’s nationwide scouting network</li>
+        </ul>
+        <p class="ikf-para">This scale allows clubs to discover talent from regions they’ve never reached before.</p>
+      </div>
+
+      <div class="ikf-soft ikf-block">
+        <h2 class="ikf-title"> Trusted by International Academies</h2>
+        <p class="ikf-para">Beyond India, MyFirstKick is also used by international academies looking to handpick emerging talent from the country.</p>
+        <p class="ikf-para">The platform gives them structured, reliable, and comparable data — something grassroots football has lacked for decades.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content">
+    <!-- inner page banner -->
+    <div class="dez-bnr-inr overlay-black-middle"
+        style="background-image: url('{{corporatesimages.CorporateBannerImage}}')">
+        <div class="container">
+            <div class="dez-bnr-inr-entry">
+                <h1 class="text-white">{{corporate_heading1}}</h1>
+            </div>
+        </div>
+    </div>
+    <!-- inner page banner END -->
+    <!-- Breadcrumb row -->
+    <div class="breadcrumb-row">
+        <div class="container">
+            <ul class="list-inline">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>{{corporate_heading1}}</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Breadcrumb row END -->
+    <!-- contact area -->
+    <div class="section-full content-inner bg-white">
+        <!-- Services -->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4">
+                    <img loading="lazy"  src="images/machine.jpg" alt="" />
+                </div>
+                <div class="col-lg-8 col-md-8">
+                    <h2 class="text-uppercase m-b10">{{corporate_heading2}}</h2>
+                    <p> {{corporate_paragraph1}}</p>
+                    <div class="row">
+                        {%for corporate_partners in corporate_partners1 %}
+                        <div class="col-lg-6 col-sm-6 m-b30">
+                            <div class="dez-box">
+                                <div class="dez-media">
+                                    <img loading="lazy" src="{{corporate_partners.pic}}" alt="" />
+                                </div>
+                                <div class="dez-info p-a30 border-1">
+                                    <h4 class="dez-title m-t0"><a href="#">{{corporate_partners.heading}}</a></h4>
+                                    <p> {{corporate_partners.paragraph}} [...]</p>
+                                    <a href="#" class="site-button">{{corporate_partners.button1_text}}</a>
+                                </div>
+                            </div>
+                        </div>
+                        {%endfor%}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Services END -->
+    </div>
+    <!-- contact area  END -->
+</div>
+<!-- Content END-->
+<!-- Footer -->
+{%endblock content%}

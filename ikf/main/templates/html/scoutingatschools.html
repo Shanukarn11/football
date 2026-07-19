@@ -1,0 +1,462 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-dim:    rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --surface:           #ffffff;
+    --surface-2:         #f8f9fb;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         22px;
+    --shadow-sm:         0 2px 8px  rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md:         0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg:         0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  /* ── Layout ── */
+  .ikf-wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  .ikf-section { padding: 36px 0 44px; }
+  .ikf-section + .ikf-section { padding-top: 18px; }
+
+  /* ── Soft panel ── */
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 28px;
+    position: relative;
+  }
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* ── Headings ── */
+  .ikf-h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 14px;
+    letter-spacing: -.3px;
+  }
+  .ikf-h2:first-child { margin-top: 0; }
+
+  /* ── Body copy ── */
+  p, li {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  /* ═══════════════════════
+     HERO — Season 6 layout
+  ════════════════════════ */
+  .ses-hero { padding-top: 24px; }
+
+  .ses-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .ses-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .ses-title { display: flex; flex-direction: column; }
+
+  .ses-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .ses-hero__eyebrow::before {
+    content: '';
+    width: 22px; height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .ses-title h1 {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    margin: 0 0 14px;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .ses-title p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0;
+    max-width: 70ch;
+  }
+
+  /* hero media */
+  .ses-heroimg {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .ses-heroimg img {
+    width: 100%; height: 100%;
+    display: block; object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .ses-heroimg:hover img { transform: scale(1.02); }
+
+  .ikf-media { position: relative; }
+
+  .ikf-caption {
+    position: absolute;
+    right: 14px; bottom: 12px; z-index: 2;
+    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    text-align: right;
+    max-width: 85%;
+    pointer-events: none;
+  }
+  .ikf-caption::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+    background: rgba(0,0,0,.5);
+    z-index: -1;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ═══════════════════════
+     STEP CARDS (journey card style)
+  ════════════════════════ */
+  .howitworks-grid,
+  .revenue-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+  @media (max-width: 900px) {
+    .howitworks-grid,
+    .revenue-grid { grid-template-columns: 1fr; }
+  }
+
+  .step-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 24px 22px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+  }
+  .step-card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .step-card:hover h3,
+  .step-card:hover p { color: #000 !important; }
+
+  .step-card h3 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink-2);
+    margin: 0 0 8px;
+  }
+  .step-card p {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ═══════════════════════
+     STRATEGIC ADVANTAGE — 2×2 cards
+  ════════════════════════ */
+  .scouting-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+  @media (max-width: 768px) { .scouting-benefits-grid { grid-template-columns: 1fr; } }
+
+  .scouting-benefit {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 22px 20px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+  }
+  .scouting-benefit:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .scouting-benefit:hover h3,
+  .scouting-benefit:hover p { color: #000 !important; }
+
+  .scouting-benefit h3 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink-2);
+    margin: 0 0 8px;
+  }
+  .scouting-benefit p {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ═══════════════════════
+     JOIN SECTION
+  ════════════════════════ */
+  .join-center {
+    text-align: center;
+  }
+
+  .join-center h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 10px;
+    letter-spacing: -.3px;
+  }
+
+  .join-center p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 6px;
+  }
+
+  .join-center a {
+    color: var(--ink-2);
+    text-decoration: underline;
+    font-weight: 600;
+  }
+
+  .career360-icon-row {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 20px;
+  }
+
+  .career360-icon-box {
+    width: 50px; height: 50px;
+    border-radius: var(--radius-sm);
+    background: var(--ikf-yellow);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(255,195,0,.35);
+    text-decoration: none;
+    transition: all .2s ease;
+  }
+  .career360-icon-box:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.45);
+  }
+  .career360-icon-box img { width: 22px; height: 22px; object-fit: contain; }
+
+  /* ═══════════════════════
+     RESPONSIVE
+  ════════════════════════ */
+  @media (max-width: 900px) {
+    .ikf-wrap { padding: 0 18px; }
+    .ses-title h1 { font-size: 38px; letter-spacing: -1px; }
+    .ikf-soft { padding: 22px 18px; }
+  }
+  @media (max-width: 640px) {
+    .ses-title h1 { font-size: 30px; }
+  }
+</style>
+
+
+<!-- =============== HERO =============== -->
+<section class="ikf-section ses-hero">
+  <div class="ikf-wrap">
+    <div class="ses-hero__grid">
+      <div class="ses-title">
+        
+        <h1>Session Plans by Scouts</h1>
+        <p>
+          IKF's Session Plans by Scouts program brings the expertise of certified national and international
+          football scouts directly to your school. Designed for holistic student-athlete development, these
+          structured, age-appropriate training modules help schools integrate world-class football coaching
+          into their curriculum — while enhancing their reputation as a sport-focused institution.
+        </p>
+      </div>
+
+      <div class="ses-heroimg ikf-media">
+        <img loading="lazy"
+             src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/ses.png' %}{% endif %}"
+             alt="Session Plans by Scouts">
+        <div class="ikf-caption">
+          {% if hero_image and hero_image.caption %}{{ hero_image.caption }}{% else %}Session Plans by Scouts{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== TAILORED IMPLEMENTATION =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Tailored, School-Centric Implementation</h2>
+    <div class="ikf-soft">
+      <p style="margin-bottom: 18px;">
+        We work exclusively with partner schools to customize football programming based on your infrastructure,
+        student profile, and academic schedule. Every implementation is school-branded, co-created, and results-driven.
+      </p>
+      <div class="howitworks-grid">
+        <div class="step-card">
+          <h3>Custom-Tailored Session Plans</h3>
+          <p>Designed by top-level scouts for your student-athletes.</p>
+        </div>
+        <div class="step-card">
+          <h3>Exclusive Rollout</h3>
+          <p>Limited to chosen partner schools within each region.</p>
+        </div>
+        <div class="step-card">
+          <h3>Aligned With School Values</h3>
+          <p>Built to reflect your school's ethos, discipline, and culture.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== STRATEGIC ADVANTAGE =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Your School's Strategic Advantage</h2>
+    <div class="ikf-soft">
+      <div class="scouting-benefits-grid">
+        <div class="scouting-benefit">
+          <h3>Point of Differentiation</h3>
+          <p>Stand out among peer institutions with a certified, co-branded football program.</p>
+        </div>
+        <div class="scouting-benefit">
+          <h3>Association with International &amp; National Leaders</h3>
+          <p>Showcase ties to Premier League–certified scouts, UEFA coaches, and India's largest grassroots initiative.</p>
+        </div>
+        <div class="scouting-benefit">
+          <h3>Branding &amp; Visibility</h3>
+          <p>Get featured in co-branded media campaigns, events, and IKF showcases.</p>
+        </div>
+        <div class="scouting-benefit">
+          <h3>Priority Access</h3>
+          <p>Your students get first consideration for IKF trials, workshops, and international showcases.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== REVENUE OPPORTUNITIES =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">New Revenue Opportunities for Schools</h2>
+    <div class="ikf-soft">
+      <div class="revenue-grid">
+        <div class="step-card">
+          <p>Run paid football development sessions as part of after-school offerings.</p>
+        </div>
+        <div class="step-card">
+          <p>Increase admissions with a sport-aligned branding strategy.</p>
+        </div>
+        <div class="step-card">
+          <p>Leverage IKF branding and global partner badges to enhance your institutional credibility.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== JOIN =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Join the Movement</h2>
+    <div class="ikf-soft join-center">
+      <p>
+        Questions? Reach us at:
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nimesh.pitale@indiakhelofootball.com" target="_blank" rel="noopener">nimesh.pitale@indiakhelofootball.com</a>
+      </p>
+      <div class="career360-icon-row">
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nimesh.pitale@indiakhelofootball.com" target="_blank" rel="noopener" class="career360-icon-box">
+          <img loading="lazy" src="{% static 'images/career360/Vector1.svg' %}" alt="Email Icon">
+        </a>
+        <a href="https://wa.me/918850119762" target="_blank" class="career360-icon-box">
+          <img loading="lazy" src="{% static 'images/career360/vector4.svg' %}" alt="WhatsApp Icon">
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

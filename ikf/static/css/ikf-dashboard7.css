@@ -1,0 +1,292 @@
+.ikf-dashboard-wrapper {
+  position: relative;
+  min-height: 100vh;
+  z-index: 0;
+}
+
+.ikf-dashboard-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/static/images/background-dashboard/Vector.png");
+  background-repeat: repeat;
+  background-size: auto;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.dmt-title {
+  text-align: center;
+  margin: 20px 0;
+  padding: 10px;
+}
+
+.dmt-title h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.dmt-title h4 {
+  font-size: 1rem;
+  color: #ff5555; /* subtle warning color */
+  display: none; /* hidden by default */
+}
+
+/* Show recommendation only on small screens */
+@media (max-width: 768px) {
+  .dmt-title h4 {
+    display: block;
+  }
+}
+
+.ikf-dashboard {
+  max-width: 95%;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.cb1 {
+  margin-top: 3rem;
+  padding-right: 1.5rem;
+  padding-top: 0.75rem;
+  padding-left: 1.5rem;
+}
+
+.ikf-dashboard-second-row {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.ikf-dashboard-s2-col1 {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  flex: 1;
+}
+
+.ikf-dashboard-s2-col2 {
+  flex: 2;
+}
+
+.chart-box {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.chart-box h3,
+.chart-box p {
+  text-align: left;
+}
+
+.chart-box h3 {
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.chart-box p {
+  text-align: left;
+  color: black;
+  margin-bottom: 0.5rem;
+}
+
+.age-dist {
+  padding: 1.5rem;
+}
+
+.avg-rating {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.avg-rating-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem 1.5rem 1.5rem; /* top-right-bottom-left */
+}
+
+.avg-rating-right {
+  flex: 1; /* equal width to left */
+  padding: 1.5rem 0rem 0rem 0rem;
+}
+
+.positioncomp-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.positioncomp-legend {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.legend-dot.male {
+  background-color: #007bff; /* blue */
+}
+
+.legend-dot.female {
+  background-color: #ffc107; /* yellow */
+}
+
+.positioncomp-plot {
+  padding: 0 1rem 1rem 1rem;
+}
+
+.ikf-dashboard-third-row {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.foot-preference {
+  flex: 1; /* one-third */
+  display: flex;
+  flex-direction: column;
+  gap: 0rem !important;
+  padding: 1.5rem;
+}
+
+.position-impact {
+  flex: 2; /* two-thirds */
+}
+
+.position-impact-section {
+  flex: 2; /* two-thirds */
+  display: flex;
+  flex-direction: column;
+}
+
+.position-impact-section p {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.position-impact-section h3 {
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.ikf-dashboard-fourth-row {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.radar-chart-box,
+.other-chart-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem; /* same padding as .age-dist for consistency */
+}
+
+.radar-chart-box h3,
+.radar-chart-box p,
+.other-chart-box h3,
+.other-chart-box p {
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
+
+.radar-chart-box h3,
+.other-chart-box h3 {
+  font-weight: bold;
+  font-size: 1.75rem;
+}
+
+.radar-chart-box p,
+.other-chart-box p {
+  color: black;
+}
+
+.responsive-plot-container {
+  width: 100%;
+  overflow-x: auto; /* enables horizontal scroll if still exceeds */
+}
+
+.responsive-plot-container > div {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+.responsive-plot-container svg {
+  width: 100% !important;
+  height: auto !important;
+}
+
+@media (max-width: 768px) {
+  .ikf-dashboard-second-row,
+  .ikf-dashboard-third-row,
+  .ikf-dashboard-fourth-row {
+    flex-direction: column;
+  }
+
+  .ikf-dashboard-s2-col1,
+  .ikf-dashboard-s2-col2,
+  .foot-preference,
+  .position-impact-section,
+  .radar-chart-box,
+  .other-chart-box {
+    flex: none;
+    width: 100%;
+  }
+
+  .chart-box {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .chart-box > div {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .responsive-plot-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .responsive-plot-container > div {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  .responsive-plot-container svg {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
+.positioncomp p {
+  margin-left: 1rem;
+}

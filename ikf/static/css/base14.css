@@ -1,0 +1,127 @@
+.header-bar {
+  padding: 1px 0 !important; /* Reducing padding to make it narrower */
+}
+.logo-header {
+  height: 70px!important; /* Adjusting logo height */
+}
+.header-nav .nav > li > a {
+  text-transform: capitalize;
+  padding: 20px 12px!important; /* Reduced padding to make header smaller */
+}
+.header-nav .nav > li .sub-menu {
+  margin-top: -7px !important; /* Reduce the gap */
+}
+.header-nav .nav > li:hover .sub-menu {
+  display: block;
+}
+.header-nav .nav > li {
+  position: relative;
+}
+.header-nav .nav > li .sub-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  pointer-events: none;
+}
+.header-nav .nav > li:hover .sub-menu {
+  pointer-events: auto;
+}
+
+.header-nav .nav > li .sub-menu {
+  transition: visibility 0.2s, opacity 0.2s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+}
+.header-nav .nav > li:hover .sub-menu {
+  opacity: 1;
+  visibility: visible;
+}
+
+.custom-nav-link {
+  text-transform: capitalize !important;
+  color: black !important;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  line-height: 1.2;
+}
+.header-style-6 .header-bar {
+    border-bottom: 1px dashed rgba(255, 255, 255, .2) !important;
+    margin-bottom: 0px !important;
+}
+.logo-footer img, .logo-header img {
+    max-width: 100% !important;
+    width: 60% !important;
+    height: auto !important;
+}
+.header-style-6 .header-nav .nav > li {
+  padding: 8px 0px !important;
+}
+
+.header-style-6 .header-nav .nav>li>a {
+  color: #fff;
+  padding: 12px 15px !important;;
+  border-radius: 30px;
+}
+/* .header-style-6 .header-bar {
+  border-bottom: 1px dashed rgba(255, 255, 255, .2);
+  margin-bottom: 5px;
+} */
+
+@media all and (max-width: 990.98px) {
+  .custom-nav-link a {
+    color: #000000 !important;
+  }
+}
+
+.custom-nav-link:hover a {
+  color: #000000 !important;
+}
+
+
+@media only screen and (max-width: 991px) {
+    .header-style-6 .header-nav .nav>li {
+        padding: 0 10px !important;
+    }
+    .header-nav .nav > li .sub-menu {
+  margin-left: 10px !important; /* Reduce the gap */
+  }
+}
+
+@media screen and (max-width: 768px) {
+    .mo-left .header-nav .logo-header, .mo-left.header-style-3 .is-fixed.header-curve .header-nav .logo-header {
+    
+        height: 11px !important;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .logo-header {
+        margin-bottom: 0; /* Removes extra space below the logo */
+        margin-left: 0 !important;
+        padding-left:0 !important;
+        padding-bottom: 0;
+    }
+
+    .header-bar {
+        display: flex; /* Align logo and navigation horizontally */
+        align-items: center; /* Ensures they align properly */
+        justify-content: space-between; /* Distributes space evenly */
+    }
+
+    .header-nav ul.nav {
+        margin-top: 0 !important; /* Removes extra margin above the navigation */
+        padding-top: 0 !important;
+        margin-left: 0 !important;
+        padding-left:0 !important;
+    }
+
+    .header-nav ul.nav li {
+        padding: 10px 15px!important; /* Reduces padding to minimize gaps */
+        margin: 0!important;
+    }
+}
+
+
+

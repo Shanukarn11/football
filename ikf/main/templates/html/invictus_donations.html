@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  .inv-wrap{
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #0f172a;
+  }
+  .inv-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:18px;
+  }
+  .inv-head h2{
+    margin:0;
+    font-size:28px;
+    font-weight:800;
+    letter-spacing:-0.02em;
+  }
+  .inv-meta{
+    color:#475569;
+    font-size:14px;
+  }
+  .inv-card{
+    border:1px solid rgba(15,23,42,.10);
+    border-radius:14px;
+    overflow:hidden;
+    background:#fff;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+  }
+  thead th{
+    text-align:left;
+    background:#fffef2;
+    padding:12px 14px;
+    border-bottom:1px solid rgba(15,23,42,.08);
+    font-weight:700;
+  }
+  tbody td{
+    padding:12px 14px;
+    border-bottom:1px solid rgba(15,23,42,.06);
+    vertical-align:top;
+  }
+  tbody tr:hover{ background:#fafafa; }
+  .pill{
+    display:inline-block;
+    padding:4px 10px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:700;
+    background:#e8fff1;
+    color:#0b7a34;
+    border:1px solid rgba(11,122,52,.18);
+  }
+  .amt{
+    font-weight:800;
+  }
+  .table-scroll{
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  @media (max-width: 768px){
+    .inv-wrap{ margin: 20px auto; padding: 0 12px; }
+    .inv-head{ flex-direction: column; align-items: flex-start; gap: 8px; }
+    .inv-head h2{ font-size: 22px; }
+    table{ font-size: 13px; min-width: 600px; }
+    thead th, tbody td{ padding: 10px 10px; }
+  }
+  @media (max-width: 480px){
+    .inv-head h2{ font-size: 18px; }
+    table{ font-size: 12px; min-width: 520px; }
+  }
+</style>
+
+<div class="inv-wrap">
+  <div class="inv-head">
+    <div>
+      <h2>Invictus Donations</h2>
+      <div class="inv-meta">
+        Total donations: <b>{{ count|default:0 }}</b>  <br />
+         Total amount: <b>₹{{ total_amount|default:0 }}</b>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="inv-card table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Mobile</th>
+          <th>Email</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Razorpay Payment ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in donations %}
+          <tr>
+            <td>{{ d.created_at|date:"d M Y, h:i A" }}</td>
+            <td>{{ d.name }}</td>
+            <td>{{ d.mobile }}</td>
+            <td>{{ d.email }}</td>
+            <td class="amt">₹{{ d.amount }}</td>
+            <td><span class="pill">{{ d.status|default:"paid" }}</span></td>
+            <td>{{ d.razorpay_payment_id }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="7" style="text-align:center; padding:18px; color:#64748b;">
+              No completed Invictus donations yet.
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

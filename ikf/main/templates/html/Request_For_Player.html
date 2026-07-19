@@ -1,0 +1,543 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-dim:    rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --surface:           #ffffff;
+    --surface-2:         #f8f9fb;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         22px;
+    --shadow-sm:         0 2px 8px  rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md:         0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg:         0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  /* ── Layout ── */
+  .ikf-wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  .ikf-section { padding: 36px 0 44px; }
+  .ikf-section + .ikf-section { padding-top: 18px; }
+
+  /* ── Soft panel ── */
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 28px;
+    position: relative;
+  }
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* ── Headings ── */
+  .ikf-h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 14px;
+    letter-spacing: -.3px;
+  }
+  .ikf-h2:first-child { margin-top: 0; }
+
+  /* ── Body copy ── */
+  p, li {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  /* ── Yellow-dot bullets ── */
+  .ikf-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .ikf-list li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .ikf-list li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 8px;
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: #facc15;
+    box-shadow: 0 0 0 3px rgba(250,204,21,.25);
+    transition: background .25s ease, box-shadow .25s ease;
+  }
+
+  /* two-col bullets */
+  .two-col-bullets {
+    column-count: 2;
+    column-gap: 40px;
+  }
+  @media (max-width: 900px) { .two-col-bullets { column-count: 1; } }
+
+  /* ═══════════════════════
+     HERO — Season 6 layout
+  ════════════════════════ */
+  .to-hero { padding-top: 24px; }
+
+  .to-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .to-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .to-title { display: flex; flex-direction: column; }
+
+  .to-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .to-hero__eyebrow::before {
+    content: '';
+    width: 22px; height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .to-title h1 {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    margin: 0 0 10px;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .to-title p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0;
+    max-width: 70ch;
+  }
+
+  /* hero media */
+  .to-heroimg {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .to-heroimg img {
+    width: 100%; height: 100%;
+    display: block; object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .to-heroimg:hover img { transform: scale(1.02); }
+
+  .ikf-caption {
+    position: absolute;
+    right: 14px; bottom: 12px; z-index: 2;
+    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    text-align: right;
+    max-width: 85%;
+    pointer-events: none;
+  }
+  .ikf-caption::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+    background: rgba(0,0,0,.5);
+    z-index: -1;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ═══════════════════════
+     BENEFIT / CONTRIBUTION CARDS — 2-col grid
+  ════════════════════════ */
+  .scouting-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 16px;
+  }
+  @media (max-width: 700px) { .scouting-benefits-grid { grid-template-columns: 1fr; } }
+
+  .scouting-benefit {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 22px 20px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+  }
+  .scouting-benefit:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .scouting-benefit:hover h3,
+  .scouting-benefit:hover p { color: #000 !important; }
+
+  .scouting-benefit h3 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: var(--ink-2);
+  }
+  .scouting-benefit p {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ═══════════════════════
+     TWO-COL RESPONSIBILITY LISTS
+  ════════════════════════ */
+  .responsibilities-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 20px 40px;
+    margin-top: 10px;
+  }
+  @media (max-width: 768px) { .responsibilities-columns { grid-template-columns: 1fr; } }
+
+  /* ═══════════════════════
+     PROCESS + APPLY
+  ════════════════════════ */
+  .request-player-section {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, .9fr);
+    gap: 28px;
+    align-items: start;
+  }
+  @media (max-width: 900px) { .request-player-section { grid-template-columns: 1fr; } }
+
+  /* apply box — card hover style */
+  .apply-box {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 28px 24px;
+    text-align: left;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+  }
+  .apply-box:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .apply-box:hover h3,
+  .apply-box:hover p { color: #000 !important; }
+
+  .apply-box h3 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink-2);
+    margin: 0 0 10px;
+  }
+  .apply-box p {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+
+  .apply-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    padding: 0 32px;
+    background: var(--ikf-yellow);
+    color: #000;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    border: none;
+    box-shadow: 0 4px 14px rgba(255,195,0,.35);
+    transition: all .2s ease;
+    margin-top: 12px;
+    width: 100%;
+    justify-content: center;
+  }
+  .apply-button:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.45);
+  }
+
+  /* ═══════════════════════
+     RESPONSIVE
+  ════════════════════════ */
+  @media (max-width: 900px) {
+    .ikf-wrap { padding: 0 18px; }
+    .to-title h1 { font-size: 38px; letter-spacing: -1px; }
+    .ikf-soft { padding: 22px 18px; }
+  }
+  @media (max-width: 640px) {
+    .to-title h1 { font-size: 30px; }
+  }
+
+  /* Query mail button */
+  .rfp-query-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    padding: 12px 22px;
+    background: #ffc300;
+    color: #0b1120;
+    border-radius: 999px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: .02em;
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(255,195,0,.35);
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .rfp-query-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(255,195,0,.45);
+    background: #ffd23f;
+    color: #0b1120;
+  }
+  .rfp-query-btn__icon {
+    display: inline-flex;
+    width: 22px; height: 22px;
+    align-items: center; justify-content: center;
+    background: #0b1120;
+    color: #ffc300;
+    border-radius: 50%;
+    font-size: 12px;
+  }
+</style>
+
+
+<!-- =============== HERO =============== -->
+<section class="ikf-section to-hero">
+  <div class="ikf-wrap">
+    <div class="to-hero__grid">
+      <div class="to-title">
+
+        <h1>Request IKF-Scouted Players</h1>
+        <p>Access India's top grassroots talent — filtered, trained, and ready for your club.</p>
+        <a class="rfp-query-btn"
+           href="mailto:sanket.goswami@indiakhelofootball.com?subject=Query%20-%20Request%20IKF%20Scouted%20Players">
+          <span class="rfp-query-btn__icon" aria-hidden="true">✉</span>
+          For any query, mail us
+        </a>
+      </div>
+      <div class="to-heroimg ikf-media">
+        <img loading="lazy"
+             src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/req.png' %}{% endif %}"
+             alt="Request IKF Scouted Players">
+        <div class="ikf-caption">
+          {% if hero_image and hero_image.caption %}
+            {{ hero_image.caption }}
+          {% else %}
+            Request IKF Scouted Players
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== REQUEST BENEFITS =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Why Request IKF-Scouted Players</h2>
+    <div class="ikf-soft">
+      <div class="scouting-benefits-grid">
+        <div class="scouting-benefit">
+          <h3>Curated talent</h3>
+          <p>Receive a list of scouted players selected from across India, tailored to your specifications.</p>
+        </div>
+        <div class="scouting-benefit">
+          <h3>Cost-effective</h3>
+          <p>Minimize your resources spent on talent discovery — we do the hard work.</p>
+        </div>
+        <div class="scouting-benefit">
+          <h3>Platform scale</h3>
+          <p>Tap into Asia's largest grassroots scouting network.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== ELIGIBILITY =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Eligibility Criteria</h2>
+    <div class="ikf-soft">
+      <p style="margin-bottom: 12px;">To request players from IKF, your club/academy must:</p>
+      <div class="responsibilities-columns">
+        <ul class="ikf-list">
+          <li>Offer 100% scholarship seats—no charges to players.</li>
+          <li>Participate in AIFF-accredited regional or national leagues.</li>
+        </ul>
+        <ul class="ikf-list">
+          <li>Sign amateur player contracts for selected talent.</li>
+          <li>Provide players with food, accommodation, and training plans.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== IKF CONTRIBUTION =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">IKF Contribution</h2>
+    <div class="ikf-soft">
+      <div class="scouting-benefits-grid">
+        <div class="scouting-benefit">
+          <h3>Scouting support</h3>
+          <p>If you need additional player sourcing, we'll work with you under agreed terms and transparent fees.</p>
+        </div>
+        <div class="scouting-benefit">
+          <h3>Admin transparency</h3>
+          <p>Any administrative fees are communicated in advance, case-by-case.</p>
+        </div>
+        <div class="scouting-benefit">
+          <h3>Secure sharing</h3>
+          <p>You'll receive a shortlist of interested players via email directly to your designated SPOC.</p>
+        </div>
+        <div class="scouting-benefit">
+          <h3>Player's choice respected</h3>
+          <p>Players decide if they wish to join your club—selection is never enforced.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== YOUR RESPONSIBILITIES =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Your Responsibilities</h2>
+    <div class="ikf-soft">
+      <div class="responsibilities-columns">
+        <ul class="ikf-list">
+          <li>Acknowledge IKF as a scouting partner on all public platforms.</li>
+          <li>Provide clear and detailed player criteria.</li>
+          <li>Do not charge players sourced through IKF.</li>
+        </ul>
+        <ul class="ikf-list">
+          <li>Keep IKF updated at every step until final signing.</li>
+          <li>Appoint a Single Point of Contact (SPOC) to coordinate with IKF.</li>
+          <li>Offer full support services (food, stay, training) to selected players.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== PROCESS + APPLY BOX =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">How the Process Works</h2>
+    <div class="ikf-soft">
+      <div class="request-player-section">
+        <div class="responsibilities-list">
+          <ul class="ikf-list">
+            <li>Submit your request using the form below.</li>
+            <li>IKF reviews your criteria and responds with available candidates.</li>
+            <li>Coordinate interviews/trials through your appointed SPOC.</li>
+            <li>Finalize player agreements via amateur contracts.</li>
+            <li>Provide player onboarding; maintain open communication with IKF throughout the process.</li>
+          </ul>
+        </div>
+        <!-- <div class="apply-box">
+          <h3>Request For Player</h3>
+          <p>Click on Apply to fill the form.</p>
+          <p>
+            For any query mail to us on
+            <strong>info@indiakhelofootball.com</strong> /
+            <strong>indiakhelofootball@gmail.com</strong>.
+          </p>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSe1C0QeTmTTP-ZC9znmMfKgGhLt1aQYn6C3D8FJvFRaBAC0ag/viewform"
+             target="_blank" rel="noopener noreferrer"
+             class="apply-button">
+            Apply
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

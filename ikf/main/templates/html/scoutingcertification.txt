@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content bg-white">
+    <div style="height: 120px; background-color: white;"></div>
+    <!-- <div class="dez-bnr-inr overlay-black-middle" style="background-image:url('{{scoutingimages.ScoutingBanner}}');">
+        <div class="container">
+            <div class="dez-bnr-inr-entry">
+                <h1 class="text-white">{{ heading_heading1 }}</h1>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="breadcrumb-row">
+        <div class="container">
+            <ul class="list-inline">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>{{heading_heading1}}</li>
+            </ul>
+        </div>
+    </div> -->
+
+    <!-- contact area -->
+    <div class="section-full content-inner">
+        <!-- Product details -->
+        <div class="container woo-entry">
+            <div class=" m-b30">
+                <div class="row blog-post blog-md date-style-2">
+                    <div class="col-lg-4 col-md-4  col-sm-5 m-b30"> <a href="#"><img loading="lazy"  src="{{scoutingimages.TabelImage}}"
+                                alt=""></a> </div>
+                    <div class="col-lg-8 col-md-8 col-sm-7">
+                        <div class="dez-post-title ">
+                            <h2 class="post-title"><a href="#">{{heading_heading2}}</a></h2>
+                        </div>
+                        <div class="dez-post-text">
+                            <p class="m-b10">{{heading_paragraph1}}.</p>
+                        </div>
+                        <table class="table table-bordered">
+                            {%for tabels in tabel_Scouting %}
+                            <tr>
+
+                                <td>{{tabels.First_Column }}</td>
+                                <td>{{tabels.Second_Column }}</td>
+
+                            </tr>
+                            {%endfor%}
+                        </table>
+                        <form method="post" class="cart"> {% csrf_token %}
+			                
+                            <div class="m-tb10">
+                                <a href="https://scout.myfirstkick.com/"target=”_blank” class="site-button text-dark ">Register Now </a>
+                                <a class="site-button text-dark " href="/main/media/ui/download/ScoutingCertification.pdf"
+                                    download="ScoutingCertification.pdf">Download
+                                    Brochure</a>
+                            </div>
+                            <p class="m-0 text-dark">Next Cohort Starts on &nbsp;<span class="font-weight-bold">9-10-11 May 2025</span></p>
+                            <a class="m-0 text-dark" href="tel:+919767271703">For more Information, Contact: <span class="font-weight-bold">+91-9767271703</span></a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="section-full bg-img-fix content-inner overlay-black-middle our-projects-galery"
+                style="background-image:url('{{scoutingimages.ScoutingFeatureBG}}'); background-position:center;">
+                <div class="container">
+                    <div class="row">
+                        {% for scouting_feature in FeatureScouting %}
+                        <div class="col-lg-3 col-sm-6 m-b30">
+                            <div
+                                class="border-1 p-a15 text-center text-white skew-triangle left-top hvr-wobble-horizontal">
+                                <div class="sports-icon ">
+                                    <img loading="lazy"  width="85" height="85" src="{{ scouting_feature.pic }}" alt="" />
+                                </div>
+                                <h4 class="text-capitalize">{{ scouting_feature.name }}</h4>
+                                <div class="dez-separator-outer ">
+                                    <div class="dez-separator bg-primary style-liner"></div>
+                                </div>
+                                <p class="m-b0">{{ scouting_feature.description }}
+                                </p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="section-full bg-white content-inner our-achievements">
+                <div class="container">
+                    <div class="section-head text-center ">
+                        <h2 class="h2 text-uppercase"> {{ Scouting_LearnFromExpertHeading }} </h2>
+                        <div class="dez-separator-outer ">
+                            <div class="dez-separator bg-primary style-liner"></div>
+                        </div>
+                        <h3>{{ Scouting_LearnFromExpertParagraph }}</h3>
+                    </div>
+                    <div class="section-content text-center ">
+                        <div class="row m-lr0">
+                            {% for initiative in Scout_initiative %}
+                            <div class="col-lg-3 col-sm-6 p-a0 m-b30" style="padding-right:40px ;">
+                                <div class="dez-box dez-media">
+                                    <img loading="lazy"  width="292" height="292" src="{{ initiative.pic }}" alt="">
+                                    <div
+                                        class="dez-info-has p-a20 bg-primary text-left skew-triangle right-top text-center">
+                                        <h4 class="text-capitalize"> {{ initiative.name }}</h4>
+                                        <div class="dez-info-has-text">{{ initiative.description}}
+                                        </div>
+                                        <div class="m-tb30"><a href="{{ initiative.initiative_href }}"target=”_blank”
+                                                class="site-button outline white border-1">{{initiative.button_text}}</a>
+                                        </div>
+                                    </div>
+                                    <div class="dez-title-bx bg-gray p-a20 text-left skew-triangle left-top">
+                                        <h4 class="m-a0 text-capitalize"> {{ initiative.name }} </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="dez-tabs border-tp product-description bg-tabs" style="padding-top:20px ;">
+                        <ul class="nav nav-tabs">
+                            <!-- <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#web-design-1"><i class="fa fa-globe"></i><span class="title-head"> Description</span></a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#graphic-design-1"><i class="fa fa-photo"></i> <span class="title-head">Additional Information</span></a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#developement-1"><i class="fa fa-cog"></i><span class="title-head"> Product Review</span></a></li> -->
+                            {% for tab in TrialsAndInitiativeNav %}
+                            <li class="nav-item"><a class="nav-link {{ tab.activestatus_id}}" data-toggle="tab"
+                                    href="#{{ tab.href }}"target=”_blank”><i class="fa fa-globe"></i><span
+                                        class="title-head">{{tab.name}}</span></a>
+                            </li>
+
+                            {% endfor %}
+                        </ul>
+
+                        <div class="tab-content">
+                            {% for tab in TrialsAndInitiativeNav %}
+                            <div id="{{ tab.href }}" class="tab-pane {{ tab.activestatus_id}}">
+                                <p class="m-b10">{{ tab.description |safe}}</p>
+                                <p>{{tab.listtext|safe}}</p>
+                                <p>{{ tab.bottomtext|safe}}</p>
+
+
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Product details -->
+    </div>
+    <!-- contact area  END -->
+</div>
+<!-- Content END-->
+<!-- Footer -->
+{% endblock content %}

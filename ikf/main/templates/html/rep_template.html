@@ -1,0 +1,1322 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if rep.is_approved %}
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{ rep.rep_name }} | REP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;0,9..40,800;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ====================================================
+       DESIGN TOKENS
+    ==================================================== */
+    :root {
+      --ink: #0d1117;
+      --ink-2: #3a4051;
+      --muted: #6b7280;
+      --surface: #f8f9fb;
+      --card: #ffffff;
+      --ring: rgba(0,0,0,.08);
+
+      --bg-hero: #080e1c;
+      --accent: #facc15;
+      --accent-ink: #0d1117;
+      --accent-glow: rgba(250,204,21,.28);
+      --accent-dim: rgba(250,204,21,.12);
+
+      /* Players section */
+      --players-bg: #FDEFC2;
+      --modal-card: #FFF9E6;
+
+      /* Derived */
+      --accent-dark: color-mix(in oklab, var(--accent) 65%, #000);
+      --accent-tint: color-mix(in oklab, var(--accent) 12%, #ffffff);
+    }
+
+    /* Per-theme overrides */
+    .theme-yellow { --accent:#facc15; --accent-ink:#0d1117; --bg-hero:#f2d163; --players-bg:#FDEFC2; --modal-card:#FFF9E6; }
+    .theme-red    { --accent:#ef4444; --accent-ink:#fff;    --bg-hero:#f45f5f; --players-bg:#FFE0E0; --modal-card:#FFE9E9; }
+    .theme-pink   { --accent:#f472b6; --accent-ink:#fff;    --bg-hero:#f381b4; --players-bg:#FFE0EE; --modal-card:#FFEAF4; }
+    .theme-emerald{ --accent:#10b981; --accent-ink:#041f14; --bg-hero:rgb(96, 255, 176); --players-bg:#DFF3EA; --modal-card:#EAF8F1; }
+    .theme-blue   { --accent:#60a5fa; --accent-ink:#061428; --bg-hero:#79a9fb; --players-bg:#E1ECFF; --modal-card:#EAF2FF; }
+
+    {% if rep.theme == 'custom' %}
+    :root {
+      {% if rep.brand_color %} --accent: {{ rep.brand_color }}; {% endif %}
+      {% if rep.text_color %}  --ink: {{ rep.text_color }};    {% endif %}
+      {% if rep.card_color %}  --card: {{ rep.card_color }};   {% endif %}
+      {% if rep.hero_bg_color %}--bg-hero: {{ rep.hero_bg_color }};{% endif %}
+      --accent-dark: color-mix(in oklab, var(--accent) 65%, #000);
+      --accent-tint: color-mix(in oklab, var(--accent) 12%, #ffffff);
+      --accent-glow: color-mix(in oklab, var(--accent) 28%, transparent);
+      --accent-dim:  color-mix(in oklab, var(--accent) 12%, transparent);
+      --players-bg: color-mix(in srgb, var(--accent) 16%, #fff);
+      --modal-card: color-mix(in srgb, var(--accent) 8%, #fff);
+    }
+    {% endif %}
+
+    /* ====================================================
+       RESET + BASE
+    ==================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      color: var(--ink);
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: var(--accent); text-decoration: none; }
+
+    .container { width: min(1200px, 93vw); margin: 0 auto; }
+    .accent { color: var(--accent); }
+
+    /* ====================================================
+       HERO
+    ==================================================== */
+    .rep-hero {
+      position: relative;
+      min-height: 40vh;
+      background: var(--bg-hero) center / cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Photo banner overlay — only when banner present */
+    .rep-hero.has-banner::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(135deg, rgba(0,0,0,.80) 0%, rgba(0,0,0,.32) 55%, rgba(0,0,0,.18) 100%),
+        linear-gradient(0deg, rgba(0,0,0,.82) 0%, transparent 52%);
+      z-index: 1;
+    }
+
+    /* No-banner: subtle bottom fade for text legibility */
+    .rep-hero:not(.has-banner)::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,.45) 0%, transparent 55%);
+      z-index: 1;
+    }
+
+    /* ---- Geometric decorative layer (no-banner only) ---- */
+    /* Large outer ring — top right */
+    .hero-ring-1 {
+      position: absolute;
+      top: -160px; right: -160px;
+      width: 620px; height: 620px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent);
+      opacity: .10;
+      z-index: 1;
+      pointer-events: none;
+    }
+    /* Inner ring */
+    .hero-ring-2 {
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      border: 1px solid var(--accent);
+      opacity: .08;
+      z-index: 1;
+      pointer-events: none;
+    }
+    /* Innermost filled dot */
+    .hero-ring-3 {
+      position: absolute;
+      top: 60px; right: 60px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: .06;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Diagonal accent stripe — top-right to bottom-left */
+    .hero-stripe {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(
+        118deg,
+        transparent 0%,
+        transparent 58%,
+        rgba(255,255,255,.022) 59%,
+        rgba(255,255,255,.022) 61%,
+        transparent 62%,
+        transparent 66%,
+        rgba(255,255,255,.014) 67%,
+        rgba(255,255,255,.014) 68.5%,
+        transparent 69%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Accent horizontal bar at very bottom — no-banner only */
+    .hero-base-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--accent) 30%,
+        var(--accent) 70%,
+        transparent 100%
+      );
+      opacity: .5;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Grid dot pattern — bottom left */
+    .hero-dots {
+      position: absolute;
+      bottom: 60px; left: -20px;
+      width: 180px; height: 180px;
+      background-image:
+        radial-gradient(circle, var(--accent) 1.2px, transparent 1.2px);
+      background-size: 18px 18px;
+      opacity: .10;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 3;
+      flex: 1;
+      display: grid;
+      gap: 40px;
+      align-items: center;
+      padding: 48px 0 40px;
+    }
+    @media (min-width: 960px) {
+      .hero-inner { grid-template-columns: 1.3fr .7fr; }
+    }
+
+    .hero-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(54px, 8vw, 96px);
+      line-height: .95;
+      letter-spacing: .02em;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .hero-heading .accent { color: var(--accent); }
+
+    .hero-sub {
+      color: rgba(255,255,255,.7);
+      font-size: clamp(14px, 1.4vw, 17px);
+      font-weight: 400;
+      line-height: 1.6;
+      max-width: 480px;
+      margin-bottom: 20px;
+    }
+
+    /* Location badge */
+    .hero-location {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(255,255,255,.07);
+      backdrop-filter: blur(8px);
+      color: rgba(255,255,255,.85);
+      font-size: .82rem;
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+    .hero-location svg { flex-shrink: 0; opacity: .7; }
+
+    /* CTA buttons */
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-weight: 800;
+      font-size: .9rem;
+      letter-spacing: .02em;
+      border-radius: 8px;
+      padding: 13px 24px;
+      border: 1px solid var(--accent-dark);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px var(--accent-glow);
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: #fff;
+      font-weight: 700;
+      font-size: .9rem;
+      border-radius: 8px;
+      padding: 12px 22px;
+      border: 1px solid rgba(255,255,255,.25);
+      backdrop-filter: blur(6px);
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    /* Social links */
+    .hero-socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .social-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 13px;
+      border-radius: 8px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.8);
+      font-size: .8rem;
+      font-weight: 600;
+      transition: all .15s ease;
+    }
+    .social-chip:hover {
+      background: var(--accent);
+      border-color: var(--accent-dark);
+      color: var(--accent-ink);
+      transform: translateY(-1px);
+    }
+    .social-chip svg { width: 14px; height: 14px; }
+
+    /* Logo card — right column */
+    .hero-logo-wrap {
+      justify-self: center;
+      position: relative;
+    }
+    .hero-logo-frame {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(16px);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow:
+        0 40px 80px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.12);
+      position: relative;
+    }
+    .hero-logo-frame::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: 21px;
+      background: linear-gradient(135deg, rgba(255,255,255,.2), transparent 60%);
+      pointer-events: none;
+    }
+    .hero-logo-frame img {
+      width: min(340px, 54vw);
+      max-height: 340px;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,.4);
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.35), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: .4; transform: scaleY(1); }
+      50% { opacity: .8; transform: scaleY(1.08); }
+    }
+
+    /* ====================================================
+       STATS BAR
+    ==================================================== */
+    .stats-bar {
+      background: var(--ink);
+      border-bottom: 3px solid var(--accent);
+      padding: 0;
+      overflow: hidden;
+    }
+    .stats-inner {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: 640px) { .stats-inner { grid-template-columns: repeat(4, 1fr); } }
+
+    .stat-item {
+      padding: 28px 20px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,.07);
+      position: relative;
+      transition: background .2s;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item:hover { background: rgba(255,255,255,.03); }
+    .stat-item::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 40px; height: 2px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .stat-item:hover::before { opacity: 1; }
+
+    .stat-val {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(30px, 4vw, 44px);
+      letter-spacing: .03em;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-lbl {
+      display: block;
+      color: rgba(255,255,255,.55);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-top: 5px;
+    }
+
+    /* ====================================================
+       SECTIONS
+    ==================================================== */
+    .section { padding: 72px 0; }
+    .section-alt { background: var(--surface); }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 20px; height: 2px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(32px, 5vw, 52px);
+      letter-spacing: .03em;
+      line-height: 1;
+      color: var(--ink);
+      margin-bottom: 8px;
+      margin-top: -30px;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: .95rem;
+      line-height: 1.6;
+      margin-bottom: 36px;
+      max-width: 560px;
+    }
+
+    /* ====================================================
+       ABOUT — editorial card
+    ==================================================== */
+    .about-grid {
+      display: grid;
+      gap: 28px;
+    }
+    @media (min-width: 900px) {
+      .about-grid { grid-template-columns: 1fr 360px; }
+    }
+
+    .about-card {
+      background: var(--players-bg);
+      border-radius: 16px;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      border-left: 4px solid var(--accent);
+    }
+    .about-card .prose {
+      color: black;
+      line-height: 1.8;
+      font-size: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .about-card .prose p { margin-bottom: 14px; }
+    .about-card .prose h1,
+    .about-card .prose h2,
+    .about-card .prose h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      color: black;
+      letter-spacing: .04em;
+      margin-bottom: 10px;
+    }
+
+    .about-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .sidebar-card {
+      background: var(--players-bg);
+      color: var(--accent-ink);
+      border-radius: 14px;
+      padding: 22px 20px;
+      border: 1px solid var(--accent-dark);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+    .sidebar-card-label {
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      opacity: .65;
+      margin-bottom: 6px;
+    }
+    .sidebar-card-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: .04em;
+      line-height: 1.2;
+    }
+
+    /* ====================================================
+       HIGHLIGHTS — 3-col cards
+    ==================================================== */
+    .highlights-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 600px) { .highlights-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 900px) { .highlights-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .highlight-card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 28px 24px;
+      border: 1px solid var(--ring);
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .highlight-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(0,0,0,.1);
+    }
+    .highlight-card::before {
+      content: "";
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s ease;
+    }
+    .highlight-card:hover::before { transform: scaleX(1); }
+    .highlight-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 4px;
+      letter-spacing: .04em;
+    }
+    .highlight-card h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+    .highlight-card p {
+      color: var(--muted);
+      font-size: .875rem;
+      line-height: 1.65;
+    }
+
+    /* ====================================================
+       NARRATIVES — stacked with left accent border
+    ==================================================== */
+    .narrative-stack { display: grid; gap: 20px; }
+    .narrative-block {
+      background: #131b2e;
+      border-radius: 14px;
+      padding: 28px 28px 28px 32px;
+      border-left: 4px solid var(--accent);
+      position: relative;
+      overflow: hidden;
+    }
+    .narrative-block::after { display: none; }
+    .narrative-label {
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .narrative-text {
+      color: rgba(255,255,255,.82);
+      line-height: 1.75;
+      font-size: .95rem;
+      position: relative;
+      z-index: 1;
+    }
+    .narrative-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: .05em;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    /* ====================================================
+       STAR PLAYERS
+    ==================================================== */
+    .players-section {
+      position: relative;
+      overflow: hidden;
+      padding: 72px 0 80px;
+    }
+
+    /* Background with image or solid color */
+    .players-section::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: var(--players-bg);
+      z-index: 0;
+    }
+
+    /* Decorative large PLAYERS text */
+    .players-ghost-text {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(80px, 14vw, 180px);
+      letter-spacing: .05em;
+      color: rgba(0,0,0,.04);
+      pointer-events: none;
+      z-index: 1;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .players-inner { position: relative; z-index: 2; }
+
+    .players-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .players-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 6vw, 64px);
+      letter-spacing: .04em;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .players-title .accent { color: var(--accent); }
+
+    /* Arrow controls — grouped right */
+    .car-controls { display: flex; gap: 10px; }
+    .car-btn {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      border: 2px solid rgba(0,0,0,.15);
+      background: #fff;
+      color: var(--ink);
+      display: grid; place-items: center;
+      cursor: pointer;
+      transition: background .15s, border-color .15s, transform .15s;
+    }
+    .car-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent-dark);
+      color: var(--accent-ink);
+      transform: scale(1.05);
+    }
+    .car-btn svg { width: 18px; height: 18px; }
+
+    /* Carousel */
+    .players-viewport { overflow: hidden; }
+    .players-track {
+      display: flex;
+      gap: 20px;
+      will-change: transform;
+      transition: transform .5s cubic-bezier(.2,.6,.2,1);
+      padding: 4px 2px 12px;
+    }
+
+    /* Player card */
+    .player-card {
+      flex: 0 0 clamp(220px, 22vw, 280px);
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,.07);
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0,0,0,.07);
+      transition: transform .2s ease, box-shadow .2s ease;
+      position: relative;
+    }
+    .player-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(0,0,0,.14);
+    }
+    .player-photo-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+    .player-photo {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+      transition: transform .4s ease;
+    }
+    .player-card:hover .player-photo { transform: scale(1.05); }
+
+    /* Hover overlay */
+    .player-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.72) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity .3s ease;
+      display: flex;
+      align-items: flex-end;
+      padding: 18px;
+    }
+    .player-card:hover .player-overlay { opacity: 1; }
+    .player-overlay-hint {
+      color: #fff;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .player-info {
+      padding: 16px 16px 18px;
+    }
+    .player-name {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .player-subtitle {
+      font-size: .78rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .player-accent-bar {
+      height: 3px;
+      background: var(--accent);
+      margin: 10px 0 0;
+      border-radius: 999px;
+      width: 32px;
+      transition: width .3s ease;
+    }
+    .player-card:hover .player-accent-bar { width: 64px; }
+
+    /* ====================================================
+       LIGHTBOX
+    ==================================================== */
+    .lightbox {
+      position: fixed; inset: 0;
+      display: none;
+      align-items: center; justify-content: center;
+      background: rgba(5, 8, 18, .75);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      padding: 20px;
+    }
+    .lightbox.open { display: flex; }
+
+    .lightbox-card {
+      background: var(--modal-card);
+      border-radius: 20px;
+      width: min(860px, 100%);
+      box-shadow: 0 40px 100px rgba(0,0,0,.35);
+      position: relative;
+      overflow: hidden;
+      animation: lbIn .2s ease;
+    }
+    @keyframes lbIn {
+      from { opacity: 0; transform: scale(.95) translateY(12px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .lightbox-close {
+      position: absolute; right: 16px; top: 14px;
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: rgba(0,0,0,.08);
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      display: grid; place-items: center;
+      color: var(--ink);
+      transition: background .15s;
+    }
+    .lightbox-close:hover { background: rgba(0,0,0,.16); }
+
+    .lightbox-body {
+      display: grid;
+      gap: 0;
+    }
+    @media (min-width: 600px) {
+      .lightbox-body { grid-template-columns: 240px 1fr; }
+    }
+
+    .lightbox-img {
+      width: 240px; height: 100%;
+      min-height: 280px;
+      object-fit: cover;
+    }
+    @media (max-width: 599px) {
+      .lightbox-img { width: 100%; height: 200px; }
+    }
+
+    .lightbox-content {
+      padding: 32px 28px;
+    }
+    .lb-eyebrow {
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .lb-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: .04em;
+      color: var(--ink);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .lb-sub {
+      color: var(--muted);
+      font-size: .875rem;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .lb-divider {
+      height: 2px;
+      background: linear-gradient(to right, var(--accent), transparent);
+      margin-bottom: 16px;
+      border-radius: 999px;
+    }
+    .lb-bio {
+      color: var(--ink-2);
+      line-height: 1.75;
+      font-size: .9rem;
+      white-space: pre-wrap;
+    }
+
+    /* ====================================================
+       FOOTER
+    ==================================================== */
+    .rep-footer {
+      background: var(--ink);
+      color: rgba(255,255,255,.5);
+      padding: 36px 0;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .footer-logo-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: .1em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .footer-copy {
+      font-size: .78rem;
+      letter-spacing: .03em;
+    }
+
+    /* ====================================================
+       ENTRANCE ANIMATIONS
+    ==================================================== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-left > * {
+      animation: fadeUp .7s ease both;
+    }
+    .hero-left > *:nth-child(1) { animation-delay: .05s; }
+    .hero-left > *:nth-child(2) { animation-delay: .15s; }
+    .hero-left > *:nth-child(3) { animation-delay: .25s; }
+    .hero-left > *:nth-child(4) { animation-delay: .35s; }
+    .hero-left > *:nth-child(5) { animation-delay: .45s; }
+    .hero-left > *:nth-child(6) { animation-delay: .55s; }
+    .hero-logo-wrap {
+      animation: fadeUp .8s .3s ease both;
+    }
+
+    /* ====================================================
+       RESPONSIVE TWEAKS
+    ==================================================== */
+    @media (max-width: 640px) {
+      .section { padding: 48px 0; }
+      .about-card { padding: 26px 20px; }
+      .narrative-block { padding: 22px 20px 22px 24px; }
+      .hero-inner { padding: 60px 0 50px; }
+    }
+  </style>
+</head>
+
+<body class="{{ rep.theme_class|default:'theme-yellow' }}">
+
+  <!-- ======================================================
+       HERO
+  ====================================================== -->
+  <section class="rep-hero{% if rep.rep_banner %} has-banner{% endif %}" style="{% if rep.rep_banner %}background-image:url('{{ rep.rep_banner.url }}');{% endif %}">
+    <!-- Geometric decorations (visible on no-banner) -->
+    <div class="hero-ring-1" aria-hidden="true"></div>
+    <div class="hero-ring-2" aria-hidden="true"></div>
+    <div class="hero-ring-3" aria-hidden="true"></div>
+    <div class="hero-stripe" aria-hidden="true"></div>
+    <div class="hero-dots"   aria-hidden="true"></div>
+    <div class="hero-base-bar" aria-hidden="true"></div>
+
+    <div class="container hero-inner">
+      <!-- LEFT -->
+      <div class="hero-left">
+        <h1 class="hero-heading">
+          {{ rep.rep_name }}
+        </h1>
+
+        {% if rep.rep_category_brief %}
+          <p class="hero-sub">{{ rep.rep_category_brief }}</p>
+        {% endif %}
+
+        {% if rep.cities_of_operation %}
+          <div class="hero-location">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 6 8 12 8 12s8-6 8-12a8 8 0 0 0-8-8Z"/>
+            </svg>
+            {{ rep.cities_of_operation }}
+          </div>
+        {% endif %}
+
+        <div class="hero-cta">
+          {% if rep.website_url %}
+            <a class="btn-primary" href="{{ rep.website_url }}" target="_blank" rel="noopener">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1"/><path d="M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1"/></svg>
+              Visit Website
+            </a>
+          {% endif %}
+          <a class="btn-ghost" href="#socials">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Get in Touch
+          </a>
+        </div>
+
+        {% if rep.website_url or rep.socials.all %}
+          <div id="socials" class="hero-socials">
+            {% if rep.website_url %}
+              <a class="social-chip" href="{{ rep.website_url }}" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Website
+              </a>
+            {% endif %}
+            {% for s in rep.socials.all %}
+              <a class="social-chip" href="{{ s.url }}" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51L8.59 10.49"/></svg>
+                {{ s.get_platform_display }}
+              </a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- RIGHT: Logo -->
+      {% if rep.rep_logo %}
+        <div class="hero-logo-wrap" aria-hidden="true">
+          <div class="hero-logo-frame">
+            <img src="{{ rep.rep_logo.url }}" alt="{{ rep.rep_name }} logo">
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       STATS BAR
+  ====================================================== -->
+  {% if rep.show_stats %}
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-inner">
+        <div class="stat-item">
+          <span class="stat-val">{{ rep.stat1_value|default:"—" }}</span>
+          <span class="stat-lbl">{{ rep.stat1_label|default:"" }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-val">{{ rep.stat2_value|default:"—" }}</span>
+          <span class="stat-lbl">{{ rep.stat2_label|default:"" }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-val">{{ rep.stat3_value|default:"—" }}</span>
+          <span class="stat-lbl">{{ rep.stat3_label|default:"" }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-val">{{ rep.stat4_value|default:"—" }}</span>
+          <span class="stat-lbl">{{ rep.stat4_label|default:"" }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- ======================================================
+       ABOUT
+  ====================================================== -->
+  {% if rep.content %}
+  <section class="section">
+    <div class="container">
+      
+      <h2 class="section-title">About {{ rep.rep_name }}</h2>
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="prose">{{ rep.content|safe }}</div>
+        </div>
+        <div class="about-sidebar">
+          {% if rep.cities_of_operation %}
+          <div class="sidebar-card" style="background:#131b2e; color:rgba(255,255,255,.85); border-color:rgba(255,255,255,.08); box-shadow:none;">
+            <div class="sidebar-card-label" style="color:var(--accent);">Operating In</div>
+            <div class="sidebar-card-value" style="color:#fff;">{{ rep.cities_of_operation }}</div>
+          </div>
+          {% endif %}
+          {% if rep.rep_founder %}
+          <div class="sidebar-card" style="background:#131b2e; color:rgba(255,255,255,.85); border-color:rgba(255,255,255,.08); box-shadow:none;">
+            <div class="sidebar-card-label" style="color:var(--accent);">Founder</div>
+            <div class="sidebar-card-value" style="color:#fff; font-size:18px;">{{ rep.rep_founder }}</div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- ======================================================
+       HIGHLIGHTS
+  ====================================================== -->
+  {% if rep.highlights.all %}
+  <section class="section section-alt">
+    <div class="container">
+      <div class="eyebrow">What we offer</div>
+      <h2 class="section-title">Highlights</h2>
+      <div class="highlights-grid">
+        {% for h in rep.highlights.all %}
+          <div class="highlight-card">
+            <div class="highlight-num">0{{ forloop.counter }}</div>
+            <h3>{{ h.title }}</h3>
+            <p>{{ h.text }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- ======================================================
+       NARRATIVES
+  ====================================================== -->
+  {% if rep.rep_opinion or rep.csr_activities or rep.ikf_activities %}
+  <section class="section">
+    <div class="container">
+     
+      <h2 class="section-title">More About Us</h2>
+      <div class="narrative-stack">
+
+        {% if rep.rep_opinion %}
+        <div class="narrative-block">
+          <div class="narrative-label">REP Opinion</div>
+          <p class="narrative-text">{{ rep.rep_opinion }}</p>
+        </div>
+        {% endif %}
+
+        {% if rep.csr_activities %}
+        <div class="narrative-block">
+          <div class="narrative-label">CSR Activities</div>
+          <p class="narrative-text">{{ rep.csr_activities }}</p>
+        </div>
+        {% endif %}
+
+        {% if rep.ikf_activities %}
+        <div class="narrative-block">
+          <div class="narrative-label">Activities with IKF</div>
+          <p class="narrative-text">{{ rep.ikf_activities }}</p>
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- ======================================================
+       STAR PLAYERS
+  ====================================================== -->
+  {% if rep.players.all %}
+  <section class="players-section" style="{% if rep.players_bg %}background-image:url('{{ rep.players_bg.url }}'); background-size:cover; background-position:center;{% endif %}">
+    <div class="players-ghost-text" aria-hidden="true">PLAYERS</div>
+
+    <div class="container players-inner">
+      <div class="players-header">
+        <div>
+         
+          <h2 class="players-title">Star <span class="accent">Players</span></h2>
+        </div>
+        <div class="car-controls">
+          <button class="car-btn prev" type="button" aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="car-btn next" type="button" aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="playersCarousel">
+        <div class="players-viewport">
+          <div class="players-track" id="playersTrack">
+            {% for pl in rep.players.all %}
+              <article class="player-card"
+                       data-name="{{ pl.name|escapejs }}"
+                       data-subtitle="{{ pl.subtitle|default:''|escapejs }}"
+                       data-photo="{% if pl.photo %}{{ pl.photo.url }}{% endif %}"
+                       data-bio="{{ pl.bio|default:''|escapejs }}">
+                <div class="player-photo-wrap">
+                  {% if pl.photo %}
+                    <img class="player-photo" src="{{ pl.photo.url }}" alt="{{ pl.name }}">
+                  {% endif %}
+                  <div class="player-overlay">
+                    <span class="player-overlay-hint">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                      View Profile
+                    </span>
+                  </div>
+                </div>
+                <div class="player-info">
+                  <div class="player-name">{{ pl.name }}</div>
+                  {% if pl.subtitle %}<div class="player-subtitle">{{ pl.subtitle }}</div>{% endif %}
+                  <div class="player-accent-bar"></div>
+                </div>
+              </article>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div id="playerLightbox" class="lightbox" aria-hidden="true">
+    <div class="lightbox-card" role="dialog" aria-modal="true" aria-labelledby="lbName">
+      <button class="lightbox-close" type="button" aria-label="Close">&times;</button>
+      <div class="lightbox-body">
+        <img id="lbPhoto" class="lightbox-img" alt="">
+        <div class="lightbox-content">
+          <div class="lb-eyebrow">Star Player</div>
+          <h3 class="lb-name" id="lbName"></h3>
+          <div class="lb-sub" id="lbSub"></div>
+          <div class="lb-divider"></div>
+          <div class="lb-bio" id="lbBio"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- ======================================================
+       FOOTER
+  ====================================================== -->
+  <footer class="rep-footer">
+    <div class="container">
+      <div class="footer-logo-text">{{ rep.rep_name }}</div>
+      <p class="footer-copy">Powered by IKF &nbsp;·&nbsp; India Khelo Football</p>
+    </div>
+  </footer>
+
+  <!-- ======================================================
+       SCRIPTS
+  ====================================================== -->
+  <script>
+  (function () {
+    /* ---- Lightbox ---- */
+    const track = document.getElementById('playersTrack');
+    const box   = document.getElementById('playerLightbox');
+    if (track && box) {
+      const lbName = document.getElementById('lbName');
+      const lbSub  = document.getElementById('lbSub');
+      const lbBio  = document.getElementById('lbBio');
+      const lbImg  = document.getElementById('lbPhoto');
+      const closeBtn = box.querySelector('.lightbox-close');
+
+      function openBox(card) {
+        lbName.textContent = card.dataset.name || '';
+        lbSub.textContent  = card.dataset.subtitle || '';
+        lbBio.textContent  = (card.dataset.bio || '').trim() || 'More details coming soon.';
+        const src = card.dataset.photo || '';
+        if (src) { lbImg.src = src; lbImg.style.display = 'block'; }
+        else { lbImg.removeAttribute('src'); lbImg.style.display = 'none'; }
+        box.classList.add('open');
+        box.setAttribute('aria-hidden', 'false');
+        pauseAuto();
+      }
+      function closeBox() {
+        box.classList.remove('open');
+        box.setAttribute('aria-hidden', 'true');
+        resumeAuto();
+      }
+
+      track.querySelectorAll('.player-card').forEach(card =>
+        card.addEventListener('click', () => openBox(card), { passive: true }));
+      box.addEventListener('click', e => { if (e.target === box) closeBox(); });
+      closeBtn.addEventListener('click', closeBox);
+      window.addEventListener('keydown', e => { if (e.key === 'Escape') closeBox(); });
+    }
+
+    /* ---- Carousel ---- */
+    const carousel  = document.getElementById('playersCarousel');
+    const viewport  = carousel?.querySelector('.players-viewport');
+    const trackEl   = carousel?.querySelector('.players-track');
+    const prevBtn   = document.querySelector('.car-btn.prev');
+    const nextBtn   = document.querySelector('.car-btn.next');
+
+    if (carousel && viewport && trackEl) {
+      let index = 0, step = 0, count = trackEl.children.length, autoId = null;
+
+      function computeStep() {
+        if (count < 2) { step = trackEl.getBoundingClientRect().width; return; }
+        const a = trackEl.children[0].getBoundingClientRect();
+        const b = trackEl.children[1].getBoundingClientRect();
+        step = Math.round(b.left - a.left);
+      }
+      function update() {
+        trackEl.style.transform = `translateX(${-(index * step)}px)`;
+      }
+      function maxIndex() {
+        const visible = Math.max(1, Math.floor(viewport.clientWidth / step));
+        return Math.max(0, count - visible);
+      }
+      function next() {
+        index = index >= maxIndex() ? 0 : index + 1;
+        update();
+      }
+      function prev() {
+        index = index <= 0 ? maxIndex() : index - 1;
+        update();
+      }
+      function startAuto() { if (!autoId && count > 1) autoId = setInterval(next, 3200); }
+      function stopAuto()  { if (autoId) { clearInterval(autoId); autoId = null; } }
+
+      window.pauseAuto = stopAuto;
+      window.resumeAuto = startAuto;
+
+      prevBtn?.addEventListener('click', () => { stopAuto(); prev(); startAuto(); });
+      nextBtn?.addEventListener('click', () => { stopAuto(); next(); startAuto(); });
+      carousel.addEventListener('mouseenter', stopAuto);
+      carousel.addEventListener('mouseleave', startAuto);
+      window.addEventListener('resize', () => { computeStep(); update(); });
+
+      computeStep(); update(); startAuto();
+
+      const visible = Math.max(1, Math.floor(viewport.clientWidth / step));
+      if (count <= visible) {
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
+        stopAuto();
+      }
+    }
+  })();
+  </script>
+
+</body>
+</html>
+
+{% else %}
+  <!-- Not published -->
+  <div style="max-width:640px;margin:80px auto;padding:40px 32px;border:1px solid #e5e7eb;border-radius:16px;background:#fff;text-align:center;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:64px;color:#f3f4f6;line-height:1;margin-bottom:16px;">IKF</div>
+    <h2 style="margin:0 0 10px;color:#111827;font-size:1.3rem;">Page not published yet</h2>
+    <p style="color:#6b7280;margin:0 0 8px;line-height:1.65;">This page isn't live yet. Please check back later.</p>
+    <p style="color:#9ca3af;font-size:.875rem;margin:0;">If you're the REP, use your secure onboarding link to submit or update your details.</p>
+  </div>
+{% endif %}
+
+{% endblock %}

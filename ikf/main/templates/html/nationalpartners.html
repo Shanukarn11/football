@@ -1,0 +1,58 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content">
+    <div style="height: 120px; background-color: white;"></div>
+    <!-- <div class="dez-bnr-inr overlay-black-middle"
+        style="background-image: url('{{nationalpartnersimages.NationalBannerImages}}')">
+        <div class="container">
+            <div class="dez-bnr-inr-entry">
+                <h1 class="text-white">{{ national_heading1 }}</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="breadcrumb-row">
+        <div class="container">
+            <ul class="list-inline">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>{{national_heading1}}</li>
+            </ul>
+        </div>
+    </div> -->
+
+    <!-- contact area -->
+    <div class="section-full content-inner bg-white">
+        <!-- Services -->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-8">
+
+                    <h2 class="text-uppercase m-b10">{{national_heading2}}</h2>
+                    <p>{{national_paragraph}}</p>
+                    <div class="row">
+                        {%for national_partners in national_partners1 %}
+                        <div class="col-lg-6 col-sm-6 m-b30">
+                            <div class="dez-box">
+                                <div class="dez-media">
+                                    <img loading="lazy"  src="{{national_partners.pic}}" alt="" />
+                                </div>
+                                <div class="dez-info p-a30 border-1">
+                                    <h4 class="dez-title m-t0">{{national_partners.heading}}</h4>
+                                    <p> {{national_partners.paragraph}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        {%endfor%}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Services END -->
+    </div>
+    <!-- contact area  END -->
+</div>
+<!-- Content END-->
+<!-- Footer -->
+{%endblock content%}

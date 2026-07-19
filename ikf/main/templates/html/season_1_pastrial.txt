@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content bg-white">
+  <div style="height: 120px; background-color: white;"></div>
+<!-- 
+    <div class="dez-bnr-inr overlay-black-middle" style="background-image:url('{{season1images.Season1Banner}}');">
+        <div class="container">
+            <div class="dez-bnr-inr-entry">
+                <h1 class="text-white">{{ Heading_season1 }}</h1>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="breadcrumb-row">
+        <div class="container">
+            <ul class="list-inline">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>{{ Heading_season1 }}</li>
+            </ul>
+        </div>
+    </div>
+     -->
+    <!-- contact area -->
+    <div class="section-full content-inner">
+        <!-- Product details -->
+        <div class="container woo-entry">
+            <div class=" m-b30">
+                <div class="row blog-post blog-md date-style-2">
+                    <div class="col-lg-4 col-md-4  col-sm-5 m-b30"> <img loading="lazy"
+                                src="{{season1images.Season1SidePic}}" alt="">
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-7">
+                        <div class="dez-post-title ">
+                            <h2 class="post-title">{{ Heading_season1 }}</h2>
+                        </div>
+                        <div class="dez-post-text">
+                            <p class="m-b10">{{ description_season1 }}</p>
+                        </div>
+                        <table class="table table-bordered">
+                            {%for tabels in tabel_pasttrial %}
+                            <tr>
+                              <td>{{tabels.First_Column }}</td>
+                              <td>{{tabels.Second_Column }}</td>
+                            </tr>
+                            {%endfor%}
+                          </table>
+                        <!-- <form method="post" class="cart"> {% csrf_token %}
+                            <button class="btn btn-primary site-button pull-left"><i class="fa fa"></i>
+                                {{ button_season1 }} </button>
+                        </form> -->
+                    </div>
+                </div>
+            </div>
+            <div class="section-full bg-img-fix content-inner overlay-black-middle our-projects-galery"
+                style="background-image:url('{{season1images.Season1FeatureBG}}'); background-position:center;">
+                <div class="container">
+                    <div class="row">
+                        {% for season1_feature in season1_features %}
+                        <div class="col-lg-3 col-sm-6 m-b30">
+                            <div
+                                class="border-1 p-a15 text-center text-white skew-triangle left-top hvr-wobble-horizontal">
+                                <div class="sports-icon ">
+                                    <img loading="lazy" width="85" height="85" src="{{ season1_feature.pic }}" alt="" />
+                                </div>
+                                <h4 class="text-capitalize">{{ season1_feature.name }}</h4>
+                                <div class="dez-separator-outer ">
+                                    <div class="dez-separator bg-primary style-liner"></div>
+                                </div>
+                                <p class="m-b0">{{ season1_feature.description }}
+                                </p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <!-- Clubs -->
+	    <div class="p-b30">
+			<div class="section-head text-center " style="padding-bottom:20px ; padding-top:20px ;">
+				<h2 class="h2 text-uppercase"> {{ Club_Heading }} </h2>
+				<div class="dez-separator-outer ">
+
+					<div class="dez-separator bg-primary style-liner"></div>
+				</div>
+			</div>
+			<div class="section-content" >
+			  <div
+				class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr"
+			  >
+			  {% for clubs in clubs_partner_home %}
+				<div class="item">
+				  <div class="ow-carousel-entry">
+					<div class="ow-entry-media dez-img-effect zoom-slow">
+					  <img loading="lazy" src="{{ clubs.pic }}" alt="" />
+					</div>
+					<div class="ow-entry-content">
+					  <div class="ow-entry-title">
+						<a href="#">{{ clubs.name }}</a>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				{% endfor %}
+			  </div>
+			</div>
+		  </div>
+		  <!-- Clubs END -->
+          <div class="section-full bg-white content-inner">
+            <div class="container">
+              <div class="section-head text-center">
+                <h2 class="h2">{{ winners_home }}</h2>
+                <div class="dez-separator-outer">
+                  <div class="dez-separator bg-primary style-liner"></div>
+                </div>
+                <p>{{ winners_paragraph }}</p>
+              </div>
+              <div class="section-content text-center">
+                <div
+                  class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr"
+                >
+                  {% for winner in winners %}
+                  <div class="item">
+                    <div class="dez-box m-b30 dez-img-effect vertical-pan dez-staff">
+                      <div class="dez-media vertical-pan dez-img-effect">
+                        <a href="javascript:;">
+                          <img loading="lazy" src="{{winner.pic}}" alt="" width="358" height="460" />
+                        </a>
+                      </div>
+                      <div class="p-a15 bg-primary text-white dez-team">
+                        <h4 class="dez-title text-capitalize m-t0">
+                          {{ winner.name|safe }}
+                        </h4>
+                        <div class="dez-separator-outer">
+                          <div class="dez-separator bg-white style-liner"></div>
+                        </div>
+                        <!-- <span class="dez-member-position"
+                          >{{winner.category_id}}</span
+                        > -->
+                        
+                                          <!-- <div class="m-t10">
+                                              <ul class="dez-social-icon dez-social-icon-lg border">
+                                                  <li><a href="{{winner.attr1}}" class="fa fa-facebook text-white"></a>
+                                                  </li>
+                                                  <li><a href="{{winner.attr2}}" class="fa fa-instagram text-white"></a>
+                                              </ul>
+                                          </div> -->
+                                      
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+            <!-- What peolpe are saying style 7 -->
+            <!-- <div class="section-full bg-white bg-img-fix content-inner-1">
+                <div class="container">
+                    <div class="section-head text-center">
+                        <h2 class="text-uppercase">{{selection_heading}}</h2>
+                        <div class="dez-separator bg-primary"></div>
+                    </div>
+                    <div class="section-content">
+                        <div class="owl-carousel owl-theme testimonial-four">
+                            {% for Selected_players in Selected_Season1 %}
+                            <div class="item">
+                                <div class="testimonial-4 ">
+                                    <div class="testimonial-pic"><img loading="lazy" src="{{Selected_players.pic}}" width="100"
+                                            height="100" alt=""></div>
+                                    <div class="testimonial-text text-white">
+                                        <p>{{Selected_players.Information|safe}}</p>
+                                    </div>
+                                    <div class="testimonial-detail"> <strong
+                                            class="testimonial-name text-white">{{Selected_players.Name}}</strong> <span
+                                            class="testimonial-position ">{{Selected_players.Age}}</span> </div>
+                                    <div class="quote-right"></div>
+                                </div>
+                            </div>
+                            {%endfor%}
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- What peolpe are saying style 7 END -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="dez-tabs border-tp product-description bg-tabs" style="padding-top:20px ;">
+                        <ul class="nav nav-tabs">
+                            <!-- <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#web-design-1"><i class="fa fa-globe"></i><span class="title-head"> Description</span></a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#graphic-design-1"><i class="fa fa-photo"></i> <span class="title-head">Additional Information</span></a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#developement-1"><i class="fa fa-cog"></i><span class="title-head"> Product Review</span></a></li> -->
+                            {% for tab in TrialsAndInitiativeNav %}
+                            <li class="nav-item"><a class="nav-link {{ tab.activestatus_id}}" data-toggle="tab"
+                                    href="#{{ tab.href }}"><i class="fa fa-globe"></i><span
+                                        class="title-head">{{tab.name}}</span></a>
+                            </li>
+
+                            {% endfor %}
+                        </ul>
+
+                        <div class="tab-content">
+                            {% for tab in TrialsAndInitiativeNav %}
+                            <div id="{{ tab.href }}" class="tab-pane {{ tab.activestatus_id }}">
+                              <p style="margin-bottom: 0;">{{ tab.description|safe}}</p>
+                      
+                              <div class="row justify-content-center">
+                                  <div class="col-lg-3 col-md-2 col-sm-1"></div> <!-- Left space -->
+                                  <div class="col-lg-6 col-md-8 col-sm-10 text-center"> 
+                                      <img loading="lazy" src="{{ tab.pic }}" class="img-fluid" style="margin-top: 0;">
+                                  </div>
+                                  <div class="col-lg-3 col-md-2 col-sm-1"></div> <!-- Right space -->
+                              </div>
+                      
+                          </div>
+                            
+                            <!-- <div id="{{ tab.href }}" class="tab-pane {{ tab.activestatus_id}}">
+                                <p  style="margin-bottom: 0;">{{ tab.description|safe}}</p> -->
+                                <!-- <p>{{tab.listtext|safe}}</p>
+                                <p>{{ tab.bottomtext }}</p> -->
+                                <!-- <img loading="lazy" src="{{tab.pic}}" style="margin-top: 0;">
+
+                            </div> -->
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Product details -->
+</div>
+<!-- contact area  END -->
+</div>
+<!-- Content END-->
+<!-- Footer -->
+{% endblock content %}

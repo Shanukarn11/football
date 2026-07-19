@@ -1,0 +1,354 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{{ page.heading }}</title>
+
+  <style>
+    :root{
+      --text: #111;
+      --paper-bg: #fff;
+    }
+
+    body{
+      margin:0;
+      background:#2f2f2f;                 /* dark viewer background */
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+    }
+
+    /* ===== A4 paper ===== */
+    .paper{
+      width: 210mm;
+      min-height: 297mm;
+      margin: 18px auto;
+      background: var(--paper-bg);
+      position: relative;
+      box-sizing: border-box;
+
+      /* Wider content so lines don't break early */
+      padding: 18mm 14mm 18mm;
+
+      overflow: hidden;
+      border-radius: 6px;
+    }
+
+    /* Watermark (behind content) */
+    .watermark{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      pointer-events:none;
+      user-select:none;
+      z-index:0;
+    }
+    .watermark img{
+      width: 145mm;
+      max-width: 85%;
+      opacity: 0.14;
+      transform: translateY(10mm);
+    }
+
+    /* content above watermark */
+    .content{ position:relative; z-index:1; }
+
+    /* Main top heading */
+    .h1{
+      text-align:center;
+      font-size: 26px;
+      font-weight: 800;
+      margin: 0 0 35px 0;
+      text-decoration: underline;
+      text-underline-offset: 5px;
+    }
+
+    /* Paragraph block */
+    .p{
+  font-size: 15px;
+  line-height: 1.45;
+  margin: 0;
+  white-space: pre-wrap;   /* ✅ keeps line breaks exactly as typed in admin */
+  word-break: break-word;
+}
+
+.download-wrap{
+  margin-top: 16px;
+}
+.download-btn{
+  display: inline-block;
+  padding: 10px 14px;
+  border: 1px solid #111;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111;
+  background: #ffc300;
+}
+.download-btn:hover{
+  background: #ffc300;
+}
+
+    /* Key-value lines */
+    .kv{
+      font-size: 15px;
+      line-height: 1.45;
+      margin: 0 0 6px 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .kv b{ font-weight: 800; }
+
+    a{ color:#1a73e8; text-decoration: underline; word-break: break-word; }
+
+    /* Section heading like GUIDELINES */
+    .section{
+      font-size: 20px;
+      font-weight: 800;
+      margin: 14px 0 8px;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* Guidelines block: exact as typed (no auto numbering) */
+    .guidelines{
+  margin: 0;
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.55;
+}
+   .g-item{
+  margin: 0 0 8px 0;               /* ✅ controlled gap between points */
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.g-item:last-child{
+  margin-bottom: 0;        /* ✅ no extra gap after last one */
+}
+.g-no{
+  width: 22px;                     /* ✅ keeps numbers aligned */
+  flex: 0 0 22px;
+  font-weight: 700;
+}
+.g-text{
+  flex: 1;
+  word-break: break-word;
+}
+    /* spacing helpers */
+    .gap-sm{ height: 8px; }
+    .gap-md{ height: 12px; }
+    .gap-lg{ height: 18px; }
+
+    /* Print as true A4 */
+    @page{ size: A4; margin: 0; }
+    @media print{
+      body{ background:#fff; }
+      .paper{
+        margin: 0;
+        border-radius: 0;
+      }
+      .page-break{
+        page-break-before: always;
+        break-before: page;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 900px){
+      body{ background:#fff; }
+      .paper{
+        width:auto;
+        min-height:auto;
+        margin:0;
+        border-radius:0;
+        padding: 18px 14px;
+      }
+      .watermark img{
+        width: 90%;
+        opacity: 0.10;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       PAGE 1: HINDI (if present)
+       ========================= -->
+  {% if page.heading_hi or page.message_hi or page.guidelines_hi or page.outro_hi %}
+    <div class="paper page-break">
+
+      <!-- watermark -->
+      {% if page.watermark_logo_url %}
+        <div class="watermark">
+          <img src="{{ page.watermark_logo_url }}" alt="Watermark">
+        </div>
+      {% else %}
+        <!-- fallback to static logo if field not present / empty -->
+        <div class="watermark">
+          <img src="{% static 'images/logo/ikflogo.png' %}" alt="Watermark">
+        </div>
+      {% endif %}
+
+      <div class="content">
+        <div class="h1">{{ page.heading_hi|default:"" }}</div>
+
+        {% if page.message_hi %}
+          <p class="p">{{ page.message_hi }}</p>
+          <div class="gap-md"></div>
+        {% endif %}
+
+        {% if page.event_date %}
+          <p class="kv"><b>आपको</b> {{ page.event_date }} <b>को आना होगा</b></p>
+        {% endif %}
+        {% if page.reporting_time %}
+          <p class="kv"><b>रिपोर्टिंग समय:</b> {{ page.reporting_time }}</p>
+        {% endif %}
+
+        <div class="gap-sm"></div>
+
+        {% if page.venue %}
+          <p class="kv"><b>Venue -</b> {{ page.venue }}</p>
+        {% endif %}
+        {% if page.map_link %}
+          <p class="kv"><b>जगह -</b> <a href="{{ page.map_link }}" target="_blank" rel="noopener">{{ page.map_link }}</a></p>
+        {% endif %}
+
+        <div class="gap-md"></div>
+
+        {% if page.outro_hi %}
+          <p class="p">{{ page.outro_hi }}</p>
+          <div class="gap-md"></div>
+        {% endif %}
+
+        {% if page.guidelines_hi %}
+  <div class="section">गाइडलाइन</div>
+
+  <div class="guidelines">
+    {% for line in page.guidelines_hi.splitlines %}
+      {% if line.strip %}
+        <div class="g-item">
+          {% if "." in line %}
+            <div class="g-no">{{ line|cut:" " |slice:":2" }}</div>
+            <div class="g-text">{{ line|slice:"2:" }}</div>
+          {% else %}
+            <div class="g-no"></div>
+            <div class="g-text">{{ line }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+
+        <div class="gap-md"></div>
+        <p class="p">धन्यवाद</p>
+        {% if show_download %}
+  <div class="download-wrap">
+    <a class="download-btn"
+       href="{% static 'pdf/consent.pdf' %}"
+       download>
+      Download Consent Form & NOC (PDF)
+    </a>
+  </div>
+{% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+
+  <!-- =========================
+       PAGE 2: ENGLISH (always)
+       ========================= -->
+  <div class="paper">
+
+    <!-- watermark -->
+    {% if page.watermark_logo_url %}
+      <div class="watermark">
+        <img src="{{ page.watermark_logo_url }}" alt="Watermark">
+      </div>
+    {% else %}
+      <div class="watermark">
+        <img src="{% static 'images/logo/ikflogo.png' %}" alt="Watermark">
+      </div>
+    {% endif %}
+
+    <div class="content">
+      <div class="h1">{{ page.heading }}</div>
+
+      {% if page.message_en %}
+        <p class="p">{{ page.message_en }}</p>
+        <div class="gap-md"></div>
+      {% endif %}
+
+      {% if page.event_date %}
+        <p class="kv">You must come on {{ page.event_date }}</p>
+      {% endif %}
+      {% if page.reporting_time %}
+        <p class="kv">Reporting Time: {{ page.reporting_time }}</p>
+      {% endif %}
+
+      <div class="gap-sm"></div>
+
+      {% if page.venue %}
+        <p class="kv"><b>Venue -</b> {{ page.venue }}</p>
+      {% endif %}
+      {% if page.map_link %}
+        <p class="kv"><b>Location -</b> <a href="{{ page.map_link }}" target="_blank" rel="noopener">{{ page.map_link }}</a></p>
+      {% endif %}
+
+      <div class="gap-md"></div>
+
+      {% if page.outro_en %}
+        <p class="p">{{ page.outro_en }}</p>
+      {% endif %}
+
+      <div class="gap-lg"></div>
+
+      {% if page.guidelines_en %}
+  <div class="section">GUIDELINES</div>
+
+  <div class="guidelines">
+    {% for line in page.guidelines_en.splitlines %}
+      {% if line.strip %}
+        <div class="g-item">
+          {% if "." in line %}
+            <div class="g-no">{{ line|cut:" " |slice:":2" }}</div>
+            <div class="g-text">{{ line|slice:"2:" }}</div>
+          {% else %}
+            <div class="g-no"></div>
+            <div class="g-text">{{ line }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+
+      <div class="gap-md"></div>
+      <p class="p">Thanks</p>
+      {% if show_download %}
+  <div class="download-wrap">
+    <a class="download-btn"
+       href="{% static 'pdf/consent.pdf' %}"
+       download>
+      Download Consent Form & NOC (PDF)
+    </a>
+  </div>
+{% endif %}
+
+    </div>
+  </div>
+
+</body>
+</html>

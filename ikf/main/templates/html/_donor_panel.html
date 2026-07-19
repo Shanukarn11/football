@@ -1,0 +1,333 @@
+{% load static %}
+
+<div class="donor-overlay" id="donorOverlay"></div>
+
+<aside class="donor-panel" id="donorPanel" aria-hidden="true">
+  <div class="panel-header">
+    <div>
+      <p class="panel-project-label">You are supporting</p>
+      <h3 class="panel-project-name" id="panelProjectName">&mdash;</h3>
+    </div>
+    <button type="button" class="panel-close" id="panelClose" aria-label="Close">&times;</button>
+  </div>
+
+  <form id="donorForm" onsubmit="return false;" autocomplete="on">
+    {% csrf_token %}
+
+    <div class="anon-row">
+      <input type="checkbox" id="anonToggle">
+      <label for="anonToggle">I prefer to donate anonymously</label>
+    </div>
+
+    <div class="field-group" id="nameField">
+      <label for="donorName">Your Name</label>
+      <input type="text" id="donorName" name="name" placeholder="Optional">
+    </div>
+
+    <div class="field-group" id="orgField">
+      <label for="donorOrg">Organisation (if applicable)</label>
+      <input type="text" id="donorOrg" name="organisation" placeholder="Optional">
+    </div>
+
+    <div class="field-group">
+      <label for="donorEmail">Email ID</label>
+      <input type="email" id="donorEmail" name="email" placeholder="Optional">
+    </div>
+
+    <p class="notice-80g">
+      To receive your 80G certificate, please enter your email ID.
+    </p>
+
+    <div class="field-group">
+      <label for="donorMobile">Mobile Number</label>
+      <input type="tel" id="donorMobile" name="mobile" placeholder="Optional">
+    </div>
+
+    <div class="field-group">
+      <label>Choose an amount (INR)</label>
+      <div class="preset-row" id="presetRow"></div>
+      <input type="number" id="donorAmount" name="amount" placeholder="Enter amount of your choice" min="1">
+    </div>
+
+    <button type="button" class="pay-btn" id="payBtn">Proceed to Pay</button>
+
+    <div class="pay-error" id="payError"></div>
+
+    <div class="confirm-card" id="confirmCard">
+      <h4>Thank you for your support.</h4>
+      <p id="confirmText">Your contribution has been recorded.</p>
+    </div>
+  </form>
+</aside>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+(function(){
+  const panel       = document.getElementById('donorPanel');
+  const overlay     = document.getElementById('donorOverlay');
+  const closeBtn    = document.getElementById('panelClose');
+  const projectName = document.getElementById('panelProjectName');
+  const anonToggle  = document.getElementById('anonToggle');
+  const nameField   = document.getElementById('nameField');
+  const orgField    = document.getElementById('orgField');
+  const presetRow   = document.getElementById('presetRow');
+  const amountInput = document.getElementById('donorAmount');
+  const payBtn      = document.getElementById('payBtn');
+  const payError    = document.getElementById('payError');
+  const confirmCard = document.getElementById('confirmCard');
+
+  let currentProject = '';
+  let currentHost    = null;
+
+  function openPanelForHost(host){
+    currentProject = host.dataset.project || '';
+    currentHost    = host;
+    projectName.textContent = currentProject;
+    renderPresets(host);
+    resetPanelState();
+
+    document.body.classList.add('donor-panel-open');
+    if (window.matchMedia('(max-width:768px)').matches){
+      host.insertAdjacentElement('afterend', panel);
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden','false');
+      setTimeout(()=>panel.scrollIntoView({behavior:'smooth', block:'nearest'}), 50);
+    } else {
+      overlay.classList.add('open');
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closePanel(){
+    panel.classList.remove('open');
+    overlay.classList.remove('open');
+    panel.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    document.body.classList.remove('donor-panel-open');
+  }
+
+  function resetPanelState(){
+    payError.classList.remove('show');
+    payError.textContent = '';
+    confirmCard.classList.remove('show');
+    document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
+    payBtn.disabled = false;
+    payBtn.style.opacity = '';
+    amountInput.value = '';
+    document.getElementById('donorName').value = '';
+    document.getElementById('donorOrg').value  = '';
+    document.getElementById('donorEmail').value = '';
+    document.getElementById('donorMobile').value = '';
+    anonToggle.checked = false;
+    nameField.style.display = '';
+    orgField.style.display  = '';
+    payBtn.textContent = 'Proceed to Pay';
+  }
+
+  function renderPresets(host){
+    const raw = (host.dataset.presets || '').split(',')
+      .map(x => parseInt(x.trim(), 10))
+      .filter(n => Number.isFinite(n) && n > 0);
+    presetRow.innerHTML = '';
+    raw.forEach(amt => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'preset-btn';
+      b.dataset.amt = amt;
+      b.textContent = '₹' + amt.toLocaleString('en-IN');
+      b.addEventListener('click', () => {
+        presetRow.querySelectorAll('.preset-btn').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        amountInput.value = amt;
+      });
+      presetRow.appendChild(b);
+    });
+  }
+
+  document.querySelectorAll('.support-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const host = btn.closest('[data-project]') || btn;
+      openPanelForHost(host);
+    });
+  });
+  closeBtn.addEventListener('click', closePanel);
+  overlay.addEventListener('click', closePanel);
+
+  /* ───────────────────────────────────────────────
+     Auto-open panel when returning from a project
+     detail page. When the user clicks "Know more"
+     on a project card, remember which project they
+     visited; on return to the donate page, open
+     that project's panel automatically.
+  ─────────────────────────────────────────────── */
+  const PENDING_PROJECT_KEY = 'ikf_pending_donate_project';
+
+  document.querySelectorAll('.project-card .read-more').forEach(link => {
+    link.addEventListener('click', () => {
+      const card = link.closest('[data-project]');
+      const name = card && card.dataset.project;
+      if (name) sessionStorage.setItem(PENDING_PROJECT_KEY, name);
+    });
+  });
+
+  const pendingProject = sessionStorage.getItem(PENDING_PROJECT_KEY);
+  if (pendingProject) {
+    sessionStorage.removeItem(PENDING_PROJECT_KEY);
+    const card = document.querySelector(
+      '.project-card[data-project="' + pendingProject.replace(/"/g, '\\"') + '"]'
+    );
+    if (card) {
+      setTimeout(() => {
+        openPanelForHost(card);
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+  }
+
+  anonToggle.addEventListener('change', ()=>{
+    const hide = anonToggle.checked;
+    nameField.style.display = hide ? 'none' : '';
+    orgField.style.display  = hide ? 'none' : '';
+    if (hide){
+      document.getElementById('donorName').value = '';
+      document.getElementById('donorOrg').value  = '';
+    }
+  });
+
+  amountInput.addEventListener('input', ()=>{
+    presetRow.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
+  });
+
+  function showError(msg){
+    payError.textContent = msg;
+    payError.classList.add('show');
+  }
+  function buildPayload(){
+    const isAnon = anonToggle.checked;
+    return {
+      name:         isAnon ? '' : document.getElementById('donorName').value.trim(),
+      organisation: isAnon ? '' : document.getElementById('donorOrg').value.trim(),
+      email:        document.getElementById('donorEmail').value.trim(),
+      mobile:       document.getElementById('donorMobile').value.trim(),
+      amount:       amountInput.value.trim(),
+      anonymous:    isAnon,
+      purpose:      [currentProject]
+    };
+  }
+
+  payBtn.addEventListener('click', ()=>{
+    payError.classList.remove('show');
+    const data = buildPayload();
+
+    if (data.mobile){
+      if (data.mobile.indexOf('0') === 0){
+        return showError('Mobile number should not start with 0.');
+      }
+      if (!/^\d{10}$/.test(data.mobile)){
+        return showError('Mobile number must be 10 digits.');
+      }
+    }
+
+    if (!data.amount || parseFloat(data.amount) <= 0){
+      return showError('Please enter an amount to proceed.');
+    }
+
+    sessionStorage.setItem('ikfdonationdata', JSON.stringify(data));
+    startRazorpay(data);
+  });
+
+  function startRazorpay(inputdata){
+    const AMOUNT = parseFloat(inputdata.amount);
+    const amountPaise = Math.round(AMOUNT * 100);
+    payBtn.disabled = true;
+    payBtn.textContent = 'Opening payment...';
+
+    fetch("{% url 'order' %}", {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/x-www-form-urlencoded',
+        'X-CSRFToken': '{{ csrf_token }}'
+      },
+      body: new URLSearchParams({
+        mobile: inputdata.mobile || '',
+        amount: AMOUNT,
+        project: currentProject || ''
+      })
+    })
+    .then(r => r.text())
+    .then(text => {
+      let res;
+      try { res = JSON.parse(text); }
+      catch(e){ throw new Error('Bad order response'); }
+
+      if (res.error === 'true' || res.error === true){
+        throw new Error(res.message || 'Order error');
+      }
+
+      sessionStorage.setItem('donation_order_id', res.order_id);
+      sessionStorage.setItem('donation_IKF_unique_id', res.ikfplayerunique);
+
+      openRazorpayCheckout({
+        order_id:   res.order_id,
+        unique_id:  res.ikfplayerunique,
+        amountPaise: amountPaise,
+        donor:      inputdata
+      });
+    })
+    .catch(err => {
+      payBtn.disabled = false;
+      payBtn.textContent = 'Proceed to Pay';
+      showError(err.message || 'Could not start payment. Please try again.');
+    });
+  }
+
+  function openRazorpayCheckout(opts){
+    if (typeof Razorpay === 'undefined'){
+      payBtn.disabled = false;
+      payBtn.textContent = 'Proceed to Pay';
+      showError('Payment SDK failed to load. Please refresh and try again.');
+      return;
+    }
+
+    const rzp = new Razorpay({
+      key:        "{{ RAZORPAY_KEY_ID }}",
+      amount:     opts.amountPaise,
+      currency:   "INR",
+      name:       "India Khelo Football",
+      description:"Donation - " + currentProject,
+      image:      "{% static 'images/ikflogo.png' %}",
+      order_id:   opts.order_id,
+      handler: function(resp){
+        localStorage.setItem("Donation_IKF_razorpay_payment_id", resp.razorpay_payment_id);
+        localStorage.setItem("Donation_IKF_razorpay_order_id",   resp.razorpay_order_id);
+        localStorage.setItem("Donation_IKF_razorpay_signature",  resp.razorpay_signature);
+        sessionStorage.removeItem("donation_source");
+        window.location.href = "{% url 'successpayment' %}";
+      },
+      prefill: {
+        name:    opts.donor.name    || '',
+        email:   opts.donor.email   || '',
+        contact: opts.donor.mobile  || ''
+      },
+      notes: { playerid: opts.unique_id, season: "S03", project: currentProject },
+      theme: { color: "#ffc107" },
+      modal: {
+        ondismiss: function(){
+          payBtn.disabled = false;
+          payBtn.textContent = 'Proceed to Pay';
+        }
+      }
+    });
+
+    rzp.on("payment.failed", function(resp){
+      payBtn.disabled = false;
+      payBtn.textContent = 'Proceed to Pay';
+      showError("Payment failed: " + (resp && resp.error && resp.error.description ? resp.error.description : "Please try again."));
+    });
+
+    rzp.open();
+  }
+})();
+</script>

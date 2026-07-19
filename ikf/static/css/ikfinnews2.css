@@ -1,0 +1,499 @@
+
+
+@font-face {
+  font-family: "Avenir" !important;
+  src: url("../fonts/AvenirLTStd-Roman.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.ikfinnews-fullpage {
+  max-width: 1200px; /* or any width you want */
+  margin: 4rem auto; /* this centers it horizontally */
+  padding: 20px;
+}
+
+.ikfinnews-heading p {
+  font-size: 3.5rem;
+  font-family: "Avenir", sans-serif;
+  font-weight: 600;
+  color: black !important;
+}
+
+.ikfinnews-hero-article {
+  display: flex;
+  align-items: stretch;
+  height: 450px;
+  gap: 5rem;
+  margin-top: 3rem;
+}
+
+.ikfinnews-heroimage {
+  flex: 0 0 70%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ikfinnews-heroimage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* ensures horizontal cropping */
+  border-radius: 12px;
+}
+
+.ikfinnews-herotext {
+  flex: 0 0 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 1rem;
+  text-align: left;
+}
+
+.ikfinnews-herotext h3 {
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+.ikfinnews-herotext-para-two {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .ikfinnews-hero-article {
+    flex-direction: column;
+    height: auto;
+    gap: 2rem;
+  }
+
+  .ikfinnews-heroimage,
+  .ikfinnews-herotext {
+    flex: 1 1 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .ikfinnews-herotext {
+    text-align: left;
+  }
+}
+/* Media Type Toggle */
+.ikfinnews-media-toggle {
+  display: flex;
+  gap: 0.75rem;
+  margin: 2rem 0 1.5rem;
+}
+
+.ikfinnews-media-toggle a {
+  text-decoration: none;
+}
+
+.ikfinnews-media-btn {
+  padding: 0.6rem 1.8rem;
+  border-radius: 30px;
+  font-family: "Avenir", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 2px solid transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.ikfinnews-media-btn:hover {
+  border-color: #ffc400;
+}
+
+.ikfinnews-media-btn.active {
+  background-color: #ffc400;
+  color: #000;
+  border-color: #ffc400;
+}
+
+/* Active filter button */
+.ikfinnews-filter.active {
+  background-color: #ffc400;
+  color: #000;
+}
+
+/* Digital/Print pills in the filter row */
+.ikfinnews-media-pill {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Vertical separator between toggle and type filters */
+.ikfinnews-filter-sep {
+  width: 1px;
+  background: #ccc;
+  align-self: stretch;
+  margin: 0 0.25rem;
+  flex-shrink: 0;
+}
+
+/*Filters Section*/
+.ikfinnews-filters {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+/* Remove default link styling */
+.ikfinnews-filters a {
+  text-decoration: none;
+}
+
+/* Styling for each button div */
+.ikfinnews-filter {
+  padding: 0.6rem 1.2rem;
+  min-width: 120px; /*  Minimum width for consistency */
+  text-align: center;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  font-weight: 500;
+  font-family: "Avenir", sans-serif;
+  font-size: 0.95rem;
+  color: black;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover highlight */
+.ikfinnews-filter:hover {
+  background-color: #ffc400;
+}
+
+
+/*Articles Section*/
+.ikfinnews-full-articles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* two columns */
+  gap: 0.5rem 4rem; /* vertical gap, horizontal gap */
+  margin-top: 2rem;
+  border-top: 1px solid #ccc;
+}
+
+.ikfinnews-article {
+  display: flex;
+  align-items: center;       /* center image + text vertically */
+  gap: 1.5rem;
+  padding-top: 1rem;
+  border-bottom: 1px solid #000;
+  padding-bottom: 1rem;
+  height: 260px;             /* uniform card height for every outlet */
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.ikfinnews-article-image {
+  width: 220px;              /* uniform square thumbnail */
+  height: 220px;
+  aspect-ratio: 1 / 1;       /* enforce 1:1 even if a value is overridden */
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ikfinnews-article-image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;         /* uniform thumbnail crop; full image shown in lightbox */
+  display: block;
+  border-radius: 10px;
+}
+
+.ikfinnews-titletext {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.ikfinnews-titletext h4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.ikfinnews-subtitle {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ikfinnews-titletext h4 {
+  font-weight: bold;
+}
+
+.ikfinnews-pub-and-date {
+  display: flex;
+  justify-content: left;
+  align-items: flex-end;
+  gap: 2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0rem !important;
+}
+
+@media (max-width: 768px) {
+  .ikfinnews-full-articles {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ikfinnews-article {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Make the entire card clickable using a pseudo-element */
+.ikfinnews-article::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+@media (max-width: 768px) {
+  .ikfinnews-fullpage {
+    max-width: 100%;
+    overflow-x: hidden;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  .ikfinnews-heading p {
+    font-size: 2.2rem;
+    text-align: center;
+  }
+
+  .ikfinnews-hero-article {
+    flex-direction: column;
+    height: auto;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .ikfinnews-heroimage,
+  .ikfinnews-herotext {
+    flex: 1 1 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .ikfinnews-herotext {
+    text-align: center;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .ikfinnews-full-articles {
+    grid-template-columns: 1fr;
+    gap: 1.5rem 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  .ikfinnews-article {
+    flex-direction: column;
+    width: 100%;
+    height: auto;            /* allow card to grow on mobile */
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    padding: 1rem 0;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .ikfinnews-article::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    max-width: 100%;
+    max-height: 100%;
+    z-index: 1;
+  }
+
+  .ikfinnews-article-image {
+    width: 100%;
+    max-width: 280px;        /* keep the square readable on phones */
+    height: auto;
+    aspect-ratio: 1 / 1;     /* stay square on mobile too */
+    margin: 0 auto;
+    border-radius: 10px;
+  }
+
+  .ikfinnews-titletext {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem; /* 🔧 reduces vertical spacing */
+  }
+
+  .ikfinnews-titletext-top {
+    margin-bottom: 0.25rem; /* optional */
+  }
+
+  .ikfinnews-pub-and-date {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.25rem;
+  }
+
+  .ikfinnews-filters {
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .ikfinnews-filter {
+    min-width: 100px;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .ikfinnews-herotext-para-two {
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .ikfinnews-media-toggle {
+    justify-content: center;
+  }
+
+  .ikfinnews-media-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1.4rem;
+  }
+}
+
+/* Print Media Lightbox */
+.ikfinnews-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+
+.ikfinnews-lightbox.open {
+  display: flex;
+}
+
+.ikfinnews-lightbox-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+.ikfinnews-lightbox-content {
+  position: relative;
+  z-index: 1;
+  background: #1a1a1a;
+  border-radius: 16px;
+  max-width: 720px;
+  width: 92%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+}
+
+.ikfinnews-lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 1;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  z-index: 2;
+}
+
+.ikfinnews-lightbox-close:hover {
+  background: rgba(255, 196, 0, 0.5);
+}
+
+.ikfinnews-lightbox-image-wrap {
+  width: 100%;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+  max-height: 460px;
+}
+
+.ikfinnews-lightbox-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #111;
+}
+
+.ikfinnews-lightbox-body {
+  padding: 1.5rem 2rem 2rem;
+  color: #fff;
+}
+
+.ikfinnews-lightbox-body h3 {
+  font-family: "Avenir", sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.ikfinnews-lightbox-body p {
+  font-family: "Avenir", sans-serif;
+  font-size: 0.95rem;
+  color: #ccc;
+  line-height: 1.7;
+}
+
+.ikfinnews-lightbox-meta {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.2rem;
+  font-family: "Avenir", sans-serif;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+@media (max-width: 768px) {
+  .ikfinnews-lightbox-body {
+    padding: 1.2rem 1.2rem 1.5rem;
+  }
+
+  .ikfinnews-lightbox-body h3 {
+    font-size: 1.1rem;
+  }
+}

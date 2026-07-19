@@ -1,0 +1,224 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<div class="ikfinnews-fullpage">
+  <!--Title-->
+  <div class="ikfinnews-heading">
+    <p>IKF In News</p>
+  </div>
+
+  <!--Hero Article-->
+  <div class="ikfinnews-hero-article" data-url="{{ ikfinnews_banner.link }}">
+    <div class="ikfinnews-heroimage">
+      <img loading="lazy" src="{{ ikfinnews_banner.pic }}" alt="{{ ikfinnews_banner.heading }}" />
+    </div>
+    <div class="ikfinnews-herotext">
+      <div>
+        <h3>{{ ikfinnews_banner.heading }}</h3>
+        <p class="ikfinnews-herotext-para-one ikf-para">{{ ikfinnews_banner.description }}</p>
+        <div class="ikfinnews-herotext-para-two ikf-para">
+          <p>{{ ikfinnews_banner.name }}</p>
+          <p>{{ ikfinnews_banner.date }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Buttons -->
+  <div class="ikfinnews-filters">
+    <a href="?type=All"><div class="ikfinnews-filter {% if selected_type == 'All' %}active{% endif %}">All</div></a>
+    <a href="?type=Trials"><div class="ikfinnews-filter {% if selected_type == 'Trials' %}active{% endif %}">Trials</div></a>
+    <a href="?type=Workshop"><div class="ikfinnews-filter {% if selected_type == 'Workshop' %}active{% endif %}">Workshop</div></a>
+    <a href="?type=Social Impact"><div class="ikfinnews-filter {% if selected_type == 'Social Impact' %}active{% endif %}">Social Impact</div></a>
+    <a href="?type=Partners"><div class="ikfinnews-filter {% if selected_type == 'Partners' %}active{% endif %}">Partners</div></a>
+    <a href="?type=Career 360"><div class="ikfinnews-filter {% if selected_type == 'Pathway 360' %}active{% endif %}">Pathway 360</div></a>
+    <a href="?type=Scouting"><div class="ikfinnews-filter {% if selected_type == 'Scouting' %}active{% endif %}">Scouting</div></a>
+  </div>
+
+  <!-- Articles -->
+  <div class="ikfinnews-full-articles">
+    {% for item in ikfinnews_news %}
+    {% if item.media_type == 'print' %}
+    <div class="ikfinnews-article ikfinnews-print-card"
+         data-img="{{ item.pic }}"
+         data-heading="{{ item.heading }}"
+         data-desc="{{ item.description }}"
+         data-name="{{ item.name }}"
+         data-date="{{ item.date }}">
+      <div class="ikfinnews-article-image">
+        <img loading="lazy" src="{{ item.pic }}" alt="{{ item.heading }}" />
+      </div>
+      <div class="ikfinnews-titletext">
+        <div class="ikfinnews-titletext-top">
+          <h4>{{ item.heading }}</h4>
+          <p class="ikfinnews-subtitle ikf-para">
+            {% if item.description|length > 100 %}{{ item.description|slice:":100" }}...{% else %}{{ item.description }}{% endif %}
+          </p>
+        </div>
+        <div class="ikfinnews-pub-and-date ikf-para">
+          <p>{{ item.name }}</p>
+          <p>{{ item.date }}</p>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="ikfinnews-article" data-url="{{ item.link }}">
+      <div class="ikfinnews-article-image">
+        <img loading="lazy" src="{{ item.pic }}" alt="{{ item.heading }}" />
+      </div>
+      <div class="ikfinnews-titletext">
+        <div class="ikfinnews-titletext-top">
+          <h4>{{ item.heading }}</h4>
+          <p class="ikfinnews-subtitle ikf-para">
+            {% if item.description|length > 100 %}{{ item.description|slice:":100" }}...{% else %}{{ item.description }}{% endif %}
+          </p>
+        </div>
+        <div class="ikfinnews-pub-and-date ikf-para">
+          <p>{{ item.name }}</p>
+          <p>{{ item.date }}</p>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  // Digital cards: open link
+  document.querySelectorAll('.ikfinnews-article:not(.ikfinnews-print-card)').forEach(card => {
+    card.addEventListener('click', function () {
+      const url = this.dataset.url;
+      if (!url) return;
+      if (url.startsWith('http://') || url.startsWith('https://')) {
+        window.open(url, '_blank');
+      } else {
+        window.location.href = url;
+      }
+    });
+  });
+
+  const hero = document.querySelector('.ikfinnews-hero-article');
+  if (hero) {
+    hero.style.cursor = 'pointer';
+    hero.addEventListener('click', function () {
+      const url = this.dataset.url;
+      if (!url) return;
+      if (url.startsWith('http://') || url.startsWith('https://')) {
+        window.open(url, '_blank');
+      } else {
+        window.location.href = url;
+      }
+    });
+  }
+
+  // ── Lightbox ──
+  const lb = document.createElement('div');
+  lb.id = 'ikfLightbox';
+  lb.innerHTML = `
+    <div id="ikfLbOverlay"></div>
+    <div id="ikfLbPanel">
+      <button id="ikfLbClose">&times;</button>
+      <div id="ikfLbImgWrap"><img id="ikfLbImg" src="" alt="" /></div>
+      <div id="ikfLbBody">
+        <h3 id="ikfLbHeading"></h3>
+        <p id="ikfLbDesc"></p>
+        <div id="ikfLbMeta"><span id="ikfLbName"></span><span id="ikfLbDate"></span></div>
+      </div>
+    </div>`;
+  document.body.appendChild(lb);
+
+  Object.assign(lb.style, {
+    display: 'none', position: 'fixed', inset: '0',
+    zIndex: '999999', alignItems: 'center', justifyContent: 'center'
+  });
+  const overlay = document.getElementById('ikfLbOverlay');
+  Object.assign(overlay.style, {
+    position: 'absolute', inset: '0',
+    background: 'rgba(0,0,0,0.78)', backdropFilter: 'blur(5px)'
+  });
+  const panel = document.getElementById('ikfLbPanel');
+  Object.assign(panel.style, {
+    position: 'relative', zIndex: '1',
+    background: '#1a1a1a', borderRadius: '16px',
+    maxWidth: '95vw', width: 'auto', maxHeight: '92vh',
+    overflow: 'hidden', display: 'flex', flexDirection: 'column',
+    boxShadow: '0 24px 64px rgba(0,0,0,0.7)'
+  });
+  const closeBtn = document.getElementById('ikfLbClose');
+  Object.assign(closeBtn.style, {
+    position: 'absolute', top: '0.8rem', right: '0.9rem',
+    background: 'rgba(255,255,255,0.13)', border: 'none',
+    color: '#fff', fontSize: '1.5rem', width: '2rem', height: '2rem',
+    borderRadius: '50%', cursor: 'pointer', zIndex: '10',
+    display: 'flex', alignItems: 'center', justifyContent: 'center'
+  });
+  const imgWrap = document.getElementById('ikfLbImgWrap');
+  Object.assign(imgWrap.style, {
+    flex: '1 1 auto', overflow: 'hidden',
+    borderRadius: '16px 16px 0 0', background: '#111',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    minHeight: '0'
+  });
+  const lbImg = document.getElementById('ikfLbImg');
+  Object.assign(lbImg.style, {
+    maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto',
+    display: 'block', objectFit: 'contain'
+  });
+  const lbBody = document.getElementById('ikfLbBody');
+  Object.assign(lbBody.style, {
+    flex: '0 0 auto', padding: '1.2rem 1.8rem 1.4rem', color: '#1a1a1a',
+    overflowY: 'auto', display: 'flex', flexDirection: 'column', justifyContent: 'center',
+    background: '#ffe680', maxHeight: '30vh'
+  });
+  document.getElementById('ikfLbHeading').style.cssText =
+    'font-weight:700;font-size:1.2rem;margin-bottom:1rem;color:#1a1a1a;font-family:Avenir,sans-serif;line-height:1.4;';
+  document.getElementById('ikfLbDesc').style.cssText =
+    'color:#1a1a1a;line-height:1.75;font-size:0.9rem;font-family:Avenir,sans-serif;flex:1;';
+  const lbMeta = document.getElementById('ikfLbMeta');
+  Object.assign(lbMeta.style, {
+    display: 'flex', flexDirection: 'column', gap: '0.3rem', marginTop: '1.5rem',
+    color: '#333', fontSize: '0.83rem', fontFamily: 'Avenir,sans-serif'
+  });
+
+  function applyResponsiveLayout() {
+    // Image displayed in original aspect ratio; panel sizes to viewport.
+    if (window.innerWidth < 600) {
+      lbBody.style.maxHeight = '40vh';
+    } else {
+      lbBody.style.maxHeight = '30vh';
+    }
+  }
+  window.addEventListener('resize', applyResponsiveLayout);
+
+  function openLightbox(img, heading, desc, name, date) {
+    applyResponsiveLayout();
+    lbImg.src = img;
+    lbImg.alt = heading;
+    document.getElementById('ikfLbHeading').textContent = heading;
+    document.getElementById('ikfLbDesc').textContent = desc;
+    document.getElementById('ikfLbName').textContent = name;
+    document.getElementById('ikfLbDate').textContent = date;
+    lb.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lb.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.ikfinnews-print-card').forEach(card => {
+    card.addEventListener('click', function () {
+      openLightbox(
+        this.dataset.img, this.dataset.heading,
+        this.dataset.desc, this.dataset.name, this.dataset.date
+      );
+    });
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+  overlay.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+
+{% endblock content %}

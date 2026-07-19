@@ -1,0 +1,277 @@
+{% extends 'base.html' %} 
+{% load query_transform %}
+{% load static %} 
+{% block content %}
+
+<div class="internal-dashboard">
+  
+  <!-- PLAYERS_WITH_A_PROFILE -->
+  <section class="data-section" id="players_visited_section">
+
+    <div class="title_database">
+    <h1>Internal Database Dashboard</h1>
+    <a href="{% url 'dashboard_logout' %}" class="logout-button">Logout</a>
+    </div>
+
+    <h2>Players With a Profile</h2>
+
+  <form method="get">
+    <div class="filters">
+
+      <!-- Row 1: Gender, City, Project City -->
+      <div class="filter-row">
+        <div class="filter-item">
+          <label>Gender:</label>
+          <select name="gender">
+            <option value="">--Select--</option>
+            {% for g in genders %}
+            <option value="{{ g }}" {% if request.GET.gender == g %}selected{% endif %}>{{ g }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="filter-item">
+          <label>City:</label>
+          <select name="city">
+            <option value="">--Select--</option>
+            {% for c in cities %}
+            <option value="{{ c }}" {% if request.GET.city == c %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="filter-item">
+          <label>Project City:</label>
+          <select name="project_city">
+            <option value="">--Select--</option>
+            {% for pc in project_cities %}
+            <option value="{{ pc }}" {% if request.GET.project_city == pc %}selected{% endif %}>{{ pc }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 2: Height, Weight -->
+      <div class="filter-row">
+        <div class="filter-item">
+          <label>Height:</label>
+          <div class="minmax-group">
+            <input type="number" name="height_min" placeholder="Min" value="{{ request.GET.height_min }}">
+            <input type="number" name="height_max" placeholder="Max" value="{{ request.GET.height_max }}">
+          </div>
+        </div>
+
+        <div class="filter-item">
+          <label>Weight:</label>
+          <div class="minmax-group">
+            <input type="number" name="weight_min" placeholder="Min" value="{{ request.GET.weight_min }}">
+            <input type="number" name="weight_max" placeholder="Max" value="{{ request.GET.weight_max }}">
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Assigned Position, Position, Secondary Position -->
+      <div class="filter-row">
+        <div class="filter-item">
+          <label>Assigned Position:</label>
+          <select name="assigned_position">
+            <option value="">--Select--</option>
+            {% for ap in assigned_positions %}
+            <option value="{{ ap }}" {% if request.GET.assigned_position == ap %}selected{% endif %}>{{ ap }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="filter-item">
+          <label>Position:</label>
+          <select name="position">
+            <option value="">--Select--</option>
+            {% for p in positions %}
+            <option value="{{ p }}" {% if request.GET.position == p %}selected{% endif %}>{{ p }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="filter-item">
+          <label>Secondary Position:</label>
+          <select name="secondary_position">
+            <option value="">--Select--</option>
+            {% for sp in secondary_positions %}
+            <option value="{{ sp }}" {% if request.GET.secondary_position == sp %}selected{% endif %}>{{ sp }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 4: LevelData, Age Group, Preference Foot -->
+      <div class="filter-row">
+        <div class="filter-item">
+          <label>Level Data:</label>
+          <select name="leveldata">
+            <option value="">--Select--</option>
+            {% for l in leveldatas %}
+            <option value="{{ l }}" {% if request.GET.leveldata == l %}selected{% endif %}>{{ l }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="filter-item">
+          <label>Age Group:</label>
+          <select name="age_group">
+            <option value="">--Select--</option>
+            <option value="u13" {% if request.GET.age_group == 'u13' %}selected{% endif %}>U13</option>
+            <option value="u15" {% if request.GET.age_group == 'u15' %}selected{% endif %}>U15</option>
+            <option value="u17" {% if request.GET.age_group == 'u17' %}selected{% endif %}>U17</option>
+          </select>
+        </div>
+
+        <div class="filter-item">
+          <label>Preference Foot:</label>
+          <select name="foot_preference">
+            <option value="">--Select--</option>
+            {% for fp in foot_preferences %}
+            <option value="{{ fp }}" {% if request.GET.foot_preference == fp %}selected{% endif %}>{{ fp }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 5: Season, Project Name -->
+      <div class="filter-row">
+        <div class="filter-item">
+          <label>Season:</label>
+          <select name="season">
+            <option value="">--Select--</option>
+            {% for s in seasons %}
+            <option value="{{ s }}" {% if request.GET.season == s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="filter-item">
+          <label>Project Name:</label>
+          <select name="project_name">
+            <option value="">--Select--</option>
+            {% for pn in project_names %}
+            <option value="{{ pn }}" {% if request.GET.project_name == pn %}selected{% endif %}>{{ pn }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <button type="submit" class="ikf-button">Apply Filters</button>
+      </div>
+
+    </div>
+  </form>
+
+  <div class="download-links">
+    <a href="?{% query_transform request.GET 'download=csv' %}">Download CSV</a>
+    <a href="?{% query_transform request.GET 'download=excel' %}">Download Excel</a>
+  </div>
+
+    <!-- Add filters here similar to your existing template using context variables -->
+
+    <div class="table-container table-scroll-window">
+      <table border="1">
+        <tr>
+          <th>Global ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>User City</th>
+          <th>Project City</th>
+          <th>Project Name</th>
+          <th>Assign ID</th>
+          <th>Assigned Position</th>
+          <th>Position</th>
+          <th>Secondary Position</th>
+          <th>LevelData</th>
+          <th>DOB</th>
+          <th>Preference Foot</th>
+          <th>Height</th>
+          <th>Weight</th>
+          <th>Season</th>
+        </tr>
+        {% for p in players_with_a_profile %}
+        <tr>
+          <td>{{ p.global_id }}</td>
+          <td>{{ p.FirstName }}</td>
+          <td>{{ p.LastName }}</td>
+          <td>{{ p.UserCityName }}</td>
+          <td>{{ p.ProjectCityName }}</td>
+          <td>{{ p.ProjectName }}</td>
+          <td>{{ p.assign_id }}</td>
+          <td>{{ p.AssignedPosition }}</td>
+          <td>{{ p.Position }}</td>
+          <td>{{ p.SecondaryPosition }}</td>
+          <td>{{ p.LevelData }}</td>
+          <td>{{ p.Dob }}</td>
+          <td>{{ p.PreferenceFoot }}</td>
+          <td>{{ p.Height }}</td>
+          <td>{{ p.Weight }}</td>
+          <td>{{ p.season }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function(){
+
+  // Auto-submit form on dropdown change except for ranges
+  $('.filters select').not('[name="height_min"], [name="height_max"], [name="weight_min"], [name="weight_max"]').change(function(){
+    applyFilters();
+  });
+
+  // Apply button for height & weight
+  $('.filters button[type="submit"]').click(function(e){
+    e.preventDefault(); // prevent default form submission
+    applyFilters();
+  });
+
+  function applyFilters(){
+    const data = {
+      gender: $('select[name="gender"]').val(),
+      city: $('select[name="city"]').val(),
+      project_city: $('select[name="project_city"]').val(),
+      height_min: $('input[name="height_min"]').val(),
+      height_max: $('input[name="height_max"]').val(),
+      weight_min: $('input[name="weight_min"]').val(),
+      weight_max: $('input[name="weight_max"]').val(),
+      assigned_position: $('select[name="assigned_position"]').val(),
+      position: $('select[name="position"]').val(),
+      secondary_position: $('select[name="secondary_position"]').val(),
+      leveldata: $('select[name="leveldata"]').val(),
+      age_group: $('select[name="age_group"]').val(),
+      foot_preference: $('select[name="foot_preference"]').val(),
+      season: $('select[name="season"]').val(),
+      project_name: $('select[name="project_name"]').val(),
+      csrfmiddlewaretoken: '{{ csrf_token }}'
+    };
+
+    $.ajax({
+      url: "{% url 'players_with_a_profile' %}",
+      data: data,
+      type: "GET",
+      success: function(response){
+        // Replace only the table container with new filtered data
+        $('.table-container').html(
+          $(response).find('.table-container').html()
+        );
+      },
+      error: function(xhr, status, error){
+        console.log("Error applying filters:", error);
+      }
+    });
+  }
+
+});
+</script>
+
+  
+{% endblock content %}

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}IKF Pathway 360 Partner: Build the Future of Football Together | India Khelo Football{% endblock %}
+
+{% block content %}
+{% include 'html/ikf360/_base_styles.html' %}
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="ikf-section i360-hero">
+  <div class="ikf-wrap">
+    <div class="i360-hero__grid">
+      <div class="i360-hero__left">
+        <div class="i360-hero__eyebrow">IKF Pathway 360 · Partner</div>
+        <h1 class="i360-hero__title">
+          IKF Pathway 360 Partner. <span>Build the Future of Football Together</span>
+        </h1>
+        <p class="i360-hero__lead">
+          IKF Pathway 360 Partner is for organizations, institutions, and brands that want to create real, grassroots impact in Indian football.
+        </p>
+        <div class="i360-ctas">
+          <a class="i360-btn primary" href="#partnership-areas">Explore Partnership Areas</a>
+          <a class="i360-btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=partnerships@indiakhelofootball.com&su=IKF%20360%20Partner" target="_blank" rel="noopener">Become a Partner</a>
+        </div>
+      </div>
+      <div class="i360-hero__right">
+        <div class="i360-hero__media">
+          <img src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/ikf360.jpg' %}{% endif %}"
+               alt="IKF Pathway 360 Partner"
+               loading="eager" />
+          {% if hero_image and hero_image.caption %}
+            <div class="i360-hero__caption">{{ hero_image.caption }}</div>
+          {% else %}
+            <div class="i360-hero__caption">IKF Pathway 360 Partner</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ CO-CREATION ═══════════════════════ -->
+<section class="ikf-section" id="partnership-areas">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Partners become a critical part of the ecosystem by enabling</h2>
+    <div class="ikf-soft">
+      <ul class="i360-bullets">
+        <li>Talent identification programs.</li>
+        <li>Community and grassroots events.</li>
+        <li>Infrastructure and access.</li>
+        <li>Awareness and education initiatives.</li>
+      </ul>
+      <p style="margin-top:12px;"><strong>This is co-creation of a national football movement.</strong></p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ BOTTOM CTA ═══════════════════════ -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <div class="i360-banner">
+      <div class="i360-ctas">
+        <a class="i360-btn primary" href="#partnership-areas">Explore Partnership Areas</a>
+        <a class="i360-btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=partnerships@indiakhelofootball.com&su=IKF%20360%20Partner" target="_blank" rel="noopener">Become a Partner</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

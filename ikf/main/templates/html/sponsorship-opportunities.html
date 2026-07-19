@@ -1,0 +1,127 @@
+{% extends 'base.html' %} {% load static %} 
+
+{% block title %}Invest in Social Impact | Empower India's Future - India Khelo Football{% endblock title %}
+
+{% block meta_description %}Invest in India's future through football with India Khelo Football (IKF). Your CSR investment supports essential life skills, health and well-being, gender equality, and community development. Join us in creating a lasting legacy of empowered youth, vibrant communities, and a healthier, more equitable society. Together, we can build a stronger India.{% endblock meta_description%}
+
+{% block meta_keywords %}Invest in Social Impact, India Khelo Football, CSR investment, football in India, youth empowerment, community development, gender equality, health and well-being, social impact through sport{% endblock meta_keywords%} 
+
+{% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content">
+    <style>
+        .animated-button {
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      color: black; /* Text always visible */
+      text-decoration: none;
+      background-color: #E4AE00;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      position: fixed; /* Makes the button float */
+      bottom: 20px; /* Adjust position */
+      right: 20px;
+      margin-left: 20px;
+      overflow: hidden;
+      transition: transform 0.3s ease-in-out;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      animation: floatUpDown 2s infinite ease-in-out;
+      z-index: 999; /* Ensure it stays above other elements */
+    }
+    
+    .animated-button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      z-index: 1; 
+      filter: blur(6px);
+      transform: translateX(-100%) rotate(45deg);
+      transition: transform 0.3s ease-in-out;
+      animation: borderShine 3s infinite linear;
+    }
+    
+    .animated-button::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 1; /* Same level as ::before */
+    }
+    
+    .animated-button:hover {
+      transform: scale(1.1);
+    }
+    
+    @keyframes floatUpDown {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    
+    @keyframes borderShine {
+      0% {
+        transform: translateX(-100%) rotate(45deg);
+      }
+      100% {
+        transform: translateX(100%) rotate(45deg);
+      }
+    }
+    
+    </style>
+
+    <div style="height: 120px; background-color: white;"></div>
+    <!-- <div class="dez-bnr-inr overlay-black-middle" style="background-image:url('{{sponsorship_opportunities_banner}}');">
+        <div class="container">
+            <div class="dez-bnr-inr-entry">
+                <h1 class="text-white">Sponsorship Opportunities</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="breadcrumb-row">
+        <div class="container">
+            <ul class="list-inline">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>Sponsorship Opportunities</li>
+            </ul>
+        </div>
+    </div> -->
+
+    <!-- contact area -->
+    <div class="container m-t70">
+        <div class="section-content">
+            <div class="row">
+                <div class="col-lg-12 text-center section-head m-0">
+                    <h2 class="h4">{{sponsorship_opportunities_heading}}</h2>
+                    <div class="dez-separator bg-primary"></div>
+                </div>
+                
+                <div class="text-left p-3">
+                    {{sponsorship_opportunities_detail_text | safe}}
+                </div>
+
+                <a href="/main/media/ui/download/National-Finals-Sponsorship-Proposal.pdf"
+                download="National-Finals-Sponsorship-Proposal.pdf" class="animated-button">Download 
+                National Final
+                Sponsorship Opportunity</a>
+            </div>
+        </div>
+    </div>
+        <!-- contact area END -->
+</div>
+    <!-- Content END-->
+    {% endblock content %}

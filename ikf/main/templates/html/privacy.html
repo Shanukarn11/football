@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Privacy Policy | India Khelo Football{% endblock %}
+
+{% block content %}
+<style>
+  :root{
+    --ink:#0f172a;
+    --muted:#475569;
+    --line:#e5e7eb;
+    --paper:#ffffff;
+    --bg:#fffef2; /* IKF butter-ish */
+  }
+
+  .privacy-page{
+    background: var(--bg);
+    padding: 32px 0;
+  }
+
+  .privacy-wrap{
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 18px;
+  }
+
+  .privacy-card{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 26px 22px;
+  }
+
+  .privacy-card h1{
+    margin: 0 0 8px;
+    color: var(--ink);
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  .privacy-card p{
+    margin: 0 0 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  .privacy-card h2{
+    margin: 18px 0 8px;
+    color: var(--ink);
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .privacy-list{
+    margin: 0 0 14px;
+    padding-left: 18px;
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  .privacy-note{
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: #f8fafc;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .privacy-email{
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: underline;
+  }
+</style>
+
+<section class="privacy-page">
+  <div class="privacy-wrap">
+    <div class="privacy-card">
+      <h1>Privacy Policy</h1>
+      <p>
+        This Privacy Policy explains how <strong>India Khelo Football (IKF)</strong> collects, uses, stores, and protects your information
+        when you use our website, services, or features (including login or posting integrations).
+      </p>
+
+      <p><strong>Last updated:</strong> {{ "2025-12-26" }}</p>
+
+      <h2>1) What data we collect</h2>
+      <p>Depending on what you use on IKF, we may collect:</p>
+      <ul class="privacy-list">
+        <li><strong>Basic identity data:</strong> name, email address, phone number (if provided)</li>
+        <li><strong>Profile / social data:</strong> LinkedIn profile ID / public profile URL (if you connect LinkedIn)</li>
+        <li><strong>Account and usage data:</strong> login timestamps, pages/actions used on the site</li>
+        <li><strong>Technical data:</strong> device/browser info, IP address (for security and analytics)</li>
+      </ul>
+
+      <h2>2) Why we collect it</h2>
+      <ul class="privacy-list">
+        <li>To enable <strong>login</strong> and account access</li>
+        <li>To support <strong>posting / integrations</strong> (e.g., LinkedIn-related features if enabled)</li>
+        <li>To operate, improve, and secure IKF services (fraud prevention, debugging, performance)</li>
+        <li>To contact you for support or important service updates (when required)</li>
+      </ul>
+
+      <h2>3) Where your data is stored</h2>
+      <p>
+        Your information is stored in IKF’s internal systems, including our <strong>database (DB)</strong> and supporting infrastructure
+        used to run the website and its services.
+      </p>
+
+      <h2>4) Who can access it</h2>
+      <p>
+        Access is restricted to <strong>authorized IKF admins</strong> and team members who need it to operate, maintain,
+        and support the platform.
+      </p>
+
+      <h2>5) Data deletion requests</h2>
+      <p>
+        You can request deletion of your data by emailing us from your registered email address.
+        We may verify your request before processing it.
+      </p>
+      <p>
+        Email: <a class="privacy-email" href="https://mail.google.com/mail/?view=cm&fs=1&to=support@indiakhelofootball.com" target="_blank" rel="noopener">support@indiakhelofootball.com</a>
+      </p>
+
+      <h2>6) Contact</h2>
+      <p>
+        If you have questions about this policy or your data, contact:
+        <a class="privacy-email" href="https://mail.google.com/mail/?view=cm&fs=1&to=support@indiakhelofootball.com" target="_blank" rel="noopener">support@indiakhelofootball.com</a>
+      </p>
+
+      <div class="privacy-note">
+        Note: If IKF adds new features (e.g., additional integrations), we may update this policy to reflect changes in data handling.
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

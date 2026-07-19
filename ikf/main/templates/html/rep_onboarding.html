@@ -1,0 +1,422 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rep Onboarding — {{ rep.rep_name }}</title>
+
+  <style>
+    :root{ --ink:#0f172a; --muted:#475569; --line:#e5e7eb; --bg:#ffffff; --card:#ffffff; --amber:#ffc300; --amber-600:#e0ae00; --amber-50:#fff8db; }
+    *{ box-sizing:border-box }
+    html,body{ background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; font-size:17px; line-height:1.6; margin:0 }
+    .wrap{max-width:980px;margin:28px auto;padding:0 20px}
+    h1{font-size:clamp(28px,4.6vw,40px);font-weight:800;margin:0 0 4px}
+    .subtitle{color:var(--muted); margin-bottom:18px}
+    .steps{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 18px}
+    .chip{flex:0 0 auto; white-space:nowrap; display:inline-flex;align-items:center;gap:8px; background:var(--amber-50);border:1px solid #f4e2a2; padding:8px 12px;border-radius:999px;font-weight:700;font-size:14px}
+    .section{margin:22px 0}
+    .section-title{ background:var(--amber); color:#111; font-weight:900; font-size:18px; padding:12px 16px; border-radius:14px 14px 0 0; border:1px solid rgba(0,0,0,.06); border-bottom:0 }
+    .card{ background:var(--card); border:1px solid var(--line); border-radius:0 0 14px 14px; padding:16px; box-shadow:0 8px 24px rgba(2,6,23,.06) }
+    .grid{display:grid; gap:14px}
+    .grid > *{ min-width:0 }
+    @media(min-width:860px){ .grid-2{ grid-template-columns:repeat(2, minmax(0,1fr)) } }
+    .repeat-wrap{display:grid; gap:12px}
+    .repeat-card{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff}
+    .repeat-grid{display:grid; gap:12px}
+    @media(min-width:980px){
+      .hl-grid{ grid-template-columns:minmax(90px,120px) minmax(0,1fr) }
+      .pl-grid{ grid-template-columns:minmax(80px,120px) minmax(220px,1fr) minmax(220px,1fr) minmax(220px,1fr) }
+      .sl-grid{ grid-template-columns:minmax(220px,320px) minmax(0,1fr) }
+    }
+    .field{display:flex; flex-direction:column; align-items:stretch; gap:6px}
+    .field label{font-size:18px;font-weight:800}
+    .hint{font-size:13px;color:var(--muted); margin-top:2px}
+    input[type="text"],input[type="url"],input[type="number"],select,textarea{
+      width:100%; padding:14px 12px; font-size:16px; border-radius:10px;
+      border:1px solid var(--line); background:#fff; color:var(--ink);
+      transition:border-color .15s ease, box-shadow .15s ease;
+    }
+    textarea{min-height:120px; resize:vertical}
+    input[type="file"]{font-size:16px;max-width:100%}
+    input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--amber); box-shadow:0 0 0 4px rgba(255,195,0,.25) }
+    .errorlist{margin:4px 0 0; padding:0; list-style:none; color:#b91c1c; font-size:13px}
+    .explainer{ background:var(--amber-50); border:1px solid #f4e2a2; padding:12px 14px; border-radius:12px; font-size:15px }
+    .addbar{display:flex; justify-content:flex-start; margin-top:8px}
+    .btn-add{ appearance:none;border:1px dashed var(--amber); background:var(--amber-50); color:#111; font-weight:900; border-radius:10px; padding:10px 12px; cursor:pointer }
+    .btn-add:hover{filter:saturate(1.04)}
+    .savebar{ position:sticky; bottom:0; background:rgba(255,255,255,.96); backdrop-filter:saturate(1.2) blur(6px); border-top:1px solid var(--line); padding:12px 0; margin-top:22px }
+    .btn-primary{ appearance:none; border:0; border-radius:12px; padding:14px 18px; font-size:16px; font-weight:900; background:var(--amber); color:#111; cursor:pointer; box-shadow:0 10px 24px rgba(255,195,0,.35); margin-right:10px }
+    .btn-primary:hover{transform:translateY(-1px)}
+    .small-muted{font-size:12px;color:var(--muted);margin-left:4px}
+    template{display:none}
+  </style>
+</head>
+<body>
+  {% if rep.is_submitted and not rep.is_approved %}
+    <div style="max-width:980px;margin:10px auto 18px;padding:12px 14px;border:1px solid #ffe08a;background:#fff8db;color:#5b4b00;border-radius:10px;font-weight:600;">
+      Your changes are saved and <strong>awaiting approval</strong>. You can still edit and re-submit.
+    </div>
+  {% endif %}
+
+  <div class="wrap">
+    <h1>Rep Onboarding</h1>
+    <p class="subtitle">Fill this simple form and press <strong>Save</strong>. You can return to this page anytime using your secure link.</p>
+
+    <div class="steps">
+      {% if form.rep_logo or form.rep_banner or form.players_bg %}
+        <span class="chip">1. Branding</span>
+      {% endif %}
+      {% if form.theme or form.show_pills or form.show_stats or form.brand_color or form.hero_bg_color or form.card_color or form.text_color %}
+        <span class="chip">2. Theme</span>
+      {% endif %}
+      {% if form.stat1_value or form.stat1_label or form.stat2_value or form.stat2_label or form.stat3_value or form.stat3_label or form.stat4_value or form.stat4_label %}
+        <span class="chip">3. Stats</span>
+      {% endif %}
+      {% if form.cities_of_operation or form.website_url or form.rep_founder %}
+        <span class="chip">4. Meta</span>
+      {% endif %}
+      {% if form.content or form.rep_opinion or form.rep_category or form.rep_category_brief or form.csr_activities or form.ikf_activities %}
+        <span class="chip">5. Narratives</span>
+      {% endif %}
+      <span class="chip">6. Highlights</span>
+      <span class="chip">7. Players</span>
+      <span class="chip">8. Social links</span>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      {# ---------------- BRANDING ---------------- #}
+      {% if form.rep_logo or form.rep_banner or form.players_bg %}
+      <div class="section">
+        <div class="section-title">Branding</div>
+        <div class="card grid grid-2">
+          <div class="explainer" style="grid-column:1/-1">
+            Upload your <b>logo</b>, a wide <b>banner</b> (best 1600×500), and an optional <b>players background</b>.
+          </div>
+
+          {% if form.rep_logo %}
+          <div class="field">
+            <label for="{{ form.rep_logo.id_for_label }}">Logo</label>
+            {% if rep.rep_logo %}<div class="hint">Current: <a href="{{ rep.rep_logo.url }}" target="_blank">view logo</a></div>{% endif %}
+            {{ form.rep_logo }} {{ form.rep_logo.errors }}
+          </div>
+          {% endif %}
+
+          {% if form.rep_banner %}
+          <div class="field">
+            <label for="{{ form.rep_banner.id_for_label }}">Banner</label>
+            {% if rep.rep_banner %}<div class="hint">Current: <a href="{{ rep.rep_banner.url }}" target="_blank">view banner</a></div>{% endif %}
+            {{ form.rep_banner }} {{ form.rep_banner.errors }}
+          </div>
+          {% endif %}
+
+          {% if form.players_bg %}
+          <div class="field" style="grid-column:1/-1">
+            <label for="{{ form.players_bg.id_for_label }}">Players background (optional)</label>
+            {% if rep.players_bg %}<div class="hint">Current: <a href="{{ rep.players_bg.url }}" target="_blank">view image</a></div>{% endif %}
+            {{ form.players_bg }} {{ form.players_bg.errors }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      {# ---------------- THEME ---------------- #}
+      {% if form.theme or form.show_pills or form.show_stats or form.brand_color or form.hero_bg_color or form.card_color or form.text_color %}
+      <div class="section">
+        <div class="section-title">Theme</div>
+        <div class="card grid grid-2">
+          <div class="explainer" style="grid-column:1/-1">
+            Keep the default theme, or choose <b>Custom</b> and enter your brand colors.
+          </div>
+
+          {% if form.theme %}
+          <div class="field">
+            <label for="{{ form.theme.id_for_label }}">Theme</label>
+            {{ form.theme }} {{ form.theme.errors }}
+          </div>
+          {% endif %}
+
+          {% if form.show_pills %}
+          <div class="field">
+            <label for="{{ form.show_pills.id_for_label }}">Show highlight pills</label>
+            {{ form.show_pills }} {{ form.show_pills.errors }}
+          </div>
+          {% endif %}
+
+          {% if form.show_stats %}
+          <div class="field">
+            <label for="{{ form.show_stats.id_for_label }}">Show stat blocks</label>
+            {{ form.show_stats }} {{ form.show_stats.errors }}
+          </div>
+          {% endif %}
+
+          {% if form.brand_color %}
+          <div class="field row-custom">
+            <label for="{{ form.brand_color.id_for_label }}">Brand color</label>
+            {{ form.brand_color }} <div class="hint">Used only when theme = Custom (e.g. #111111)</div>{{ form.brand_color.errors }}
+          </div>
+          {% endif %}
+
+          {% if form.hero_bg_color %}
+          <div class="field row-custom">
+            <label for="{{ form.hero_bg_color.id_for_label }}">Hero background</label>
+            {{ form.hero_bg_color }} <div class="hint">Custom theme only</div>{{ form.hero_bg_color.errors }}
+          </div>
+          {% endif %}
+
+          {% if form.card_color %}
+          <div class="field row-custom">
+            <label for="{{ form.card_color.id_for_label }}">Card color</label>
+            {{ form.card_color }} <div class="hint">Custom theme only</div>{{ form.card_color.errors }}
+          </div>
+          {% endif %}
+
+          {% if form.text_color %}
+          <div class="field row-custom">
+            <label for="{{ form.text_color.id_for_label }}">Text color</label>
+            {{ form.text_color }} <div class="hint">Custom theme only</div>{{ form.text_color.errors }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      {# ---------------- STATS ---------------- #}
+      {% if form.stat1_value or form.stat1_label or form.stat2_value or form.stat2_label or form.stat3_value or form.stat3_label or form.stat4_value or form.stat4_label %}
+      <div class="section">
+        <div class="section-title">Stats</div>
+        <div class="card grid grid-2">
+          <div class="explainer" style="grid-column:1/-1">
+            Quick numbers you’d like to show (you can leave these empty).
+          </div>
+          {% if form.stat1_value %}<div class="field"><label>Stat 1 value</label>{{ form.stat1_value }}{{ form.stat1_value.errors }}</div>{% endif %}
+          {% if form.stat1_label %}<div class="field"><label>Stat 1 label</label>{{ form.stat1_label }}{{ form.stat1_label.errors }}</div>{% endif %}
+          {% if form.stat2_value %}<div class="field"><label>Stat 2 value</label>{{ form.stat2_value }}{{ form.stat2_value.errors }}</div>{% endif %}
+          {% if form.stat2_label %}<div class="field"><label>Stat 2 label</label>{{ form.stat2_label }}{{ form.stat2_label.errors }}</div>{% endif %}
+          {% if form.stat3_value %}<div class="field"><label>Stat 3 value</label>{{ form.stat3_value }}{{ form.stat3_value.errors }}</div>{% endif %}
+          {% if form.stat3_label %}<div class="field"><label>Stat 3 label</label>{{ form.stat3_label }}{{ form.stat3_label.errors }}</div>{% endif %}
+          {% if form.stat4_value %}<div class="field"><label>Stat 4 value</label>{{ form.stat4_value }}{{ form.stat4_value.errors }}</div>{% endif %}
+          {% if form.stat4_label %}<div class="field"><label>Stat 4 label</label>{{ form.stat4_label }}{{ form.stat4_label.errors }}</div>{% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      {# ---------------- META ---------------- #}
+      {% if form.cities_of_operation or form.website_url or form.rep_founder %}
+      <div class="section">
+        <div class="section-title">Meta</div>
+        <div class="card grid grid-2">
+          {% if form.cities_of_operation %}
+          <div class="field">
+            <label for="{{ form.cities_of_operation.id_for_label }}">Cities of operation</label>
+            {{ form.cities_of_operation }}{{ form.cities_of_operation.errors }}
+            <div class="hint">Example: Mumbai, Pune</div>
+          </div>
+          {% endif %}
+          {% if form.website_url %}
+          <div class="field">
+            <label for="{{ form.website_url.id_for_label }}">Website URL</label>
+            {{ form.website_url }}{{ form.website_url.errors }}
+            <div class="hint">Paste your full link (e.g., https://example.com)</div>
+          </div>
+          {% endif %}
+          {% if form.rep_founder %}
+          <div class="field" style="grid-column:1/-1">
+            <label for="{{ form.rep_founder.id_for_label }}">Rep founder</label>
+            {{ form.rep_founder }}{{ form.rep_founder.errors }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      {# ---------------- NARRATIVES ---------------- #}
+      {% if form.content or form.rep_opinion or form.rep_category or form.rep_category_brief or form.csr_activities or form.ikf_activities %}
+      <div class="section">
+        <div class="section-title">Narratives</div>
+        <div class="card grid">
+          <div class="explainer">Tell your story in simple words. Bullet points are okay.</div>
+          {% if form.content %}
+            <div class="field"><label for="{{ form.content.id_for_label }}">Intro / long description</label>{{ form.content }}{{ form.content.errors }}<div class="hint">You can use basic HTML if needed.</div></div>
+          {% endif %}
+          {% if form.rep_opinion %}
+            <div class="field"><label for="{{ form.rep_opinion.id_for_label }}">Your opinion / message</label>{{ form.rep_opinion }}{{ form.rep_opinion.errors }}</div>
+          {% endif %}
+          <div class="grid grid-2">
+            {% if form.rep_category %}<div class="field"><label for="{{ form.rep_category.id_for_label }}">Rep category</label>{{ form.rep_category }}{{ form.rep_category.errors }}</div>{% endif %}
+            {% if form.rep_category_brief %}<div class="field"><label for="{{ form.rep_category_brief.id_for_label }}">Category brief</label>{{ form.rep_category_brief }}{{ form.rep_category_brief.errors }}</div>{% endif %}
+          </div>
+          <div class="grid grid-2">
+            {% if form.csr_activities %}<div class="field"><label for="{{ form.csr_activities.id_for_label }}">CSR activities</label>{{ form.csr_activities }}{{ form.csr_activities.errors }}</div>{% endif %}
+            {% if form.ikf_activities %}<div class="field"><label for="{{ form.ikf_activities.id_for_label }}">IKF activities</label>{{ form.ikf_activities }}{{ form.ikf_activities.errors }}</div>{% endif %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      {# ---------------- HIGHLIGHTS ---------------- #}
+      <div class="section">
+        <div class="section-title">Rep Highlights</div>
+        <div class="card">
+          <div class="explainer" style="margin-bottom:12px">Short “wins” or key points you want to feature.</div>
+          {{ hl_formset.management_form }}
+          <div class="repeat-wrap" id="hl-forms">
+            {% for f in hl_formset %}
+              <div class="repeat-card">
+                {{ f.id }}
+                <div class="repeat-grid hl-grid">
+                  <div class="field"><label>Order</label>{{ f.order }}{{ f.order.errors }}</div>
+                  <div class="field"><label>Title</label>{{ f.title }}{{ f.title.errors }}</div>
+                  <div class="field" style="grid-column:1 / -1"><label>Text</label>{{ f.text }}{{ f.text.errors }}</div>
+                  <div class="del-cell"><label>Delete?</label>{{ f.DELETE }}</div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="addbar">
+            <button class="btn-add" id="add-hl" type="button">+ Add another highlight</button>
+          </div>
+
+          <template id="tpl-hl">
+            <div class="repeat-card">
+              {{ hl_formset.empty_form.id }}
+              <div class="repeat-grid hl-grid">
+                <div class="field"><label>Order</label>{{ hl_formset.empty_form.order }}</div>
+                <div class="field"><label>Title</label>{{ hl_formset.empty_form.title }}</div>
+                <div class="field" style="grid-column:1 / -1"><label>Text</label>{{ hl_formset.empty_form.text }}</div>
+                <div class="del-cell"><label>Delete?</label>{{ hl_formset.empty_form.DELETE }}</div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      {# ---------------- PLAYERS ---------------- #}
+      <div class="section">
+        <div class="section-title">Rep Players</div>
+        <div class="card">
+          <div class="explainer" style="margin-bottom:12px">Add your standout players (square image looks best).</div>
+
+          {{ pl_formset.management_form }}
+          <div class="repeat-wrap" id="pl-forms">
+            {% for f in pl_formset %}
+              <div class="repeat-card">
+                {{ f.id }}
+                <div class="repeat-grid pl-grid">
+                  <div class="field"><label>Order</label>{{ f.order }}{{ f.order.errors }}</div>
+                  <div class="field"><label>Name</label>{{ f.name }}{{ f.name.errors }}</div>
+                  <div class="field"><label>Subtitle</label>{{ f.subtitle }}{{ f.subtitle.errors }}</div>
+                  <div class="field"><label>Photo</label>{{ f.photo }}{{ f.photo.errors }}</div>
+                  <div class="field" style="grid-column:1 / -1"><label>Bio</label>{{ f.bio }}{{ f.bio.errors }}</div>
+                  <div class="del-cell"><label>Delete?</label>{{ f.DELETE }}</div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="addbar">
+            <button class="btn-add" id="add-pl" type="button">+ Add another player</button>
+          </div>
+
+          <template id="tpl-pl">
+            <div class="repeat-card">
+              {{ pl_formset.empty_form.id }}
+              <div class="repeat-grid pl-grid">
+                <div class="field"><label>Order</label>{{ pl_formset.empty_form.order }}</div>
+                <div class="field"><label>Name</label>{{ pl_formset.empty_form.name }}</div>
+                <div class="field"><label>Subtitle</label>{{ pl_formset.empty_form.subtitle }}</div>
+                <div class="field"><label>Photo</label>{{ pl_formset.empty_form.photo }}</div>
+                <div class="field" style="grid-column:1 / -1"><label>Bio</label>{{ pl_formset.empty_form.bio }}</div>
+                <div class="del-cell"><label>Delete?</label>{{ pl_formset.empty_form.DELETE }}</div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      {# ---------------- SOCIAL LINKS ---------------- #}
+      <div class="section">
+        <div class="section-title">Rep Social Links</div>
+        <div class="card">
+          <div class="explainer" style="margin-bottom:12px">Choose a platform and paste the link.</div>
+
+          {{ sl_formset.management_form }}
+          <div class="repeat-wrap" id="sl-forms">
+            {% for f in sl_formset %}
+              <div class="repeat-card">
+                {{ f.id }}
+                <div class="repeat-grid sl-grid">
+                  <div class="field"><label>Platform</label>{{ f.platform }}{{ f.platform.errors }}</div>
+                  <div class="field"><label>URL</label>{{ f.url }}{{ f.url.errors }}</div>
+                  <div class="del-cell"><label>Delete?</label>{{ f.DELETE }}</div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="addbar">
+            <button class="btn-add" id="add-sl" type="button">+ Add another social link</button>
+          </div>
+
+          <template id="tpl-sl">
+            <div class="repeat-card">
+              {{ sl_formset.empty_form.id }}
+              <div class="repeat-grid sl-grid">
+                <div class="field"><label>Platform</label>{{ sl_formset.empty_form.platform }}</div>
+                <div class="field"><label>URL</label>{{ sl_formset.empty_form.url }}</div>
+                <div class="del-cell"><label>Delete?</label>{{ sl_formset.empty_form.DELETE }}</div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      {# ---------------- SAVE / PREVIEW ---------------- #}
+      <div class="savebar">
+        <a class="btn-primary" href="{{ preview_url }}" target="_blank" rel="noopener">View page (Preview)</a>
+
+        {% if not rep.is_locked %}
+          <button class="btn-primary" type="submit" name="action" value="save">Save draft</button>
+          <button class="btn-primary" type="submit" name="action" value="final">Final submit</button>
+          <span class="small-muted">Final submit will lock editing until IKF approves or unlocks.</span>
+        {% else %}
+          <span class="small-muted">Editing locked after final submission. Contact IKF to reopen.</span>
+        {% endif %}
+      </div>
+
+    </form>
+  </div>
+
+  <script>
+    // Only try to toggle custom color rows if the theme control exists.
+    (function(){
+      const theme = document.getElementById("id_theme");
+      const rows = document.querySelectorAll(".row-custom");
+      function toggle(){
+        const on = theme && theme.value === "custom";
+        rows.forEach(r => r.style.display = on ? "flex" : "none");
+      }
+      if (theme){ theme.addEventListener("change", toggle); toggle(); }
+    })();
+
+    function addCard(listId, tplId, totalId){
+      const list = document.getElementById(listId);
+      const tpl  = document.getElementById(tplId);
+      const total= document.getElementById(totalId);
+      const idx  = parseInt(total.value || "0", 10);
+      let html   = tpl.innerHTML.replace(/__prefix__/g, String(idx));
+      const temp = document.createElement("div");
+      temp.innerHTML = html.trim();
+      list.appendChild(temp.firstElementChild);
+      total.value = idx + 1;
+    }
+    document.getElementById("add-hl")?.addEventListener("click", ()=>addCard("hl-forms","tpl-hl","id_hl-TOTAL_FORMS"));
+    document.getElementById("add-pl")?.addEventListener("click", ()=>addCard("pl-forms","tpl-pl","id_pl-TOTAL_FORMS"));
+    document.getElementById("add-sl")?.addEventListener("click", ()=>addCard("sl-forms","tpl-sl","id_sl-TOTAL_FORMS"));
+  </script>
+</body>
+</html>

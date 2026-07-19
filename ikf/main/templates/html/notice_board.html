@@ -1,0 +1,926 @@
+{# templates/html/notice_board.html #}
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+{# ── Preconnect so the browser opens the socket early, before CSS is parsed ── #}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{# Swap prevents invisible text while the font loads #}
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&display=swap"
+      media="print" onload="this.media='all'">
+<noscript>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&display=swap">
+</noscript>
+{% endblock %}
+
+{% block content %}
+<style>
+  :root {
+    --yellow: #ffc300;
+    --yellow-soft: #fff9e6;
+    --ink: #0b1120;
+    --muted: #64748b;
+    --border: #e8ecf2;
+    --white: #ffffff;
+    --light: #f5f5f5;
+    --radius: 18px;
+
+    /* Warm IKF palette — sunshine yellow, tangerine, paprika, crimson */
+    --c-yellow:  #ffc300;
+    --c-gold:    #ffb300;
+    --c-orange:  #ff8a00;
+    --c-tang:    #ff6a00;
+    --c-coral:   #ff5a4f;
+    --c-red:     #e63946;
+    --c-rose:    #d62828;
+  }
+
+  .nb-page {
+    font-family: 'Sora', system-ui, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nb-page > * { position: relative; z-index: 1; }
+
+  /* ── TITLE BAR ──────────────────────────── */
+  .nb-titlebar {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 28px 24px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 1px dashed rgba(230,57,70,0.22);
+  }
+
+  .nb-title {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin: 0;
+    background: linear-gradient(90deg, #0b1120 0%, #ff8a00 45%, #e63946 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .nb-title span {
+    -webkit-text-fill-color: initial;
+    color: var(--ink);
+  }
+
+  .nb-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .nb-eyebrow-tag {
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.75);
+    border: 1px solid rgba(11,17,32,0.08);
+    color: #1e293b;
+    backdrop-filter: blur(6px);
+  }
+
+  .nb-eyebrow-tag:nth-child(6n+1) { color:#92400e; background:rgba(255,195,0,0.18);  border-color:rgba(255,195,0,0.40); }
+  .nb-eyebrow-tag:nth-child(6n+3) { color:#9a3412; background:rgba(255,138,0,0.14);  border-color:rgba(255,138,0,0.35); }
+  .nb-eyebrow-tag:nth-child(6n+5) { color:#9f1239; background:rgba(230,57,70,0.12);  border-color:rgba(230,57,70,0.30); }
+  .nb-eyebrow-tag:nth-child(6n+7) { color:#7c2d12; background:rgba(255,106,0,0.14);  border-color:rgba(255,106,0,0.34); }
+  .nb-eyebrow-tag:nth-child(6n+9) { color:#854d0e; background:rgba(255,179,0,0.16);  border-color:rgba(255,179,0,0.36); }
+  .nb-eyebrow-tag:nth-child(6n+11){ color:#991b1b; background:rgba(214,40,40,0.12);  border-color:rgba(214,40,40,0.30); }
+
+  .nb-eyebrow-dot { display: none; }
+
+  /* ── FULL BANNER ────────────────────────── */
+  .nb-banner-wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 28px 24px 0;
+    position: relative;
+  }
+
+  .nb-banner-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 22px 18px -6px 18px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #ffc300, #ff8a00 50%, #e63946);
+    filter: blur(24px);
+    opacity: 0.45;
+    z-index: 0;
+  }
+
+  .nb-banner-img {
+    width: 100%;
+    display: block;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.6);
+    background: var(--light);
+    object-fit: cover;
+    object-position: center;
+    height: 400px;
+    content-visibility: auto;
+    contain-intrinsic-size: 0 400px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 16px 40px -12px rgba(11,17,32,0.25);
+  }
+
+  /* ── SINGLE-COLUMN BODY ─────────────────── */
+  .nb-body {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 32px 24px 56px;
+    display: block;
+  }
+
+  .nb-info-desc {
+    position: relative;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 19px;
+    line-height: 1.7;
+    color: #1f2937;
+    font-weight: 500;
+    margin: 56px auto 12px;
+    max-width: 760px;
+    text-align: center;
+    padding: 38px 40px 32px;
+    background:
+      /* faint lined-paper rules */
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 33px,
+        rgba(59,130,246,0.10) 33px,
+        rgba(59,130,246,0.10) 34px
+      ),
+      #fffdf6;
+    border: none;
+    border-radius: 3px 12px 4px 14px;
+    box-shadow:
+      0 1px 1px rgba(0,0,0,0.06),
+      0 16px 26px -12px rgba(0,0,0,0.30),
+      inset 0 -28px 36px -28px rgba(0,0,0,0.08);
+    transform: rotate(-0.7deg);
+    transform-origin: 50% 0;
+  }
+
+  /* Pushpin on the paper memo */
+  .nb-info-desc::before {
+    content: '';
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 32% 26%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.55) 7%, transparent 14%),
+      radial-gradient(circle at 38% 32%, rgba(255,255,255,0.55) 0%, transparent 32%),
+      radial-gradient(circle at 50% 80%, rgba(0,0,0,0.55) 0%, transparent 55%),
+      radial-gradient(circle at 50% 50%, #fbbf24 0%, #d97706 55%, #92400e 92%, #5a2406 100%);
+    box-shadow:
+      0 5px 6px -1px rgba(0,0,0,0.45),
+      0 2px 3px rgba(0,0,0,0.30),
+      inset 0 -3px 4px rgba(0,0,0,0.35),
+      inset 0 2px 3px rgba(255,255,255,0.25),
+      inset 0 0 0 1px rgba(0,0,0,0.10);
+    z-index: 2;
+  }
+
+  /* Folded bottom-right corner */
+  .nb-info-desc::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 26px;
+    height: 26px;
+    background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.07) 50%, rgba(0,0,0,0.18) 100%);
+    border-radius: 0 0 3px 0;
+    box-shadow: -1px -1px 2px rgba(0,0,0,0.05);
+  }
+
+  .nb-section-label {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nb-section-label::before,
+  .nb-section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(11,17,32,0.15), transparent);
+  }
+
+  .nb-boxgrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px 22px;
+    padding: 18px 6px 8px;
+  }
+
+  /* ── CATEGORY CARDS — pinned sticky notes ────── */
+  .nb-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 190px;
+    padding: 48px 24px 32px;
+    text-decoration: none;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #2b2010;
+    background: #fff59d;
+    border: none;
+    border-radius: 2px 14px 3px 18px;
+    box-shadow:
+      0 1px 1px rgba(0,0,0,0.08),
+      0 14px 22px -10px rgba(0,0,0,0.35),
+      inset 0 -28px 36px -28px rgba(0,0,0,0.10);
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1), box-shadow 0.3s ease;
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    transform-origin: 50% 0;
+  }
+
+  /* Folded corner (bottom-right) for paper feel */
+  .nb-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 22px;
+    height: 22px;
+    background:
+      linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.18) 100%);
+    border-radius: 0 0 3px 0;
+    box-shadow: -1px -1px 2px rgba(0,0,0,0.06);
+  }
+
+  /* Pushpin — glossy 3D sphere */
+  .nb-box::before {
+    content: '';
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background:
+      /* sharp specular spot */
+      radial-gradient(circle at 32% 26%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.55) 7%, transparent 14%),
+      /* soft diffuse highlight */
+      radial-gradient(circle at 38% 32%, rgba(255,255,255,0.55) 0%, transparent 32%),
+      /* lower-rim ambient occlusion */
+      radial-gradient(circle at 50% 80%, rgba(0,0,0,0.55) 0%, transparent 55%),
+      /* base sphere color */
+      radial-gradient(circle at 50% 50%, #ef4444 0%, #b91c1c 55%, #7f1d1d 92%, #4a0c0c 100%);
+    box-shadow:
+      /* cast shadow on the paper */
+      0 5px 6px -1px rgba(0,0,0,0.45),
+      0 2px 3px rgba(0,0,0,0.30),
+      /* dark rim ring */
+      inset 0 -3px 4px rgba(0,0,0,0.35),
+      /* subtle inner top glow */
+      inset 0 2px 3px rgba(255,255,255,0.25),
+      /* faint outline for definition */
+      inset 0 0 0 1px rgba(0,0,0,0.10);
+    z-index: 2;
+  }
+
+  .nb-box:hover {
+    transform: translateY(-3px) rotate(0deg) !important;
+    box-shadow:
+      0 2px 2px rgba(0,0,0,0.10),
+      0 22px 30px -14px rgba(0,0,0,0.30),
+      inset 0 -22px 30px -22px rgba(0,0,0,0.10);
+  }
+
+  /* Sticky-note paper colors + tilt + pin color rotation */
+  .nb-box:nth-child(6n+1) { background: #fff176; transform: rotate(-2.2deg); }
+  .nb-box:nth-child(6n+1)::before {
+    background:
+      radial-gradient(circle at 32% 26%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.55) 7%, transparent 14%),
+      radial-gradient(circle at 38% 32%, rgba(255,255,255,0.55) 0%, transparent 32%),
+      radial-gradient(circle at 50% 80%, rgba(0,0,0,0.55) 0%, transparent 55%),
+      radial-gradient(circle at 50% 50%, #ef4444 0%, #b91c1c 55%, #7f1d1d 92%, #4a0c0c 100%);
+  }
+
+  .nb-box:nth-child(6n+2) { background: #ffd180; transform: rotate(1.8deg); }
+  .nb-box:nth-child(6n+2)::before {
+    background:
+      radial-gradient(circle at 32% 26%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.55) 7%, transparent 14%),
+      radial-gradient(circle at 38% 32%, rgba(255,255,255,0.55) 0%, transparent 32%),
+      radial-gradient(circle at 50% 80%, rgba(0,0,0,0.55) 0%, transparent 55%),
+      radial-gradient(circle at 50% 50%, #60a5fa 0%, #1d4ed8 55%, #1e3a8a 92%, #0c1d54 100%);
+  }
+
+  .nb-box:nth-child(6n+3) { background: #ffab91; transform: rotate(-1.4deg); }
+  .nb-box:nth-child(6n+3)::before {
+    background:
+      radial-gradient(circle at 32% 26%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.55) 7%, transparent 14%),
+      radial-gradient(circle at 38% 32%, rgba(255,255,255,0.55) 0%, transparent 32%),
+      radial-gradient(circle at 50% 80%, rgba(0,0,0,0.55) 0%, transparent 55%),
+      radial-gradient(circle at 50% 50%, #fbbf24 0%, #d97706 55%, #92400e 92%, #5a2406 100%);
+  }
+
+  .nb-box:nth-child(6n+4) { background: #fff9c4; transform: rotate(2.4deg); }
+  .nb-box:nth-child(6n+4)::before {
+    background:
+      radial-gradient(circle at 32% 26%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.55) 7%, transparent 14%),
+      radial-gradient(circle at 38% 32%, rgba(255,255,255,0.55) 0%, transparent 32%),
+      radial-gradient(circle at 50% 80%, rgba(0,0,0,0.55) 0%, transparent 55%),
+      radial-gradient(circle at 50% 50%, #4ade80 0%, #15803d 55%, #14532d 92%, #062814 100%);
+  }
+
+  .nb-box:nth-child(6n+5) { background: #ffccbc; transform: rotate(-2.6deg); }
+  .nb-box:nth-child(6n+5)::before {
+    background:
+      radial-gradient(circle at 32% 26%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.55) 7%, transparent 14%),
+      radial-gradient(circle at 38% 32%, rgba(255,255,255,0.55) 0%, transparent 32%),
+      radial-gradient(circle at 50% 80%, rgba(0,0,0,0.55) 0%, transparent 55%),
+      radial-gradient(circle at 50% 50%, #f87171 0%, #dc2626 55%, #7f1d1d 92%, #4a0c0c 100%);
+  }
+
+  .nb-box:nth-child(6n+6) { background: #ffe082; transform: rotate(1.2deg); }
+  .nb-box:nth-child(6n+6)::before {
+    background:
+      radial-gradient(circle at 32% 26%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.55) 7%, transparent 14%),
+      radial-gradient(circle at 38% 32%, rgba(255,255,255,0.55) 0%, transparent 32%),
+      radial-gradient(circle at 50% 80%, rgba(0,0,0,0.55) 0%, transparent 55%),
+      radial-gradient(circle at 50% 50%, #c084fc 0%, #7e22ce 55%, #581c87 92%, #2a0c45 100%);
+  }
+
+  /* ── RIGHT COLUMN — WHAT'S NEW ──────────── */
+  .nb-right {
+    position: sticky;
+    top: 24px;
+  }
+
+  .nb-whatsnew {
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--white);
+    overflow: hidden;
+  }
+
+  .nb-wn-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px 13px;
+    background: rgba(255,195,0,0.15);
+    border-bottom: 1px solid rgba(255,195,0,0.25);
+  }
+
+  .nb-live {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 0 3px rgba(74,222,128,0.22);
+    animation: livePulse 2.2s infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes livePulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(74,222,128,0.22); }
+    50%       { box-shadow: 0 0 0 6px rgba(74,222,128,0.06); }
+  }
+
+  .nb-wn-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: black;
+    letter-spacing: -0.1px;
+  }
+
+  /* ── SCROLL VIEWPORT ────────────────────── */
+  .nb-wn-viewport {
+    position: relative;
+    height: 360px;
+    overflow: hidden;
+  }
+
+  .nb-wn-viewport::before,
+  .nb-wn-viewport::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 24px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .nb-wn-viewport::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--white), transparent);
+  }
+
+  .nb-wn-viewport::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--white), transparent);
+  }
+
+  .nb-wn-list {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 0;
+  }
+
+  .nb-wn-list.nb-wn-animate {
+    will-change: transform;
+    animation: scrollUp 45s linear infinite;
+  }
+
+  .nb-wn-list.nb-wn-animate:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes scrollUp {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-50%); }
+  }
+
+  /* ── Row ── */
+  .nb-wn-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 11px 18px;
+    border-bottom: 1px solid #f3f3f3;
+  }
+
+  .nb-wn-row:last-child { border-bottom: none; }
+
+  .nb-wn-arrow {
+    color: var(--yellow);
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .nb-wn-rowtitle {
+    display: inline;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nb-wn-rowtitle:hover {
+    color: #1a56db;
+    text-decoration: underline;
+  }
+
+  .nb-wn-meta {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 400;
+    margin-top: 3px;
+  }
+
+  /* ── Coming Soon sub-line in What's New ── */
+  .nb-wn-coming-soon {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #6b7280;
+    line-height: 1.4;
+  }
+
+  .nb-wn-coming-soon::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #d1d5db;
+    flex-shrink: 0;
+  }
+
+  .nb-wn-coming-soon .cs-city {
+    color: var(--ink);
+    font-weight: 800;
+  }
+
+  .nb-wn-empty {
+    padding: 28px 18px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  /* ── RESPONSIVE ─────────────────────────── */
+  @media (max-width: 960px) {
+    .nb-boxgrid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 860px) {
+    .nb-title { font-size: 32px; }
+
+    .nb-banner-img {
+      height: auto;
+      max-height: none;
+      object-fit: contain;
+      background: #fff;
+      contain-intrinsic-size: 0 200px;
+    }
+
+    .nb-banner-wrap { padding: 18px 16px 0; }
+    .nb-banner-wrap::before { inset: 14px 12px -4px 12px; }
+  }
+
+  @media (max-width: 720px) {
+    .nb-boxgrid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px 14px;
+    }
+    .nb-box {
+      min-height: 130px;
+      padding: 32px 12px 18px;
+      font-size: 12.5px;
+      letter-spacing: 0.1px;
+      height: 100%;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .nb-boxgrid {
+      gap: 20px 12px;
+    }
+    .nb-box {
+      min-height: 120px;
+      padding: 28px 10px 16px;
+      font-size: 11.5px;
+    }
+    .nb-title { font-size: 28px; }
+    .nb-info-desc { font-size: 14.5px; padding: 18px 18px; }
+  }
+
+  @media (max-width: 380px) {
+    .nb-box {
+      font-size: 10.5px;
+      padding: 26px 8px 14px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nb-wn-list.nb-wn-animate { animation: none !important; }
+  }
+
+  /* ── EXTRA INFO SECTION ─────────────────── */
+  .nb-extra-wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px 70px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .nb-extra {
+    margin-top: 8px;
+    padding-top: 28px;
+  }
+
+  .nb-extra-title {
+    margin: 0 0 18px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nb-extra-title::before,
+  .nb-extra-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(11,17,32,0.15), transparent);
+  }
+
+  .nb-extra-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .nb-extra-card {
+    position: relative;
+    border: 1px solid rgba(11,17,32,0.08);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+    padding: 22px 22px;
+    max-width: 620px;
+    overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease;
+    box-shadow: 0 6px 20px -10px rgba(11,17,32,0.10);
+  }
+
+  .nb-extra-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ffc300, #ff8a00, #ff5a4f, #e63946);
+  }
+
+  .nb-extra-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 36px -16px rgba(11,17,32,0.20);
+  }
+
+  .nb-extra-card:only-child {
+    width: min(100%, 620px);
+  }
+
+  .nb-extra-card h3 {
+    margin: 4px 0 6px;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.1px;
+  }
+
+  .nb-extra-card .sub {
+    margin: 0 0 10px;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .nb-extra-card .body {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: #374151;
+  }
+
+  .nb-extra-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 11px 16px;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, #ff8a00, #e63946);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 0.02em;
+    transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+    box-shadow: 0 6px 16px -6px rgba(230,57,70,0.55);
+  }
+
+  .nb-extra-cta:hover {
+    transform: translateY(-2px);
+    filter: saturate(1.1);
+    box-shadow: 0 10px 22px -6px rgba(230,57,70,0.65);
+  }
+
+  .nb-extra-cta span { transition: transform .2s ease; }
+  .nb-extra-cta:hover span { transform: translateX(3px); }
+
+  .nb-extra-img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    background: var(--light);
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 860px) {
+    .nb-extra-grid { grid-template-columns: 1fr; }
+    .nb-extra-wrap { padding-bottom: 54px; }
+  }
+</style>
+
+<div class="nb-page">
+
+  <!-- Full-width banner -->
+  <div class="nb-banner-wrap">
+    <img class="nb-banner-img"
+         src="{% static 'images/noticeboard3.jpeg' %}"
+         alt="IKF Notice Board"
+         loading="eager"
+         fetchpriority="high"
+         decoding="async"
+         width="1120" height="340">
+  </div>
+
+  <!-- Title bar -->
+  <div class="nb-titlebar">
+    <h1 class="nb-title">IKF <span>Notice</span> Board</h1>
+    <div class="nb-eyebrow">
+      <span class="nb-eyebrow-tag">Official Updates</span><span class="nb-eyebrow-dot"></span>
+      <span class="nb-eyebrow-tag">Trials</span><span class="nb-eyebrow-dot"></span>
+      <span class="nb-eyebrow-tag">Results</span><span class="nb-eyebrow-dot"></span>
+      <span class="nb-eyebrow-tag">Guidelines</span><span class="nb-eyebrow-dot"></span>
+      <span class="nb-eyebrow-tag">Match Videos</span><span class="nb-eyebrow-dot"></span>
+      <span class="nb-eyebrow-tag">Announcements</span>
+    </div>
+  </div>
+
+  <!-- Two-column body -->
+  <div class="nb-body">
+
+    <!-- LEFT -->
+    <div class="nb-left">
+
+      <p class="nb-section-label">Browse by category</p>
+      <div class="nb-boxgrid">
+        {% for item in quick_links %}
+          <a class="nb-box"
+             href="{% if item.url %}{{ item.url }}{% elif item.slug %}{% url 'noticeboard_slug' slug=item.slug %}{% else %}#{% endif %}">
+            {{ item.name }}
+          </a>
+        {% empty %}
+          <a class="nb-box" href="#">Upcoming Trials</a>
+          <a class="nb-box" href="#">Trial Results</a>
+          <a class="nb-box" href="#">Trial Guidelines</a>
+          <a class="nb-box" href="#">Post-Match Media</a>
+          <a class="nb-box" href="#">Official Announcements &amp; Circulars</a>
+        {% endfor %}
+      </div>
+
+      <p class="nb-info-desc">
+        The IKF Notice Board serves as the single official information hub for trials, results and other important updates managed centrally by IKF — ensuring timely, transparent and verified communication for players, parents, coaches, partners and stakeholders.
+      </p>
+
+    </div>
+
+    <!-- RIGHT — sticky What's New -->
+   <div class="nb-right">
+  <div class="nb-whatsnew">
+
+    <div class="nb-wn-head">
+      <div class="nb-live"></div>
+      <h2 class="nb-wn-title">What's New</h2>
+    </div>
+
+    <div class="nb-wn-viewport">
+      <div class="nb-wn-list {% if notices|length > 5 %}nb-wn-animate{% endif %}">
+
+        {% for n in notices %}
+          <div class="nb-wn-row">
+            <span class="nb-wn-arrow">»</span>
+            <span>
+              <a class="nb-wn-rowtitle" href="{{ n.url|default:'#' }}">{{ n.title }}</a>
+              {% if n.meta %}
+                <span class="nb-wn-meta">{{ n.meta }}</span>
+              {% endif %}
+
+              {% if n.status_of_trial == "City Confirmed" or n.statusOfTrial == "City Confirmed" or n.is_coming_soon %}
+                <span class="nb-wn-coming-soon">
+                  <span class="cs-city">{% firstof n.city_name n.cityName %}</span> registration will open soon
+                </span>
+              {% endif %}
+            </span>
+          </div>
+        {% empty %}
+          <div class="nb-wn-empty">No updates yet.</div>
+        {% endfor %}
+
+        {% if notices and notices|length > 5 %}
+          {% for n in notices %}
+            <div class="nb-wn-row">
+              <span class="nb-wn-arrow">»</span>
+              <span>
+                <a class="nb-wn-rowtitle" href="{{ n.url|default:'#' }}">{{ n.title }}</a>
+                {% if n.meta %}
+                  <span class="nb-wn-meta">{{ n.meta }}</span>
+                {% endif %}
+
+                {% if n.status_of_trial == "City Confirmed" or n.statusOfTrial == "City Confirmed" or n.is_coming_soon %}
+                  <span class="nb-wn-coming-soon">
+                    <span class="cs-city">{% firstof n.city_name n.cityName %}</span> registration will open soon
+                  </span>
+                {% endif %}
+              </span>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  </div>
+
+  {% if info_blocks %}
+  <div class="nb-extra-wrap">
+    <div class="nb-extra">
+      <p class="nb-extra-title">More information</p>
+
+      <div class="nb-extra-grid">
+        {% for b in info_blocks %}
+          <div class="nb-extra-card">
+
+            {% if b.image %}
+              <img class="nb-extra-img"
+                   src="{{ b.image.url }}"
+                   alt="{{ b.title }}"
+                   loading="lazy"
+                   decoding="async">
+            {% endif %}
+
+            <h3>{{ b.title }}</h3>
+
+            {% if b.subtitle %}
+              <p class="sub">{{ b.subtitle }}</p>
+            {% endif %}
+
+            <p class="body">{{ b.body|linebreaksbr }}</p>
+
+            {% if b.cta_url and b.cta_text %}
+              <a class="nb-extra-cta" href="{{ b.cta_url }}">
+                {{ b.cta_text }} <span>→</span>
+              </a>
+            {% endif %}
+
+          </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+
+{% if faqs %}
+<div style="max-width:1240px; margin:0 auto; padding:0 24px 48px;">
+  <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700;color:#0b1120;margin:0 0 14px;letter-spacing:-.3px;">Frequently Asked Questions</h2>
+  <div style="background:#fff;border:1px solid rgba(255,195,0,.28);border-radius:22px;box-shadow:0 8px 28px rgba(11,17,32,.07);padding:24px 28px;position:relative;">
+    <div style="position:absolute;top:0;left:28px;right:28px;height:2px;background:linear-gradient(90deg,#ffc300 0%,transparent 100%);border-radius:2px;"></div>
+    <div style="border-top:1px solid #e8ecf2;margin-top:4px;">
+      {% for f in faqs %}
+      <div style="border-bottom:1px solid #e8ecf2;">
+        <div class="nb-faq-q" onclick="this.classList.toggle('nb-faq-open');this.nextElementSibling.classList.toggle('nb-faq-open')"
+             style="padding:16px 4px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:Lato,sans-serif;font-size:15px;font-weight:500;color:#1e293b;gap:16px;">
+          <span>{{ f.question }}</span>
+          <span class="nb-faq-icon" style="font-size:20px;font-weight:300;color:#8896aa;flex-shrink:0;width:24px;text-align:center;transition:transform .25s ease,color .15s ease;">+</span>
+        </div>
+        <div class="nb-faq-a" style="max-height:0;overflow:hidden;padding:0;transition:max-height .3s ease,padding .3s ease;">
+          <p style="margin:0;font-family:Lato,sans-serif;font-size:14px;line-height:1.7;color:#5a6478;padding:4px 4px 16px;">{{ f.answer|linebreaksbr }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<style>
+  .nb-faq-q.nb-faq-open { color:#0b1120; }
+  .nb-faq-q.nb-faq-open .nb-faq-icon { color:#ffc300; transform:rotate(45deg); }
+  .nb-faq-a.nb-faq-open { max-height:320px !important; padding:0 !important; }
+</style>
+{% endif %}
+
+{% endblock %}

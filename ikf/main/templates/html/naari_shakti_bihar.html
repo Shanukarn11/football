@@ -1,0 +1,294 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ikf-yellow:#ffc300;
+    --ikf-yellow-dark:#e0a800;
+    --ikf-yellow-soft:#fff8e1;
+    --ink:#0b1120;
+    --muted:#5a6478;
+    --line:#e8ecf2;
+  }
+  .nsb-wrap{
+    box-sizing:border-box;
+    max-width:1120px;
+    margin:0 auto;
+    padding:32px 24px 96px;
+    font-family:'Lato', sans-serif;
+    color:var(--ink);
+  }
+  .nsb-hero{
+    text-align:center;
+    padding:48px 16px 32px;
+    background:linear-gradient(180deg, var(--ikf-yellow-soft) 0%, #fff 100%);
+    border-radius:18px;
+    margin-bottom:32px;
+  }
+  .nsb-hero h1{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-size:40px;
+    font-weight:800;
+    margin:0 0 12px;
+    letter-spacing:-0.5px;
+  }
+  .nsb-hero .tagline{
+    font-size:18px;
+    font-weight:700;
+    color:var(--ikf-yellow-dark);
+    margin:0 0 18px;
+  }
+  .nsb-hero .supported{
+    font-size:14px;
+    color:var(--muted);
+    margin:0;
+  }
+  .nsb-hero .supported strong{
+    color:var(--ink);
+  }
+  .nsb-partner-logos{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:32px;
+    margin:24px 0 0;
+  }
+  .nsb-partner-logos img{
+    height:84px;
+    width:auto;
+    object-fit:contain;
+  }
+  .nsb-image-slot{
+    width:100%;
+    aspect-ratio:16/7;
+    border-radius:14px;
+    background:linear-gradient(135deg, var(--ikf-yellow-soft) 0%, #ffe89a 100%);
+    border:1px dashed var(--ikf-yellow-dark);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--ikf-yellow-dark);
+    font-weight:700;
+    font-family:'Plus Jakarta Sans', sans-serif;
+    margin:0 0 32px;
+  }
+  .nsb-section{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:28px;
+    margin-bottom:20px;
+    box-shadow:0 6px 18px -12px rgba(0,0,0,.10);
+  }
+  .nsb-section h2{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-size:24px;
+    font-weight:800;
+    margin:0 0 14px;
+    padding-left:14px;
+    position:relative;
+    line-height:1.25;
+  }
+  .nsb-section h2::before{
+    content:"";
+    position:absolute;
+    left:0; top:6px; bottom:6px;
+    width:4px;
+    border-radius:3px;
+    background:var(--ikf-yellow);
+  }
+  .nsb-section p{
+    font-size:15px;
+    line-height:1.75;
+    color:#3a3a3a;
+    margin:0 0 12px;
+  }
+  .nsb-list{
+    margin:0;
+    padding-left:18px;
+  }
+  .nsb-list li{
+    font-size:15px;
+    line-height:1.85;
+    color:#3a3a3a;
+    margin-bottom:6px;
+  }
+  .nsb-sub{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-size:17px;
+    font-weight:700;
+    margin:14px 0 6px;
+    color:var(--ink);
+  }
+  .nsb-cta-strip{
+    margin-top:40px;
+    padding:32px 28px;
+    text-align:center;
+    background:linear-gradient(135deg, #fff8d6 0%, #ffe89a 60%, #f5c94a 100%);
+    border:1px solid #ecc34a;
+    border-radius:20px;
+  }
+  .nsb-cta-strip h3{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-size:22px;
+    font-weight:800;
+    margin:0 0 8px;
+  }
+  .nsb-cta-strip p{
+    margin:0 0 18px;
+    color:#5d4f1a;
+    font-size:14px;
+  }
+  .nsb-cta{
+    background:var(--ikf-yellow);
+    color:#1a1a1a;
+    border:none;
+    padding:14px 36px;
+    font-size:15px;
+    font-weight:700;
+    font-family:'Plus Jakarta Sans', sans-serif;
+    border-radius:12px;
+    cursor:pointer;
+    box-shadow:0 10px 24px -8px rgba(245, 201, 74, .7);
+    transition:all .2s ease;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .nsb-cta::after{
+    content:"\2192";
+    font-size:18px;
+    transition:transform .2s ease;
+  }
+  .nsb-cta:hover{
+    background:var(--ikf-yellow-dark);
+    transform:translateY(-2px);
+  }
+  .nsb-cta:hover::after{ transform:translateX(4px); }
+  @media (max-width:768px){
+    .nsb-hero h1{ font-size:28px; }
+    .nsb-hero .tagline{ font-size:15px; }
+    .nsb-partner-logos img{ height:64px; }
+    .nsb-section{ padding:20px; }
+    .nsb-section h2{ font-size:20px; }
+  }
+</style>
+{% include 'html/_donor_panel_styles.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="nsb-wrap">
+
+  <section class="nsb-hero">
+    <h1>IKF Naari Shakti &ndash; Bihar Edition</h1>
+    <p class="tagline">For The Girls. By The Girls. Of The Girls.</p>
+    <p class="supported">supported and operated by <strong><a href="https://atulyaanant.com/" target="_blank" rel="noopener">AtulyaAnant Foundation</a> &amp; <a href="https://www.kridanta.in/" target="_blank" rel="noopener">Kridanta</a></strong></p>
+    <div class="nsb-partner-logos">
+      <img src="{% static 'images/ikf.png' %}" alt="IKF" onerror="this.style.display='none'">
+      <a href="https://atulyaanant.com/" target="_blank" rel="noopener"><img src="{% static 'images/atulyaanant.png' %}" alt="AtulyaAnant Foundation" onerror="this.style.display='none'"></a>
+      <a href="https://www.kridanta.in/" target="_blank" rel="noopener"><img src="{% static 'images/kridanta.png' %}" alt="Kridanta" onerror="this.style.display='none'"></a>
+    </div>
+  </section>
+
+  
+
+  <section class="nsb-section">
+    <h2>Why Bihar?</h2>
+    <p>Across Bihar, thousands of girls dream of playing football, yet many face barriers such as limited access to training, lack of awareness, social constraints, and the absence of structured pathways.</p>
+    <p><strong>IKF Naari Shakti is changing that.</strong></p>
+    <p>Through football, mentorship, health awareness, and career guidance, Naari Shakti creates a safe and empowering environment where girls can develop both on and off the field.</p>
+  </section>
+
+  <section class="nsb-section">
+    <h2>It's More Than Football</h2>
+    <p>IKF Naari Shakti uses football as a tool to build:</p>
+    <ul class="nsb-list">
+      <li>Confidence</li>
+      <li>Leadership</li>
+      <li>Teamwork</li>
+      <li>Resilience</li>
+      <li>Health Awareness</li>
+      <li>Aspirational Thinking</li>
+    </ul>
+    <p>The objective is not only to identify football talent but to empower young girls to become future leaders within their communities.</p>
+  </section>
+
+  <section class="nsb-section">
+    <h2>What happens at IKF Naari Shakti?</h2>
+    <p>Naari Shakti is IKF's flagship girls-first initiative designed to increase participation, create opportunities, and build long-term pathways for girls in football.</p>
+    <p>The program combines:</p>
+    <p class="nsb-sub">Talent Discovery</p>
+    <p>Providing girls with a platform to showcase their football abilities.</p>
+    <p class="nsb-sub">Football Development</p>
+    <p>Access to structured football activities and coaching through regional partners.</p>
+    <p class="nsb-sub">Health &amp; Wellbeing</p>
+    <p>Sessions focused on menstrual health, athlete wellness, nutrition, and injury prevention.</p>
+    <p class="nsb-sub">Parent Support</p>
+    <p>Helping families understand the opportunities available through sport.</p>
+    <p class="nsb-sub">Career Pathways</p>
+    <p>Introducing girls to opportunities both within and beyond football.</p>
+    <p class="nsb-sub">National Platform</p>
+    <p>Connecting talented players to broader opportunities through the IKF ecosystem.</p>
+  </section>
+
+  <section class="nsb-section">
+    <h2>Why Your Support Matters</h2>
+    <p>The future of girls' participation in sports cannot be built by sporting organizations alone.</p>
+    <p>It requires visionary partners who believe that access, opportunity, and empowerment should not be determined by geography, gender, or economic background.</p>
+    <p>By supporting IKF Naari Shakti, you are helping create:</p>
+
+    <p class="nsb-sub">Opportunities Where None Exist</p>
+    <p>Many girls participating in Naari Shakti experience their first structured football program through the initiative.</p>
+
+    <p class="nsb-sub">Confidence Through Sport</p>
+    <p>Football becomes a tool for building self-belief, leadership, teamwork, and resilience.</p>
+
+    <p class="nsb-sub">Health &amp; Wellbeing Awareness</p>
+    <p>Girls receive critical education regarding menstrual health, nutrition, injury prevention, and athlete wellbeing.</p>
+
+    <p class="nsb-sub">Stronger Family Support Systems</p>
+    <p>Parents become active partners in encouraging and sustaining girls' participation in sports.</p>
+
+    <p class="nsb-sub">Pathways Beyond Participation</p>
+    <p>The initiative introduces girls to opportunities both on and off the field, including coaching, refereeing, sports management, and athlete development pathways.</p>
+
+    <p class="nsb-sub">Sustainable Community Impact</p>
+    <p>Every activation creates awareness among schools, communities, coaches, and local stakeholders, leaving a lasting impact beyond the event itself.</p>
+  </section>
+
+  <section class="nsb-section">
+    <h2>Impact Beyond the Field</h2>
+    <p>Project IKF Naari Shakti contributes directly to the following SDGs:</p>
+    <ul class="nsb-list">
+      <li>Gender Equality</li>
+      <li>Quality Education</li>
+      <li>Good Health &amp; Wellbeing</li>
+      <li>Reduced Inequalities</li>
+      <li>Community Development</li>
+    </ul>
+    <p>Every girl who steps onto the field gains more than a sporting opportunity &mdash; she gains confidence, visibility, support, and the belief that her aspirations matter.</p>
+  </section>
+
+  <div class="nsb-cta-strip">
+    <h3>IKF Naari Shakti Bihar Edition starts 5th July &ndash; Begusarai, Bihar</h3>
+    <p>Every contribution goes directly into this initiative. 80G tax exemption applicable.</p>
+    <button type="button" class="nsb-cta support-btn"
+            data-project="IKF Naari Shakti - Bihar Edition"
+            data-razorpay="1"
+            data-upi="0"
+            data-bank="0"
+            data-presets="500,1000,2500,5000">
+      Support Naari Shakti Bihar
+    </button>
+  </div>
+
+</div>
+
+{% include 'html/_donor_panel.html' %}
+
+{% endblock %}

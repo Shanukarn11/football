@@ -1,0 +1,29 @@
+.supported-logo-image{
+    width: 80px;
+    height: 60px;
+}
+
+.supported-company-name{
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.button-styles{
+    background-color: #E4AE00;
+    color: #000000;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.project-brief-explains span{
+    font-weight: bold;
+}
+
+
+@media all and (min-width: 991.98px){
+    .name-address-field{
+        max-width: 700px;
+    }
+}

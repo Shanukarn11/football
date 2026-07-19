@@ -1,0 +1,214 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- 
+	Template Name: SportsZone: Sports Club, New & Game Magazine Mobile Responsive Bootstrap Html Template 
+	Version: 1.0
+	Author: DexignZone
+	Website: http://www.dexignzone.com/
+	Contact: dexignexpert@gmail.com
+	Follow: www.twitter.com/dexignzones
+	Like: www.facebook.com/dexignzone
+	
+-->
+<!--[if IE 7 ]>  <html lang="en-gb" class="isie ie7 oldie no-js"> <![endif]-->
+<!--[if IE 8 ]>  <html lang="en-gb" class="isie ie8 oldie no-js"> <![endif]-->
+<!--[if IE 9 ]>  <html lang="en-gb" class="isie ie9 no-js"> <![endif]-->
+<!-- Meta -->
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="robots" content="" />
+    <meta name="description" content="{{ ikf_shared_link_desc }}." />
+    <meta property="og:title" content="{{ ikf_shared_link_title }}" />
+    <meta property="og:description" content="{{ ikf_shared_link_desc }}." />
+    <!-- <meta property="og:image" content="http://sportszone.dexignlab.com/xhtml/social-image.png' %}" /> -->
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- Favicons Icon -->
+    <link rel="icon" href="{% static 'images/ikflogo3.png' %}" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/ikflogo3.png' %}" />
+
+    <!-- Page Title Here -->
+    <title>India Khelo Football</title>
+
+    <!-- Mobile Specific -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--[if lt IE 9]>
+            <script src="{% static 'js/html5shiv.min.js' %}"></script>
+            <script src="{% static 'js/respond.min.js' %}"></script>
+        <![endif]-->
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/plugins.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/hover.css' %}">
+    <link rel="stylesheet" type="text/css" class="skin" href="{% static 'css/skin/skin-1.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/templete.min.css' %}">
+
+    <!-- Revolution Slider Css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/revolution/revolution/css/settings.css' %}">
+    <!-- Revolution Navigation Style -->
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/revolution/revolution/css/navigation.css' %}">
+
+</head>
+<!-- header END -->
+<!-- Content -->
+<div class="page-content bg-white">
+    <!-- inner page banner -->
+    <div class="dez-bnr-inr overlay-black-middle"
+        style="background-image:url('{{ workshopsRegimages.WorkShopsRegBanner }}');">
+        <div class="container">
+            <div class="dez-bnr-inr-entry">
+                <h1 class="text-white" style="padding-top:30px ;">{{ Heading_Workshops1 }}</h1>
+            </div>
+        </div>
+    </div>
+    <!-- inner page banner END -->
+    <!-- Breadcrumb row -->
+    <div class="breadcrumb-row">
+        <div class="container">
+            <ul class="list-inline">
+                <li><a href="{%url 'home' %}">Home</a></li>
+                <li>{{ Heading_Workshops1 }}</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Breadcrumb row END -->
+    <!-- contact area -->
+    <div class="section-full content-inner">
+        <!-- Product details -->
+        <div class="container woo-entry">
+            <div class=" m-b30">
+                <div class="row blog-post blog-md date-style-2">
+                    <div class="col-lg-4 col-md-4  col-sm-5 m-b30"> <a href="#"><img
+                        loading="lazy" src="{{ workshopsRegimages.WorkShopsRegSideImage }}" alt=""></a> </div>
+                    <div class="col-lg-8 col-md-8 col-sm-7">
+                        <div class="dez-post-title ">
+                            <h2 class="post-title"><a href="#">{{ Heading_Workshops2 }}</a></h2>
+                        </div>
+                        <div class="dez-post-text">
+                            <p class="m-b10">{{ Paragraph_Workshops2 }}</p>
+                        </div>
+                        <table class="table table-bordered">
+                            {% for workshop in WorkshopsRegTabel %}
+                            <tr>
+                                <td>{{workshop.First_Column}}</td>
+                                <td>{{workshop.Second_Column}}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        <form method="post" class="cart"> {% csrf_token %}
+                            <div class="m-tb30">
+                                <!---
+                                <a href="https://workshop.indiakhelofootball.com/workshoppage/en/Workshop"target=”_blank”
+                                    class="site-button">Register Now
+                                </a> 
+                                <a class="site-button" href="/main/media/ui/download/workshops.pdf"target=”_blank”
+                                    download="workshops.pdf">Download
+                                    Brochure</a> --> 
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="section-full bg-img-fix content-inner overlay-black-middle our-projects-galery"
+                style="background-image:url('{{workshopsRegimages.WorkShopRegsFeatureBG}}'); background-position:center;">
+                <div class="container">
+                    <div class="row">
+                        {% for feature in featurestripsReg %}
+                        <div class="col-lg-3 col-sm-6 m-b30">
+                            <div
+                                class="border-1 p-a15 text-center text-white skew-triangle left-top hvr-wobble-horizontal">
+                                <div class="sports-icon ">
+                                    <img loading="lazy" width="85" height="85" src="{{ feature.pic }}" alt="" />
+                                </div>
+                                <h4 class="text-capitalize">{{ feature.heading }}</h4>
+                                <div class="dez-separator-outer ">
+                                    <div class="dez-separator bg-primary style-liner"></div>
+                                </div>
+                                <p class="m-b0">{{ feature.paragraph }}
+                                </p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="section-full bg-white content-inner our-achievements">
+                <div class="container">
+                    <div class="section-head text-center ">
+                        <h2 class="h2 text-uppercase"> {{Heading_Workshops3}}</h2>
+                        <div class="dez-separator-outer ">
+                            <div class="dez-separator bg-primary style-liner"></div>
+                        </div>
+                        <p>{{Paragraph_Workshops3}}</p>
+                    </div>
+                    <div class="section-content text-center ">
+                        <div class="row m-lr0">
+                            {%for learn in learnfromexpertsReg %}
+                            <div class="col-lg-3 col-sm-6 p-a0 m-b30" style="padding-right:20px ;">
+                                <div class="dez-box dez-media">
+                                    <img loading="lazy" width="292" height="292" src="{{learn.pic}}" alt="">
+                                    <div
+                                        class="dez-info-has p-a20 bg-primary text-left skew-triangle right-top text-center">
+                                        <h4 class="text-capitalize">{{learn.heading1}}</h4>
+                                        <div class="dez-info-has-text">{{learn.paragraph}}</div>
+                                        <div class="m-tb30"><a href="{{ learn.attr1 }}"target=”_blank”
+                                                class="site-button outline white border-1">{{learn.button_text}}</a>
+                                        </div>
+                                    </div>
+                                    <div class="dez-title-bx bg-gray p-a20 text-left skew-triangle left-top">
+                                        <h4 class="m-a0 text-capitalize"> {{learn.heading2}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endfor%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="dez-tabs border-tp product-description bg-tabs" style="padding-top:20px ;">
+                        <ul class="nav nav-tabs">
+                            <!-- <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#web-design-1"><i class="fa fa-globe"></i><span class="title-head"> Description</span></a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#graphic-design-1"><i class="fa fa-photo"></i> <span class="title-head">Additional Information</span></a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#developement-1"><i class="fa fa-cog"></i><span class="title-head"> Product Review</span></a></li> -->
+                            {% for tab in TrialsAndInitiativeNav %}
+                            <li class="nav-item"><a class="nav-link {{ tab.activestatus_id}}" data-toggle="tab"
+                                    href="#{{ tab.href }}"target=”_blank”><i class="fa fa-globe"></i><span
+                                        class="title-head">{{tab.name}}</span></a>
+                            </li>
+
+                            {% endfor %}
+                        </ul>
+
+                        <div class="tab-content">
+                            {% for tab in TrialsAndInitiativeNav %}
+                            <div id="{{ tab.href }}" class="tab-pane {{ tab.activestatus_id}}">
+                                <p class="m-b10">{{ tab.description|safe }}</p>
+                                <p>{{tab.listtext|safe}}</p>
+                                <p>{{ tab.bottomtext|safe }}</p>
+                                {% if tab.attr2 %}
+                                <div class="m-tb30">
+                                    <a href="{{tab.attr3}}"target=”_blank” class="site-button">{{ tab.attr2 }}</a>
+                                    <link rel="stylesheet" href="/static/css/style.css" </div>
+                                    {%endif%}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Product details -->
+        </div>
+        <!-- contact area  END -->
+    </div>
+    <!-- Content END-->
+    <!-- Footer -->

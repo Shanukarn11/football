@@ -1,0 +1,2917 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="robots" content="index, follow" />
+	<meta name="format-detection" content="telephone=no">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NGO",
+  "name": "India Khelo Football",
+  "alternateName": "IKF",
+  "legalName": "Khelo Football Ecosystem Development Federation",
+  "url": "https://indiakhelofootball.com/",
+  "logo": "https://indiakhelofootball.com/static/images/logo/livelogo.png",
+  "description": "IKF (India Khelo Football) is Bharat's largest phygital scouting ecosystem, connecting grassroots football talent with professional clubs and international pathways.",
+  "foundingDate": "2020-11-23",
+  "founders": [
+    {
+      "@type": "Person",
+      "name": "Phani Bhushan"
+    },
+    
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Mumbai",
+    "addressRegion": "Maharashtra",
+    "addressCountry": "IN"
+  },
+  "sameAs": [
+    "https://www.instagram.com/indiakhelofootball",
+    "https://www.facebook.com/indiakhelofootball",
+    "https://twitter.com/IKF_Official", 
+    "https://www.linkedin.com/company/india-khelo-football/"
+  ],
+  "nonprofitStatus": "Section 8 Company",
+  "areaServed": "India",
+  "knowsAbout": ["Football Scouting", "Grassroots Sports", "Player Development", "Career through Sports", "Football Social Empowerment"]
+}
+</script>
+	<!-- For Search Engine  -->
+	<title>{% block title %}Aap Khelo, Mauka Hum Denge | India Khelo Football (IKF){% endblock %}</title>
+	<meta name="description" content="{% block meta_description %}Join India Khelo Football (IKF), a non-profit platform connecting grassroots talent with professional football opportunities and career support across India.{% endblock %}" />
+
+	<meta name="keywords" content="{% block meta_keywords %}football opportunity, Tournaments, IKF trials, workshops,IKF, IKF Pathway 360 , IKF Scouting certification {% endblock %}" />
+
+    <meta name="author" content="{% block meta_author %}India Khelo Football{% endblock %}" />
+
+
+	    <!-- Open Graph tags -->
+	<meta property="og:title" content="{% block og_title %}India Khelo Football - Aap Khelo, Mauka Hum Denge!{% endblock %}">
+	<meta property="og:description" content="{% block og_description %}India Khelo Football provides a platform for aspiring footballers to explore and seize opportunities worldwide. Join us in our mission to nurture talent and promote football on a global scale.{% endblock %}">
+	<meta property="og:url" content="{% block og_url %}https://www.indiakhelofootball.com{% endblock %}">
+	<meta property="og:type" content="website">
+	<meta property="og:image" content="{% block og_image %}http://indiakhelofootball.com/static/images/ikf_logo.jpeg{% endblock %}">
+
+		<!-- Twitter Card tags -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="{% block twitter_title %}India Khelo Football - Aap Khelo, Mauka Hum Denge!{% endblock %}">
+	<meta name="twitter:description" content="{% block twitter_description %}India Khelo Football provides a platform for aspiring footballers to explore and seize opportunities worldwide. Join us in our mission to nurture talent and promote football on a global scale.{% endblock %}">
+	<meta name="twitter:image" content="{% block twitter_image %}http://indiakhelofootball.com/static/images/ikf_logo.jpeg{% endblock %}">
+	
+
+	<!-- Favicons Icon -->
+	<link rel="icon" href="{% static 'images/ikflogo3.png' %}" type="image/x-icon" />
+	<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/ikflogo3.png' %}" />
+	<link rel="preload" as="image" href="{% static 'images/goals.png' %}" fetchpriority="high">
+	{% block extra_head %}{% endblock %}
+
+	<style>
+		.nav-fftg-badge {
+			display: none !important;
+		}
+		.ikf-qab-wrap {
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+			gap: 8px;
+			width: 100%;
+			max-width: 155px;
+			font-family: inherit;
+		}
+		.ikf-qab {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			min-height: 40px;
+			padding: 8px 12px;
+			border-radius: 10px;
+			text-decoration: none;
+			font-weight: 600;
+			font-size: 12px;
+			line-height: 1.3;
+			color: #1a1a1a;
+			border: 0;
+			cursor: pointer;
+			box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+			transition: filter 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease;
+		}
+		.ikf-qab:hover {
+			filter: brightness(1.06);
+			transform: translateY(-2px);
+			box-shadow: 0 8px 20px rgba(0,0,0,0.14);
+			color: #1a1a1a;
+			text-decoration: none;
+		}
+		.ikf-qab:active {
+			transform: translateY(0) scale(0.98);
+		}
+		.ikf-qab-icon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 24px;
+			height: 24px;
+			border-radius: 6px;
+			flex: 0 0 24px;
+			background: rgba(0,0,0,0.10);
+		}
+		.ikf-qab-icon svg {
+			display: block;
+			width: 13px;
+			height: 13px;
+			flex: 0 0 13px;
+		}
+		.ikf-qab-label {
+			flex: 1 1 auto;
+			white-space: nowrap;
+			min-width: 0;
+		}
+		.ikf-qab--support {
+			background: #FFC300;
+		}
+		.ikf-qab--sitemap {
+			background: #FFD966;
+		}
+		.ikf-qab--notice {
+			background: #FFAA00;
+		}
+		.ikf-qab--sitemap .ikf-qab-icon {
+			background: rgba(0,0,0,0.08);
+		}
+		.ikf-qab--notice .ikf-qab-icon {
+			background: rgba(0,0,0,0.12);
+		}
+		.ikf-qab--goals {
+			background: #fff;
+			border: 1px solid #e5e7eb;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+		}
+		.main-bar {
+			position: relative;
+			padding-top: 4px;
+			padding-bottom: 18px;
+		}
+		.ikf-header-qab-bar {
+			display: flex !important;
+			position: absolute;
+			left: 54%;
+			right: auto;
+			bottom: 10px;
+			z-index: 0;
+			align-items: center;
+			gap: 12px;
+			transform: translateX(-50%);
+		}
+		.ikf-header-qab-bar .ikf-qab-wrap {
+			flex-direction: row !important;
+			align-items: center;
+			max-width: none;
+			width: auto;
+			gap: 6px;
+		}
+		.ikf-header-qab-bar .ikf-qab {
+			flex: 0 0 auto;
+			min-height: 34px;
+			height: 34px;
+			padding: 5px 10px;
+			border-radius: 8px;
+			font-size: 11px;
+		}
+		.ikf-header-qab-bar .ikf-qab-icon {
+			width: 24px;
+			height: 24px;
+			flex-basis: 24px;
+		}
+		.ikf-header-qab-bar .ikf-qab--support {
+			width: 118px;
+		}
+		.ikf-header-qab-bar .ikf-qab--sitemap {
+			width: 92px;
+		}
+		.ikf-header-qab-bar .ikf-qab--notice {
+			width: 126px;
+		}
+		.ikf-header-qab-bar .ikf-qab--goals {
+			display: none !important;
+		}
+		.ikf-header-goals-link {
+			display: block;
+			width: 91px;
+			height: 34px;
+			flex: 0 0 91px;
+		}
+		.ikf-header-goals-img {
+			display: block;
+			width: 91px;
+			height: 34px;
+			object-fit: contain;
+		}
+		@media (max-width: 991px) {
+			.ikf-header-qab-bar,
+			.ikf-header-goals-link {
+				display: none !important;
+			}
+		}
+		@media (max-width: 767px) {
+			.logo-header {
+				height: 56px !important;
+				width: 140px !important;
+			}
+			.main-bar {
+				padding-top: 0 !important;
+				padding-bottom: 0 !important;
+			}
+			.navbar-toggler,
+			.navbar-toggle {
+				margin-top: 10px !important;
+				margin-bottom: 10px !important;
+			}
+		}
+
+		.site-header.header-style-2 .sticky-header,
+		.site-header.header-style-2 .main-bar {
+			background: #f8f8f1 !important;
+			box-shadow: 0 10px 30px rgba(26, 37, 31, 0.08);
+		}
+
+		.site-header.header-style-2 .main-bar {
+			padding: 8px 0 !important;
+		}
+
+		.site-header.header-style-2 .container {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+			max-width: 1180px;
+			width: 100%;
+		}
+
+		/* Nav-item / nav-card rules were previously here but caused a FOUC
+		   (boxed-card layout flashed for ~1s before the real flex layout
+		   repainted on top). The authoritative styling lives in the later
+		   <style> block (around line 1750+) AND in the hoisted block below.
+		   The subtitle stays hidden since the final design doesn't use it. */
+		.site-header.header-style-2 .header-nav .navbar-nav > li > a .nav-subtitle {
+			display: none !important;
+		}
+
+	</style>
+
+	
+
+	<!-- Stylesheets -->
+	
+	<link rel="stylesheet" type="text/css" href="{% static 'css/plugins.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/hover.css' %}">
+	<link rel="stylesheet" type="text/css" class="skin" href="{% static 'css/skin/skin-1.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/templete.min.css' %}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	
+	
+	
+	
+
+	<!-- Revolution Slider Css -->
+	<link rel="stylesheet" type="text/css" href="{% static 'plugins/revolution/revolution/css/settings.css' %}">
+	<!-- Revolution Navigation Style -->
+	<link rel="stylesheet" type="text/css" href="{% static 'plugins/revolution/revolution/css/navigation.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/base19.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/season_5_landing2.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/global13.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/season5new.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/ikf_workshop_new88.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/ikfinnews2.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/ikf-dashboard7.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/internal_dashboard2.css' %}" />
+
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-TN7FTRVH');</script>
+	<!-- End Google Tag Manager -->
+	 <!-- Google tag (gtag.js) -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-F0V7V017S6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-F0V7V017S6');
+</script> -->
+
+<style data-from="hoisted-from-body-to-prevent-fouc">
+/* ─── Active navbar layout (hoisted so it applies before the
+   header renders, preventing the visibility-hidden → visible
+   FOUC on pages like /donate/<project>/ where the late <style>
+   block parses well after the header HTML).  Duplicates the
+   in-body rules at line 1799+; keep both in sync. ─── */
+.site-header.header-style-2 .header-nav .navbar-nav {
+  align-items: center !important;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 38px !important;
+  justify-content: flex-end !important;
+  margin: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 370px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  width: 100% !important;
+  visibility: visible !important;
+}
+.site-header.header-style-2 .header-nav .navbar-nav > li > a {
+  visibility: visible !important;
+}
+.site-header.header-style-2 .logo-header,
+.site-header.header-style-2 .header-nav,
+.site-header.header-style-2 .header-nav .navbar-nav,
+.site-header.header-style-2 .header-nav .navbar-nav > li,
+.site-header.header-style-2 .header-nav .navbar-nav > li > a,
+.site-header.header-style-2 .header-nav .navbar-nav > li > a .nav-title {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.site-header.header-style-2 .ikf-header-qab-bar {
+  visibility: visible !important;
+}
+@media (min-width: 1600px) {
+  .site-header.header-style-2 .header-nav .navbar-nav {
+    gap: 54px !important;
+    padding-left: 0 !important;
+  }
+}
+@media (max-width: 1180px) {
+  .site-header.header-style-2 .header-nav .navbar-nav {
+    gap: 22px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    justify-content: center !important;
+  }
+}
+@media (max-width: 1024px) {
+  .site-header.header-style-2 .header-nav .navbar-nav {
+    gap: 16px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+/* FFTG badge — desktop navbar, image top + text bottom */
+		  .nav-fftg-badge {
+		    position: absolute !important;
+		    right: 60px;
+		    top: 92%;
+		    transform: translateY(-50%);
+		    z-index: 200;
+		    display: flex !important;
+		    align-items: center;
+		  }
+		  .nav-fftg-link,
+		  .ikf-header-fftg-link {
+		    display: flex !important;
+		    flex-direction: column;
+		    align-items: center;
+		    gap: 3px;
+		    text-decoration: none !important;
+		  }
+		  .nav-fftg-link img,
+		  .ikf-header-fftg-link img {
+		    height: 42px;
+		    width: 113px;
+		    object-fit: contain;
+		    flex-shrink: 0;
+		  }
+		  .nav-fftg-link span,
+		  .ikf-header-fftg-link span {
+		    font-size: 9px;
+		    font-weight: 700;
+		    color: #000000;
+		    font-family: 'Inter', sans-serif;
+		    line-height: 1.2;
+		    text-align: center;
+		    max-width: 90px;
+		  }
+
+		  /* Always hidden — goals image now lives inside the QAB bar */
+		  .nav-fftg-badge {
+		    display: none !important;
+		  }
+
+		  /* Hide from mobile nav — shown below carousel instead */
+		  @media (max-width: 991px) {
+		    .ikf-header-fftg-link {
+		      display: none !important;
+		    }
+		    .ikf-header-goals-link {
+		      display: none !important;
+		    }
+		  }
+
+		  /* ── Mobile Sidebar Redesign ── */
+		  @media (max-width: 991px) {
+		    .mo-left .header-nav {
+		      background: #fff !important;
+		      border-right: 3px solid #ffc300 !important;
+		      overflow-y: auto !important;
+		      overflow-x: hidden !important;
+		    }
+		    .mo-left .header-nav.show {
+		      box-shadow: 4px 0 20px rgba(0,0,0,.15);
+		    }
+		    /* Remove dark page overlay when sidebar opens */
+		    .mo-left .navbar-toggler.open:after {
+		      display: none !important;
+		    }
+		    /* Close (X) button */
+		    .mo-left .navbar-toggler.open {
+		      background-color: #ffc300 !important;
+		      background-image: none !important;
+		      border: none !important;
+		      border-radius: 50% !important;
+		      width: 32px !important;
+		      height: 32px !important;
+		      padding: 0 !important;
+		      position: relative !important;
+		      z-index: 100 !important;
+		      box-shadow: 0 2px 8px rgba(0,0,0,.3) !important;
+		      outline: none !important;
+		    }
+		    .mo-left .navbar-toggler.open span {
+		      background: #111 !important;
+		      width: 14px !important;
+		      left: 9px !important;
+		    }
+		    .mo-left .navbar-toggler.open span:nth-child(1) {
+		      top: 15px !important;
+		    }
+		    .mo-left .navbar-toggler.open span:nth-child(3) {
+		      top: 15px !important;
+		    }
+		    /* Hide logo in sidebar — nav starts from top */
+		    .mo-left .header-nav .logo-header,
+		    .mo-left.header-style-3 .is-fixed.header-curve .header-nav .logo-header {
+		      display: none !important;
+		    }
+		    /* Push nav down from top */
+		    .mo-left .header-nav .nav {
+		      margin-top: 60px !important;
+		    }
+		    /* Top-level nav items */
+		    .mo-left .header-nav .nav > li {
+		      position: relative !important;
+		    }
+		    .mo-left .header-nav .nav > li > a {
+		      color: #222 !important;
+		      font-size: 14px !important;
+		      font-weight: 600 !important;
+		      padding: 13px 48px 13px 20px !important;
+		      border-top: none !important;
+		      border-bottom: 0 !important;
+		      display: block !important;
+		      background: #fff !important;
+		      line-height: 1.4 !important;
+		    }
+		    .mo-left .header-nav .nav > li > a:hover,
+		    .mo-left .header-nav .nav > li > a:focus,
+		    .mo-left .header-nav .nav > li > a:active,
+		    .mo-left .header-nav .nav > li.active > a,
+		    .mo-left .header-nav .nav > li.current-menu-item > a {
+		      color: #b88a00 !important;
+		      background: #fff8e1 !important;
+		      text-decoration: none !important;
+		    }
+		    /* Chevron icon — yellow badge, absolutely positioned to right-center */
+		    .mo-left .header-nav .nav > li > a > i.fa {
+		      position: absolute !important;
+		      right: 14px !important;
+		      top: 50% !important;
+		      transform: translateY(-50%) rotate(0deg) !important;
+		      background: #ffc300 !important;
+		      color: #000 !important;
+		      font-size: 10px !important;
+		      width: 22px !important;
+		      height: 22px !important;
+		      display: inline-flex !important;
+		      align-items: center !important;
+		      justify-content: center !important;
+		      border-radius: 4px !important;
+		      float: none !important;
+		      margin: 0 !important;
+		      line-height: 1 !important;
+		      transition: transform 0.25s ease !important;
+		    }
+		    /* Rotate arrow up when submenu is open */
+		    .mo-left .header-nav .nav > li.open > a > i.fa {
+		      transform: translateY(-50%) rotate(180deg) !important;
+		    }
+		    /* Submenu */
+		    .mo-left .header-nav .nav > li .sub-menu {
+		      background: #fffdf5 !important;
+		      border: none !important;
+		      border-left: 3px solid #ffc300 !important;
+		      margin: 0 0 0 16px !important;
+		      box-shadow: none !important;
+		      display: none !important;
+		      position: static !important;
+		      opacity: 1 !important;
+		      visibility: visible !important;
+		    }
+		    .mo-left .header-nav .nav > li.open > .sub-menu {
+		      display: block !important;
+		    }
+		    .mo-left .header-nav .nav > li .sub-menu li a {
+		      color: #555 !important;
+		      font-size: 13px !important;
+		      padding: 10px 16px !important;
+		      border-bottom: 0 !important;
+		      font-weight: 500 !important;
+		      background: transparent !important;
+		    }
+		    .mo-left .header-nav .nav > li .sub-menu li a:hover {
+		      color: #b88a00 !important;
+		      background: #fff8e1 !important;
+		    }
+		  }
+
+		  .ikf-footer { background-color:#272e3a; color:#fff; padding:48px 0 0; }
+		  .ikf-footer-inner { max-width:1400px; margin:0 auto; padding:0 60px; }
+		  .ikf-footer-grid { display:grid; grid-template-columns:1.2fr 1fr 1fr 1.6fr; gap:48px; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,.1); }
+		  .ikf-footer-legal { background:rgba(0,0,0,.2); padding:20px 60px; }
+		  .ikf-footer-legal-inner { max-width:1400px; margin:0 auto; display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:48px; align-items:start; }
+		  .ikf-footer-social-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; margin-bottom:20px; }
+		  @media (max-width:900px) {
+		    .ikf-footer-inner { padding:0 32px; }
+		    .ikf-footer-legal { padding:24px 32px; }
+		    .ikf-footer-grid { grid-template-columns:1fr 1fr; gap:32px 24px; }
+		    .ikf-footer-legal-inner { grid-template-columns:1fr 1fr; gap:24px; }
+		  }
+		  @media (max-width:540px) {
+		    .ikf-footer-inner { padding:0 20px; }
+		    .ikf-footer-grid { grid-template-columns:1fr; gap:28px; }
+		    .ikf-footer-legal { padding:24px 20px; }
+		    .ikf-footer-legal-inner { grid-template-columns:1fr; gap:20px; }
+		    .ikf-footer-social-grid { grid-template-columns:1fr 1fr; }
+		  }
+.footer-heading {
+				  text-align: left !important;
+				  margin-left: 0 !important;
+				}
+			  
+				.footer-hr {
+				  width: 100%;
+				  max-width: 150px;
+				  height: 3px;
+				  background-color: #f5f5f5;
+				  border: none;
+				  margin-left: 0 !important;
+				}
+				.footer-section-content {
+				  margin-left: 0 !important;
+  text-align: left !important;
+}
+              /* Overlay */
+.ikf-disclaimer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none; /* shown via JS */
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;               /* ✅ give breathing room on small screens */
+}
+.ikf-sitemap-link i {
+  font-size: 12px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+.ikf-disclaimer-modal {
+  max-width: 640px;
+  width: 100%;
+  padding: 24px 22px 18px;
+  border-radius: 18px;
+  position: relative;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* ✅ Solid white background instead of transparent gradient */
+  background: #ffffff;
+  border: 1px solid rgba(255, 195, 0, 0.55);
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.45);
+  /* optional: remove blur since it's not glassy anymore */
+  backdrop-filter: none;
+
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+
+.ikf-disclaimer-modal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  border-top: 3px solid #ffc300;
+}
+
+.ikf-disclaimer-modal h2 {
+  margin-top: 0;
+  margin-bottom: 14px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.ikf-disclaimer-modal p {
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 10px;
+  color: #111827;
+}
+.ikf-support-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ikf-sitemap-link {
+  font-size: 14px;
+  color: black !important;
+  margin-top: 2px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.ikf-sitemap-link:hover {
+  color: #ffd700 !important;
+  text-decoration: underline;
+}
+@media (max-width: 991px) {
+  .ikf-support-nav {
+    align-items: stretch;
+  }
+
+  .ikf-sitemap-link {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+}
+
+/* Close button stays same */
+.ikf-disclaimer-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: none;
+  background: rgba(255, 255, 255, 0.7);
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
+}
+.ikf-disclaimer-close:hover {
+  background: #ffc300;
+}
+
+.ikf-disclaimer-footer {
+  margin-top: 14px !important;
+  text-align: right !important;
+}
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+  .ikf-disclaimer-overlay {
+    align-items: flex-start;
+    padding-top: 40px;         /* ✅ avoids being cut by top of screen */
+  }
+
+  .ikf-disclaimer-modal {
+    max-width: 100%;
+    padding: 18px 14px 14px;
+    border-radius: 14px;
+  }
+
+  .ikf-disclaimer-modal h2 {
+    font-size: 18px;
+  }
+
+  .ikf-disclaimer-modal p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+}
+
+			  
+			  
+
+
+
+
+			  /* ===== Global image caption utility ===== */
+.ikf-media{ position:relative; display:block; }
+.ikf-media img{ display:block; width:100%; height:100%; object-fit:cover; }
+
+.ikf-caption{
+  position:absolute;
+  right:12px;
+  bottom:12px;
+  z-index:2;
+  font-size:13px;
+  line-height:1.35;
+  font-style:italic;
+  color:#fff;
+  text-align:right;
+  padding:6px 10px;
+  border-radius:10px;
+  max-width:85%;
+}
+.ikf-caption::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  border-radius:10px;
+  z-index:-1;
+}
+
+
+   
+.header-nav .nav > li > a.corporate-donor1-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: -10px -10px;          /* ⬅️ smaller height */
+  margin-top: 10px;
+  margin-bottom: -10px;         /* space for sitemap link */
+
+  border-radius: 6px;
+  background-color: #ffc300;
+  border: 1px solid #fbbf24;
+
+  color: #000 !important;
+  font-weight: 600;
+  font-size: 12px;            /* slightly smaller text */
+  text-decoration: none;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+.header-nav .nav > li > a.corporate-donor1-btn:hover {
+  background-color: #e6b200;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Icon + text inside button */
+.corporate-donor1-btn .gif-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.corporate-donor1-btn .donate-text {
+  white-space: nowrap;
+}
+
+/* On mobile, make it full-width and centered in the collapsed menu */
+@media (max-width: 991px) {
+  .header-nav .nav > li > a.corporate-donor1-btn {
+    width: 100%;
+    justify-content: center;
+    margin: 8px 0;
+  }
+}
+
+/* ✅ Force single column layout for social icons on mobile */
+@media (max-width: 768px) {
+  .footer-legal-section .row {
+    flex-direction: column !important;
+  }
+
+  .footer-section-content {
+    margin-left: 0 !important;
+    padding: 0 15px;
+    text-align: center !important;
+  }
+
+  .footer-section-content p {
+    text-align: center !important;
+    font-size: 13px;
+  }
+}
+
+/* Footer: make "Get In Touch" grid responsive (structure is inside base.html footer) */
+@media (max-width: 768px) {
+  footer .container.px-5 > .row.gx-md-5 {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  footer .container.px-5 > .row.gx-md-5 > .col-md-4 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center !important;
+    margin-bottom: 10px;
+  }
+
+  footer .container.px-5 > .row.gx-md-5 > .col-md-4 a.social-link {
+    justify-content: center !important;
+    width: 100%;
+  }
+
+  footer .footer-section-content a.social-link {
+    justify-content: center !important;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-social-contact .row.gx-md-5 {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .footer-social-contact .col-md-4 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center !important;
+    margin-bottom: 10px;
+  }
+
+  .footer-social-contact .social-link {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .footer-social-contact .social-text {
+    text-align: center;
+    margin-left: 10px;
+  }
+}
+
+
+
+
+   .social-text {
+	padding-left: 10px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    color: white; /* default color */
+  }
+
+  .social-text:hover {
+    color: #ffc300 !important;
+    text-decoration: underline;
+  }
+  .footer-legal-section {
+    color: #b3b3b3 !important;
+  }
+
+  .footer-legal-section p {
+    color: #b3b3b3 !important;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+
+
+.contact-form-wrapper-custom {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 30px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  max-width: 100%;
+  width: 500px;
+  margin-left: auto;
+  margin-right: 0;
+ 
+}
+
+.contact-form-wrapper-custom label {
+  font-size: 13px;
+  color: #ddd;
+  margin-bottom: 5px;
+  display: block;
+  text-align: left;  /* ✅ forces left alignment */
+}
+
+
+.contact-form-wrapper-custom .form-control {
+  border: none;
+  border-radius: 12px;
+  background-color: white;
+  color: #000;
+  font-size: 14px;
+  padding: 10px 14px;
+  width: 100%;
+  box-shadow: none;
+}
+
+.footer-submit-btn {
+  background-color: #f9c606;
+  color: #000;
+  border: none;
+  font-weight: bold;
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.footer-submit-btn:hover {
+  background-color: #e0b500;
+}
+
+/* Responsive tweak if needed */
+@media (max-width: 768px) {
+  .contact-form-wrapper-custom {
+    width: 100%;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+}
+.footer-social-contact {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 30px;
+  max-width: 100%;
+  justify-content: center;
+  padding: 10px 20px;
+}
+
+.footer-social-contact {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 30px;
+  justify-content: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px 0;
+}
+
+.footer-social-contact .social-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-social-contact .social-item img {
+  width: 20px;
+  height: 20px;
+}
+
+.footer-social-contact .social-item span {
+  font-size: 14px;
+  color: white;
+}
+.footer-social-contact {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.footer-social-contact .social-item {
+  font-size: 14px;
+  color: white;
+  min-width: 200px;
+}
+
+.footer-social-contact img {
+  width: 20px;
+  height: 20px;
+}
+
+
+@media (max-width: 768px) {
+  .footer-social-contact {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>
+
+</head>
+
+
+<body id="bg">
+	<div class="page-wraper">
+		<!-- header -->
+
+    <header class="site-header header-style-2 mo-left">
+
+        <!-- main header -->
+        <div class="sticky-header  main-bar-wraper navbar-expand-lg">
+            <div class="main-bar clearfix ">
+                <div class="container clearfix">
+                    <!-- website logo -->
+                    <div class="logo-header mostion"><a href="{% url 'home' %}"><img loading="lazy" src="{% static 'images/ikf_logo.jpeg' %}" width="230" height="106" alt=""></a></div>
+                    <!-- nav toggle button -->
+                    <button class="navbar-toggler collapsed navicon justify-content-end" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+						<span></span>
+						<span></span>
+						<span></span>
+					</button>
+                    <!-- extra nav -->
+                    <!-- <div class="extra-nav">
+                        <div class="extra-cell">
+                            <button id="quik-search-btn" type="button" class="site-button"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div> -->
+                    <!-- Quik search -->
+                    <!-- <div class="dez-quik-search bg-primary ">
+                        <form action="#">
+                            <input name="search" value="" type="text" class="form-control" placeholder="Type to search">
+                            <span  id="quik-search-remove"><i class="fa fa-remove"></i></span>
+                        </form>
+                    </div> -->
+                    <!-- main nav -->
+                    <div class="header-nav navbar-collapse collapse justify-content-center"  id="navbarNavDropdown">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{% url 'home' %}"><span class="nav-title">Home</span><span class="nav-subtitle">Where it all begins</span></a></li>
+                        <li><a href="{% url 'team-behind-ikf' %}"><span class="nav-title">About IKF</span><span class="nav-subtitle">What we are &amp; why</span></a>
+                            <ul class="sub-menu">
+                                <li><a href="{% url 'team-behind-ikf' %}">Meet the team</a></li>
+                                <li><a href="{% url 'ikfinnews' %}">IKF in the news</a></li>
+                                <li><a href="{% url 'home' %}#ikf-achievements">Achievements &amp; recognition</a></li>
+                                <li><a href="{% url 'un_certificate' %}">UN affiliation</a></li>
+                                <li><a href="{% url 'supporters' %}">Annual impact</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li><a href="{% url 'IkfTrials' %}"><span class="nav-title">What We Do</span><span class="nav-subtitle">Programmes &amp; projects</span></a>
+                            <ul class="sub-menu">
+                                <li><a href="{% url 'IkfTrials' %}">IKF Trials</a></li>
+                                <li><a href="{% url 'professional_pathway' %}">Scout on Wheel</a></li>
+                                <li><a href="{% url 'invest-social-impact' %}">North East Rising</a></li>
+                                <li><a href="{% url 'naari_shakti' %}">Project IKF Naari Shakti</a></li>
+                                <li><a href="{% url 'career360vision' %}">IKF Pathway 360</a></li>
+                                <li><a href="{% url 'discovery_call' %}">IKF Scouting</a></li>
+                                <li><a href="{% url 'internationalpartners' %}">Global Pathways</a></li>
+                            </ul>
+                        </li>
+
+
+
+
+
+                        <li><a href="{% url 'ikf_for_players' %}"><span class="nav-title">Your Path</span><span class="nav-subtitle">Player, parent, scout, donor</span></a>
+                            <ul class="sub-menu">
+                                <li><a href="{% url 'ikf_for_players' %}">I&apos;m a player</a></li>
+                                <li><a href="{% url 'ikf_for_parents' %}">I&apos;m a parent</a></li>
+                                <li><a href="{% url 'ikf_for_scouts' %}">I&apos;m a scout / coach</a></li>
+                                <li><a href="{% url 'ikf_for_donors' %}">I want to support IKF</a></li>
+                                <li><a href="{% url 'scouted_players' %}">Scouted players</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="{% url 'supporters' %}"><span class="nav-title">Our Impact</span><span class="nav-subtitle">Stories, data, proof</span></a>
+							<ul class="sub-menu">
+							    <li><a href="{% url 'international-alliance' %}">IKF Success Stories</a></li>
+                                                                <li><a href="{% url 'football-education' %}">Democratizing the dream</a></li>
+                                <li><a href="{% url 'woman-empowerment' %}">Empowering her through football</a></li>
+                                
+                                <li><a href="{% url 'supporters' %}">Annual impact report</a></li>
+                            </ul>
+						</li>
+
+                        <li><a href="{% url 'career360faq' %}"><span class="nav-title">Partners</span><span class="nav-subtitle">Clubs, states, REPs, legal</span></a>
+                            <ul class="sub-menu">
+                                <li><a href="{% url 'clubs' %}">Club &amp; academy partners</a></li>
+                                <li><a href="{% url 'internationalpartners' %}">International clubs</a></li>
+                                <li><a href="{% url 'state-association-partners' %}">State association partners</a></li>
+                                <li><a href="{% url 'rep_landing' %}">Regional execution partners</a></li>
+                                <li><a href="{% url 'associate_tournamentorganizer' %}">Tournament organisers</a></li>
+								<li><a href="{% url 'lawyer_landing' %}">Legal partners</a></li>
+                                <li><a href="{% url 'career360impactinaction' %}">Partnership guidelines</a></li>
+                                <li><a href="{% url 'request_for_player' %}">Request a player</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="{% url 'Donate' %}"><span class="nav-title">Donate</span><span class="nav-subtitle">Support the mission</span></a></li>
+
+                        <!-- <li><a href="javascript:;">International Pathways<i class="fa fa-chevron-down"></i></a>
+                            <ul class="sub-menu">
+                                <li><a href="{% url 'ikf_international_alliance' %}">IKF International Alliance</a></li>
+                                <li><a href="{% url 'discovery_call' %}">Career Consultations</a></li>
+                                <li><a href="{% url 'student_athlete_pathway' %}">Student-Athlete Pathway</a></li>
+                                <li><a href="{% url 'professional_pathway' %}">Professional Pathway</a></li>
+                                <li><a href="{% url 'workshops' %}">International Workshops</a></li>
+                                <li><a href="{% url 'playabroad' %}">IKF Advisory Services</a></li>
+                            </ul>
+                        </li> -->
+
+
+
+
+                        <li><a href="javascript:;">IKF Network<i class="fa fa-chevron-down"></i></a>
+                            <ul class="sub-menu">
+								               <li>
+  <a href="{% url 'rep_landing' %}">Regional Execution Partners</a>
+</li>
+                                <li>
+  <a href="{% url 'academy-partners' %}">Academy Partners</a>
+</li>
+                                <li><a href="{% url 'clubs' %}">Indian Clubs & Academies</a></li>
+                                <li><a href="{% url 'internationalpartners' %}">International Clubs & Academies</a></li>
+                                <li><a href="{% url 'state-association-partners' %}">State Association Partners</a></li>
+                                <!-- <li><a href="{% url 'myfirstkick_page' %}">My First Kick</a></li> -->
+								<li><a href="{% url 'lawyer_landing' %}">Legal Partners </a></li>
+								<li><a href="{% url 'associate_tournamentorganizer' %}">Tournament Organizer</a></li>
+								<li><a href="{% url 'request_for_player' %}">Request For Player</a></li>
+                                 <li><a href="{% url 'career360impactinaction' %}">Partnership Guidelines</a></li>
+                                <!-- <li><a href="{% url 'ikf-as-scouting-partners' %}">IKF as Scouting Partner</a></li>
+                                <li><a href="{% url 'international-alliance' %}">International Alliance</a></li>
+                                <li><a href="{% url 'associate_academy' %}">Football Academy</a></li>
+                                <li><a href="{% url 'associate_clubs' %}">Indian Football Clubs</a></li> -->
+                                
+                                
+                            </ul>
+                        </li>						
+                        <li><a href="{% url 'team-behind-ikf' %}">About Us<i class="fa fa-chevron-down"></i></a>
+                            <ul class="sub-menu">
+                                <li><a href="{% url 'team-behind-ikf' %}">Meet The Team</a></li>
+                                <li><a href="{% url 'ikfinnews' %}">IKF In News </a></li>
+
+                                <!-- <li><a href="{% url 'team-behind-ikf' %}">People Behind IKF</a></li>-->
+                                
+                            </ul>
+                        </li>
+
+                        <li class="nav-fftg-badge">
+                          <a href="/un-certificate" class="nav-fftg-link" target="_blank" rel="noopener noreferrer">
+                            <img src="{% static 'images/goals.png' %}" alt="Football for the Goals" width="107" height="40" style="width:107px;height:40px;display:block;" />
+                            <span>An UN's Initiative</span>
+                          </a>
+                        </li>
+
+
+			<!-- <li class="ikf-support-nav">
+  <a href="{% url 'Donate' %}" class="corporate-donor1-btn">
+    <img src="{% static 'images/gif/foot1.png' %}" alt="Donate" class="gif-icon" />
+    <span class="donate-text">Support IKF</span>
+  </a>
+
+  <a href="https://indiakhelofootball.com/sitemap" class="ikf-sitemap-link">
+  View Sitemap <i class="bi bi-arrow-right"></i>
+</a>
+
+</li> -->
+
+						 
+						  
+						  
+						  
+						  
+						  
+						  
+						  
+
+
+
+                        <!-- <li><a href="javascript:;">Support Initiatives &nbsp; &nbsp; &nbsp; <i class="fa fa-chevron-down" ></i></a>
+                            <ul class="sub-menu">
+                                <li><a href="{% url 'Donate' %}">Support IKF</a></li>
+                                <li><a href="{% url 'supporters' %}">Our Impact Partners</a></li>
+                                <li><a href="{% url 'invest-social-impact' %}">Invest in Social Impact</a></li>
+                                <li><a href="{% url 'sponsorship-opportunities' %}">Sponsorship Opportunities</a></li>
+                                <li><a href="{% url 'Donate' %}">Donate Now</a></li>
+                            </ul>
+                        </li> -->
+                    </ul>
+                    </div>
+                    <!-- IKF Quick Action Buttons — bottom-right of header -->
+                    {% if request.path != '/sitemap' and request.path != '/sitemap/' %}
+                    <div class="ikf-header-qab-bar">
+                      {% include 'html/Components/ikf_quick_buttons.html' %}
+                      <a href="/un-certificate" class="ikf-header-goals-link" title="Football for the Goals – UN Initiative" target="_blank" rel="noopener noreferrer">
+                        <img src="{% static 'images/goals.png' %}" alt="Football for the Goals" class="ikf-header-goals-img" width="91" height="34" />
+                      </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- main header END -->
+    </header>
+
+		<!-- our content -->
+		<main>
+			
+			{% block content %}
+
+			{% endblock content %}
+
+			{% include 'html/Components/persona_side_nav.html' %}
+		</main>
+		
+		<footer class="ikf-footer">
+			<div class="ikf-footer-inner">
+				<div class="ikf-footer-grid">
+
+					<!-- Support Us -->
+					<div>
+						<h6 style="text-transform:uppercase;font-size:14px;font-weight:700;letter-spacing:.1em;color:#ffffff;margin:0 0 12px;">Support Us</h6>
+						<div style="width:32px;height:2px;background:#ffc300;margin-bottom:18px;border-radius:2px;"></div>
+						<p style="font-size:14px;line-height:1.7;color:#a8b0be;margin:0 0 20px;">Join hands with India Khelo Football to empower grassroots football with your support.</p>
+						<a href="{% url 'Donate' %}" target="_blank" style="display:inline-block;padding:9px 24px;background:#ffc300;color:#000;font-weight:700;font-size:13px;border-radius:8px;text-decoration:none;">Donate</a>
+					</div>
+
+					<!-- Useful Links -->
+					<div>
+						<h6 style="text-transform:uppercase;font-size:14px;font-weight:700;letter-spacing:.1em;color:#ffffff;margin:0 0 12px;">Useful Links</h6>
+						<div style="width:32px;height:2px;background:#ffc300;margin-bottom:18px;border-radius:2px;"></div>
+						<p style="margin:0 0 10px;"><a href="{% url 'season5' %}" style="color:#a8b0be;text-decoration:none;font-size:14px;transition:color .2s;" onmouseover="this.style.color='#ffc300'" onmouseout="this.style.color='#a8b0be'">IKF's Trials</a></p>
+						<p style="margin:0;"><a href="{% url 'scoutingcertification' %}" style="color:#a8b0be;text-decoration:none;font-size:14px;" onmouseover="this.style.color='#ffc300'" onmouseout="this.style.color='#a8b0be'">Scouting Certification</a></p>
+					</div>
+
+					<!-- Contact Us -->
+					<div>
+						<h6 style="text-transform:uppercase;font-size:14px;font-weight:700;letter-spacing:.1em;color:#ffffff;margin:0 0 12px;">Contact Us</h6>
+						<div style="width:32px;height:2px;background:#ffc300;margin-bottom:18px;border-radius:2px;"></div>
+						<a href="https://wa.me/918850119762" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#a8b0be;font-size:14px;" onmouseover="this.style.color='#ffc300'" onmouseout="this.style.color='#a8b0be'">
+							<img src="{% static 'images/social/Whastapp.png' %}" width="22" height="22" style="flex-shrink:0;" />
+							<span>+91 8850119762</span>
+						</a>
+					</div>
+
+					<!-- Get In Touch -->
+					<div>
+						<h6 style="text-transform:uppercase;font-size:14px;font-weight:700;letter-spacing:.1em;color:#ffffff;margin:0 0 12px;">Get In Touch</h6>
+						<div style="width:32px;height:2px;background:#ffc300;margin-bottom:18px;border-radius:2px;"></div>
+						<div class="ikf-footer-social-grid">
+							<a href="https://www.linkedin.com/company/india-khelo-football" target="_blank" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:#a8b0be;font-size:13px;" onmouseover="this.style.color='#ffc300'" onmouseout="this.style.color='#a8b0be'">
+								<img src="{% static 'images/social/Linkedin1.png' %}" width="20" height="20" /><span>LinkedIn</span>
+							</a>
+							<a href="https://www.instagram.com/indiakhelofootball/" target="_blank" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:#a8b0be;font-size:13px;" onmouseover="this.style.color='#ffc300'" onmouseout="this.style.color='#a8b0be'">
+								<img src="{% static 'images/social/Instagram1.png' %}" width="20" height="20" /><span>Instagram</span>
+							</a>
+							<a href="https://www.facebook.com/officialikf/" target="_blank" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:#a8b0be;font-size:13px;" onmouseover="this.style.color='#ffc300'" onmouseout="this.style.color='#a8b0be'">
+								<img src="{% static 'images/social/facebook.png' %}" width="20" height="20" /><span>Facebook</span>
+							</a>
+							<a href="https://www.youtube.com/channel/UCX6z5QDccvyipZirUChE7uA/videos" target="_blank" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:#a8b0be;font-size:13px;" onmouseover="this.style.color='#ffc300'" onmouseout="this.style.color='#a8b0be'">
+								<img src="{% static 'images/social/youtube.png' %}" width="20" height="20" /><span>YouTube</span>
+							</a>
+							<a href="https://mail.google.com/mail/?view=cm&fs=1&to=info@indiakhelofootball.com" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:#a8b0be;font-size:13px;grid-column:span 2;" onmouseover="this.style.color='#ffc300'" onmouseout="this.style.color='#a8b0be'">
+								<img src="{% static 'images/social/email.png' %}" width="20" height="20" /><span>info@indiakhelofootball.com</span>
+							</a>
+						</div>
+						<a href="{% url 'terms_and_conditions' %}" target="_blank" rel="noopener" style="display:inline-block;padding:8px 18px;background:#ffc300;color:#000;font-weight:700;font-size:12px;border-radius:8px;text-decoration:none;">IKF Terms and Conditions</a>
+					</div>
+
+				</div>
+			</div>
+
+			<!-- Legal section -->
+			<div class="ikf-footer-legal">
+				<div class="ikf-footer-legal-inner">
+					<p style="font-size:14px;line-height:1.7;color:#a4aebe;margin:0;text-align:left;">
+						Powered by technology and operational expertise from FIRST KICK ANALYTICS PRIVATE LIMITED, the trusted execution partner of India Khelo Football. All financial processes are managed by FIRST KICK ANALYTICS PRIVATE LIMITED.
+					</p>
+					<p style="font-size:13px;line-height:1.7;color:#a4aebe;margin:0;text-align:left;">
+						Refunds will be issued solely in the event of cancellation due to unforeseen circumstances; Absence of participants does not qualify for a refund.<br/><br/>
+						Company name: Khelo Football Ecosystem Development Federation (Section 8 Company)
+					</p>
+					<p style="font-size:13px;line-height:1.7;color:#a4aebe;margin:0;text-align:left;">
+						80G Registration number: AAICK4512EF20214<br/>
+						CSR Number: CSR00022415<br/><br/>
+						Registration number: U80901MH2020NPL350467<br/>
+						Darpan ID: MH/2021/0282733
+					</p>
+				</div>
+			</div>
+		</footer>
+  
+		  
+			  <!-- ✅ Footer Legal & Bottom Bar -->
+			  <!-- Keep the rest as you have it -->
+		  
+		  
+		
+		  
+		<!-- Footer 
+		<footer class="site-footer footer-overlay bg-img-fix"
+			style="background-image: url(images/background/bg5.jpg); background-position: center bottom; background-size: cover; display: block;">
+			<div class="footer-top">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-3 col-sm-6 footer-col-4">
+							<form role="search" method="post" action="script/mailchamp.php"
+								class="dzSubscribe bg-primary p-a20 text-white m-t15">
+								<h2 class="m-tb0 font-40"> Support Us  </h2>
+								
+								<div class="m-tb30">
+								   <a href="https://donation.indiakhelofootball.com/"
+		   class="site-button bold black border-40"> Donate </a>
+								</div> 
+							</form>
+						</div>
+						</br>
+
+						<div id="mk-icon-box-5" class="mk-box-icon-2  jupiter-donut- box-align-center "
+							style="padding-left: 30px;">
+							<div class="mk-box-icon-2-icon size-48"> <svg class="mk-svg-icon"
+									data-name="mk-moon-location-3" data-cacheid="icon-631ee4c97dcd3"
+									style=" height:48px; width: 48px ;" viewBox="0 0 512 512">
+									<path
+										d="M256 480c-88.366 0-160-71.634-160-160 0-160 160-352 160-352s160 192 160 352c0 88.366-71.635 160-160 160zm0-258c-54.124 0-98 43.876-98 98s43.876 98 98 98 98-43.876 98-98-43.876-98-98-98zm-62 98a62 62 1260 1 0 124 0 62 62 1260 1 0-124 0z"
+										transform="scale(1 -1) translate(0 -480)"></path>
+								</svg> </div>
+							<h3 class="mk-box-icon-2-title">Address</h3>
+							<p class="mk-box-icon-2-content"><span style="color: #ffffff;"><b>Mumbai</b>
+						</div>
+						<div id="mk-icon-box-7" class="mk-box-icon-2  jupiter-donut- box-align-center "
+							style="padding-left: 100px ;">
+							<div class="mk-box-icon-2-icon size-48"> <svg class="mk-svg-icon"
+									data-name="mk-moon-phone-4" data-cacheid="icon-631ee0e2ec3df"
+									style=" height:48px; width: 48px; " viewBox="0 0 512 512">
+									<path
+										d="M321.788 371.146c-11.188 6.236-20.175 2.064-32.764-4.572-11.46-8.748-45.402-35.438-81.226-71.188-26.156-33.084-46.162-64.288-55.375-79.293-.625-1.66-.944-2.632-.944-2.632-5.397-13.476-8.771-22.92-1.324-33.521 6.854-9.727 9.5-12.383 18.24-20.108l-87.79-130.124c-10.604 7.728-27.018 25.106-40.509 44.378-12.538 18.317-23.154 38.587-26.049 53.055 15.295 55.117 52.258 157.896 120.583 231.325l-.021.308c65.73 81.028 170.165 131.43 225.571 153.226 14.679-1.385 35.938-9.844 55.456-20.404 20.598-11.415 39.567-25.945 48.329-35.685l-120.288-100.829c-8.597 7.91-11.498 10.254-21.889 16.064zm-116.178-242.488c7.241-5.302 5.313-14.944 1.926-20.245l-66.579-101.913c-4.344-5.291-13.396-8.064-21.252-5.579l-27.433 18.381 88.034 129.879 25.304-20.523zm287.339 269.188l-94.473-76.788c-4.93-3.918-14.313-6.838-20.325-.188l-23.046 23.05 120.047 101.015 21.136-25.357c3.285-7.564 1.467-16.857-3.339-21.732z">
+									</path>
+								</svg> </div>
+							<h3 class="mk-box-icon-2-title">Phone</h3>
+							<p class="mk-box-icon-2-content"><span style="color: #ffffff;">
+									<p><span style="color: #ffffff;"><b>+91 8928669565</b>
+						</div>
+						<div id="mk-icon-box-9" class="mk-box-icon-2  jupiter-donut- box-align-center "
+							style="padding-left: 100px;">
+							<div class="mk-box-icon-2-icon size-48"> <svg class="mk-svg-icon"
+									data-name="mk-moon-bubble-dots" data-cacheid="icon-631ee0e2ec6ae"
+									style=" height:48px; width: 48px;" xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 512 512">
+									<path
+										d="M418 32h-324c-51.7 0-94 42.3-94 94v354l96-96h322c51.7 0 94-42.3 94-94v-164c0-51.7-42.3-94-94-94zm-258 224c-17.673 0-32-14.327-32-32s14.327-32 32-32 32 14.327 32 32-14.327 32-32 32zm96 0c-17.673 0-32-14.327-32-32s14.327-32 32-32 32 14.327 32 32-14.327 32-32 32zm96 0c-17.673 0-32-14.327-32-32s14.327-32 32-32 32 14.327 32 32-14.327 32-32 32z">
+									</path>
+								</svg> </div>
+							<h3 class="mk-box-icon-2-title">Email</h3>
+							<p class="mk-box-icon-2-content"><span
+									style="color: #ffffff;"><b>info@indiakhelofootball.com
+									</b></span><br>
+							</p>
+						</div>
+
+					</div>
+
+
+				</div>
+
+				<div class="footer-bottom">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-4 text-left"> <span>Company name: Khelo Football Ecosystem Development
+									Federation (Section 8 Company)</span> </div>
+							<div class="col-lg-4 text-center"> <span> Registration number:
+									U80901MH2020NPL350467</span><br><span> Darpan ID: MH/2021/0282733</span> </div>
+							<div class="col-lg-4 text-right "> <span> 80G Registration number:
+									AAICK4512EF20214</span><br><span> CSR Number: CSR00022415</span> </div>
+						</div>
+					</div>
+				</div>
+
+				        <div class="row mt-3">
+          <div class="col-lg-1 text-left"></div>
+          <div class="col-lg-10 text-left"> <span style="color: #fff !important;">{{ powered_by_mfk_text | safe }}</span> </div>
+          <div class="col-lg-1 text-left"></div>
+        </div>
+
+					<div class="footer-bottom">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-4 text-left"> <a href="https://usconnect.indiakhelofootball.com/term">Terms and Condition</a> </div>
+							<div class="col-lg-4 text-center"> <span> </span><br><span></span> </div>
+							<div class="col-lg-4 text-right "> <a href="https://usconnect.indiakhelofootball.com/refund"> Refund Policy</a> </div>
+						</div>
+
+					</div>
+				</div>
+
+		</footer> -->
+
+		<!-- scroll top button -->
+		<button class="scroltop fa fa-caret-up"></button>
+	</div>
+	<div id="loading-area">
+		<img src="{% static 'images/animation/loading.gif' %}" alt="Loading..." />
+	</div>
+<!-- Disclaimer Popup -->
+<div id="ikf-disclaimer-overlay" class="ikf-disclaimer-overlay">
+  <div class="ikf-disclaimer-modal">
+    <button class="ikf-disclaimer-close" id="ikf-disclaimer-close">&times;</button>
+
+    <h2>Disclaimer</h2>
+
+    <p>
+      India Khelo Football (IKF) is <strong>NOT</strong> an agent, intermediary, club, or football academy. IKF is a
+      <strong>neutral platform</strong> that connects all dots of the football ecosystem.
+    </p>
+
+    <p>
+      At IKF, <strong>we do not charge</strong> any fee to clubs for accessing players, nor do we charge players for
+      being scouted or connected to a club — <strong>apart from the one-time registration fee.</strong>
+    </p>
+
+    <p>
+      Players pay a <strong>single registration fee of ₹125 (inclusive of GST)</strong>, applicable only for the city
+      round. Participation is <strong>free for girls and underprivileged children (with valid government proof).</strong>
+    </p>
+
+    <p>
+      Beyond the city round, there are <strong>no charges at all</strong> — zonal rounds and the national finals are
+      <strong>completely free for everyone.</strong>
+    </p>
+
+    <p>
+      If <strong>any individual or organisation</strong> asks for additional payment, makes false claims, or
+      misrepresents IKF in any manner, please <strong>report it immediately</strong> at:
+      <br>
+      📧 <strong>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=indiakhelofootball@gmail.com" target="_blank" rel="noopener">indiakhelofootball@gmail.com</a>
+      </strong>
+    </p>
+
+    <p>
+      IKF remains committed to <strong>transparency, fairness, and creating a safe, genuine pathway for all aspiring footballers.</strong>
+    </p>
+
+    <div class="ikf-disclaimer-footer">
+      <button type="button" id="ikf-disclaimer-hide-30" class="ikf-disclaimer-hide-btn">
+        Continue Browsing
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+	<!-- JavaScript  files ========================================= -->
+	  
+	<script src="{% static 'js/jquery.min.js' %}" defer></script><!-- JQUERY.MIN JS -->
+	<script src="{% static 'plugins/bootstrap/js/popper.min.js' %}" defer></script><!-- BOOTSTRAP.MIN JS -->
+	<script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}" defer></script><!-- BOOTSTRAP.MIN JS -->
+	<script src="{% static 'plugins/bootstrap-select/bootstrap-select.min.js' %}" defer></script><!-- FORM JS -->
+	<script src="{% static 'plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js' %}" defer></script><!-- FORM JS -->
+	<script src="{% static 'plugins/magnific-popup/magnific-popup.js' %}" defer></script><!-- MAGNIFIC POPUP JS -->
+	<script src="{% static 'plugins/counter/waypoints-min.js' %}" defer></script><!-- WAYPOINTS JS -->
+	<script src="{% static 'plugins/counter/counterup.min.js' %}" defer></script><!-- COUNTERUP JS -->
+	<script src="{% static 'plugins/countdown/jquery.countdown.js' %}" defer></script><!-- COUNTDOWN JS -->
+	<script src="{% static 'plugins/imagesloaded/imagesloaded.js' %}" defer></script><!-- IMAGESLOADED -->
+	<script src="{% static 'plugins/masonry/masonry-3.1.4.js' %}" defer></script><!-- MASONRY -->
+	<script src="{% static 'plugins/masonry/masonry.filter.js' %}" defer></script><!-- MASONRY -->
+	<script src="{% static 'plugins/owl-carousel/owl.carousel.js' %}" defer></script><!-- OWL SLIDER -->
+	<script src="{% static 'plugins/lightgallery/js/lightgallery-all.js' %}" defer></script><!-- LIGHT GALLERY -->
+	<script src="{% static 'js/dz.ajax.js' %}" defer></script><!-- CONTACT JS  -->
+
+	<script src="{% static 'js/custom.js' %}" defer></script><!-- CUSTOM FUCTIONS  -->
+	<script src="{% static 'js/dz.carousel.min.js' %}" defer></script><!-- SORTCODE FUCTIONS  -->
+	<!-- revolution JS FILES -->
+	<script src="{% static 'plugins/revolution/revolution/js/jquery.themepunch.tools.min.js' %}" defer></script>
+	<script src="{% static 'plugins/revolution/revolution/js/jquery.themepunch.revolution.min.js' %}" defer></script>
+	<!-- Slider revolution 5.0 Extensions  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) -->
+	<script
+		src="{% static 'plugins/revolution/revolution/js/extensions/revolution.extension.actions.min.js' %}" defer></script>
+	<script
+		src="{% static 'plugins/revolution/revolution/js/extensions/revolution.extension.carousel.min.js' %}" defer></script>
+	<script
+		src="{% static 'plugins/revolution/revolution/js/extensions/revolution.extension.kenburn.min.js' %}" defer></script>
+	<script
+		src="{% static 'plugins/revolution/revolution/js/extensions/revolution.extension.layeranimation.min.js' %}" defer></script>
+	<script
+		src="{% static 'plugins/revolution/revolution/js/extensions/revolution.extension.migration.min.js' %}" defer></script>
+	<script
+		src="{% static 'plugins/revolution/revolution/js/extensions/revolution.extension.navigation.min.js' %}" defer></script>
+	<script
+		src="{% static 'plugins/revolution/revolution/js/extensions/revolution.extension.parallax.min.js' %}" defer></script>
+	<script
+		src="{% static 'plugins/revolution/revolution/js/extensions/revolution.extension.slideanims.min.js' %}" defer></script>
+	<script src="{% static 'plugins/revolution/revolution/js/extensions/revolution.extension.video.min.js' %}" defer></script>
+	<script src="{% static 'js/rev.slider.js' %}" defer></script>
+	<script>
+		jQuery(document).ready(function () {
+			'use strict';
+			if (jQuery('#slider_01').length) {
+				dz_rev_slider_1();
+			}
+		});	/*ready*/
+
+		function function1(content) {
+
+			document.getElementById("button_content").innerHTML = content;
+		}
+
+		function function2(content) {
+
+			document.getElementById("button_content").innerHTML = content;
+		}
+	</script>
+{% if messages %}
+{% for message in messages %}
+  {% if "submitted" in message.message %}
+	<script>
+	  document.addEventListener("DOMContentLoaded", function () {
+		const popup = document.getElementById("success-popup");
+		if (popup) {
+		  popup.style.display = "block";
+		}
+	  });
+	</script>
+  {% endif %}
+{% endfor %}
+{% endif %}
+
+
+  
+<script>
+  const currentPath = window.location.pathname;
+
+  document.querySelectorAll('.nav.navbar-nav li').forEach(li => {
+    const links = li.querySelectorAll('a');
+    links.forEach(a => {
+      if (a.getAttribute('href') && a.getAttribute('href') !== '#' && currentPath === a.getAttribute('href')) {
+        li.classList.add('active');
+        // If it's a sub-menu item, also mark its parent
+        const parent = li.closest('.sub-menu')?.closest('li');
+        if (parent) parent.classList.add('active');
+      }
+    });
+  });
+
+
+</script>
+
+
+   
+
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TN7FTRVH"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const overlay = document.getElementById('ikf-disclaimer-overlay');
+    const closeBtn = document.getElementById('ikf-disclaimer-close');
+    const hide30Btn = document.getElementById('ikf-disclaimer-hide-30');
+
+    if (!overlay || !closeBtn || !hide30Btn) return;
+
+    const LS_KEY = 'ikfDisclaimerLastDismissed';
+    const MINUTES_TO_HIDE = 30;  // 👈 30 mins
+
+    function shouldShowPopup() {
+      const stored = localStorage.getItem(LS_KEY);
+      if (!stored) return true;
+
+      const lastDismissed = parseInt(stored, 10);
+      if (isNaN(lastDismissed)) return true;
+
+      const diffMs = Date.now() - lastDismissed;
+      const diffMinutes = diffMs / (1000 * 60);
+
+      return diffMinutes >= MINUTES_TO_HIDE;
+    }
+
+    if (shouldShowPopup()) {
+      overlay.style.display = 'none';
+    } else {
+      overlay.style.display = 'none';
+    }
+
+    function closeDisclaimer() {
+      overlay.style.display = 'none';
+    }
+
+    // Normal close (X or outside) – no timer saved
+    closeBtn.addEventListener('click', closeDisclaimer);
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) {
+        closeDisclaimer();
+      }
+    });
+
+    // “Don’t show again for 30 mins”
+    hide30Btn.addEventListener('click', function () {
+      localStorage.setItem(LS_KEY, String(Date.now()));
+      closeDisclaimer();
+    });
+  });
+</script>
+
+	<!-- ===== IKF Floating Quick Buttons ===== -->
+	{% load sticky_page_title_tags %}
+	{% get_sticky_page_title as sticky_page_title %}
+	{% if request.resolver_match.url_name != 'home' %}
+	<div class="ikf-floating-page-title" aria-hidden="true"{% if sticky_page_title %} data-admin-title="{{ sticky_page_title }}"{% endif %}></div>
+	{% endif %}
+
+	{% if request.path != '/sitemap' and request.path != '/sitemap/' %}
+	<div class="ikf-qab-fixed-wrap" style="display:none;">
+	  {% include 'html/Components/ikf_quick_buttons.html' %}
+</div>
+{% endif %}
+
+<style>
+  /* Desktop — hide the fixed sidebar; buttons now live in the header sub-bar */
+	  .ikf-qab-fixed-wrap {
+	    display: none;
+	  }
+
+	  .ikf-floating-page-title {
+	    position: fixed;
+	    top: calc(var(--ikf-floating-page-title-top, 128px) - 1px);
+	    left: 0;
+	    right: 0;
+	    width: 100%;
+	    z-index: 920;
+	    display: flex;
+	    align-items: center;
+	    min-height: 48px;
+	    padding: 10px max(24px, calc((100vw - 1240px) / 2 + 24px));
+	    border-radius: 0;
+	    background: #ffffff !important;
+	    backdrop-filter: none;
+	    -webkit-backdrop-filter: none;
+	    border: none;
+	    box-shadow: none;
+	    color: #2d2a1e;
+	    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+	    font-size: 22px;
+	    font-weight: 800;
+	    line-height: 1.05;
+	    letter-spacing: -0.4px;
+	    pointer-events: none;
+	    opacity: 0;
+	    transform: translateY(-6px);
+	    transition: opacity 0.22s ease, transform 0.22s ease;
+	  }
+
+	  .ikf-floating-page-title::before {
+	    content: '';
+	    width: 4px;
+	    align-self: stretch;
+	    min-height: 22px;
+	    margin-right: 12px;
+	    border-radius: 999px;
+	    background: #ffc300;
+	    flex: 0 0 4px;
+	  }
+
+	  .ikf-floating-page-title.is-visible {
+	    opacity: 1;
+	    transform: translateY(0);
+	  }
+
+  /* ── Quick buttons: absolute bottom-right inside the header bar ── */
+  .main-bar {
+    position: relative;
+  }
+
+  .ikf-header-qab-bar {
+    display: flex !important;
+    position: absolute;
+    left: 54%;
+    transform: translateX(-50%);
+    right: auto;
+    bottom: 10px;
+    z-index: 0;
+    align-items: center;
+    gap: 12px;
+  }
+  /* ensure nav dropdowns always float above the qab-bar */
+  .main-bar .navigation > ul > li > .sub-menu,
+  .main-bar .sub-menu {
+    z-index: 9999 !important;
+  }
+
+  /* Goals image tucked beside Noticeboard — image only, no text */
+  .ikf-header-goals-link {
+    display: block;
+    width: 91px;
+    height: 34px;
+    flex: 0 0 91px;
+  }
+
+  .ikf-header-goals-img {
+    display: block;
+    height: 34px;
+    width: 91px;
+    object-fit: contain;
+    flex-shrink: 0;
+    opacity: 0.92;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .ikf-header-goals-link:hover .ikf-header-goals-img {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+
+  .main-bar {
+    padding-top: 8px;
+    padding-bottom: 32px;
+  }
+
+  .ikf-header-qab-bar .ikf-qab-wrap {
+    flex-direction: row !important;
+    max-width: none;
+    width: auto;
+    gap: 6px;
+  }
+
+  .ikf-header-qab-bar .ikf-qab {
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 8px;
+  }
+
+  /* Final navbar redesign override: screenshot structure with IKF's brighter yellow visual language. */
+  /* Bulletproof fixed header. position:sticky was breaking on the
+     donate-project page (some ancestor was creating a containing
+     block that disengaged the sticky). position:fixed always pins
+     to the viewport regardless of any ancestor's transform/filter/
+     overflow. We compensate with padding-top on .page-wraper so
+     the page content doesn't slide under the fixed header. */
+  .site-header.header-style-2 {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 1300 !important;
+    background: #ffffff;
+  }
+
+  /* Reserve space at the top so the page content starts below the fixed header. */
+  .page-wraper {
+    padding-top: 92px;
+  }
+
+  .site-header.header-style-2 .main-bar {
+    position: relative !important;
+    z-index: 1200 !important;
+  }
+
+  .site-header.header-style-2 .sticky-header {
+    position: relative !important;
+    z-index: 1300 !important;
+  }
+
+  /* Legacy is-fixed kept as a no-op so custom.js's headerFix() can
+     still run without breaking anything. */
+  .site-header.header-style-2 .sticky-header.is-fixed .main-bar {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 1300 !important;
+  }
+
+  body.ikf-floating-title-active .site-header.header-style-2,
+  body.ikf-floating-title-active .site-header.header-style-2 .sticky-header,
+  body.ikf-floating-title-active .site-header.header-style-2 .main-bar,
+  body.ikf-floating-title-active .site-header.header-style-2 .main-bar .container,
+  body.ikf-floating-title-active .site-header.header-style-2 .logo-header,
+  body.ikf-floating-title-active .site-header.header-style-2 .header-nav,
+  body.ikf-floating-title-active .site-header.header-style-2 .header-nav .navbar-nav,
+  body.ikf-floating-title-active .site-header.header-style-2 .header-nav .navbar-nav > li,
+  body.ikf-floating-title-active .site-header.header-style-2 .header-nav .navbar-nav > li > a,
+  body.ikf-floating-title-active .site-header.header-style-2 .header-nav .navbar-nav > li > a .nav-title {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+
+  body.ikf-floating-title-active .site-header.header-style-2 {
+    z-index: 1300 !important;
+  }
+
+  body.ikf-floating-title-active .site-header.header-style-2 .header-nav {
+    position: static !important;
+    z-index: 1302 !important;
+  }
+
+  body.ikf-floating-title-active .site-header.header-style-2 .header-nav .navbar-nav > li > a,
+  body.ikf-floating-title-active .site-header.header-style-2 .header-nav .navbar-nav > li > a .nav-title {
+    color: #1a1a1a !important;
+  }
+
+  /* Mobile header is shorter — adjust spacer accordingly. */
+  @media (max-width: 991px) {
+    .page-wraper {
+      padding-top: 72px;
+    }
+  }
+
+  .site-header.header-style-2 .main-bar {
+    background: #ffffff !important;
+    box-shadow: 0 10px 30px rgba(26, 37, 31, 0.08) !important;
+    padding: 0 0 8px !important;
+  }
+
+  .site-header.header-style-2 .sticky-header.is-fixed,
+  .site-header.header-style-2 .sticky-header.is-fixed .main-bar,
+  .site-header.header-style-2 .is-fixed .main-bar {
+    background: #ffffff !important;
+    box-shadow: 0 10px 30px rgba(26, 37, 31, 0.08) !important;
+  }
+
+  .ikf-floating-page-title {
+    background: #ffffff !important;
+    box-shadow: none !important;
+    filter: none !important;
+    z-index: 920 !important;
+  }
+
+  body.ikf-floating-title-active .site-header.header-style-2 .sticky-header,
+  body.ikf-floating-title-active .site-header.header-style-2 .sticky-header.is-fixed,
+  body.ikf-floating-title-active .site-header.header-style-2 .sticky-header .main-bar,
+  body.ikf-floating-title-active .site-header.header-style-2 .sticky-header.is-fixed .main-bar {
+    background: #ffffff !important;
+    box-shadow: none !important;
+  }
+
+  body.ikf-floating-title-active .ikf-floating-page-title {
+    background: #ffffff !important;
+    box-shadow: none !important;
+  }
+
+  .site-header.header-style-2 .main-bar .container {
+    align-items: center !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    max-width: 1480px !important;
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+    gap: 0 !important;
+  }
+
+  .site-header.header-style-2 .navbar-toggler {
+    display: none !important;
+  }
+
+  .site-header.header-style-2 .logo-header {
+    display: block !important;
+    flex: 0 0 116px !important;
+    height: auto !important;
+    margin-right: 20px !important;
+    margin-top: 10px !important;
+    margin-bottom: 0 !important;
+    align-self: flex-start !important;
+    width: 116px !important;
+  }
+
+  .site-header.header-style-2 .logo-header a,
+  .site-header.header-style-2 .logo-header img {
+    display: block !important;
+    height: auto !important;
+    max-height: 58px !important;
+    max-width: 116px !important;
+    object-fit: contain !important;
+    width: 116px !important;
+  }
+
+  .site-header.header-style-2 .header-nav {
+    display: block !important;
+    flex: 1 1 auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+    width: auto !important;
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav {
+    align-items: center !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 38px !important;
+    justify-content: flex-end !important;
+    margin: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 370px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    width: 100% !important;
+    visibility: visible !important;
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav > li > a {
+    visibility: visible !important;
+  }
+
+  .site-header.header-style-2 .ikf-header-qab-bar {
+    visibility: visible !important;
+  }
+
+  @media (min-width: 1600px) {
+    .site-header.header-style-2 .header-nav .navbar-nav {
+      gap: 54px !important;
+      padding-left: 0 !important;
+    }
+  }
+
+  @media (max-width: 1180px) {
+    .site-header.header-style-2 .header-nav .navbar-nav {
+      gap: 22px !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      justify-content: center !important;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .site-header.header-style-2 .header-nav .navbar-nav {
+      gap: 16px !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav > li {
+    display: block !important;
+    float: none !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav > li:nth-child(n+8) {
+    display: none !important;
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav > li > a {
+    align-items: center !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: #1a1a1a !important;
+    display: inline-flex !important;
+    flex-direction: row !important;
+    font-family: Montserrat, Arial, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    height: auto !important;
+    justify-content: center !important;
+    line-height: 1.2 !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+    padding: 6px 0 !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav > li > a .nav-title {
+    display: inline !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav > li > a .nav-subtitle {
+    display: none !important;
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav > li > a:hover,
+  .site-header.header-style-2 .header-nav .navbar-nav > li.active > a {
+    background: transparent !important;
+    border: none !important;
+    color: #f5b800 !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav > li > a:hover .nav-subtitle,
+  .site-header.header-style-2 .header-nav .navbar-nav > li.active > a .nav-subtitle {
+    color: inherit !important;
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav i.fa {
+    display: none !important;
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav > li {
+    position: relative !important;
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav > li > .sub-menu {
+    background: #fffaf0 !important;
+    border: 1px solid rgba(255, 195, 0, 0.50) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 18px 38px rgba(26, 37, 31, 0.16) !important;
+    display: none !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    left: 50% !important;
+    list-style: none !important;
+    margin: 10px 0 0 !important;
+    min-width: 240px !important;
+    opacity: 1 !important;
+    padding: 10px !important;
+    position: absolute !important;
+    top: 100% !important;
+    transform: translateX(-50%) !important;
+    visibility: visible !important;
+    z-index: 99999 !important;
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav > li:hover > .sub-menu,
+  .site-header.header-style-2 .header-nav .navbar-nav > li:focus-within > .sub-menu {
+    display: flex !important;
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav > li > .sub-menu li {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav > li > .sub-menu li a {
+    background: #ffffff !important;
+    border: 1px solid rgba(255, 195, 0, 0.18) !important;
+    border-radius: 8px !important;
+    color: #222722 !important;
+    display: block !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    padding: 11px 12px !important;
+    text-decoration: none !important;
+    white-space: normal !important;
+  }
+
+  .site-header.header-style-2 .header-nav .navbar-nav > li > .sub-menu li a:hover {
+    background: #ffc300 !important;
+    border-color: #e1a900 !important;
+    color: #111111 !important;
+  }
+
+  .site-header.header-style-2 .ikf-header-qab-bar {
+    align-items: center !important;
+    display: flex !important;
+    flex: 0 0 100% !important;
+    gap: 8px !important;
+    justify-content: center !important;
+    left: auto !important;
+    margin-left: 10px !important;
+    margin-top: -8px !important;
+    order: 3 !important;
+    padding-left: 0 !important;
+    position: static !important;
+    right: auto !important;
+    transform: none !important;
+    width: calc(100% - 10px) !important;
+    z-index: 2 !important;
+  }
+
+  .site-header.header-style-2 .ikf-header-qab-bar .ikf-qab-wrap {
+    display: flex !important;
+    flex-direction: row !important;
+    flex: 0 0 auto !important;
+    gap: 12px !important;
+    justify-content: center !important;
+    width: auto !important;
+  }
+
+  .site-header.header-style-2 .ikf-header-qab-bar .ikf-qab-wrap {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    justify-content: center !important;
+    width: auto !important;
+  }
+
+  .site-header.header-style-2 .ikf-header-qab-bar .ikf-qab {
+    border-radius: 8px !important;
+    box-shadow: 0 6px 14px rgba(255, 195, 0, 0.16) !important;
+    font-size: 12px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    padding: 5px 13px !important;
+    width: auto !important;
+  }
+
+  .site-header.header-style-2 .ikf-header-qab-bar .ikf-qab--sitemap {
+    min-width: 120px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .site-header.header-style-2 .ikf-header-qab-bar .ikf-qab--support {
+    min-width: 140px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .site-header.header-style-2 .ikf-header-qab-bar .ikf-qab--notice {
+    min-width: 140px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .site-header.header-style-2 .ikf-header-qab-bar .ikf-qab-icon {
+    width: 18px !important;
+    height: 18px !important;
+    flex-basis: 18px !important;
+  }
+
+  .site-header.header-style-2 .ikf-header-goals-link {
+    display: block !important;
+    flex: 0 0 82px !important;
+    height: 30px !important;
+    width: 82px !important;
+  }
+
+  .site-header.header-style-2 .ikf-header-goals-img {
+    display: block !important;
+    height: 30px !important;
+    object-fit: contain !important;
+    width: 82px !important;
+  }
+
+  @media (min-width: 992px) and (max-width: 1280px) {
+    .site-header.header-style-2 .main-bar .container {
+      max-width: 100% !important;
+      padding-left: 18px !important;
+      padding-right: 18px !important;
+    }
+
+    .site-header.header-style-2 .logo-header {
+      flex: 0 0 76px !important;
+      margin-right: 12px !important;
+      width: 76px !important;
+    }
+
+    .site-header.header-style-2 .logo-header a,
+    .site-header.header-style-2 .logo-header img {
+      max-height: 42px !important;
+      max-width: 76px !important;
+      width: 76px !important;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav {
+      gap: 14px !important;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav > li > a,
+    .site-header.header-style-2 .header-nav .navbar-nav > li > a .nav-title {
+      font-size: 12px !important;
+    }
+
+    .site-header.header-style-2 .ikf-header-qab-bar .ikf-qab {
+      font-size: 11px !important;
+      height: 30px !important;
+      min-height: 30px !important;
+      padding: 4px 12px !important;
+    }
+
+    .site-header.header-style-2 .ikf-header-qab-bar .ikf-qab--support {
+      min-width: 112px !important;
+    }
+
+    .site-header.header-style-2 .ikf-header-qab-bar .ikf-qab--sitemap {
+      min-width: 96px !important;
+    }
+
+    .site-header.header-style-2 .ikf-header-qab-bar .ikf-qab--notice {
+      min-width: 112px !important;
+    }
+
+    .site-header.header-style-2 .ikf-header-goals-link,
+    .site-header.header-style-2 .ikf-header-goals-img {
+      height: 28px !important;
+      width: 76px !important;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .site-header.header-style-2 .main-bar .container {
+      align-items: stretch !important;
+      flex-direction: column !important;
+      padding-left: 14px !important;
+      padding-right: 14px !important;
+    }
+
+    .site-header.header-style-2 .logo-header {
+      margin: 0 auto 8px !important;
+    }
+
+    .site-header.header-style-2 .ikf-header-qab-bar,
+    .site-header.header-style-2 .ikf-header-qab-bar .ikf-qab-wrap {
+      flex-wrap: wrap !important;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav {
+      gap: 7px !important;
+      justify-content: center !important;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav > li > a {
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav > li > .sub-menu {
+      grid-template-columns: 1fr !important;
+      left: 0 !important;
+      min-width: min(92vw, 360px) !important;
+      transform: none !important;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .ikf-header-qab-bar {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .site-header.header-style-2 .ikf-header-qab-bar {
+      display: flex !important;
+    }
+
+    .site-header.header-style-2 .ikf-header-goals-link {
+      display: block !important;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .site-header.header-style-2 .header-nav .navbar-nav > li:has(.sub-menu)::after {
+      content: "";
+      display: none;
+      height: 16px;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      z-index: 99998;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav > li:hover::after {
+      display: block;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav > li > .sub-menu {
+      margin-top: 8px !important;
+    }
+  }
+
+  /* Keep mobile exactly on the original hamburger/sidebar pattern. */
+  @media (max-width: 991px) {
+    .site-header.header-style-2 .main-bar {
+      padding: 6px 0 !important;
+    }
+
+    .site-header.header-style-2 .sticky-header.is-fixed {
+      left: auto !important;
+      position: relative !important;
+      right: auto !important;
+      top: auto !important;
+      z-index: auto !important;
+    }
+
+    .site-header.header-style-2 .main-bar .container {
+      display: block !important;
+      max-width: 100% !important;
+      padding-left: 14px !important;
+      padding-right: 14px !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      width: 100% !important;
+    }
+
+    .site-header.header-style-2 .main-bar .container::after {
+      clear: both !important;
+      content: "" !important;
+      display: block !important;
+    }
+
+    .site-header.header-style-2 .logo-header {
+      align-self: auto !important;
+      display: block !important;
+      float: left !important;
+      height: auto !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      position: relative !important;
+      left: 0 !important;
+      width: 120px !important;
+    }
+
+    .site-header.header-style-2 .logo-header a,
+    .site-header.header-style-2 .logo-header img {
+      display: block !important;
+      height: auto !important;
+      max-height: 56px !important;
+      max-width: 120px !important;
+      width: 120px !important;
+    }
+
+    .site-header.header-style-2 .navbar-toggler {
+      background: transparent !important;
+      border: none !important;
+      display: block !important;
+      float: right !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      position: relative !important;
+      width: 40px !important;
+      height: 40px !important;
+    }
+
+    .site-header.header-style-2 .navbar-toggler:not(.open) span:nth-child(1) {
+      top: 18px !important;
+    }
+
+    .site-header.header-style-2 .navbar-toggler:not(.open) span:nth-child(2) {
+      top: 26px !important;
+    }
+
+    .site-header.header-style-2 .navbar-toggler:not(.open) span:nth-child(3) {
+      top: 34px !important;
+    }
+
+    .site-header.header-style-2 .navbar-toggler.open {
+      position: fixed !important;
+      top: 14px !important;
+      right: 14px !important;
+      left: auto !important;
+      z-index: 10001 !important;
+      width: 32px !important;
+      height: 32px !important;
+      background: #ffc300 !important;
+      border-radius: 50% !important;
+      padding: 0 !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,.3) !important;
+    }
+
+    .site-header.header-style-2 .navbar-toggler.open span {
+      background: #111 !important;
+      width: 16px !important;
+      height: 2px !important;
+      position: absolute !important;
+      top: 50% !important;
+      left: 50% !important;
+      margin: 0 !important;
+    }
+
+    .site-header.header-style-2 .navbar-toggler.open span:nth-child(1) {
+      transform: translate(-50%, -50%) rotate(45deg) !important;
+    }
+
+    .site-header.header-style-2 .navbar-toggler.open span:nth-child(2) {
+      opacity: 0 !important;
+    }
+
+    .site-header.header-style-2 .navbar-toggler.open span:nth-child(3) {
+      transform: translate(-50%, -50%) rotate(-45deg) !important;
+    }
+
+    .site-header.header-style-2 .ikf-header-qab-bar,
+    .site-header.header-style-2 .ikf-header-goals-link {
+      display: none !important;
+    }
+
+    .site-header.header-style-2 .header-nav {
+      background: #ffffff !important;
+      display: none !important;
+      height: 100vh !important;
+      left: 0 !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      padding: 60px 0 24px !important;
+      position: fixed !important;
+      top: 0 !important;
+      width: 280px !important;
+      max-width: 85vw !important;
+      z-index: 9999 !important;
+    }
+
+    .site-header.header-style-2 .header-nav .logo-header,
+    .site-header.header-style-2 .header-nav > div:first-child .logo-header,
+    .site-header.header-style-2 .header-nav > div:first-child img,
+    .mo-left .header-nav .logo-header {
+      display: none !important;
+      visibility: hidden !important;
+      height: 0 !important;
+      width: 0 !important;
+      max-height: 0 !important;
+      overflow: hidden !important;
+    }
+
+    .site-header.header-style-2 .header-nav.show {
+      display: block !important;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav {
+      display: block !important;
+      margin-top: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav > li {
+      display: block !important;
+      width: 100% !important;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav > li > a {
+      background: #fff !important;
+      border: 0 !important;
+      border-bottom: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      color: #222 !important;
+      display: block !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      min-height: 0 !important;
+      min-width: 0 !important;
+      padding: 13px 48px 13px 20px !important;
+      text-align: left !important;
+      width: 100% !important;
+      position: relative !important;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav > li.active > a,
+    .site-header.header-style-2 .header-nav .navbar-nav > li.current-menu-item > a,
+    .site-header.header-style-2 .header-nav .navbar-nav > li.open > a,
+    .mo-left .header-nav .nav > li.active > a,
+    .mo-left .header-nav .nav > li.current-menu-item > a,
+    .mo-left .header-nav .nav > li.open > a {
+      background: #fff !important;
+      color: #222 !important;
+      box-shadow: none !important;
+      text-decoration: none !important;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav > li.has-submenu > a::after,
+    .site-header.header-style-2 .header-nav .navbar-nav > li:has(> .sub-menu) > a::after {
+      align-items: center;
+      background: #ffd35a;
+      border-radius: 4px;
+      color: #111;
+      content: "\f078";
+      display: inline-flex;
+      font-family: FontAwesome;
+      font-size: 10px;
+      height: 22px;
+      justify-content: center;
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: transform 0.2s ease;
+      width: 22px;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav > li.open.has-submenu > a::after,
+    .site-header.header-style-2 .header-nav .navbar-nav > li.open:has(> .sub-menu) > a::after {
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav > li > a .nav-title {
+      display: inline !important;
+      font-size: 14px !important;
+      margin: 0 !important;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav > li > a .nav-subtitle {
+      display: none !important;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav i.fa {
+      display: inline-flex !important;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav > li > .sub-menu {
+      background: #fffdf5 !important;
+      border: none !important;
+      border-left: 3px solid #ffc300 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      display: none !important;
+      left: auto !important;
+      margin: 0 0 0 16px !important;
+      min-width: 0 !important;
+      padding: 0 !important;
+      position: static !important;
+      transform: none !important;
+      width: auto !important;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav > li.open > .sub-menu {
+      display: block !important;
+    }
+
+    .site-header.header-style-2 .header-nav .navbar-nav > li > .sub-menu li a {
+      background: transparent !important;
+      border: 0 !important;
+      border-bottom: 0 !important;
+      border-radius: 0 !important;
+      color: #555 !important;
+      font-size: 13px !important;
+      font-weight: 500 !important;
+      padding: 10px 16px !important;
+    }
+  }
+
+  /* Mobile — fixed 2x2 quick-button grid */
+	@media (max-width: 768px) {
+	  .ikf-floating-page-title {
+	    top: calc(var(--ikf-floating-page-title-top, 96px) - 1px);
+	    left: 0;
+	    right: 0;
+	    width: 100%;
+	    max-width: 100%;
+	    min-height: 40px;
+	    padding: 8px 16px;
+	    border-radius: 0;
+	    font-size: 16px;
+	    box-shadow: 0 4px 12px rgba(11,17,32,0.06);
+	    transform: translateY(-6px);
+	  }
+
+	  .ikf-floating-page-title::before {
+	    width: 3px;
+	    min-height: 20px;
+	    margin-right: 8px;
+	    flex-basis: 3px;
+	  }
+
+	  .ikf-floating-page-title.is-visible {
+	    transform: translateY(0);
+	  }
+
+	  .ikf-qab-fixed-wrap {
+	    display: block !important;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    top: auto;
+    z-index: 900;
+    background: #fff;
+    border: 2px solid #ffc300;
+    border-radius: 10px;
+    box-shadow: 0 -2px 18px rgba(0,0,0,0.12);
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+  }
+
+  .ikf-qab-fixed-wrap .ikf-qab-wrap {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 100%;
+    gap: 6px;
+    align-items: stretch;
+  }
+
+  .ikf-qab-fixed-wrap .ikf-qab {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 8px 6px;
+    border-radius: 8px;
+    gap: 0;
+    min-height: 38px;
+  }
+
+  /* Hide SVG icons on Support IKF + Noticeboard so labels fit */
+  .ikf-qab-fixed-wrap .ikf-qab--support .ikf-qab-icon,
+  .ikf-qab-fixed-wrap .ikf-qab--notice  .ikf-qab-icon {
+    display: none !important;
+  }
+
+  .ikf-qab-fixed-wrap .ikf-qab-label {
+    display: block;
+    min-width: 0;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.15;
+  }
+
+  /* Goals: keep the image, hide the "UN Initiative" label */
+  .ikf-qab-fixed-wrap .ikf-qab--goals {
+    padding: 4px 6px;
+  }
+  .ikf-qab-fixed-wrap .ikf-qab--goals .ikf-qab-label {
+    display: none !important;
+  }
+  .ikf-qab-fixed-wrap .ikf-qab--goals img {
+    height: 26px !important;
+    width: auto !important;
+    max-width: 100%;
+    object-fit: contain;
+  }
+}
+
+@media (max-width: 420px) {
+  .ikf-qab-fixed-wrap .ikf-qab-label {
+    font-size: 10.5px;
+  }
+  .ikf-qab-fixed-wrap .ikf-qab {
+    padding: 7px 4px;
+  }
+}
+
+@media (max-width: 360px) {
+  .ikf-qab-fixed-wrap .ikf-qab-label {
+    font-size: 9.5px;
+  }
+}
+
+
+	</style>
+	<!-- ===== END IKF Floating Quick Buttons ===== -->
+
+	{% if request.resolver_match.url_name != 'home' %}
+	<script>
+	  (function () {
+	    const floatingTitle = document.querySelector('.ikf-floating-page-title');
+	    if (!floatingTitle) return;
+
+	    const adminTitle = (floatingTitle.getAttribute('data-admin-title') || '').trim();
+
+	    const root = document.documentElement;
+	    const headingSelectors = [
+	      '[data-floating-page-title]',
+	      'main h1',
+	      '.page-content h1',
+	      '.content-inner h1',
+	      '.dlab-bnr-inr h1',
+	      '.dez-bnr-inr h1',
+	      '.section-head h1',
+	      'h1',
+	      '.ikf-h2',
+	      '.section-head h2'
+	    ];
+	    const headerSelectors = ['.site-header', 'header', '.main-bar'];
+
+	    function isVisible(element) {
+	      const rect = element.getBoundingClientRect();
+	      const style = window.getComputedStyle(element);
+	      return rect.width > 0 && rect.height > 0 && style.display !== 'none' && style.visibility !== 'hidden';
+	    }
+
+	    function cleanTitle(text) {
+	      return (text || '').replace(/\s+/g, ' ').trim();
+	    }
+
+	    function normalizePath(pathname) {
+	      let path = pathname || '/';
+	      try {
+	        path = decodeURI(path);
+	      } catch (_) {}
+	      path = path.replace(/\/+$/, '');
+	      return path || '/';
+	    }
+
+	    function titleFromLink(link) {
+	      const clone = link.cloneNode(true);
+	      clone.querySelectorAll('i, svg, .nav-subtitle').forEach(function (node) { node.remove(); });
+	      const titleNode = clone.querySelector('.nav-title');
+	      return cleanTitle(titleNode ? titleNode.textContent : clone.textContent);
+	    }
+
+	    function getSubNavTitle() {
+	      const currentPath = normalizePath(window.location.pathname);
+	      const navLinks = document.querySelectorAll('.header-nav .navbar-nav .sub-menu a[href], .navbar-nav .sub-menu a[href]');
+	      for (const link of navLinks) {
+	        const href = link.getAttribute('href') || '';
+	        if (!href || href === '#' || href.indexOf('javascript:') === 0) continue;
+
+	        let linkUrl;
+	        try {
+	          linkUrl = new URL(href, window.location.origin);
+	        } catch (_) {
+	          continue;
+	        }
+
+	        if (normalizePath(linkUrl.pathname) !== currentPath) continue;
+
+	        const title = titleFromLink(link);
+	        if (title) return title;
+	      }
+	      return '';
+	    }
+
+	    function getSourceHeading() {
+	      for (const selector of headingSelectors) {
+	        const headings = document.querySelectorAll(selector);
+	        for (const heading of headings) {
+	          if (heading.closest('header, nav, footer, script, style')) continue;
+	          if (!isVisible(heading)) continue;
+	          const text = cleanTitle(heading.getAttribute('data-floating-page-title') || heading.textContent);
+	          if (text && text.length <= 80) return { element: heading, text: text };
+	        }
+	      }
+	      return null;
+	    }
+
+	    function getHeaderOffset() {
+	      let offset = 0;
+	      for (const selector of headerSelectors) {
+	        const header = document.querySelector(selector);
+	        if (!header) continue;
+	        const rect = header.getBoundingClientRect();
+	        if (rect.bottom > 0 && rect.bottom > offset) offset = rect.bottom;
+	      }
+	      return Math.min(Math.max(offset, 64), 190);
+	    }
+
+	    const source = getSourceHeading();
+	    if (!source && !adminTitle) return;
+	    floatingTitle.textContent = adminTitle || getSubNavTitle() || (source ? source.text : '');
+
+	    function updateTitle() {
+	      const top = getHeaderOffset();
+	      root.style.setProperty('--ikf-floating-page-title-top', top + 'px');
+
+	      let shouldShow;
+	      if (source) {
+	        const titleRect = source.element.getBoundingClientRect();
+	        shouldShow = window.scrollY > 80 && titleRect.bottom < top + 18;
+	      } else {
+	        // Admin override without a detected source heading — just gate on scroll.
+	        shouldShow = window.scrollY > 80;
+	      }
+	      floatingTitle.classList.toggle('is-visible', shouldShow);
+	      document.body.classList.toggle('ikf-floating-title-active', shouldShow);
+	    }
+
+	    updateTitle();
+	    window.addEventListener('scroll', updateTitle, { passive: true });
+	    window.addEventListener('resize', updateTitle);
+	  })();
+	</script>
+	{% endif %}
+
+	<script>
+
+(function(){
+  var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (!isMobile) return;
+  document.querySelectorAll('a[href*="mail.google.com"]').forEach(function(link){
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      try {
+        var url = new URL(this.href);
+        var to = url.searchParams.get('to') || '';
+        var su = url.searchParams.get('su') || '';
+        window.location.href = 'mailto:' + to + (su ? '?subject=' + su : '');
+      } catch(_) {}
+    });
+  });
+})();
+</script>
+<script>
+(function () {
+  function isMobileNav() {
+    return window.matchMedia('(max-width: 991px)').matches;
+  }
+
+  function setupMobileSubnav() {
+    var nav = document.querySelector('.site-header.header-style-2 .header-nav .navbar-nav');
+    if (!nav || nav.dataset.ikfMobileAccordion === '1') return;
+
+    var navItems = nav.querySelectorAll(':scope > li');
+    navItems.forEach(function (item) {
+      var submenu = item.querySelector(':scope > .sub-menu');
+      if (submenu) item.classList.add('has-submenu');
+    });
+
+    function syncSubmenus() {
+      nav.querySelectorAll(':scope > li').forEach(function (item) {
+        var submenu = item.querySelector(':scope > .sub-menu');
+        if (!submenu) return;
+        if (isMobileNav()) {
+          submenu.style.setProperty('display', item.classList.contains('open') ? 'block' : 'none', 'important');
+        } else {
+          submenu.style.removeProperty('display');
+        }
+      });
+    }
+
+    nav.dataset.ikfMobileAccordion = '1';
+    nav.addEventListener('click', function (event) {
+      if (!isMobileNav()) return;
+
+      var item = event.target.closest('.site-header.header-style-2 .header-nav .navbar-nav > li');
+      if (!item || !nav.contains(item)) return;
+
+      var directLink = item.querySelector(':scope > a');
+      var submenu = item.querySelector(':scope > .sub-menu');
+      if (!directLink || !submenu || event.target.closest('.sub-menu')) return;
+      if (event.target !== directLink && !directLink.contains(event.target)) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+
+      var shouldOpen = !item.classList.contains('open');
+      nav.querySelectorAll(':scope > li.open').forEach(function (openItem) {
+        openItem.classList.remove('open');
+      });
+      if (shouldOpen) item.classList.add('open');
+      syncSubmenus();
+
+      window.setTimeout(function () {
+        nav.querySelectorAll(':scope > li.open').forEach(function (openItem) {
+          if (openItem !== item || !shouldOpen) openItem.classList.remove('open');
+        });
+        if (shouldOpen) item.classList.add('open');
+        syncSubmenus();
+      }, 0);
+    }, true);
+
+    syncSubmenus();
+  }
+
+  function refreshMobileSubnav() {
+    var nav = document.querySelector('.site-header.header-style-2 .header-nav .navbar-nav');
+    if (!nav) return;
+    nav.querySelectorAll(':scope > li').forEach(function (item) {
+      if (item.querySelector(':scope > .sub-menu')) item.classList.add('has-submenu');
+      var submenu = item.querySelector(':scope > .sub-menu');
+      if (!submenu) return;
+      if (isMobileNav()) {
+        submenu.style.setProperty('display', item.classList.contains('open') ? 'block' : 'none', 'important');
+      } else {
+        submenu.style.removeProperty('display');
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupMobileSubnav);
+  } else {
+    setupMobileSubnav();
+  }
+  window.addEventListener('resize', refreshMobileSubnav);
+})();
+</script>
+
+<!-- Back-to-Donate floating button (shown when arriving from /donate) -->
+<script>
+(function(){
+  try{
+    var params = new URLSearchParams(window.location.search);
+    if(params.get('from') !== 'donate') return;
+    if(document.getElementById('backToDonateBtn')) return;
+    var a = document.createElement('a');
+    a.id = 'backToDonateBtn';
+    a.href = '{% url "Donate" %}';
+    a.textContent = '← Back to Donate page';
+    a.style.cssText = [
+      'position:fixed','right:16px','bottom:140px','z-index:9999',
+      'background:#FFC72C','color:#1a1a1a','font-weight:600','font-size:14px',
+      'padding:10px 18px','border-radius:24px','text-decoration:none',
+      'box-shadow:0 4px 14px rgba(0,0,0,.18)','font-family:inherit',
+      'white-space:nowrap'
+    ].join(';');
+    (document.body || document.documentElement).appendChild(a);
+  }catch(e){}
+})();
+</script>
+</body>
+
+
+
+
+	  
+</body>
+
+</html>

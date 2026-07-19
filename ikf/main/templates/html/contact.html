@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content">
+	<style>
+		p, li{
+			font-size: 18px;
+			line-height: 22px;
+		}
+	</style>
+<div style="height: 120px;"></div>
+<div class="section-full content-inner">
+    <div class="container">
+        <div class="section-head text-center">
+            <h1 class="h2 m-0">Support India Khelo Football</h1>
+			<p style="font-size: 15px;" class="text-center">Empower grassroots football and create opportunities for India's future stars.</p>
+			<div class="dez-separator bg-primary"></div>
+        </div>
+		
+        <div class="container">
+			<div class="row no-gutters">
+				<section class="col-12 col-md-7 mb-3 mb-md-0 mr-md-4">
+					<h2 class="h3 m-b40">How You Can Donate?</h2>
+					<div class="donation-method m-b40">
+						<h3 class="h5">1. Through UPI ID</h3>
+						<p>Transfer funds using our UPI ID: <span style="font-weight: bold; font-size: 20px; color:#a48213">ikf@idfcbank</span></p>
+					</div>
+					<div class="donation-method">
+						<h3 class="h5">2. Direct Deposit in Our Bank Account</h3>
+						<p>Make a direct deposit to our official account:</p>
+						<table class=" m-b40 border-collapse border border-gray-300">
+							<tbody>
+								<tr>
+									<td class="border border-gray-300 px-4 py-2 font-bold">Account Name:</td>
+									<td class="border border-gray-300 px-4 py-2">KHELO FOOTBALL ECOSYSTEM DEVELOPMENT FEDERATION</td>
+								</tr>
+								<tr>
+									<td class="border border-gray-300 px-4 py-2 font-bold">Account Number:</td>
+									<td class="border border-gray-300 px-4 py-2">10064068880</td>
+								</tr>
+								<tr>
+									<td class="border border-gray-300 px-4 py-2 font-bold">IFSC Code:</td>
+									<td class="border border-gray-300 px-4 py-2">IDFB0040162</td>
+								</tr>
+								<tr>
+									<td class="border border-gray-300 px-4 py-2 font-bold">SWIFT Code:</td>
+									<td class="border border-gray-300 px-4 py-2">IDFBINBBMUM</td>
+								</tr>
+								<tr>
+									<td class="border border-gray-300 px-4 py-2 font-bold">Bank Name:</td>
+									<td class="border border-gray-300 px-4 py-2">IDFC FIRST</td>
+								</tr>
+								<tr>
+									<td class="border border-gray-300 px-4 py-2 font-bold">Branch:</td>
+									<td class="border border-gray-300 px-4 py-2">THANE - HIRANANDANI ESTATE BRANCH</td>
+								</tr>
+							</tbody>
+						</table>
+						
+					</div>
+					
+					<div class="mb-40 w-100">
+						<h3 class="h5 ">4. Through Razorpay</h3>
+	
+						<div class="m-4">
+								<div class="row">
+									<!-- Left part start -->
+									<div class="">
+										<div class="p-a30 bg-gray clearfix m-b30 ">
+											<h2>Donation Form</h2>
+											<div class="dzFormMsg"></div>
+											<form method="post" class="dzForm" id="form1" action="">
+												<input type="hidden" value="Contact" name="dzToDo">
+												<div class="row">
+													<div class="col-lg-6">
+														<div class="form-group">
+															<div class="input-group">
+																<input name="name" id="name" type="text" required class="form-control"
+																	placeholder="Your Name">
+															</div>
+														</div>
+													</div>
+													<div class="col-lg-6">
+														<div class="form-group">
+															<div class="input-group">
+																<input name="email" id="email" type="email" class="form-control" required
+																	placeholder="Your Email Id">
+															</div>
+														</div>
+													</div>
+													<div class="col-lg-6">
+														<div class="form-group">
+															<div class="input-group">
+																<input name="mobile" id="mobile" type="text" required class="form-control"
+																	placeholder="Mobile No.">
+															</div>
+														</div>
+													</div>
+													<div class="col-lg-6">
+														<div class="form-group">
+															<div class="input-group">
+																<input name="amount" id="amount" type="text" required class="form-control"
+																	placeholder="Amount (INR)">
+															</div>
+														</div>
+													</div>
+					
+					
+													<div class="col-lg-12">
+														<button name="submit" onclick="donate(this)" type="submit" value="Submit" class="site-button ">
+															<span>Donate</span> </button>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+									</div>
+	
+						<!-- contact area  END -->
+					</div>
+					</div>
+					<h2 class="h5">Share Your Donation Details</h2>
+					<p class="mb-40">India Khelo Football is a not for profit initiative working towards creating a structured career path for aspiring football players in India.</p>
+					<p class="mb-40">We conduct Trials across India in multiple villages, scout exceptional talent and place them in Top most clubs of India.
+					</p>
+					<p class="mb-40">Your donation will help us to expand our reach and to bring exceptional talent hidden in tribal villages in spotlight. Any amount is welcome.
+					</p>
+					<p class="h5 mb-40">PS: Do share screenshot at <a class="text-primary" href="https://mail.google.com/mail/?view=cm&fs=1&to=donate@indiakhelofootball.com" target="_blank" rel="noopener">donate@indiakhelofootball.com</a> once paid, we will issue a 80G certificate.</p>
+				</section>
+				<div class="col-12 col-md-4 m-b40 text-center d-flex flex-column align-items-center">
+					<h3 class="h5">Through UPI Scanner</h3>
+					<p>Scan the QR code below to donate instantly:</p>
+					
+					<img loading="lazy" src="{% static 'images/anaya/donate.png' %}" class="img-fluid">
+					<!-- <img loading="lazy" src="https://res.cloudinary.com/dqmmxqwiq/image/upload/v1733595004/India%20Khelo%20Football/WhatsApp_Image_2024-12-07_at_23.39.50_dpzk66.jpg" alt="UPI QR Code" class="img-fluid"> -->
+				</div>
+			</div>
+		</div>
+    </div>
+</div>
+	
+<!-- Content END-->
+<script>
+
+function checkempty(data){if(data==null||data==""||data==undefined){return ""}else{return data}}
+function order(inputdata){
+	var AMOUNT=parseFloat(inputdata["amount"])
+	console.log(inputdata)
+	console.log(inputdata["mobile"])
+	$.ajax({type: "POST",
+        url: "{% url 'order' %}",
+        data:{mobile:inputdata["mobile"],amount:AMOUNT, csrfmiddlewaretoken:'{{csrf_token}}'} }
+      ) .done(function (result) { 
+        $('.spinner-border').hide();
+                                  console.log(result)
+                                  resultdata=JSON.parse(result)
+                                 if(resultdata['error']=="true"){
+                                               alert(resultdata['message'] )
+                                    }
+                                 else{try{
+        //   alert("Order ID is generated Successfully");
+
+        sessionStorage.setItem("donation_order_id",resultdata['order_id'] )
+        sessionStorage.setItem("donation_IKF_unique_id",resultdata['ikfplayerunique'])
+        window.location="{% url 'payment' %}"
+       
+        
+        }
+        catch(e){
+
+         alert(e.message)
+        }
+
+        
+        
+      } 
+    
+    })
+    .fail(function (jqXHR, textStatus, errorThrown) { 
+      $('.spinner-border').hide();
+      alert("Order Api Error. Please Try Again") }); 
+}
+function donate(node){
+	console.log("donate function called")
+// var pan = document.getElementById('pan').value;
+// 	if (pan) {
+// 	pan = pan.toUpperCase();
+// 	if (!pan.match(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/)) {
+// 		alert("PAN Number Not Valid");
+// 		return 0;
+// 	}
+// 	}
+
+var mobiledoc = document.getElementById('mobile').value;
+	if (mobiledoc.indexOf('0') === 0) {
+	alert("Mobile Number should not start with 0");
+	return 0;
+	} else if (mobiledoc.length !== 10) {
+	alert("Mobile Number Should be 10 Digits");
+	return 0;
+	}	
+
+	var formData = JSON.parse(JSON.stringify($('#form1').serializeArray()))
+        var dict={}
+        formData.forEach(function (item) {
+           dict[item['name']]=item['value']
+        });
+        console.log(dict)
+        if(dict['csrfmiddlewaretoken']){delete dict['csrfmiddlewaretoken']}
+        if(dict['_token']){delete dict['_token']}
+		
+        if(sessionStorage.getItem("ikfdonationdata")){
+            var inputobj=JSON.parse(sessionStorage.getItem("ikfdonationdata"))
+            inputobj=Object.assign(inputobj,dict);
+			
+            sessionStorage.setItem("ikfdonationdata", JSON.stringify(inputobj));
+			order(inputobj)
+        } 
+        else{
+
+            sessionStorage.setItem("ikfdonationdata", JSON.stringify(dict));
+			order(dict)
+        }
+		
+		
+}
+</script>
+{% endblock content %}

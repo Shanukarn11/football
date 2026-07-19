@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Parent Conversation Responses — IKF Pathway 360{% endblock %}
+
+{% block content %}
+<style>
+  .pcr-wrap {
+    max-width: 1280px;
+    margin: 40px auto 80px;
+    padding: 0 20px;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #0b1120;
+  }
+
+  .pcr-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  .pcr-head__eyebrow {
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #8c5a00;
+    background: #fff6d6;
+    border: 1px solid rgba(255,195,0,.45);
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .pcr-head h2 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #0b1120;
+  }
+  .pcr-meta {
+    color: #475569;
+    font-size: 14px;
+    margin-top: 6px;
+    font-family: 'Lato', sans-serif;
+  }
+  .pcr-meta b { color: #0b1120; font-weight: 700; }
+
+  .pcr-card {
+    border: 1px solid rgba(15, 23, 42, .10);
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 8px 28px rgba(11, 17, 32, .06), 0 2px 6px rgba(11, 17, 32, .04);
+  }
+  .pcr-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    min-width: 1400px;
+  }
+  thead th {
+    text-align: left;
+    background: #fff6d6;
+    padding: 14px 14px;
+    border-bottom: 2px solid #ffc300;
+    font-weight: 800;
+    color: #0b1120;
+    font-size: 12px;
+    letter-spacing: .03em;
+    vertical-align: top;
+  }
+  thead th .pcr-th-sub {
+    display: block;
+    font-weight: 500;
+    color: #5a6478;
+    font-size: 11px;
+    margin-top: 2px;
+    text-transform: none;
+    letter-spacing: 0;
+    font-family: 'Lato', sans-serif;
+  }
+  tbody td {
+    padding: 14px 14px;
+    border-bottom: 1px solid rgba(15, 23, 42, .06);
+    vertical-align: top;
+    font-family: 'Lato', sans-serif;
+    color: #1e293b;
+    line-height: 1.5;
+  }
+  tbody tr:hover { background: #fffdf3; }
+
+  .pcr-pill {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .pcr-pill--aligned   { background: #e1f5ee; color: #085041; border: 1px solid rgba(8,80,65,.2); }
+  .pcr-pill--potential { background: #fff6d6; color: #8c5a00; border: 1px solid rgba(255,195,0,.45); }
+  .pcr-pill--atrisk    { background: #faece7; color: #c64a1d; border: 1px solid rgba(216,90,48,.25); }
+
+  .pcr-ans {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 6px;
+    background: #f1f5f9;
+    color: #0b1120;
+    font-weight: 800;
+    font-size: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    margin-bottom: 4px;
+  }
+  .pcr-open {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.55;
+    max-width: 260px;
+    display: block;
+    white-space: pre-wrap;
+  }
+
+  .pcr-empty {
+    text-align: center;
+    padding: 28px;
+    color: #64748b;
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    .pcr-wrap { margin: 20px auto 50px; padding: 0 12px; }
+    .pcr-head h2 { font-size: 22px; }
+    table { font-size: 12.5px; }
+    thead th, tbody td { padding: 10px 10px; }
+  }
+</style>
+
+<div class="pcr-wrap">
+  <div class="pcr-head">
+    <div>
+      <span class="pcr-head__eyebrow">IKF Pathway 360</span>
+      <h2>The Parent Conversation — Responses</h2>
+      <div class="pcr-meta">
+        Total responses: <b>{{ count|default:0 }}</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="pcr-card pcr-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Submitted</th>
+          <th>Parent name</th>
+          <th>Email</th>
+          <th>Child</th>
+          <th>Profile</th>
+          <th>Q1<span class="pcr-th-sub">{{ q_labels.q1_origin.label }}</span></th>
+          <th>Q2<span class="pcr-th-sub">{{ q_labels.q2_child_voice.label }}</span></th>
+          <th>Q3<span class="pcr-th-sub">{{ q_labels.q3_worth_it.label }}</span></th>
+          <th>Q4<span class="pcr-th-sub">{{ q_labels.q4_support.label }}</span></th>
+          <th>Q5<span class="pcr-th-sub">{{ q_labels.q5_hardest_part.label }}</span></th>
+          <th>Q6<span class="pcr-th-sub">{{ q_labels.q6_pro_estimate.label }}</span></th>
+          <th>Q7<span class="pcr-th-sub">{{ q_labels.q7_ten_years.label }}</span></th>
+          <th>Q8<span class="pcr-th-sub">{{ q_labels.q8_ecosystem.label }}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in responses %}
+          <tr>
+            <td>{{ r.created_at|date:"d M Y, h:i A" }}</td>
+            <td><b>{{ r.parent_name }}</b></td>
+            <td>{{ r.parent_email }}</td>
+            <td>{{ r.get_child_gender_display }}, {{ r.child_age }}y</td>
+            <td>
+              <span class="pcr-pill pcr-pill--{{ r.profile }}">{{ r.get_profile_display }}</span>
+            </td>
+
+            <td>
+              <span class="pcr-ans">{{ r.q1_origin|default:"—" }}</span>
+              {% if r.q1_origin == 'D_open' and r.q1_origin_open %}
+                <span class="pcr-open">{{ r.q1_origin_open }}</span>
+              {% endif %}
+            </td>
+
+            <td><span class="pcr-ans">{{ r.q2_child_voice|default:"—" }}</span></td>
+            <td><span class="pcr-ans">{{ r.q3_worth_it|default:"—" }}</span></td>
+            <td><span class="pcr-ans">{{ r.q4_support|default:"—" }}</span></td>
+            <td><span class="pcr-open">{{ r.q5_hardest_part|default:"—" }}</span></td>
+            <td><span class="pcr-ans">{{ r.q6_pro_estimate|default:"—" }}</span></td>
+            <td><span class="pcr-ans">{{ r.q7_ten_years|default:"—" }}</span></td>
+            <td><span class="pcr-ans">{{ r.q8_ecosystem|default:"—" }}</span></td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="13" class="pcr-empty">
+              No Parent Conversation responses yet.
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

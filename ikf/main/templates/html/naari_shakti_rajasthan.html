@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ikf-yellow:#ffc300;
+    --ikf-yellow-dark:#e0a800;
+    --ikf-yellow-soft:#fff8e1;
+    --ink:#0b1120;
+    --muted:#5a6478;
+    --line:#e8ecf2;
+  }
+  .nsr-wrap{
+    box-sizing:border-box;
+    max-width:1120px;
+    margin:0 auto;
+    padding:32px 24px 96px;
+    font-family:'Lato', sans-serif;
+    color:var(--ink);
+  }
+  .nsr-hero{
+    text-align:center;
+    padding:48px 16px 32px;
+    background:linear-gradient(180deg, var(--ikf-yellow-soft) 0%, #fff 100%);
+    border-radius:18px;
+    margin-bottom:32px;
+  }
+  .nsr-hero h1{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-size:40px;
+    font-weight:800;
+    margin:0 0 12px;
+    letter-spacing:-0.5px;
+  }
+  .nsr-hero .tagline{
+    font-size:18px;
+    font-weight:700;
+    color:var(--ikf-yellow-dark);
+    margin:0 0 12px;
+  }
+  .nsr-hero .lead{
+    font-size:15px;
+    color:var(--muted);
+    margin:0;
+    max-width:680px;
+    margin:0 auto;
+    line-height:1.6;
+  }
+  .nsr-section{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:28px;
+    margin-bottom:20px;
+    box-shadow:0 6px 18px -12px rgba(0,0,0,.10);
+  }
+  .nsr-section h2{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-size:24px;
+    font-weight:800;
+    margin:0 0 14px;
+    padding-left:14px;
+    position:relative;
+    line-height:1.25;
+  }
+  .nsr-section h2::before{
+    content:"";
+    position:absolute;
+    left:0; top:6px; bottom:6px;
+    width:4px;
+    border-radius:3px;
+    background:var(--ikf-yellow);
+  }
+  .nsr-section p{
+    font-size:15px;
+    line-height:1.75;
+    color:#3a3a3a;
+    margin:0 0 12px;
+  }
+  .nsr-list{
+    margin:0;
+    padding-left:18px;
+  }
+  .nsr-list li{
+    font-size:15px;
+    line-height:1.85;
+    color:#3a3a3a;
+    margin-bottom:6px;
+  }
+  .nsr-cta-strip{
+    margin-top:40px;
+    padding:32px 28px;
+    text-align:center;
+    background:linear-gradient(135deg, #fff8d6 0%, #ffe89a 60%, #f5c94a 100%);
+    border:1px solid #ecc34a;
+    border-radius:20px;
+  }
+  .nsr-cta-strip h3{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-size:22px;
+    font-weight:800;
+    margin:0 0 6px;
+  }
+  .nsr-cta-strip .sub{
+    margin:0 0 6px;
+    color:#5d4f1a;
+    font-size:14px;
+  }
+  .nsr-cta-strip .tag{
+    margin:0 0 18px;
+    color:var(--ink);
+    font-size:14px;
+    font-weight:700;
+  }
+  .nsr-cta{
+    background:var(--ikf-yellow);
+    color:#1a1a1a;
+    border:none;
+    padding:14px 36px;
+    font-size:15px;
+    font-weight:700;
+    font-family:'Plus Jakarta Sans', sans-serif;
+    border-radius:12px;
+    cursor:pointer;
+    box-shadow:0 10px 24px -8px rgba(245, 201, 74, .7);
+    transition:all .2s ease;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .nsr-cta::after{
+    content:"\2192";
+    font-size:18px;
+    transition:transform .2s ease;
+  }
+  .nsr-cta:hover{
+    background:var(--ikf-yellow-dark);
+    transform:translateY(-2px);
+  }
+  .nsr-cta:hover::after{ transform:translateX(4px); }
+  @media (max-width:768px){
+    .nsr-hero h1{ font-size:28px; }
+    .nsr-hero .tagline{ font-size:15px; }
+    .nsr-section{ padding:20px; }
+    .nsr-section h2{ font-size:20px; }
+  }
+</style>
+{% include 'html/_donor_panel_styles.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="nsr-wrap">
+
+  <section class="nsr-hero">
+    <h1>IKF Naari Shakti &ndash; Rajasthan</h1>
+    <p class="tagline">For The Girls. By The Girls. Of The Girls.</p>
+    <p class="lead">Empowering Rajasthan's Next Generation Through Football. Across Rajasthan, talented girls are breaking barriers and redefining what is possible through sport. IKF Naari Shakti is creating opportunities for girls from cities, towns, and rural communities by providing access to football, mentorship, health education, and long-term development pathways.</p>
+  </section>
+
+  <section class="nsr-section">
+    <h2>What is Naari Shakti?</h2>
+    <p>Naari Shakti is a girls-first football initiative by India Khelo Football (IKF) that combines talent discovery with holistic development.</p>
+    <p>The initiative creates safe and inclusive football environments where girls can participate, learn, and thrive.</p>
+    <p>The program focuses on:</p>
+    <ul class="nsr-list">
+      <li>Football Talent Identification</li>
+      <li>Football Clinics &amp; Skill Development</li>
+      <li>Menstrual Health Awareness</li>
+      <li>Parent Engagement</li>
+      <li>Life Skills &amp; Leadership Development</li>
+      <li>Career Exploration &amp; Employability</li>
+      <li>National Football Opportunities</li>
+    </ul>
+  </section>
+
+  <section class="nsr-section">
+    <h2>Why Rajasthan?</h2>
+    <p>Rajasthan has immense football potential and a growing community of young girls eager to participate in sport.</p>
+    <p>Naari Shakti works alongside local football stakeholders, schools, and community partners to ensure that girls receive equal opportunities to develop their talent and pursue their ambitions.</p>
+  </section>
+
+  <section class="nsr-section">
+    <h2>More Than a Football Program</h2>
+    <p>Naari Shakti is designed to create impact far beyond the pitch.</p>
+    <p>Through structured workshops and football activities, girls gain:</p>
+    <ul class="nsr-list">
+      <li>Confidence and Self-Belief</li>
+      <li>Leadership Skills</li>
+      <li>Discipline and Teamwork</li>
+      <li>Health &amp; Wellness Awareness</li>
+      <li>Communication Skills</li>
+      <li>Exposure to New Opportunities</li>
+    </ul>
+  </section>
+
+  <section class="nsr-section">
+    <h2>Your Support Matters</h2>
+    <p>Help us take this initiative to all districts of Rajasthan so no girl is left behind!</p>
+    <p>IKF Naari Shakti is not just about increasing participation. It is about creating an ecosystem where every girl has the confidence, support, and opportunity to pursue her dreams.</p>
+    <p>Together, we are building a stronger future for girls' football in Rajasthan.</p>
+  </section>
+
+  <div class="nsr-cta-strip">
+    <h3>Talent is the only currency.</h3>
+    <p class="sub">Mission already started. Support it today.</p>
+    <p class="tag">80G tax exemption applicable.</p>
+    <button type="button" class="nsr-cta support-btn"
+            data-project="IKF Naari Shakti - Rajasthan"
+            data-razorpay="1"
+            data-upi="0"
+            data-bank="0"
+            data-presets="500,1000,2500,5000">
+      Support Naari Shakti Rajasthan
+    </button>
+  </div>
+
+</div>
+
+{% include 'html/_donor_panel.html' %}
+
+{% endblock %}

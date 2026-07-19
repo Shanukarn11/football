@@ -1,0 +1,366 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="scout-directory">
+  <div class="scout-dir-wrap">
+    <header class="scout-dir-head">
+      <div>
+        <span class="scout-kicker">IKF Certified Scouts</span>
+        <h1>All Scout Profiles</h1>
+        <p>{{ total_scouts }} scouts listed from the IKF CFSA certified network.</p>
+      </div>
+      <a class="scout-back-link" href="{% url 'scout_landing' %}">Back to scout network</a>
+    </header>
+
+    <form class="scout-filter" method="get">
+      <div class="scout-search">
+        <label for="scoutSearch">Search</label>
+        <input id="scoutSearch" type="search" name="q" value="{{ q }}" placeholder="Search by name, city, region or strength">
+      </div>
+      <div class="scout-select">
+        <label for="stateFilter">State</label>
+        <select id="stateFilter" name="state">
+          <option value="">All states</option>
+          {% for state in states %}
+            <option value="{{ state }}" {% if selected_state == state %}selected{% endif %}>{{ state }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit">Apply</button>
+      {% if q or selected_state %}
+        <a href="{% url 'scout_index' %}">Clear</a>
+      {% endif %}
+    </form>
+
+    <div id="scoutGrid" class="scout-grid">
+      {% for scout in scouts %}
+        <a class="scout-card" href="{% url 'scout_detail' scout.slug %}" data-search="{{ scout.name|lower }} {{ scout.city|lower }} {{ scout.state|lower }} {{ scout.regions|lower }} {{ scout.strengths|lower }} {{ scout.age_groups|lower }}">
+          <div class="scout-avatar">
+            {% if scout.photo_url %}
+              <img src="{{ scout.photo_url }}" alt="{{ scout.name }}">
+            {% else %}
+              {{ scout.name|slice:":1" }}
+            {% endif %}
+          </div>
+          <div class="scout-card-body">
+            <div class="scout-card-main">
+              <h2>{{ scout.name }}</h2>
+              <p><strong>City and State:</strong> {{ scout.city }}{% if scout.state %}, {{ scout.state }}{% endif %}</p>
+              {% if scout.languages %}
+                <p><strong>Languages:</strong> {{ scout.languages }}</p>
+              {% endif %}
+            </div>
+            <span class="scout-loc-label">Scouting Experience</span>
+            <div class="scout-tags">
+              {% for pill in scout.card_pills %}
+                <span><strong>{{ pill.0 }}</strong>{{ pill.1 }}</span>
+              {% empty %}
+                <span><strong>Regions covered</strong>{{ scout.regions|default:"India" }}</span>
+              {% endfor %}
+            </div>
+            {% if scout.certification %}
+              <div class="scout-card-id">ID : {{ scout.certification }}</div>
+            {% endif %}
+            <div class="scout-card-cta">
+              <span>Click to view full profile</span>
+              <span class="scout-card-arrow" aria-hidden="true">&rarr;</span>
+            </div>
+          </div>
+        </a>
+      {% empty %}
+        <div class="empty-state">
+          <h2>No scouts found</h2>
+          <p>Try a different name, city, state, age group, or scouting strength.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  :root{
+    --scout-ink:#101828;
+    --scout-muted:#5a6575;
+    --scout-yellow:#ffc300;
+    --scout-line:#f2df91;
+    --scout-soft:#fff9df;
+  }
+  .scout-directory{
+    background:
+      radial-gradient(520px 320px at 0 0, rgba(255,195,0,.18), transparent 70%),
+      radial-gradient(520px 320px at 100% 0, rgba(255,225,110,.14), transparent 72%),
+      #fff;
+    color:var(--scout-ink);
+    font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+    padding:34px 0 72px;
+  }
+  .scout-dir-wrap{
+    width:min(1180px, 92vw);
+    margin:0 auto;
+  }
+  .scout-dir-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:18px;
+    margin-bottom:22px;
+  }
+  .scout-kicker{
+    color:#9a7100;
+    font-size:12px;
+    font-weight:850;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .scout-dir-head h1{
+    margin:8px 0 8px;
+    font-size:clamp(34px, 5vw, 58px);
+    line-height:1.05;
+  }
+  .scout-dir-head p{
+    margin:0;
+    color:var(--scout-muted);
+  }
+  .scout-back-link{
+    color:var(--scout-ink);
+    font-weight:800;
+    text-decoration:none;
+    border-bottom:3px solid var(--scout-yellow);
+    padding-bottom:4px;
+    white-space:nowrap;
+  }
+  .scout-filter{
+    background:#fff;
+    border:1px solid rgba(255,195,0,.36);
+    border-radius:8px;
+    box-shadow:0 14px 34px rgba(16,24,40,.07);
+    display:grid;
+    grid-template-columns:minmax(240px, 1fr) minmax(200px, 260px) auto auto;
+    gap:12px;
+    align-items:end;
+    padding:18px;
+    margin-bottom:22px;
+  }
+  .scout-filter label{
+    display:block;
+    font-size:12px;
+    color:#7a5a00;
+    font-weight:850;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    margin-bottom:7px;
+  }
+  .scout-filter input,
+  .scout-filter select{
+    width:100%;
+    height:46px;
+    border:1px solid #e7d792;
+    border-radius:8px;
+    padding:0 13px;
+    color:var(--scout-ink);
+    background:#fffdf3;
+    outline:none;
+  }
+  .scout-filter input:focus,
+  .scout-filter select:focus{
+    border-color:var(--scout-yellow);
+    box-shadow:0 0 0 4px rgba(255,195,0,.18);
+  }
+  .scout-filter button,
+  .scout-filter a{
+    height:46px;
+    border-radius:8px;
+    border:1px solid var(--scout-yellow);
+    background:#fff;
+    border:1px solid #f1e6b1;
+    color:var(--scout-ink);
+    font-weight:850;
+    padding:0 18px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+  }
+  .scout-filter a{
+    background:#fff;
+  }
+  .scout-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:24px;
+  }
+  .scout-card,
+  .empty-state{
+    background:#fff;
+    border:1px solid #e7e7e7;
+    border-radius:8px;
+    box-shadow:0 14px 34px rgba(16,24,40,.07);
+  }
+  .scout-card{
+    color:var(--scout-ink);
+    text-decoration:none;
+    padding:16px;
+    display:flex;
+    align-items:stretch;
+    gap:18px;
+    transition:transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+  }
+  .scout-card:hover{
+    transform:translateY(-3px);
+    border-color:var(--scout-yellow);
+    box-shadow:0 20px 42px rgba(255,195,0,.18);
+  }
+  .scout-avatar{
+    width:220px;
+    height:220px;
+    border-radius:14px;
+    background:#fff;
+    border:4px solid var(--scout-yellow);
+    display:grid;
+    place-items:center;
+    font-size:24px;
+    font-weight:900;
+    flex:0 0 auto;
+    overflow:hidden;
+    aspect-ratio:1 / 1;
+  }
+  .scout-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center top;
+    display:block;
+    background:#fff;
+  }
+  .scout-card h2{
+    font-size:24px;
+    margin:0 0 7px;
+    overflow-wrap:anywhere;
+  }
+  .scout-card p{
+    color:#3f4652;
+    margin:0;
+    line-height:1.5;
+  }
+  .scout-card p strong,
+  .scout-loc-label{
+    color:#3f4652;
+    font-weight:850;
+  }
+  .scout-card-body{
+    min-width:0;
+    flex:1;
+    padding:8px 6px 6px 0;
+    display:flex;
+    flex-direction:column;
+  }
+  .scout-loc-label{
+    display:block;
+    margin-top:12px;
+  }
+  .scout-tags{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+    margin-top:8px;
+  }
+  .scout-tags span{
+    background:#fff;
+    border:3px solid var(--scout-yellow);
+    border-radius:12px;
+    color:#1f2937;
+    font-size:15px;
+    font-weight:800;
+    padding:9px 12px;
+    text-align:center;
+    min-height:42px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    line-height:1.25;
+  }
+  .scout-tags span strong{
+    display:block;
+    color:#8a6d00;
+    font-size:11px;
+    letter-spacing:.06em;
+    margin-bottom:3px;
+    text-transform:uppercase;
+  }
+  .scout-card-id{
+    margin-top:auto;
+    padding-top:14px;
+    color:#2f3440;
+    font-size:15px;
+    font-weight:850;
+  }
+  .scout-card-cta{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:12px;
+    background:var(--scout-yellow);
+    color:#1a1300;
+    border-radius:8px;
+    padding:10px 14px;
+    font-weight:850;
+    font-size:14px;
+    letter-spacing:.02em;
+  }
+  .scout-card-arrow{
+    font-size:18px;
+    transition:transform .16s ease;
+  }
+  .scout-card:hover .scout-card-arrow{
+    transform:translateX(4px);
+  }
+  .empty-state{
+    grid-column:1 / -1;
+    padding:36px;
+  }
+  .empty-state h2{
+    margin:0 0 8px;
+  }
+  .empty-state p{
+    margin:0;
+    color:var(--scout-muted);
+  }
+  @media (max-width: 980px){
+    .scout-grid{
+      grid-template-columns:1fr;
+    }
+    .scout-filter{
+      grid-template-columns:1fr 1fr;
+    }
+    .scout-avatar{
+      width:200px;
+      height:200px;
+    }
+  }
+  @media (max-width: 640px){
+    .scout-dir-head{
+      align-items:flex-start;
+      flex-direction:column;
+    }
+    .scout-filter,
+    .scout-grid{
+      grid-template-columns:1fr;
+    }
+    .scout-filter button,
+    .scout-filter a{
+      width:100%;
+    }
+    .scout-avatar{
+      width:140px;
+      height:140px;
+    }
+    .scout-card h2{ font-size:20px; }
+    .scout-tags span{ font-size:13px; padding:7px 9px; min-height:36px; }
+  }
+</style>
+
+{% endblock %}

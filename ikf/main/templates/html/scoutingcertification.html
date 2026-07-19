@@ -1,0 +1,494 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 0;  /* ✅ updated from 30px to 80px */
+}
+
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  
+}
+
+.text-left {
+  flex: 1 1 60%;
+}
+
+.text-left h1 {
+  font-size: 48px;
+  font-weight: 800;
+  margin: 0 0 16px;
+}
+
+.text-left p {
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 850px;
+}
+
+.button-right {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+.call-btn,
+.enroll-btn {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #ffc300;
+  color: black;
+}
+
+.image-section {
+  margin-top: 40px;
+}
+
+.image-section img {
+  width: 100%;
+  max-height: 600px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.table-section {
+  margin-top: 40px;
+}
+
+.scouting-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #e0e0e0;
+}
+
+.scouting-table th,
+.scouting-table td {
+  border: 1px solid #e0e0e0;
+  padding: 16px;
+  text-align: left;
+}
+
+.scouting-table th {
+  background-color: #f9f9f9;
+  font-weight: 600;
+}
+.curriculum-section {
+  margin-top: 60px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 20px;
+}
+
+.curriculum-section h2 {
+  font-size: 32px;
+  font-weight: normal;
+  text-align: left;
+  margin-bottom: 40px;
+}
+
+.modules-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.module-box {
+  flex: 1 1 45%;
+  min-width: 300px;
+}
+
+.module-box h3 {
+  font-size: 24px;
+  font-weight: normal;
+  margin-bottom: 20px; /* increased spacing before bullet points */
+}
+
+.module-box ul {
+  padding-left: 20px;
+  margin: 0;
+  list-style-type: disc;
+  line-height: 1.8;
+}
+.module-box li {
+  font-size: 16px;
+}
+.divider {
+  width: 1px;
+  background-color: #888;
+  height: 100%;
+}
+.arrow-section {
+  margin-top: 60px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 20px;
+}
+
+.arrow-section img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+  transform: scale(1.07);         /* Scales image slightly */
+  transform-origin: top center;
+}
+.outcome-section {
+  margin-top: 60px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 20px 60px;
+}
+
+.outcome-section {
+  margin-top: 60px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 20px 60px;
+}
+
+.outcome-section h2 {
+  font-size: 28px;
+  font-weight: normal;
+  text-align: left; /* ✅ Left-aligned */
+  margin-bottom: 40px;
+}
+
+.outcome-columns {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.outcome-box {
+  flex: 1 1 45%;
+  min-width: 280px;
+}
+
+.outcome-box ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  line-height: 2.2;
+  margin: 0;
+}
+.outcome-box li {
+  font-size: 16px;
+}
+.steps-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  overflow-x: auto; /* Ensures no wrapping, adds scroll on small screens */
+}
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 0 0 auto; /* Prevent shrinking */
+  min-width: 160px;
+}
+/* Make heading normal weight and add spacing */
+.scout-title {
+  font-weight: 400 !important; 
+  margin-top: 40px; /* removes bold */
+  margin-bottom: 40px;          /* increase space below heading */
+  font-size: 28px;              /* adjust if needed */
+}
+
+/* Optional: more contrast for the yellow boxes */
+.step-box {
+  background-color: #ffc107;
+  padding: 16px;
+  border-radius: 12px;
+  min-width: 180px;
+  min-height: 80px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Step styling */
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: none;
+  box-shadow: none;
+  border: none;
+}
+
+.step-box {
+  background-color: #ffc300;
+  padding: 16px;
+  border-radius: 10px;
+  min-width: 160px;
+  min-height: 80px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.step-desc {
+  font-size: 14px;
+  margin-top: 12px;
+  max-width: 180px;
+  line-height: 1.4;
+}
+
+/* Arrow styling */
+.arrow {
+  font-size: 20px;
+  padding-top: 30px;
+  flex: 0 0 auto;
+}
+
+/* Responsive fallback */
+@media (max-width: 1024px) {
+  .steps-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .arrow {
+    transform: rotate(90deg); /* makes → become ↓ */
+    font-size: 24px;
+    margin: 12px 0;
+    padding: 0;
+  }
+
+  .step-item {
+    margin-bottom: 24px;
+  }
+}
+.coming-soon-note {
+  margin-top: 20px;
+  font-size: 16px;
+  font-style: italic;
+  color: black; /* warm orange/brown tone */
+  background-color: #fff7e6; /* light yellow-orange */
+  padding: 12px 16px;
+  border-left: 4px solid #ffc107;
+  border-radius: 6px;
+  max-width: 500px;
+}
+
+
+
+
+
+
+</style>
+
+<div class="container">
+  <!-- Heading and Buttons -->
+  <div class="top-row">
+    <div class="text-left">
+      <h1>Scouting Certification</h1>
+      <p>
+        India Khelo Football (IKF) is revolutionizing football scouting in India by offering a structured pathway for aspiring scouts to gain international and national accreditation, practical experience, and access to paid opportunities. The program is beginner-friendly yet rigorous; a passion for football analysis is key.
+      </p>
+    </div>
+    <div class="button-right">
+      <a href="tel:+919767271703" class="call-btn">📞</a>
+
+      <a href= "https://scout.myfirstkick.com/"><button class="enroll-btn">Enroll Now </button></a>
+    </div>
+  </div>
+
+  <!-- Image Section -->
+  <div class="image-section">
+    <img loading="lazy" src="{% static 'images/banners/scout1.png' %}" alt="Scouting Background" />
+  </div>
+
+  <!-- Table Section -->
+  <div class="table-section">
+    <table class="scouting-table">
+      <thead>
+        <tr>
+          <th>Track</th>
+          <th>What You Get</th>
+          <th>Mode</th>
+          
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>PFSA Level 1</td>
+          <td>International Talent ID Certificate</td>
+          <td>4-hour self-paced online course</td>
+          
+          <td>Complete in 7 days</td>
+        </tr>
+        <tr>
+          <td>IKF-CFSA Level 1</td>
+          <td>India-specific scouting accreditation + live mentoring</td>
+          <td>6–9 hr online workshops + 2 hr assessment</td>
+          
+          <td>1 week</td>
+        </tr>
+        <tr>
+          <td>Dual Super-Saver</td>
+          <td>Both certifications + priority paid projects</td>
+          <td>Combined package</td>
+          
+          <td>Approximately 2 weeks</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="coming-soon-note">IKF CFSA Level 2 - Coming Soon</p>
+
+  </div>
+  <div class="curriculum-section">
+    <h2>Curriculum Snapshot</h2>
+    <div class="modules-grid">
+      <div class="module-box">
+        <h3>PFSA Level 1 Modules</h3>
+        <ul>
+          <li>Introduction to Talent Identification</li>
+          <li>Understanding the Elite Player Performance Plan (EPPP)</li>
+          <li>Talent ID Predictors (Field Players & Goalkeepers)</li>
+          <li>Player Reports & Relative Age Effect</li>
+          <li>Anthropological, Technical, Psychological & Sociological Predictors</li>
+          <li>Limitations and Importance of Talent ID</li>
+        </ul>
+      </div>
+  
+      <div class="divider"></div>
+  
+      <div class="module-box">
+        <h3>IKF-CFSA Level 1 Modules</h3>
+        <ul>
+          <li>Scouting Primer: Introduction
+          </li>
+          <li>Scouting Lexicon: Understanding Conceptual Terms
+          </li>
+          <li>Talent Discernment: The instinct to spot Unique potential in a Player.
+          </li>
+          <li>4 Corner Assessment: Physical, Technical, Tactical and Psychosocial.
+          </li>
+          <li>Spotting Techniques: Real Time Scouting Methods
+          </li>
+          <li>Report Drafting: Clear, Unbiased and Benchmarked 
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="curriculum-section">
+    <h2 class="section-title scout-title"></h2>
+  
+    <div class="steps-grid">
+  
+      <div class="step-item">
+        <div class="step-box">Enroll & Pay</div>
+        <div class="step-desc">Register via scout.myfirstkick.com.</div>
+      </div>
+      <div class="arrow">→</div>
+  
+      <div class="step-item">
+        <div class="step-box">Receive Credentials</div>
+        <div class="step-desc">Obtain your unique Scout ID and PFSA login.</div>
+      </div>
+      <div class="arrow">→</div>
+  
+      <div class="step-item">
+        <div class="step-box">Complete PFSA Level 1</div>
+        <div class="step-desc">Finish within 7 days and upload the certificate to IKF.</div>
+      </div>
+      <div class="arrow">→</div>
+  
+      <div class="step-item">
+        <div class="step-box">Join IKF Cohort</div>
+        <div class="step-desc">Participate in a 6-hour live online training session.</div>
+      </div>
+      <div class="arrow">→</div>
+  
+      <div class="step-item">
+        <div class="step-box">Pass IKF Assessment</div>
+        <div class="step-desc">Complete a 2-hour exam to validate your knowledge.</div>
+      </div>
+      <div class="arrow">→</div>
+  
+      <div class="step-item">
+        <div class="step-box">Earn Your Certification</div>
+        <div class="step-desc">Receive a joint certificate from IKF and ProSoccerGlobal.</div>
+      </div>
+      <div class="arrow">→</div>
+  
+      <div class="step-item">
+        <div class="step-box">Activate Paid Gigs</div>
+        <div class="step-desc">Begin working on match assignments, workshops, and trials.</div>
+      </div>
+  
+    </div>
+  </div>
+  
+
+  
+
+  <div class="outcome-section">
+    <h2>Outcome: Your Role as an IKF Partner Scout</h2>
+    <div class="outcome-columns">
+      <div class="outcome-box">
+        <ul>
+          <li>Receive the official IKF Scout Badge.</li>
+          <li>Gain recognition on the IKF Scout Map.</li>
+        </ul>
+      </div>
+      <div class="outcome-divider"></div>
+      <div class="outcome-box">
+        <ul>
+          <li>Access exclusive match assignments and scouting events.</li>
+          <li>Be prioritized for scouting roles at IKF National Trials.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+</div>
+{% endblock content %}

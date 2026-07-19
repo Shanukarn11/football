@@ -1,0 +1,539 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+/* =========================
+   REVIEW & DONATE — FULL RESPONSIVE CSS
+   Replace your entire <style> with this
+========================= */
+
+:root{
+  --ikf-yellow:#ffc107;
+  --ikf-yellow-dark:#e6ac00;
+  --ikf-bg:#fffef2;
+  --ink:#111;
+  --muted:#444;
+  --line:#e6e6e6;
+  --shadow:0 10px 28px rgba(15,23,42,.10);
+}
+
+*,
+*::before,
+*::after{ box-sizing:border-box; }
+
+.review-page-bg{
+  min-height:100vh;
+  width:100%;
+  background-color: var(--ikf-bg);
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(255, 214, 70, 0.5) 0%, transparent 55%),
+    radial-gradient(circle at 80% 25%, rgba(255, 214, 70, 0.55) 0%, transparent 58%),
+    radial-gradient(circle at 30% 90%, rgba(255, 214, 70, 0.5) 0%, transparent 50%),
+    radial-gradient(circle at 70% 75%, rgba(255, 214, 70, 0.5) 0%, transparent 52%),
+    radial-gradient(circle at 50% 50%, rgba(255, 214, 70, 0.4) 0%, transparent 50%);
+  background-repeat:no-repeat;
+  background-size: 450px 450px, 500px 500px, 400px 400px, 450px 450px, 420px 420px;
+  background-position: top left, top right, bottom left, bottom right, center;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding: clamp(18px, 4vw, 60px) 12px;
+  overflow-x:hidden;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--ink);
+}
+
+/* Card */
+.review-wrapper{
+  width: min(1000px, 100%);
+  background:#fff;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  position: relative;
+
+  padding: clamp(18px, 4vw, 40px) clamp(14px, 4vw, 60px);
+}
+
+/* Logo: desktop absolute */
+.logo-ikf{
+  position:absolute;
+  top: 28px;
+  right: 28px;
+  width: clamp(90px, 14vw, 150px);
+  height:auto;
+}
+
+/* Titles */
+h2.review-title{
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  line-height:1.15;
+}
+
+p.subtitle{
+  font-size: clamp(13px, 1.6vw, 17px);
+  color: var(--muted);
+  margin: 0 0 18px 0;
+}
+
+h3.billing-heading{
+  font-size: clamp(16px, 2.2vw, 24px);
+  font-weight: 500;
+  margin: 6px 0 14px;
+}
+
+/* Labels + inputs */
+.billing-label{
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  display:block;
+  color:#555;
+}
+
+.pill-field{
+  width:100%;
+  padding: 12px 14px;
+  background:#fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ink);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.04);
+  outline: none;
+}
+
+.pill-field:focus{
+  border-color: rgba(255,193,7,.9);
+  box-shadow: 0 0 0 3px rgba(255,193,7,.25);
+}
+
+/* Billing grid */
+.billing-section{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 18px;
+  margin-bottom: 18px;
+}
+
+/* Support for checkboxes */
+.donation-checkboxes{
+  display:grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px 18px;
+  margin: 10px 0 24px;
+}
+
+.donation-checkboxes label{
+  display:flex;
+  align-items:flex-start;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height:1.25;
+  word-break: break-word;
+}
+
+.donation-checkboxes input[type="checkbox"]{ display:none; }
+
+.donation-checkboxes .custom-box{
+  flex: 0 0 18px;
+  width:18px;
+  height:18px;
+  border:2px solid #ccc;
+  background:#fff;
+  border-radius:4px;
+  position:relative;
+  margin-top: 1px;
+}
+
+.donation-checkboxes input[type="checkbox"]:checked + .custom-box{
+  background: var(--ikf-yellow);
+  border-color: var(--ikf-yellow);
+}
+
+.donation-checkboxes input[type="checkbox"]:checked + .custom-box::after{
+  content:'';
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:6px;
+  height:10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -55%) rotate(45deg);
+}
+
+/* Donate button */
+#pay-now-btn{
+  width:100%;
+  padding: 16px 0;
+  font-size: clamp(16px, 2.2vw, 22px);
+  font-weight: 700;
+  color: #6b5200;
+  background: var(--ikf-yellow);
+  border:none;
+  border-radius: 14px;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.12);
+  cursor:pointer;
+  transition: transform .08s ease, background-color .25s ease;
+}
+
+#pay-now-btn:hover{ background: var(--ikf-yellow-dark); }
+#pay-now-btn:active{ transform: translateY(1px); }
+
+/* Spinner */
+.spinner-overlay{
+  position:fixed;
+  inset:0;
+  background-color: rgba(255,255,255,0.7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.custom-spinner{
+  width:60px;
+  height:60px;
+  border:6px solid #ddd;
+  border-top-color:#007bff;
+  border-radius:50%;
+  animation: spin .9s linear infinite;
+}
+
+@keyframes spin{ to{ transform: rotate(360deg); } }
+
+/* =========================
+   RESPONSIVE BREAKPOINTS
+========================= */
+
+/* Tablet */
+@media (max-width: 992px){
+  .donation-checkboxes{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px){
+  .review-page-bg{
+    align-items: flex-start;
+  }
+
+  /* Logo stops overlapping content */
+  .logo-ikf{
+    position: static;
+    display:block;
+    margin: 0 auto 10px auto;
+  }
+
+  h2.review-title,
+  p.subtitle{
+    text-align:center;
+  }
+
+  .billing-section{
+    grid-template-columns: 1fr;
+  }
+
+  .donation-checkboxes{
+    grid-template-columns: 1fr;
+  }
+
+  #pay-now-btn{
+    border-radius: 12px;
+    padding: 14px 0;
+  }
+}
+
+/* Very small devices */
+@media (max-width: 360px){
+  .pill-field{ font-size: 15px; }
+}
+
+
+
+</style>
+<div class="review-page-bg">
+<div id="spinner-border" class="spinner-overlay" style="display: none;">
+  <div class="custom-spinner"></div>
+</div>
+<div class="review-wrapper">
+  <img src="{% static 'images/banners/logo2.png' %}" class="logo-ikf" alt="IKF Logo" />
+
+<h2 class="review-title">Review & Support</h2>
+<p class="subtitle">Please review payment details.</p>
+
+<h3 class="billing-heading">Billing Details</h3>
+
+<div class="billing-section">
+  <div>
+    <label class="billing-label">Your Name:</label>
+    <input class="pill-field" id="name-val" type="text" />
+  </div>
+  <div>
+    <label class="billing-label">Mobile No:</label>
+    <input class="pill-field" id="mobile-val" type="text" />
+  </div>
+  <div>
+    <label class="billing-label">Your Email ID:</label>
+    <input class="pill-field" id="email-val" type="email" />
+  </div>
+  <div>
+    <label class="billing-label">Amount (INR):</label>
+    <input class="pill-field" id="amount-val" type="number" min="1" />
+  </div>
+</div>
+
+
+<label class="billing-label">Support for:</label>
+<div class="donation-checkboxes" id="purpose-checkboxes"></div>
+
+
+  <button id="pay-now-btn">Support IKF</button>
+</div>
+</div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<!-- ✅ PAYMENT PAGE: replace ONLY your <script>...</script> (the one after checkout.js) with this -->
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  const INV_PURPOSE_NAME = "i-Care By Invictus";
+
+  function showSpinner(show){
+    const el = document.getElementById("spinner-border");
+    if (!el) return;
+    el.style.display = show ? "flex" : "none";
+  }
+
+  window.onload = function () {
+    const data = JSON.parse(sessionStorage.getItem("ikfdonationdata"));
+    if (!data) {
+      alert("Missing donation data. Please return to donation form.");
+      window.location.href = "{% url 'Donate' %}";
+      return;
+    }
+
+    const source = sessionStorage.getItem("donation_source"); // "invictus" or null
+
+    // Pre-fill fields
+    document.getElementById("name-val").value = data.name || "";
+    document.getElementById("email-val").value = data.email || "";
+    document.getElementById("mobile-val").value = data.mobile || "";
+    document.getElementById("amount-val").value = data.amount || "";
+
+    // 🔄 Live update sessionStorage when user edits fields
+    ["name-val", "email-val", "mobile-val", "amount-val"].forEach(id => {
+      document.getElementById(id).addEventListener("input", () => {
+        const updatedData = {
+          ...JSON.parse(sessionStorage.getItem("ikfdonationdata")),
+          name: document.getElementById("name-val").value,
+          email: document.getElementById("email-val").value,
+          mobile: document.getElementById("mobile-val").value,
+          amount: document.getElementById("amount-val").value
+        };
+        sessionStorage.setItem("ikfdonationdata", JSON.stringify(updatedData));
+      });
+    });
+
+    // ✅ purposes + auto tick when invictus
+    const purposeContainer = document.getElementById("purpose-checkboxes");
+    purposeContainer.innerHTML = "";
+
+    const purposes = Array.isArray(data.purpose) ? data.purpose : (data.purpose ? [data.purpose] : []);
+    const selectedPurposes = new Set(purposes);
+    if (selectedPurposes.has("Invictus-iCare")) {
+      selectedPurposes.delete("Invictus-iCare");
+      selectedPurposes.add(INV_PURPOSE_NAME);
+      const updatedData = JSON.parse(sessionStorage.getItem("ikfdonationdata")) || {};
+      updatedData.purpose = Array.from(selectedPurposes);
+      sessionStorage.setItem("ikfdonationdata", JSON.stringify(updatedData));
+    }
+
+    if (source === "invictus") {
+      selectedPurposes.add(INV_PURPOSE_NAME);
+      const updatedData = JSON.parse(sessionStorage.getItem("ikfdonationdata")) || {};
+      updatedData.purpose = Array.from(selectedPurposes);
+      sessionStorage.setItem("ikfdonationdata", JSON.stringify(updatedData));
+    }
+
+    const allOptions = [
+      "Parent Fuelling IKF",
+      "Naari Shakti",
+      "Field of Dreams (Future champion)",
+      "Field of Dreams (Maidaan Ki Raani)",
+      "Field of Dreams (Books & Boots)",
+      "IKF Trials",
+      INV_PURPOSE_NAME,
+      "Anaya's Goal"
+    ];
+
+    allOptions.forEach(option => {
+      const label = document.createElement("label");
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = selectedPurposes.has(option);
+
+      // 🔒 lock invictus purpose when coming from invictus
+      if (option === INV_PURPOSE_NAME && source === "invictus") {
+        checkbox.disabled = true;
+      }
+
+      checkbox.addEventListener("change", () => {
+        if (checkbox.checked) selectedPurposes.add(option);
+        else selectedPurposes.delete(option);
+
+        const updatedData = JSON.parse(sessionStorage.getItem("ikfdonationdata")) || {};
+        updatedData.purpose = Array.from(selectedPurposes);
+        sessionStorage.setItem("ikfdonationdata", JSON.stringify(updatedData));
+      });
+
+      const customBox = document.createElement("span");
+      customBox.classList.add("custom-box");
+
+      label.appendChild(checkbox);
+      label.appendChild(customBox);
+      label.appendChild(document.createTextNode(option));
+      purposeContainer.appendChild(label);
+    });
+  };
+
+  function validateMobile(mobile){
+    if (!mobile) return false;
+    if (mobile.indexOf('0') === 0) return false;
+    if (mobile.length !== 10) return false;
+    return /^\d{10}$/.test(mobile);
+  }
+
+  /* ---------- create order (backend) ---------- */
+  async function createOrder(amountPaise, mobile){
+    showSpinner(true);
+
+    const res = await fetch("{% url 'order' %}",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/x-www-form-urlencoded",
+        "X-CSRFToken": '{{csrf_token}}'
+      },
+      body: new URLSearchParams({amount: amountPaise/100, mobile})
+    });
+
+    if(!res.ok) {
+      showSpinner(false);
+      throw new Error("Server " + res.status);
+    }
+
+    const json = await res.json();
+    showSpinner(false);
+    return json; // {error, order_id, ikfplayerunique, message}
+  }
+
+  /* ---------- pay-now click ---------- */
+  document.getElementById('pay-now-btn').addEventListener("click", async (e)=>{
+    e.preventDefault();
+
+    const latest = {
+      name  : document.getElementById("name-val").value.trim(),
+      email : document.getElementById("email-val").value.trim(),
+      mobile: document.getElementById("mobile-val").value.trim(),
+      amount: document.getElementById("amount-val").value.trim()
+    };
+
+    if(!latest.amount || Number(latest.amount) <= 0){
+      alert("Enter valid amount");
+      return;
+    }
+
+    if(latest.mobile && !validateMobile(latest.mobile)){
+      alert("Mobile Number should be 10 digits and should not start with 0");
+      return;
+    }
+
+    const donationData = JSON.parse(sessionStorage.getItem("ikfdonationdata")) || {};
+    latest.purpose = donationData.purpose || [];
+
+    if (!Array.isArray(latest.purpose) || latest.purpose.length === 0) {
+      alert("Please select at least one support option");
+      return;
+    }
+
+    const amountPaise = parseInt(Number(latest.amount) * 100);
+
+    // create order
+    let order_id, unique_id;
+    try{
+      const res = await createOrder(amountPaise, latest.mobile);
+
+      if(res.error){
+        alert(res.message || "Order error");
+        return;
+      }
+
+      order_id  = res.order_id;
+      unique_id = res.ikfplayerunique;
+    }catch(err){
+      console.error(err);
+      alert("Could not start payment. Try again.");
+      return;
+    }
+
+    // open razorpay (don’t keep spinner on while checkout is open)
+    showSpinner(false);
+
+    const rzp = new Razorpay({
+      key       : "{{ RAZORPAY_KEY_ID }}",
+      amount    : amountPaise,
+      currency  : "INR",
+      name      : "India Khelo Football",
+      description: "Donation Payment",
+      image     : "{% static 'images/ikflogo.png' %}",
+      order_id,
+      handler   : resp=>{
+        showSpinner(true);
+
+        localStorage.setItem("Donation_IKF_razorpay_payment_id", resp.razorpay_payment_id);
+        localStorage.setItem("Donation_IKF_razorpay_order_id",  resp.razorpay_order_id);
+        localStorage.setItem("Donation_IKF_razorpay_signature", resp.razorpay_signature);
+
+        // ✅ clear invictus flag so it doesn't stick in same session
+        sessionStorage.removeItem("donation_source");
+
+        showSpinner(false);
+        window.location.href = "{% url 'successpayment' %}";
+      },
+      prefill:{
+        name   : latest.name,
+        email  : latest.email,
+        contact: latest.mobile
+      },
+      notes:{playerid: unique_id, season:"S03"},
+      theme:{color:"#ffc107"}
+    });
+
+    rzp.on("payment.failed", resp=>{
+      console.error("Payment failed", resp);
+
+      // ✅ clear invictus flag on failure too
+      sessionStorage.removeItem("donation_source");
+
+      showSpinner(false);
+      alert("Payment failed: " + (resp?.error?.description || "Please try again."));
+    });
+
+    rzp.open();
+  });
+</script>
+
+
+
+
+
+{% endblock %}

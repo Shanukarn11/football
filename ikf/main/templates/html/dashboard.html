@@ -1,0 +1,215 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<style>
+  @media (max-width: 768px) {
+    #mobile-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup-content {
+      background-color: #fff;
+      padding: 20px 30px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 300px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      font-family: "Inter", sans-serif;
+      font-size: 16px;
+    }
+
+    .popup-content button {
+      margin-top: 15px;
+      background-color: #ffc107;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #000;
+    }
+  }
+  /* POPUP for screens up to iPad width */
+  @media (max-width: 1024px) {
+    #mobile-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup-content {
+      background-color: #fff;
+      padding: 20px 30px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 300px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      font-family: "Inter", sans-serif;
+      font-size: 16px;
+    }
+
+    .popup-content button {
+      margin-top: 15px;
+      background-color: #ffc107;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #000;
+    }
+  }
+</style>
+<div class="ikf-dashboard-wrapper">
+  <div class="dmt-title">
+    <h1>Desi Messi Tracker</h1>
+    <h4>
+      We strongly recommend viewing this on a larger screen for a better
+      experience
+    </h4>
+  </div>
+  <div class="ikf-dashboard">
+    <div class="chart-box cb1 chart-container">
+      {{ chart_registrations_per_month|safe }}
+    </div>
+    <div class="ikf-dashboard-fourth-row">
+      <div class="chart-box radar-chart-box">
+        <h3>Top vs Average Performers by Category</h3>
+        <p>
+          The attributes for top performers differ by positions. The top AMs
+          seem to dominate in tactical quality, whereas top RWs tend to get more
+          points on physicality.
+        </p>
+        <p>Hone the skills important for your position before your trial!</p>
+        <div class="responsive-plot-container chart-container">
+          {{ chart_top_vs_avg|safe }}
+        </div>
+      </div>
+
+      <div class="chart-box other-chart-box">
+        <h3>Top Secondary Position Preferences</h3>
+        <p>
+          CBs and CFs are highly specialized and prefer similar positions. RMs
+          prove to be the most versatile!
+        </p>
+        <!-- Placeholder for second chart -->
+        <div class="chart-container">{{ chart_secondary_pref|safe }}</div>
+      </div>
+    </div>
+
+    <div class="ikf-dashboard-second-row">
+      <div class="ikf-dashboard-s2-col1">
+        <div class="chart-box age-dist">
+          <!-- Age Distribution -->
+          <h3>Age Distribution</h3>
+          <p>
+            U17 players are the majority of our participants. It's not too late!
+          </p>
+          <div class="chart-container">{{ chart_age|safe }}</div>
+        </div>
+
+        <div class="chart-box avg-rating">
+          <!-- Average Rating -->
+          <div class="avg-rating-left">
+            <h3>Average Rating by State</h3>
+            <p>
+              Nagaland punches above its weight, topping the charts for the
+              highest average rating!
+            </p>
+          </div>
+          <div class="avg-rating-right chart-container">
+            {{ chart_top5_state_avg_rating|safe }}
+          </div>
+        </div>
+      </div>
+
+      <div class="ikf-dashboard-s2-col2">
+        <div class="chart-box positioncomp">
+          <div class="positioncomp-top">
+            <h3>Height vs Weight of Selected Players</h3>
+
+            <div class="positioncomp-legend">
+              <span class="legend-dot male"></span> Male
+              <span class="legend-dot female"></span> Female
+            </div>
+          </div>
+          <p>
+            Don't let your body hold you back! The wide ranges of height and
+            weight in our selected players show that football has a place for
+            everyone!
+          </p>
+          <div class="positioncomp-plot chart-container">
+            {{ chart_boys_girls_scatter|safe }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ikf-dashboard-third-row">
+      <div class="chart-box age-dist foot-preference">
+        <h3>Preferred Foot : Righty or Lefty ?</h3>
+        <p>
+          Most players are right-footed, and while left-footed players are
+          fewer, they’re crucial for roles like Right Wing (cutting inside) or
+          Left Back (natural crosses). Coaches value left-footers for tactical
+          balance, especially in defence and wide play.
+        </p>
+        <div class="chart-container">{{ chart_radial_foot|safe }}</div>
+      </div>
+
+      <div class="position-impact-section">
+        <h3>Impact of Position Change on Average Scores</h3>
+        <p>
+          Don’t fear playing out of position during trials. Many players perform
+          just as well – sometimes even better – when adapting, especially with
+          the surplus of attacking players competing for limited spots.
+        </p>
+        <div class="chart-box position-impact chart-container">
+          {{ chart_position_impact|safe }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.addEventListener("load", function () {
+    window.dispatchEvent(new Event("resize"));
+  });
+</script>
+
+<script>
+  if (window.innerWidth <= 768) {
+    document.write(`
+      <div id="mobile-popup">
+        <div class="popup-content">
+          <p>For a better experience,<br>please access this page on a larger screen.</p>
+          <button id="close-popup">Got it</button>
+        </div>
+      </div>
+    `);
+  }
+</script>
+
+<script>
+  document.getElementById("close-popup").addEventListener("click", function () {
+    document.getElementById("mobile-popup").style.display = "none";
+  });
+</script>
+
+{% endblock content %}

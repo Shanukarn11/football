@@ -1,0 +1,86 @@
+
+    {% for item in Calender %}
+    <!-- TESTETSTEST -->
+    <div class="workshop-card {% if item.status_date == 'COMPLETED' %}completed{% endif %}">
+      <div class="workshop-header">
+        <h4 class="{% if 'Naari Shakti' in item.project %}naari-shakti-title{% endif %}" {% if 'Naari Shakti' in item.project %}style="color:#e91e63;"{% endif %}>{{ item.project|default:"Tyger IKF S6" }}</h4>
+        <button class="{{ item.status_date|default:'DATE CONFIRMED'|slugify|upper }}">
+          {{ item.status_date|default:"DATE CONFIRMED"|upper }}
+        </button>
+      </div>
+
+      <div class="workshop-fields">
+        <input
+          type="text"
+          class="input-box"
+          placeholder="{{ item.project_city }}"
+          readonly
+        />
+        <input
+          type="text"
+          class="input-box"
+          placeholder="{{ item.project_state }}"
+          readonly
+        />
+        <div class="date-box">
+          <p>
+            {% if item.date %} 
+            {{ item.date|date:"d M" }} 
+            {% else %} 
+            TBA 
+            {% endif %}
+          </p>
+        </div>
+        <a href="{{item.attr1}}" target="_blank" class="icon-btn">
+          <img loading="lazy" src="static/images/calender/Vector.png" alt="Location Pin" />
+        </a>
+      </div>
+      
+  {% if item.status_date == 'COMPLETED' %}
+  <div class="register-btn {% if item.status_date == 'COMPLETED' %}disabled{% endif %}">
+    <span>Registration Closed</span>
+  </div>
+  {% else %}
+    <a id="anchorforregister" target="_blank" rel="noopener noreferrer" href="https://app.myfirstkick.com/sign-in"><div class="register-btn {% if item.status_date == 'COMPLETED' %}disabled{% endif %}">
+     Register Now
+    </div></a>
+  {% endif %}
+
+    </div>
+
+    <!-- TESTETSTEST -->
+
+    <!-- <div class="post card-container col-lg-6 col-sm-6 col-12">
+                        <div class="blog-post blog-grid date-style-2 " style="background-color: #f3f1f1; padding: 15px; border-radius: 10px;">
+                            <div class="dez-post-media dez-img-effect zoom-slow"> 
+                   
+                            </div>
+                            <div class="dez-post-info mt-5">
+                                <div class="dez-post-title ">
+                                    <h3 class="post-title"><a href="#"> {{item.project_city}}</a></h3>
+                                </div>
+                                <div class="dez-post-meta p-2  ">
+                                    <ul>
+                                        <li class="post-date"> <i class="fa fa-calendar"></i><strong>{{ item.date|date:"d M" }}</strong> <span> {{ item.date|date:"Y" }}</span> </li>
+                                        <li class="post-author"><i class="fa fa-user"></i> <a href="#">Status</a> </li>
+                                      
+                                    </ul>
+                                </div>
+                                <div class="dez-post-text">
+                                    <p></p>
+                                </div>
+                                <div class="dez-post-readmore"> 
+                                    <a href="#" title="READ MORE" rel="bookmark" class="site-button-link">{{item.project_state}}<i class=""></i></a> 
+                                </div>
+                                <div class="dez-post-tags">
+                                    <div class="post-tags"> 
+                                       
+                                        <a href="#">{{item.project}}</a> <a href="#">{{item.project_country}}</a> 
+                                     
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+    {% endfor %}
+

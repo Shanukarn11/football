@@ -1,0 +1,509 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="scout-page scout-landing">
+  <div class="scout-wrap">
+    <div class="scout-hero">
+      <div class="scout-hero-copy">
+        <span class="scout-kicker">IKF Scouting Network</span>
+        <h1>{{ letter.title }}</h1>
+        <div class="scout-stats">
+          <div>
+            <strong>{{ scout_count }}</strong>
+            <span>certified scout profiles</span>
+          </div>
+          <div>
+            <strong>Level 2</strong>
+            <span>Positional scouting course completed</span>
+          </div>
+          <div>
+            <strong>No fee</strong>
+            <span>coordination support from IKF</span>
+          </div>
+        </div>
+        <p>{{ scout_details.intro }}</p>
+        <div class="scout-actions">
+          <a class="scout-btn scout-btn-primary" href="{% url 'scout_index' %}">View all certified scouts</a>
+          <a class="scout-btn scout-btn-contact" href="tel:+919870928221"><span class="scout-btn-icon">☎</span>9870928221</a>
+          <a class="scout-btn scout-btn-contact" href="mailto:hitesh@indiakhelofootball.com"><span class="scout-btn-icon">✉</span>hitesh@indiakhelofootball.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="scout-section-head">
+      <span class="scout-kicker">Scout details</span>
+      <h2>{{ scout_details.heading }}</h2>
+    </div>
+
+    <div class="scout-objectives">
+      {% for objective in scout_details.objectives %}
+        <article class="scout-objective">
+          <span>0{{ forloop.counter }}</span>
+          <h3>{{ objective.title }}</h3>
+          <p>{{ objective.text }}</p>
+        </article>
+      {% endfor %}
+    </div>
+
+    <div class="scout-use-card">
+      <div>
+        <span class="scout-kicker">How clubs can use this</span>
+        <h2>Hire, assign, or coordinate scouting work</h2>
+      </div>
+      <ul>
+        {% for item in scout_details.usage %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="scout-section-head scout-featured-head">
+      <div>
+        <span class="scout-kicker">Scout profiles</span>
+        <h2>All certified scouts available across regions</h2>
+      </div>
+      <a href="{% url 'scout_index' %}">View all</a>
+    </div>
+
+    <div class="scout-card-grid">
+      {% for scout in featured_scouts %}
+        <a class="scout-card" href="{% url 'scout_detail' scout.slug %}">
+          <div class="scout-avatar">
+            {% if scout.photo_url %}
+              <img src="{{ scout.photo_url }}" alt="{{ scout.name }}">
+            {% else %}
+              {{ scout.name|slice:":1" }}
+            {% endif %}
+          </div>
+          <div class="scout-card-body">
+            <div>
+              <h3>{{ scout.name }}</h3>
+              <p><strong>City and State:</strong> {{ scout.city }}{% if scout.state %}, {{ scout.state }}{% endif %}</p>
+              {% if scout.languages %}
+                <p><strong>Languages:</strong> {{ scout.languages }}</p>
+              {% endif %}
+            </div>
+            <span class="scout-loc-label">Scouting Experience</span>
+            <div class="scout-card-meta">
+              {% for pill in scout.card_pills %}
+                <span><strong>{{ pill.0 }}</strong>{{ pill.1 }}</span>
+              {% empty %}
+                <span><strong>Regions covered</strong>{{ scout.regions|default:"India" }}</span>
+              {% endfor %}
+            </div>
+            {% if scout.certification %}
+              <div class="scout-card-id">ID : {{ scout.certification }}</div>
+            {% endif %}
+            <div class="scout-card-cta">
+              <span>Click to view full profile</span>
+              <span class="scout-card-arrow" aria-hidden="true">&rarr;</span>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  :root{
+    --scout-ink:#101828;
+    --scout-muted:#566070;
+    --scout-yellow:#ffc300;
+    --scout-soft:#fff9df;
+    --scout-line:#f2df91;
+  }
+  .scout-page{
+    background:
+      radial-gradient(520px 320px at 0 8%, rgba(255,195,0,.18), transparent 70%),
+      radial-gradient(520px 320px at 100% 18%, rgba(255,225,110,.16), transparent 72%),
+      #fff;
+    color:var(--scout-ink);
+    font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+    padding:34px 0 70px;
+  }
+  .scout-wrap{
+    width:min(1180px, 92vw);
+    margin:0 auto;
+  }
+  .scout-hero{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:0;
+    align-items:stretch;
+  }
+  .scout-hero-copy,
+  .scout-letter-card,
+  .scout-use-card,
+  .scout-objective,
+  .scout-card{
+    background:#fff;
+    border:1px solid rgba(255,195,0,.34);
+    box-shadow:0 18px 44px rgba(16,24,40,.08);
+  }
+  .scout-hero-copy{
+    border-radius:8px;
+    padding:42px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    min-height:430px;
+  }
+  .scout-kicker,
+  .letter-label{
+    display:inline-flex;
+    color:#9a7100;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .scout-hero h1{
+    font-size:clamp(38px, 5vw, 68px);
+    line-height:1.02;
+    margin:14px 0 18px;
+    font-weight:850;
+    max-width:760px;
+  }
+  .scout-hero p,
+  .scout-objective p,
+  .scout-use-card li,
+  .scout-card p{
+    color:var(--scout-muted);
+    line-height:1.7;
+  }
+  .scout-hero-copy p{
+    font-size:17px;
+    max-width:690px;
+    margin:0;
+  }
+  .scout-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:28px;
+  }
+  .scout-btn{
+    min-height:46px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:8px;
+    padding:0 18px;
+    font-weight:800;
+    color:var(--scout-ink);
+    text-decoration:none;
+    border:1px solid rgba(16,24,40,.12);
+  }
+  .scout-btn-primary{
+    background:#fff;
+    border:1px solid #f1e6b1;
+    border-color:var(--scout-yellow);
+  }
+  .scout-btn-light{
+    background:#fff;
+  }
+  .scout-btn-contact{
+    background:#fff;
+    gap:10px;
+  }
+  .scout-btn-icon{
+    align-items:center;
+    background:#1f2d68;
+    border-radius:999px;
+    color:#fff;
+    display:inline-flex;
+    flex:0 0 32px;
+    font-size:16px;
+    height:32px;
+    justify-content:center;
+    width:32px;
+  }
+  .scout-letter-card{
+    border-radius:8px;
+    padding:30px;
+    margin:28px 0 42px;
+  }
+  .scout-letter-card h2{
+    margin:18px 0 14px;
+    font-size:28px;
+  }
+  .scout-letter-card p{
+    margin:0 0 14px;
+  }
+  .scout-letter-card strong{
+    display:block;
+    margin-top:18px;
+    line-height:1.6;
+  }
+  .scout-stats{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:14px;
+    margin:20px 0 46px;
+  }
+  .scout-hero-copy .scout-stats{
+    margin:4px 0 24px;
+    max-width:690px;
+  }
+  .scout-stats div{
+    background:var(--scout-soft);
+    border:1px solid var(--scout-line);
+    border-radius:8px;
+    padding:20px;
+  }
+  .scout-stats strong{
+    display:block;
+    font-size:25px;
+    margin-bottom:4px;
+  }
+  .scout-stats span{
+    color:#6b5a19;
+    font-weight:700;
+  }
+  .scout-section-head{
+    margin:0 0 18px;
+  }
+  .scout-section-head h2{
+    font-size:34px;
+    margin:8px 0 0;
+    line-height:1.18;
+  }
+  .scout-objectives{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:18px;
+  }
+  .scout-objective{
+    border-radius:8px;
+    padding:24px;
+  }
+  .scout-objective span{
+    color:#b68600;
+    font-weight:900;
+  }
+  .scout-objective h3{
+    font-size:21px;
+    line-height:1.25;
+    margin:12px 0 12px;
+  }
+  .scout-use-card{
+    border-radius:8px;
+    margin:24px 0 44px;
+    padding:28px;
+    display:grid;
+    grid-template-columns:minmax(280px, .7fr) 1fr;
+    gap:24px;
+    align-items:start;
+  }
+  .scout-use-card h2{
+    margin:8px 0 0;
+    font-size:30px;
+  }
+  .scout-use-card ul{
+    margin:0;
+    padding-left:20px;
+  }
+  .scout-use-card li{
+    margin:0 0 10px;
+  }
+  .scout-featured-head{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    align-items:end;
+  }
+  .scout-featured-head a{
+    color:var(--scout-ink);
+    font-weight:800;
+    text-decoration:none;
+    border-bottom:3px solid var(--scout-yellow);
+    padding-bottom:4px;
+  }
+  .scout-card-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:24px;
+  }
+  .scout-card{
+    border-radius:8px;
+    padding:16px;
+    text-decoration:none;
+    color:var(--scout-ink);
+    display:flex;
+    align-items:stretch;
+    gap:18px;
+    background:#fff;
+    border:1px solid #e7e7e7;
+    box-shadow:0 10px 28px rgba(16,24,40,.08);
+    transition:transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+  }
+  .scout-card:hover{
+    transform:translateY(-3px);
+    border-color:var(--scout-yellow);
+    box-shadow:0 20px 42px rgba(255,195,0,.18);
+  }
+  .scout-avatar{
+    width:220px;
+    height:220px;
+    border-radius:14px;
+    display:grid;
+    place-items:center;
+    background:#fff;
+    border:4px solid var(--scout-yellow);
+    color:#111;
+    font-size:25px;
+    font-weight:900;
+    flex:0 0 auto;
+    overflow:hidden;
+    aspect-ratio:1 / 1;
+  }
+  .scout-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center top;
+    display:block;
+    background:#fff;
+  }
+  .scout-card-body{
+    min-width:0;
+    flex:1;
+    padding:8px 6px 6px 0;
+    display:flex;
+    flex-direction:column;
+  }
+  .scout-card h3{
+    font-size:24px;
+    margin:0 0 4px;
+    overflow-wrap:anywhere;
+  }
+  .scout-card p{
+    margin:0;
+    color:#3f4652;
+    line-height:1.5;
+  }
+  .scout-card p strong,
+  .scout-loc-label{
+    color:#3f4652;
+    font-weight:850;
+  }
+  .scout-loc-label{
+    display:block;
+    margin-top:12px;
+  }
+  .scout-card-meta{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+    margin-top:8px;
+  }
+  .scout-card-meta span{
+    background:#fff;
+    border:3px solid var(--scout-yellow);
+    border-radius:12px;
+    color:#1f2937;
+    font-size:15px;
+    font-weight:800;
+    padding:9px 12px;
+    text-align:center;
+    min-height:42px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    line-height:1.25;
+  }
+  .scout-card-meta span strong{
+    display:block;
+    color:#8a6d00;
+    font-size:11px;
+    letter-spacing:.06em;
+    margin-bottom:3px;
+    text-transform:uppercase;
+  }
+  .scout-card-id{
+    margin-top:auto;
+    padding-top:14px;
+    color:#2f3440;
+    font-size:15px;
+    font-weight:850;
+  }
+  .scout-card-cta{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:12px;
+    background:var(--scout-yellow);
+    color:#1a1300;
+    border-radius:8px;
+    padding:10px 14px;
+    font-weight:850;
+    font-size:14px;
+    letter-spacing:.02em;
+  }
+  .scout-card-arrow{
+    font-size:18px;
+    transition:transform .16s ease;
+  }
+  .scout-card:hover .scout-card-arrow{
+    transform:translateX(4px);
+  }
+  @media (max-width: 940px){
+    .scout-hero,
+    .scout-use-card{
+      grid-template-columns:1fr;
+    }
+    .scout-objectives{
+      grid-template-columns:repeat(2, 1fr);
+    }
+    .scout-card-grid{
+      grid-template-columns:1fr;
+    }
+    .scout-avatar{
+      width:200px;
+      height:200px;
+    }
+  }
+  @media (max-width: 640px){
+    .scout-page{
+      padding-top:20px;
+    }
+    .scout-hero-copy,
+    .scout-letter-card,
+    .scout-use-card{
+      padding:22px;
+    }
+    .scout-hero-copy{
+      min-height:0;
+    }
+    .scout-stats,
+    .scout-objectives,
+    .scout-card-grid{
+      grid-template-columns:1fr;
+    }
+    .scout-section-head h2{
+      font-size:26px;
+    }
+    .scout-featured-head{
+      align-items:flex-start;
+      flex-direction:column;
+    }
+    .scout-card{
+      align-items:flex-start;
+      gap:14px;
+      padding:16px;
+    }
+    .scout-avatar{
+      width:140px;
+      height:140px;
+    }
+    .scout-card h3{ font-size:20px; }
+    .scout-card-meta span{ font-size:13px; padding:7px 9px; min-height:36px; }
+  }
+</style>
+
+{% endblock %}

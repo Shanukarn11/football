@@ -1,0 +1,647 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-dim:    rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --surface:           #ffffff;
+    --surface-2:         #f8f9fb;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         22px;
+    --shadow-sm:         0 2px 8px  rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md:         0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg:         0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  /* ── Layout ── */
+  .ikf-wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  .ikf-section { padding: 36px 0 44px; }
+  .ikf-section + .ikf-section { padding-top: 18px; }
+
+  /* ── Soft panel ── */
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 28px;
+    position: relative;
+  }
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* ── Headings ── */
+  .ikf-h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 14px;
+    letter-spacing: -.3px;
+  }
+  .ikf-h2:first-child { margin-top: 0; }
+
+  /* ── Body copy ── */
+  p, li {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  /* ── Floating Apply button ── */
+  .fab-top-button {
+    position: fixed;
+    top: 70px;
+    right: 30px;
+    background: var(--ikf-yellow);
+    color: #000;
+    padding: 0 24px;
+    height: 50px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 4px 14px rgba(255,195,0,.4);
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    transition: all .2s ease;
+  }
+  .fab-top-button:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.5);
+  }
+
+  /* ═══════════════════════
+     HERO — Season 6 layout
+  ════════════════════════ */
+  .fod-hero { padding-top: 24px; }
+
+  .fod-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .fod-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .fod-hero__left { display: flex; flex-direction: column; }
+
+  .fod-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .fod-hero__eyebrow::before {
+    content: '';
+    width: 22px; height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .fod-hero__brand {
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 800;
+    margin: 0 0 10px;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .fod-hero__subtitle {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0 0 14px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .fod-hero__lead {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* hero media */
+  .fod-hero__right { width: 100%; }
+
+  .fod-hero__media {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .fod-hero__img {
+    width: 100%; height: 100%;
+    display: block; object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .fod-hero__media:hover .fod-hero__img { transform: scale(1.02); }
+
+  .ikf-media { position: relative; }
+
+  .ikf-caption {
+    position: absolute;
+    right: 14px; bottom: 12px; z-index: 2;
+    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    text-align: right;
+    max-width: 85%;
+    pointer-events: none;
+  }
+  .ikf-caption::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+    background: rgba(0,0,0,.5);
+    z-index: -1;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ═══════════════════════
+     TWO-COL
+  ════════════════════════ */
+  .career360-two-col {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  .career360-two-col > div {
+    flex: 1 1 48%;
+    min-width: 260px;
+  }
+
+  /* ═══════════════════════
+     YELLOW-DOT BULLETS
+  ════════════════════════ */
+  .career360-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .career360-list li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .career360-list li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 8px;
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: #facc15;
+    box-shadow: 0 0 0 3px rgba(250,204,21,.25);
+    transition: background .25s ease, box-shadow .25s ease;
+  }
+
+  /* numbered steps */
+  .career360-steps {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    counter-reset: step;
+  }
+  .career360-steps li {
+    position: relative;
+    padding-left: 36px;
+    margin-bottom: 12px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+    counter-increment: step;
+  }
+  .career360-steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0; top: 2px;
+    width: 22px; height: 22px;
+    border-radius: 999px;
+    background: #facc15;
+    color: #111827;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 3px rgba(250,204,21,.25);
+  }
+
+  /* ═══════════════════════
+     BENEFITS GRID — 5 cards
+  ════════════════════════ */
+  .career360-benefits {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0,1fr));
+    gap: 16px;
+  }
+  @media (max-width: 1200px) { .career360-benefits { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+  @media (max-width: 768px)  { .career360-benefits { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @media (max-width: 520px)  { .career360-benefits { grid-template-columns: 1fr; } }
+
+  .career360-benefit-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 20px 18px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+    position: relative;
+  }
+  .career360-benefit-card::before { display: none; }
+  .career360-benefit-card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .career360-benefit-card:hover .benefit-text { color: #000 !important; }
+
+  .benefit-text {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin: 0;
+    transition: color .2s ease;
+  }
+
+  /* ═══════════════════════
+     ELIGIBILITY WRAPPER
+  ════════════════════════ */
+  .career360-eligibility-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  .career360-eligibility-wrapper > div {
+    flex: 1 1 48%;
+    min-width: 260px;
+  }
+
+  /* ═══════════════════════
+     APPLY CARD — dark CTA
+  ════════════════════════ */
+  .career360-apply-card {
+    border-radius: var(--radius-lg);
+    background:
+      white;
+    padding: 44px 40px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+  }
+  .career360-apply-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow), transparent);
+  }
+
+  .career360-apply-card .section-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 800;
+    color: black;
+    margin: 0 0 14px;
+    letter-spacing: -.5px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .career360-apply-card p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: black;
+    max-width: 60ch;
+    margin: 0 auto 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .career360-apply-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+    padding: 0 36px;
+    border-radius: var(--radius-sm);
+    border: none;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    background: var(--ikf-yellow);
+    color: #000;
+    box-shadow: 0 4px 14px rgba(255,195,0,.4);
+    transition: all .2s ease;
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .career360-apply-btn:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.5);
+  }
+
+  /* ═══════════════════════
+     RESPONSIVE
+  ════════════════════════ */
+  @media (max-width: 900px) {
+    .ikf-wrap { padding: 0 18px; }
+    .fod-hero__brand { font-size: 36px; letter-spacing: -1px; }
+    .ikf-soft { padding: 22px 18px; }
+    .career360-two-col > div,
+    .career360-eligibility-wrapper > div { flex: 1 1 100%; }
+    .career360-apply-card { padding: 28px 22px; }
+    .career360-apply-card .section-title { font-size: 22px; }
+    .fab-top-button { top: 80px; right: 20px; }
+  }
+  @media (max-width: 640px) {
+    .fod-hero__brand { font-size: 28px; }
+  }
+</style>
+
+
+<a href="https://docs.google.com/forms/d/e/1FAIpQLScmVqUJZjjzFW9hNgbTv5uPgbMxPsBmI6fj9jt5BrDrYoSgdA/viewform?usp=header"
+   class="fab-top-button">Apply Now</a>
+
+
+<!-- ============ HERO ============ -->
+<section class="ikf-section fod-hero">
+  <div class="ikf-wrap">
+    <div class="fod-hero__grid">
+      <div class="fod-hero__left">
+        
+        <h1 class="fod-hero__brand">IKF Pathway 360 – Supporting Footballers Beyond the Field</h1>
+        <p class="fod-hero__subtitle">Because your passion on the field deserves support off the field.</p>
+        <p class="fod-hero__lead">
+          The IKF Pathway 360 Jobs/Apprenticeship Program helps footballers build stable, meaningful careers
+          while staying connected to the game they love.
+        </p>
+      </div>
+
+      <div class="fod-hero__right">
+        <div class="fod-hero__media ikf-media">
+          <img class="fod-hero__img" loading="lazy"
+               src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/job2.png' %}{% endif %}"
+               alt="IKF Career Vision">
+          <div class="ikf-caption">
+            {% if hero_image and hero_image.caption %}{{ hero_image.caption }}{% else %}IKF Career Vision{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ PURPOSE + SPECIAL ============ -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <div class="career360-two-col">
+      <div>
+        <h2 class="ikf-h2">The Purpose</h2>
+        <div class="ikf-soft">
+          <ul class="career360-list" id="purposeList">
+            <li>
+              <strong>At India Khelo Football (IKF)</strong>, we've seen your passion, discipline, and dedication on the field.
+              Now, IKF wants to stand beside you off the field too — helping you build a stable and meaningful career
+              without losing your football identity.
+            </li>
+            <li>
+              <strong>The IKF Pathway 360 – Job/Apprenticeship Program</strong> ensures that players like you, who've been part of
+              the IKF ecosystem, always have a strong support system — one that helps you grow professionally while staying
+              connected to your football dreams.
+            </li>
+            <li>
+              Stay in the game, and keep inspiring others to stay in the game — <strong>IKF has got you covered.</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="ikf-h2">What Makes This Special</h2>
+        <div class="ikf-soft">
+          <ul class="career360-list" id="specialList">
+            <li>
+              IKF is <strong>not a recruitment company</strong>, nor do we charge players or corporates.
+              Through the <strong>IKF Pathway 360 Network</strong>, several corporate partners have come forward to
+              <strong>offer job opportunities and apprenticeships</strong> to disciplined and passionate footballers —
+              <strong>to support their journey off the field</strong> as recommended by IKF.
+            </li>
+            <li>
+              Whether you are just a class 10 pass-out or an engineer or doctor; 18 years old or 30 years old,
+              you are eligible if you've shown <strong>commitment and love for football</strong>. Your passion will have a
+              parachute through IKF — <strong>a support system to help you land on your feet and continue your journey forward.</strong>
+            </li>
+            <li>
+              IKF will first evaluate each candidate through a <strong>1-week evaluation program</strong>, and only then
+              <strong>recommend them to corporates</strong> best suited to their strengths.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ WHAT YOU'LL GET ============ -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">What You'll Get</h2>
+    <div class="career360-benefits">
+
+      <div class="career360-benefit-card">
+        <p class="benefit-text">
+          Job opportunities in
+          <strong>Marketing, Sales, Operations, Communications, Front Office, Security and many more.</strong>
+        </p>
+      </div>
+
+      <div class="career360-benefit-card">
+        <p class="benefit-text">
+          <strong>A 1-week evaluation program</strong> before recommendation to corporates.
+        </p>
+      </div>
+
+      <div class="career360-benefit-card">
+        <p class="benefit-text">
+          Starting salary from <strong>₹20,000 per month.</strong>
+        </p>
+      </div>
+
+      <div class="career360-benefit-card">
+        <p class="benefit-text">Continued mentorship through IKF's 360 ecosystem.</p>
+      </div>
+
+      <div class="career360-benefit-card">
+        <p class="benefit-text">Direct corporate recommendations based on your evaluation and performance.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ WHO CAN APPLY / HOW IT WORKS ============ -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <div class="career360-eligibility-wrapper">
+      <div>
+        <h2 class="ikf-h2">Who Can Apply</h2>
+        <div class="ikf-soft">
+          <ul class="career360-list">
+            <li>Any player who has been part of the <strong>IKF ecosystem or trials.</strong></li>
+            <li>
+              Footballers, regardless of qualification or age, who are
+              <strong>ready to build a career while staying connected to football</strong>.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="ikf-h2">How It Works</h2>
+        <div class="ikf-soft">
+          <ol class="career360-steps">
+            <li><strong>Fill the Application Form</strong> using the link provided.</li>
+            <li><strong>Join the 1-Week Evaluation Program</strong> conducted by IKF.</li>
+            <li><strong>Get Recommended to Corporates</strong> through IKF's 360 Network.</li>
+            <li><strong>Start Your Professional Journey</strong> with confidence and support.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ APPLY NOW ============ -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <div class="career360-apply-card">
+      <h3 class="section-title">Ready to Take the Next Step?</h3>
+      <p>Your journey doesn't end when the final whistle blows.</p>
+      <p>Whether you're just starting out or have been chasing football dreams for years — IKF stands with you.</p>
+      <p><strong style="color: black;">Apply now for the IKF Pathway 360 – Jobs/Apprenticeship Program.</strong></p>
+      <p>
+        Because passion deserves a parachute, and footballers deserve a future.
+        Stay in the game — and inspire others to stay in it too.
+        <strong style="color: black;">IKF has got you covered.</strong>
+      </p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScmVqUJZjjzFW9hNgbTv5uPgbMxPsBmI6fj9jt5BrDrYoSgdA/viewform?usp=header"
+         class="career360-apply-btn">Apply Now</a>
+    </div>
+  </div>
+</section>
+
+
+<script>
+(function () {
+  const left  = document.getElementById('purposeList');
+  const right = document.getElementById('specialList');
+  if (!left || !right) return;
+
+  function fullHeight(el){
+    const r = el.getBoundingClientRect();
+    const cs = getComputedStyle(el);
+    return r.height + (parseFloat(cs.marginTop)||0) + (parseFloat(cs.marginBottom)||0);
+  }
+
+  function clearHeights(){
+    [...left.children, ...right.children].forEach(li => li.style.minHeight = '');
+  }
+
+  function syncHeights(){
+    const stacked = left.getBoundingClientRect().top !== right.getBoundingClientRect().top;
+    clearHeights();
+    if (stacked) return;
+    const L = Array.from(left.children).filter(n => n.tagName === 'LI');
+    const R = Array.from(right.children).filter(n => n.tagName === 'LI');
+    const n = Math.min(L.length, R.length);
+    for (let i = 0; i < n; i++){
+      const h = Math.max(fullHeight(L[i]), fullHeight(R[i]));
+      L[i].style.minHeight = h + 'px';
+      R[i].style.minHeight = h + 'px';
+    }
+  }
+
+  const debounce = (fn, ms=120) => { let id; return (...a) => { clearTimeout(id); id = setTimeout(() => fn(...a), ms); }; };
+  const run = debounce(syncHeights, 80);
+  window.addEventListener('load', syncHeights);
+  window.addEventListener('resize', run);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(run).catch(()=>{});
+  const mo = new MutationObserver(run);
+  mo.observe(left,  { childList:true, subtree:true, characterData:true });
+  mo.observe(right, { childList:true, subtree:true, characterData:true });
+})();
+</script>
+
+{% endblock content %}

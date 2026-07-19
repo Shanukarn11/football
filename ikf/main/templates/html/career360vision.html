@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'html/ikf360/_base_styles.html' %}
+
+<section class="ikf-section i360-hero">
+  <div class="ikf-wrap">
+    <div class="i360-hero__grid">
+      <div class="i360-hero__left">
+        <div class="i360-hero__eyebrow">IKF Pathway 360</div>
+        <h1 class="i360-hero__title">
+          IKF Pathway 360: Where Every Football Journey <span>Finds Direction</span>
+        </h1>
+        <p class="i360-hero__lead">
+          A complete ecosystem built to support players, parents, and the future of football in India.
+        </p>
+        <div class="i360-ctas">
+          <a class="i360-btn primary" href="{% url 'ikf360_player' %}">Explore as a Player</a>
+          <a class="i360-btn" href="{% url 'ikf360_parent' %}">I am a Parent</a>
+          <a class="i360-btn" href="{% url 'ikf360_partner' %}">Partner with IKF</a>
+          <a class="i360-btn" href="{% url 'ikf360_supporter' %}">Support the Movement</a>
+        </div>
+        <div class="i360-ctas" style="margin-top:14px;">
+          <a class="i360-btn" href="https://indiakhelofootball.com/faces_of_change">Watch Our Journey</a>
+        </div>
+      </div>
+      <div class="i360-hero__right">
+        <div class="i360-hero__media">
+          <img src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/ikf360.jpg' %}{% endif %}"
+               alt="IKF Pathway 360"
+               loading="eager" />
+          {% if hero_image and hero_image.caption %}
+            <div class="i360-hero__caption">{{ hero_image.caption }}</div>
+          {% else %}
+            <div class="i360-hero__caption">IKF Pathway 360</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">What is IKF Pathway 360?</h2>
+    <div class="ikf-soft">
+      <p>
+        IKF Pathway 360 is not just a program. It is a <strong>holistic ecosystem designed to nurture, guide, and sustain football journeys in India</strong>.
+      </p>
+      <p style="margin-top:12px;">
+        At India Khelo Football (IKF), we believe talent alone is not enough. What truly builds a professional footballer or a lifelong contributor to the sport is the <strong>right mix of opportunity, guidance, environment, and support systems</strong>.
+      </p>
+      <p style="margin-top:12px;">IKF Pathway 360 is our answer to that need.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== IKF 360 PATHWAY PARTNERS =============== -->
+{% if pathway_partners %}
+<section class="ikf-section" id="pathway-partners">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">IKF 360 Pathway Partners</h2>
+    <div class="ikf-soft pp-partners-soft">
+      <div class="pp-partners-grid">
+        {% for partner in pathway_partners %}
+          {% if partner.website %}
+            <a class="pp-partner" href="{{ partner.website }}" target="_blank" rel="noopener noreferrer" title="{{ partner.name }}">
+              <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" loading="lazy">
+              {% if partner.category %}<span class="pp-partner-category">{{ partner.category }}</span>{% endif %}
+            </a>
+          {% else %}
+            <div class="pp-partner" title="{{ partner.name }}">
+              <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" loading="lazy">
+              {% if partner.category %}<span class="pp-partner-category">{{ partner.category }}</span>{% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pp-partners-soft { padding: 36px; }
+  .pp-partners-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    align-items: stretch;
+    justify-items: stretch;
+  }
+  @media (max-width: 980px) {
+    .pp-partners-soft { padding: 24px; }
+    .pp-partners-grid { gap: 20px; }
+    .pp-partner { padding: 22px; border-radius: 18px; }
+  }
+  @media (max-width: 640px) {
+    .pp-partners-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+    .pp-partner { padding: 18px; border-radius: 16px; }
+  }
+  @media (max-width: 380px) {
+    .pp-partners-grid { grid-template-columns: 1fr; }
+  }
+  .pp-partner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    padding: 28px;
+    background: #ffffff;
+    border: 1px solid #eef0f4;
+    border-radius: 22px;
+    box-shadow: 0 2px 8px rgba(11,17,32,.05);
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    text-decoration: none;
+  }
+  .pp-partner:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 36px rgba(11,17,32,.10);
+    border-color: rgba(255,195,0,.55);
+  }
+  .pp-partner img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: transform .25s ease;
+  }
+  .pp-partner:hover img { transform: scale(1.04); }
+  .pp-partner-category {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #0b1120;
+    text-align: center;
+    line-height: 1.2;
+  }
+</style>
+{% endif %}
+
+
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">5 Pillars Grid</h2>
+    <p style="margin-bottom:14px;">Each card is clickable and leads to its subpage.</p>
+
+    <div class="i360-pillars">
+      <a class="i360-card" href="{% url 'ikf360_player' %}" data-step="01">
+        <h3 class="i360-card__title">IKF Pathway 360 Player</h3>
+        <span class="i360-card__cta">Start Your Journey</span>
+      </a>
+
+      <a class="i360-card" href="{% url 'ikf360_parent' %}" data-step="02">
+        <h3 class="i360-card__title">IKF Pathway 360 Parent</h3>
+        <span class="i360-card__cta">Guide Your Child</span>
+      </a>
+
+      <a class="i360-card" href="{% url 'ikf360_career' %}" data-step="03">
+        <h3 class="i360-card__title">IKF Pathway 360 Career</h3>
+        <span class="i360-card__cta">Explore Opportunities</span>
+      </a>
+
+      <a class="i360-card" href="{% url 'ikf360_partner' %}" data-step="04">
+        <h3 class="i360-card__title">IKF Pathway 360 Partner</h3>
+        <span class="i360-card__cta">Collaborate With Us</span>
+      </a>
+
+      <a class="i360-card" href="{% url 'ikf360_supporter' %}" data-step="05">
+        <h3 class="i360-card__title">IKF Pathway 360 Supporter</h3>
+        <span class="i360-card__cta">Become a Supporter</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <div class="ikf-soft i360-banner">
+      <h2>Be a part of India's most structured grassroots <span>football ecosystem</span></h2>
+      <div class="i360-ctas">
+        <a class="i360-btn primary" href="{% url 'ikf360_player' %}">Join IKF Pathway 360</a>
+        <a class="i360-btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=connect@indiakhelofootball.com" target="_blank" rel="noopener">Contact Us</a>
+        <a class="i360-btn" href="{% url 'Donate' %}">Support Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

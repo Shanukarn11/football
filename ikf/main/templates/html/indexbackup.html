@@ -1,0 +1,1854 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .parallax-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8); /* You can adjust 0.4 for more/less darkness */
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.carousel-container {
+  position: relative;
+  max-width: 1400px;
+  height: 85vh;
+  margin: 20px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.noticeboard-btn {
+  position: fixed;
+  top: 160px;
+  right: 70px;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffc300;
+  color: #111;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: nb-pulse 2.4s ease-in-out infinite;
+}
+
+/* Remove pulse animation from the button entirely */
+.noticeboard-btn {
+  animation: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* One very slow, faint ripple */
+.noticeboard-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: #ffc300;
+  z-index: -1;
+  animation: nb-ripple 5s ease-out infinite;
+  opacity: 0;
+}
+
+.noticeboard-btn::after {
+  display: none;
+}
+
+@keyframes nb-ripple {
+  0%   { transform: scale(1);   opacity: 0.2; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Dot — very slow, barely noticeable */
+@keyframes nb-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+
+/* Blinking live dot */
+.nb-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #111;
+  flex-shrink: 0;
+  animation: nb-blink 1.2s ease-in-out infinite;
+}
+
+@keyframes nb-blink {
+  0%, 100% { opacity: 1;    transform: scale(1);   }
+  50%       { opacity: 0.15; transform: scale(0.6); }
+}
+
+.noticeboard-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(255,195,0,0.55);
+  color: #111;
+  animation: none;
+}
+
+@media (max-width: 768px) {
+  .noticeboard-btn {
+    top: 100px;
+    right: 14px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+  z-index: 0;
+  
+}
+
+.carousel-slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+}
+
+.parallax-wrapper {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.carousel-character,
+.character-slide-img {
+  z-index: 2;
+  position: absolute;
+}
+.carousel-content {
+  
+  top: 45%;
+  right: 50px;
+  color: white;
+  text-align: right;
+  font-family: 'Inter', sans-serif;
+  z-index: 2;
+  position: relative;
+}
+
+.carousel-content h1 {
+  font-size: 38px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.carousel-content p {
+  font-size: 16px;
+  margin: 5px 0 0 0;
+  color: white; /* 👈 this makes the paragraph text white */
+}
+
+
+.carousel-dots {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 2;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  background: #999;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.carousel-dot.active {
+  background: white;
+}
+.stats-wrapper {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 30px;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  box-sizing: border-box;
+  align-items: stretch;
+}
+
+.stat-card {
+  flex: 1;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 30px 20px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  max-width: 250px;
+  box-sizing: border-box;
+}
+
+.stat-card::before,
+.stat-card::after {
+  content: '';
+  width: 50px;
+  height: 4px;
+  background-color: #ffc300;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+}
+
+.stat-card::before {
+  top: 10px;
+}
+.stat-card::after {
+  bottom: 10px;
+}
+
+.stat-number {
+  font-size: 48px;
+  font-weight: 700;
+  color: #1f1f1f;
+}
+
+.stat-label {
+  margin-top: 8px;
+  font-size: 15px;
+  color: #666;
+}
+.stat-separator {
+  width: 1px;
+  background-color: #e5e7eb;
+  margin: 0 20px;
+  height: auto;
+}
+.custom-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(6, 140px); /* 140px per row, adjust as needed */
+  gap: 20px;
+  padding: 40px 150px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Optional: wider cards for more flexibility */
+.card-wide {
+  height: 100%;
+}
+@media (max-width: 768px) {
+  .custom-grid {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .card {
+    height: 400px !important;
+    width: 100%;
+  }
+
+  .card-overlay {
+    font-size: 14px;
+  }
+}
+.card-hover {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.card-hover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+/* ⬇️ Yellow box overlay */
+.card-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 80px;
+  right: 80px;
+  height: 120px; /* Initial height for pill */
+  background: rgba(255, 195, 0, 0.7); /* Start as yellow pill */
+  border-radius: 12px;
+  padding: 12px 20px;
+  transition: all 0.5s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+
+
+.card-overlay h3,
+.card-overlay p {
+  margin: 0;
+  
+}
+/* DEFAULT STATE */
+.card-overlay h3 {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.2s ease-in-out;  /* ⏩ faster */
+}
+
+/* ONLY fade in the paragraph + buttons later */
+.card-overlay p,
+.card-overlay .cta-buttons {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;  /* ⏩ faster */
+}
+.card-hover:hover .card-overlay p,
+.card-hover:hover .card-overlay .cta-buttons {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;  /* 🔄 shorter delay */
+}
+
+.card-hover:hover .card-overlay {
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 20px;
+  padding: 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background: linear-gradient(to top, rgba(255, 195, 0, 0.6), rgba(255, 255, 255, 0.1));
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.4s ease-in-out;
+}
+
+.card-hover:hover .card-overlay h3,
+.card-hover:hover .card-overlay p,
+.card-hover:hover .card-overlay .cta-buttons {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+
+
+.card-overlay h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid black; /* 👈 separator line */
+  width: fit-content;
+}
+
+
+.card-overlay p {
+  font-size: 13px;
+  margin-left: 0;
+  color: #111;
+}
+.card-overlay p {
+  opacity: 1;
+  transform: translateY(0);
+  transition: none;
+  align-items: flex-start;
+}
+
+/* ⬆️ Arrow Icon */
+.arrow-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  
+  color: black;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.4s ease;
+  z-index: 2;
+}
+
+/* 🌀 Hover State */
+.card-hover:hover img {
+  transform: scale(1.2);
+}
+
+.arrow-icon img {
+  width: 60px !important;
+  height: 60px !important;
+  display: block;
+}
+
+
+.card-hover:hover .arrow-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card-hover {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.card-hover img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.6s ease;
+}
+
+.card-hover:hover img {
+  transform: scale(1.1);
+}
+
+
+
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.card-content h3 {
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0;
+}
+
+.card-content p {
+  font-size: 13px;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.cta-buttons {
+  display: none;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.cta-buttons button {
+  background: #fff;
+  color: black;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* Arrow Icon */
+.arrow-icon {
+  display: none;
+  font-size: 40px;
+  font-weight: 800;
+  margin-bottom: auto;
+}
+
+/* Hover Effect */
+
+.card-hover:hover .card-text-container {
+  width: 280px; /* smaller width like in screenshot 1 */
+  height: auto;
+  background-color: rgba(255, 255, 255, 0.2); /* more transparent */
+  border-radius: 10px;
+  padding: 16px 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+
+  position: absolute;
+  bottom: 30px;  /* ⬅️ bring closer to yellow area */
+  left: 24px;    /* ⬅️ move more left */
+  transform: none;
+}
+
+
+
+
+.cta-buttons {
+  display: none;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.card-hover:hover .cta-buttons,
+.card-hover:hover .arrow-icon {
+  display: flex;
+}
+
+.card-hover:hover .card-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+.card-hover:hover .card-buttons button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+
+
+
+.card-text-container h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 0;
+}
+
+.card-text-container p {
+  font-size: 13px;
+  margin: 4px 0 0;
+  line-height: 1.4;
+}
+.carousel-character {
+  position: absolute;
+  z-index: 5;
+  max-height: 450px;
+  pointer-events: none;
+}
+
+.left-character {
+  bottom: 0;
+  left: 0;
+}
+
+.right-character {
+  bottom: 0;
+  right: 0;
+}
+
+.bottom-character {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-height: 290px !important;
+}
+
+.character-slide-img {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  max-height: 400px; /* 🔥 bigger size */
+}
+
+.left-character {
+  bottom: 0;
+  left: 0;
+}
+
+.right-character {
+  bottom: 0;
+  right: 0;
+}
+
+.bottom-character {
+  bottom: 0;
+  left: 5%;
+  transform: translateX(-5%);
+}
+
+
+@media (max-width: 768px) {
+  .character-slide-img {
+    max-height: 100px;
+  }
+}
+.starburst-wrapper {
+  position: relative;
+  display: inline-block;
+  margin: 100px auto;
+}
+
+.starburst-button {
+  padding: 16px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: #ffc300;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  z-index: 2;
+  position: relative;
+  animation: pop-scale 1.8s infinite ease-in-out;
+  transition: transform 0.3s ease;
+}
+
+@keyframes pop-scale {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+.star {
+  position: absolute;
+  font-size: 18px;
+  opacity: 0;
+  animation: sparkle 1.8s infinite ease-in-out;
+  color: #ffc300;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.star1 {
+  top: -20px;
+  left: 30%;
+  animation-delay: 0s;
+  font-size: 16px;
+}
+
+.star2 {
+  top: 50%;
+  left: 110%;
+  animation-delay: 0.3s;
+  font-size: 20px;
+}
+
+.star3 {
+  top: 100%;
+  left: 60%;
+  animation-delay: 0.6s;
+  font-size: 14px;
+}
+
+.star4 {
+  top: 40%;
+  left: -40%;
+  animation-delay: 0.9s;
+  font-size: 22px;
+}
+
+@keyframes sparkle {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) translateY(-20px) rotate(15deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) translateY(-40px) rotate(-15deg);
+  }
+}
+
+/* marqee events */
+.marquee-events-section {
+  display: flex;
+  gap: 60px;
+  justify-content: space-between;
+  padding: 60px 150px;
+  font-family: 'Inter', sans-serif;
+}
+
+.marquee-left {
+  flex: 1;
+  max-width: 400px;
+}
+
+.marquee-left h2 {
+  font-size: 48px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.marquee-left p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.marquee-right {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.event-card {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 15px 20px;
+  border-radius: 10px;
+  background-color: white;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 0 0 1px #f0f0f0;
+  transition: background-color 0.3s ease;
+}
+
+.event-card:hover {
+  background-color: rgba(255, 195, 0, 0.2); /* transparent yellow */
+}
+
+.event-card img {
+  width: 110px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.event-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.event-content h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.event-content p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.event-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ddd;
+}
+
+.dot.yellow {
+  background-color: #ffc300;
+}
+
+.dot.gray {
+  background-color: #ddd;
+}
+.join-movement-section {
+  padding: 60px 0;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  margin-top: -30px;
+}
+
+.join-content h2 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.join-content h2 span {
+  font-weight: 800;
+}
+
+.join-content p {
+  font-size: 35px;
+  color: #999999;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.join-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.join-btn {
+  background-color: #ffc300;
+  color: #000;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.join-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.card-text-container .preview-text {
+  display: block;
+  transition: opacity 0.3s ease;
+}
+
+.card-text-container .full-text {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-hover:hover .card-text-container .preview-text {
+  display: none;
+}
+
+.card-hover:hover .card-text-container .full-text {
+  display: block;
+  opacity: 1;
+}
+
+/* responsiveness */
+@media (max-width: 1200px) {
+  .custom-grid {
+    padding: 40px 40px;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  .custom-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-grid {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .card {
+    height: auto !important;
+    width: 100%;
+  }
+
+  .card-overlay {
+    flex-direction: column;
+    padding: 16px;
+    height: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .card-text-container h3 {
+    font-size: 15px;
+  }
+
+  .card-text-container p {
+    font-size: 12px;
+  }
+
+  .cta-buttons button {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .arrow-icon img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+@media (max-width: 768px) {
+  .carousel-content {
+    top: 50%;
+    right: 20px;
+    left: 20px;
+    text-align: center;
+  }
+
+  .carousel-content h1 {
+    margin-top: -30px;
+    font-size: 20px;
+    
+    padding-right: 60px ;
+  }
+
+  .carousel-content p {
+    font-size: 12px;
+    line-height: 1.0;
+    padding-right: 50px ;
+  }
+
+  .carousel-character {
+    max-height: 200px;
+  }
+  .bottom-character{
+    max-height: 100px !important;
+  }
+}
+@media (max-width: 768px) {
+  .stats-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .stat-card {
+    max-width: none;
+    width: 100%;
+  }
+
+  .stat-separator {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .marquee-events-section {
+    flex-direction: column;
+    padding: 40px 20px;
+    gap: 30px;
+  }
+
+  .marquee-left h2 {
+    font-size: 28px;
+  }
+
+  .marquee-left p {
+    font-size: 14px;
+  }
+
+  .event-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .event-card img {
+    width: 100%;
+    height: auto;
+  }
+
+  .event-content {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+@media (max-width: 768px) {
+  .join-buttons {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center; /* center the buttons */
+  }
+
+  .join-buttons .join-btn {
+    width: 100px;        /* 💡 or any width you prefer */
+    text-align: center;
+    padding: 12px 0;     /* vertical padding only */
+    border-radius: 30px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .owl-carousel .item img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+/* 1. Expand overlay on hover or active */
+.card-hover:hover .card-overlay,
+.card-hover.active .card-overlay {
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 20px;
+  padding: 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background: linear-gradient(to top, rgba(255, 195, 0, 0.6), rgba(255, 255, 255, 0.1));
+   
+  transition: all 0.4s ease-in-out;
+}
+
+/* 2. Zoom image */
+.card-hover:hover img,
+.card-hover.active img {
+  transform: scale(1.1);
+}
+
+/* 3. Show arrow icon */
+.card-hover:hover .arrow-icon,
+.card-hover.active .arrow-icon {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 4. Show CTA buttons */
+.card-hover:hover .cta-buttons,
+.card-hover.active .cta-buttons {
+  display: flex;
+}
+
+/* 5. Reveal full text and hide preview text */
+.card-hover:hover .card-text-container .preview-text,
+.card-hover.active .card-text-container .preview-text {
+  display: none;
+}
+
+.card-hover:hover .card-text-container .full-text,
+.card-hover.active .card-text-container .full-text {
+  display: block;
+  opacity: 1;
+}
+
+/* 6. Animate text in overlay */
+.card-hover:hover .card-overlay p,
+.card-hover.active .card-overlay p,
+.card-hover:hover .card-overlay .cta-buttons,
+.card-hover.active .card-overlay .cta-buttons,
+.card-hover:hover .card-overlay h3,
+.card-hover.active .card-overlay h3 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+/* 7. Style the .card-text-container on hover or active */
+.card-hover:hover .card-text-container,
+.card-hover.active .card-text-container {
+  width: 280px;
+  height: auto;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 16px 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  position: absolute;
+  bottom: 30px;
+  left: 24px;
+  transform: none;
+}
+.button-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.button-shadow {
+  position: absolute;
+  width: 90%;
+  height: 100%;
+  background: #ffc300;
+  border-radius: 999px;
+  top: 0;
+  left: 5%;
+  z-index: 0;
+  transition: transform 0.3s ease;
+}
+
+.burst-button {
+  position: relative;
+  background: #ffc300;
+  color: black;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 16px 36px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  overflow: visible;
+  z-index: 1;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+}
+
+.button-wrapper.hover .burst-button {
+  border: 2px solid white;
+  transform: rotate(-4deg);
+}
+
+.button-wrapper.hover .button-shadow {
+  transform: translate(-10px, 10px) rotate(-4deg) scale(1);
+}
+
+.star {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: black;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;         /* ✅ hide from layout/render */
+  transform: translate(-50%, -50%) scale(0.5);
+  transition: none;
+}
+
+
+@keyframes burstOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(var(--scale, 1.2));
+  }
+}
+
+@keyframes burstIn {
+  0% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(var(--scale, 1.2));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+}
+
+/* ✅ Make the 3 partner carousels smaller */
+.section-content .owl-carousel.img-carousel-content .ow-carousel-entry {
+  max-width: 240px !important;           /* overall card width */
+  margin: 0 auto;
+}
+
+.section-content .owl-carousel.img-carousel-content .ow-entry-media {
+  height: 220px;              /* image box height */
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.section-content .owl-carousel.img-carousel-content .ow-entry-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;        /* keep logos clean */
+  background: #fff;           /* nice for transparent png logos */
+}
+
+/* Reduce the text area size */
+.section-content .owl-carousel.img-carousel-content .dez-info {
+  padding: 10px 8px !important;
+}
+
+.section-content .owl-carousel.img-carousel-content .dez-title {
+  font-size: 14px !important;
+  line-height: 1.2;
+  margin: 0 !important;
+}
+
+/* Optional: reduce spacing between items inside carousel */
+.section-content .owl-carousel.img-carousel-content .item {
+  padding: 6px 8px;
+}
+/* tighten vertical spacing between the partner blocks */
+.partner-carousel-block{
+  padding-bottom: 10px !important;   /* overrides p-b30 */
+  margin-bottom: 10px !important;
+}
+
+/* tighten heading gap */
+.partner-carousel-title{
+  margin-bottom: 10px !important;    /* overrides m-b20 */
+}
+@media (max-width: 768px) {
+  .section-content .owl-carousel.img-carousel-content .ow-carousel-entry {
+    max-width: 100% !important;
+  }
+
+  .section-content .owl-carousel.img-carousel-content .ow-entry-media {
+    height: 70px;        /* shorter box on mobile */
+    border-radius: 8px;
+  }
+
+  .section-content .owl-carousel.img-carousel-content .ow-entry-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;  /* keeps logo from cropping */
+    padding: 6px;         /* small breathing room inside box */
+    box-sizing: border-box;
+  }
+
+  .section-content .owl-carousel.img-carousel-content .dez-info {
+    padding: 4px 4px !important;
+  }
+
+  .section-content .owl-carousel.img-carousel-content .dez-title {
+    font-size: 9px !important;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .section-content .owl-carousel.img-carousel-content .item {
+    padding: 4px 4px;
+  }
+}
+
+</style>
+<a href="{% url 'noticeboard_home' %}" target="_blank" rel="noopener noreferrer" class="noticeboard-btn">
+  <span class="nb-dot"></span>
+  View Noticeboard
+</a>
+<div class="carousel-container">
+  <a href="{% url 'noticeboard_home' %}" target="_blank" rel="noopener noreferrer" class="noticeboard-btn">
+  <span class="nb-dot"></span>
+  View Noticeboard
+</a>
+  <div class="carousel-slide active">
+    <div class="parallax-wrapper lazy-bg" data-bg="{% static 'images/banners/about1.png' %}">
+<div class="carousel-content">
+
+  <h1>
+    <strong>India Khelo Football</strong> (IKF)
+  </h1>
+
+  <p>
+    is a Section-8 not-for-profit organisation building
+    <strong>a transparent and standardised grassroots talent identification system</strong>
+    for Indian football.
+  </p>
+
+  <h4>
+    <strong>IKF is not a club, not an academy, and not an agent.</strong>
+  </h4>
+
+  <p>
+    It is a <strong>neutral platform</strong> designed to ensure that talent is
+    discovered, evaluated, and connected to opportunity.
+  </p>
+
+  <p>
+    <i>Aap Khelo Mauka Hum Denge</i>
+  </p>
+
+</div>
+        <img src="{% static 'images/home4/left.png' %}" loading="lazy" class="carousel-character left-character" alt="Left Character" />
+    </div>
+  </div>
+  <div class="carousel-slide">
+    <div class="parallax-wrapper lazy-bg" data-bg="{% static 'images/banners/req.png' %}">
+      <div class="carousel-content">
+        <h1>IKF is not a club, not an academy, and not an agent.</h1>
+                <p>It is a neutral platform designed to ensure that talent is discovered, evaluated, and connected to opportunity.</p>
+        <!-- <p>Empowering young footballers across Bharat with the support, structure, and stage they deserve.</p> -->
+      </div>
+      <img src="{% static 'images/home4/right.png' %}" loading="lazy" class="carousel-character left-character" alt="Left Character" />
+    </div>
+  </div>
+  <div class="carousel-slide">
+    <div class="parallax-wrapper lazy-bg" data-bg="{% static 'images/banners/no.png' %}">
+      <div class="carousel-content">
+        <h1>Aap Khelo Mauka Hum Denge</h1>
+
+      </div>
+      <img src="{% static 'images/home4/bottom.png' %}" loading="lazy" class="character-slide-img bottom-character" alt="Bottom Character" />
+    </div>
+  </div>
+  
+  
+  
+
+  <div class="carousel-dots">
+    <div class="carousel-dot active" onclick="goToSlide(0)"></div>
+    <div class="carousel-dot" onclick="goToSlide(1)"></div>
+    <div class="carousel-dot" onclick="goToSlide(2)"></div>
+  </div>
+</div>
+<section class="stats-wrapper">
+    <div class="stat-card">
+      <div class="stat-number" data-start="50000" data-target="55000">0</div>
+      <div class="stat-label">Participants</div>
+    </div>
+  
+    <div class="stat-separator"></div>
+  
+    <div class="stat-card">
+      <div class="stat-number" data-start="1500" data-target="1600">0</div>
+      <div class="stat-label">Scouted Players</div>
+    </div>
+  
+    <div class="stat-separator"></div>
+  
+    <div class="stat-card">
+      <div class="stat-number" data-start="332" data-target="432">0</div>
+      <div class="stat-label">Cities Covered</div>
+    </div>
+  </section>
+  <section class="custom-grid">
+    <!-- Row 1–3 -->
+<div class="card card-hover" style="grid-column: 1/span 2; grid-row: 1 / span 3;">
+  <img loading="lazy" src="{% static 'images/home4/t.png' %}" alt="Card 1" />
+  <div class="card-overlay">
+   <div class="card-text-container">
+  <h3>I am a Player</h3>
+
+  <!-- Short version (shown before hover) -->
+  <p class="preview-text">Opening Doors...</p>
+
+  <!-- Full version (shown on hover) -->
+  <p class="full-text">Opening Doors to Football Dreams</p>
+
+    <div class="cta-buttons">
+  <a href="https://indiakhelofootball.com/season6" class="cta-link-button"><button> Tyger IKF Season 6</button> </a>
+
+  
+  <a href="https://indiakhelofootball.com/noticeboard/trialcalendar" class="cta-link-button"><button> IKF Calender</button> </a>
+</div>
+</div>
+
+  </div>
+<div class="arrow-icon">
+  <a href="https://indiakhelofootball.com/season5" target="_blank" rel="noopener noreferrer">
+    <img loading="lazy" src="{% static 'images/home4/arrow.png' %}" alt="arrow" />
+  </a>
+</div>
+
+
+</div>
+
+<div class="card card-hover" style="grid-column: 3; grid-row: 1 / span 3;">
+  <img loading="lazy" src="{% static 'images/home4/c60.png' %}" alt="Card 2" />
+  <div class="card-overlay">
+    <div class="card-text-container">
+  <h3>I am a Parent</h3>
+
+  <!-- Short version (shown before hover) -->
+  <p class="preview-text">Less than 1%...</p>
+
+  <!-- Full version (shown on hover) -->
+  <p class="full-text">Less than 1% of players make it to the professional level, leaving behind a majority of kids and parents unsure of what’s next.</p>
+
+    <div class="cta-buttons">
+  <a href="https://indiakhelofootball.com/field_of_dreams" class="cta-link-button"><button> Know More</button> </a>
+</div>
+</div>
+
+  </div>
+  <div class="arrow-icon">
+  <a href="https://indiakhelofootball.com/field_of_dreams" target="_blank" rel="noopener noreferrer">
+    <img loading="lazy" src="{% static 'images/home4/arrow.png' %}" alt="arrow" />
+  </a>
+</div>
+</div>
+
+
+
+<!-- Row 7–9 -->
+<div class="card card-hover" style="grid-column: 1; grid-row: 4 / span 3;">
+  <img loading="lazy" src="{% static 'images/home4/s.png' %}" alt="Card 6" />
+  <div class="card-overlay">
+    <div class="card-text-container">
+  <h3>Donation</h3>
+
+  <!-- Short version (shown before hover) -->
+  <p class="preview-text">Support the...</p>
+
+  <!-- Full version (shown on hover) -->
+  <p class="full-text">Support the Initiatives</p>
+
+    <div class="cta-buttons">
+  <a href="https://indiakhelofootball.com/donate" class="cta-link-button"><button> Know More</button> </a>
+</div>
+</div>
+
+  </div>
+  <div class="arrow-icon">
+  <a href="https://indiakhelofootball.com/ikf-winners" target="_blank" rel="noopener noreferrer">
+    <img loading="lazy" src="{% static 'images/home4/arrow.png' %}" alt="arrow" />
+  </a>
+</div>
+
+</div>
+
+<div class="card card-wide card-hover" style="grid-column: 2 / span 2; grid-row: 4 / span 3;">
+  <img loading="lazy" src="{% static 'images/home4/sc.png' %}" alt="Card 7" />
+  <div class="card-overlay">
+    <div class="card-text-container">
+  <h3>I am a Scout</h3>
+
+  <!-- Short version (shown before hover) -->
+  <p class="preview-text">The program is beginner-friendly...</p>
+
+  <!-- Full version (shown on hover) -->
+  <p class="full-text">The program is beginner-friendly yet rigorous; a passion for football analysis is key.</p>
+
+    <div class="cta-buttons">
+  <a href="https://indiakhelofootball.com/scoutingcertification" class="cta-link-button"><button> Know More</button> </a>
+</div>
+</div>
+
+  </div>
+  <div class="arrow-icon">
+  <a href="https://indiakhelofootball.com/woman-empowerment" target="_blank" rel="noopener noreferrer">
+    <img loading="lazy" src="{% static 'images/home4/arrow.png' %}" alt="arrow" />
+  </a>
+</div>
+
+</div>
+
+<!-- Row 10–12 -->
+
+
+
+
+
+</section>
+
+
+<section class="marquee-events-section">
+  <div class="marquee-left">
+    <h2>Footprint Projects</h2>
+    <p>
+      These footprint Projects are special initiatives that brings together the finest talent, top scouts, global opportunities and IKF Pathway 360 under one roof. These projects are designed to bring spotlight on rising stars and propel them toward professional football pathways and at the same time focuses on community development with football as enabler
+    </p>
+  </div>
+
+  <div class="marquee-right">
+    <!-- Card 1 -->
+    <a href="https://indiakhelofootball.com/scouts_on_wheels" class="event-card">
+      <img loading="lazy" src="{% static 'images/andhra/andhra4.png' %}" alt="IKF Trials">
+      <div class="event-content">
+        <div>
+          <h3>Scout on Wheel</h3>
+          <p>
+            Taking football to every child’s doorstep
+            building a playing culture in
+            Andhra Pradesh
+          </p>
+        </div>
+        <div class="event-dots">
+          <span class="dot yellow"></span>
+          <span class="dot gray"></span>
+          <span class="dot gray"></span>
+          <span class="dot gray"></span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Card 2 -->
+    <a href="https://indiakhelofootball.com/north_east_rising" class="event-card">
+      <img loading="lazy" src="{% static 'images/banner/north_east.png' %}" alt="International Workshop">
+      <div class="event-content">
+        <div>
+          <h3>North East Rising</h3>
+          <p>Turning the Northeast’s football passion into purpose, prosperity, and structured careers.</p>
+        </div>
+        <div class="event-dots">
+          <span class="dot yellow"></span>
+          <span class="dot yellow"></span>
+          <span class="dot gray"></span>
+          <span class="dot gray"></span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Card 3 -->
+    <a href="https://indiakhelofootball.com/field_of_dreams" class="event-card">
+      <img loading="lazy" src="{% static 'images/career360/field4.png' %}" alt="Scouting">
+      <div class="event-content">
+        <div>
+          <h3>Field Of Dreams</h3>
+          <p>
+            A mission under IKF Pathway 360 – nurturing not just football players, but well-rounded individuals
+            ready to lead life with purpose, strength, and skill.
+          </p>
+        </div>
+        <div class="event-dots">
+          <span class="dot yellow"></span>
+          <span class="dot yellow"></span>
+          <span class="dot yellow"></span>
+          <span class="dot gray"></span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Card 4 – New IKF Pathway 360 page -->
+    <a href="https://indiakhelofootball.com/Job/Apprenticeship" class="event-card">
+      <img loading="lazy" src="{% static 'images/banners/job2.png' %}" alt="IKF Pathway 360 Jobs & Apprenticeships">
+      <div class="event-content">
+        <div>
+          <h3>IKF Pathway 360 – Supporting Footballers Beyond the Field</h3>
+          <p>
+            Supporting footballers with jobs, apprenticeships and a structured <br />career pathway,
+            without losing their football identity.
+          </p>
+        </div>
+        <div class="event-dots">
+          <span class="dot yellow"></span>
+          <span class="dot yellow"></span>
+          <span class="dot yellow"></span>
+          <span class="dot yellow"></span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+
+<section class="join-movement-section">
+  <div class="join-content">
+    <h2>Join the <span>Movement</span>.</h2>
+    <p>Let’s build the future of football.</p>
+    <div class="join-buttons">
+  <!-- ✨ Mail Button -->
+  <div class="button-wrapper" onmouseenter="burstOut(this)" onmouseleave="burstIn(this)">
+    <div class="button-shadow"></div>
+    <a href="mailto:indiakhelofootball@gmail.com" class="burst-button">
+      Mail
+      <span class="star" style="--x: -55px; --y: -35px; --scale: 1.3; font-size: 18px;">✦</span>
+      <span class="star" style="--x: 50px; --y: -30px; --scale: 1.2; font-size: 14px;">✦</span>
+      <span class="star" style="--x: -45px; --y: 30px; --scale: 1.4; font-size: 20px;">✦</span>
+      <span class="star" style="--x: 45px; --y: 25px; --scale: 1.1; font-size: 12px;">✦</span>
+      <span class="star" style="--x: 0px; --y: 45px; --scale: 1.4; font-size: 15px;">✦</span>
+    </a>
+  </div>
+
+  <!-- ✨ Whatsapp Button -->
+  <div class="button-wrapper" onmouseenter="burstOut(this)" onmouseleave="burstIn(this)">
+    <div class="button-shadow"></div>
+    <a href="https://wa.me/918850119762" target="_blank" class="burst-button">
+      Whatsapp
+      <span class="star" style="--x: -55px; --y: -35px; --scale: 1.3; font-size: 18px;">✦</span>
+      <span class="star" style="--x: 50px; --y: -30px; --scale: 1.2; font-size: 14px;">✦</span>
+      <span class="star" style="--x: -45px; --y: 30px; --scale: 1.4; font-size: 20px;">✦</span>
+      <span class="star" style="--x: 45px; --y: 25px; --scale: 1.1; font-size: 12px;">✦</span>
+      <span class="star" style="--x: 0px; --y: 45px; --scale: 1.4; font-size: 15px;">✦</span>
+    </a>
+  </div>
+</div>
+
+  </div>
+</section>
+
+{# 1) Official Scouting Partners #}
+{% if official_scouting_clubs %}
+  <div class="p-b30 partner-carousel-block">
+    <div class="section-content">
+      <h3 class="text-center m-b20">Official Scouting Partners</h3>
+      <div class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr">
+        {% for club in official_scouting_clubs %}
+          <div class="item">
+            <div class="ow-carousel-entry">
+              <div class="ow-entry-media dez-img-effect zoom-slow">
+                <img loading="lazy" src="{{ club.pic.url }}" alt="{{ club.name }}" />
+              </div>
+              <div class="dez-info p-a20 p-t20 border-1 text-center">
+                <h4 class="dez-title m-tb0">{{ club.name }}</h4>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{# 2) ISL Clubs #}
+{% if isl_clubs %}
+  <div class="p-b30 partner-carousel-block">
+    <div class="section-content">
+      <h3 class="text-center m-b20">ISL Clubs</h3>
+      <div class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr">
+        {% for club in isl_clubs %}
+          <div class="item">
+            <div class="ow-carousel-entry">
+              <div class="ow-entry-media dez-img-effect zoom-slow">
+                <img loading="lazy" src="{{ club.pic.url }}" alt="{{ club.name }}" />
+              </div>
+              <div class="dez-info p-a20 p-t20 border-1 text-center">
+                <h4 class="dez-title m-tb0">{{ club.name }}</h4>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{# 3) IWL Clubs #}
+{% if iwl_clubs %}
+  <div class="p-b30 partner-carousel-block">
+    <div class="section-content">
+      <h3 class="text-center m-b20">IWL Clubs</h3>
+      <div class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr">
+        {% for club in iwl_clubs %}
+          <div class="item">
+            <div class="ow-carousel-entry">
+              <div class="ow-entry-media dez-img-effect zoom-slow">
+                <img loading="lazy" src="{{ club.pic.url }}" alt="{{ club.name }}" />
+              </div>
+              <div class="dez-info p-a20 p-t20 border-1 text-center">
+                <h4 class="dez-title m-tb0">{{ club.name }}</h4>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+{# 2) I-League, I-League 2 & I-League 3 Clubs #}
+{% if indian_clubs_pre_second %}
+  <div class="p-b30 partner-carousel-block">
+    <div class="section-content">
+      <h3 class="text-center m-b20">I-League, I-League 2 & I-League 3 Clubs</h3>
+      <div class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr">
+        {% for club in indian_clubs_pre_second %}
+          <div class="item">
+            <div class="ow-carousel-entry">
+              <div class="ow-entry-media dez-img-effect zoom-slow">
+                <img loading="lazy" src="{{ club.pic.url }}" alt="{{ club.name }}" />
+              </div>
+              <div class="dez-info p-a20 p-t20 border-1 text-center">
+                <h4 class="dez-title m-tb0">{{ club.name }}</h4>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (!window.jQuery || !jQuery.fn.owlCarousel) return;
+
+  const $carousels = jQuery(".owl-carousel.img-carousel-content");
+
+  // If already initialized by theme, destroy and re-init with your settings
+  $carousels.each(function () {
+    const $c = jQuery(this);
+    if ($c.hasClass("owl-loaded")) {
+      $c.trigger("destroy.owl.carousel");
+      $c.removeClass("owl-loaded");
+      $c.find(".owl-stage-outer").children().unwrap();
+    }
+  });
+
+  $carousels.owlCarousel({
+    loop: true,
+    nav: true,
+    dots: false,
+    margin: 16,
+    responsive: {
+      0:    { items: 4 },
+      480:  { items: 4 },
+      768:  { items: 4 },
+      1200: { items: 5 }   // ✅ desktop shows 5
+    }
+  });
+});
+</script>
+
+
+
+
+
+
+  
+  
+  
+  
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.carousel-dot');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+        dots[i].classList.toggle('active', i === index);
+      });
+      currentSlide = index;
+    }
+
+    window.goToSlide = function(index) {
+      showSlide(index);
+    };
+
+    setInterval(() => {
+      let next = (currentSlide + 1) % slides.length;
+      showSlide(next);
+    }, 5000);
+
+    // 🌀 Parallax on hover
+    
+   
+  });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const duration = 5000;
+      const numbers = document.querySelectorAll(".stat-number");
+    
+      numbers.forEach(number => {
+        const finalValue = parseInt(number.getAttribute("data-target"));
+        const startValue = parseInt(number.getAttribute("data-start"));
+        let startTime = null;
+    
+        function animateNumber(timestamp) {
+          if (!startTime) startTime = timestamp;
+          const progress = timestamp - startTime;
+          const progressRatio = Math.min(progress / duration, 1);
+    
+          const fluctuation = Math.floor(Math.random() * 10) - 5;
+          const currentValue = Math.floor(
+            startValue + (finalValue - startValue) * progressRatio + fluctuation
+          );
+    
+          number.textContent = (currentValue > 0 ? currentValue : 0).toLocaleString() + "+";
+    
+          if (progress < duration) {
+            requestAnimationFrame(animateNumber);
+          } else {
+            number.textContent = finalValue.toLocaleString() + "+";
+          }
+        }
+    
+        requestAnimationFrame(animateNumber);
+      });
+    });
+    </script>
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Apply only on mobile
+    if (window.innerWidth <= 768) {
+      document.querySelectorAll(".card-hover").forEach(card => {
+        card.addEventListener("click", function (e) {
+          // Remove active from other cards
+          document.querySelectorAll(".card-hover.active").forEach(c => {
+            if (c !== card) c.classList.remove("active");
+          });
+
+          // Toggle current card
+          card.classList.toggle("active");
+        });
+      });
+    }
+  });
+  document.addEventListener("click", function (e) {
+  if (!e.target.closest(".card-hover")) {
+    document.querySelectorAll(".card-hover.active").forEach(card => card.classList.remove("active"));
+  }
+});
+
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const lazyBackgrounds = document.querySelectorAll(".lazy-bg");
+
+    function lazyLoadBackgrounds() {
+      lazyBackgrounds.forEach(function (el) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 150) {
+          const bg = el.getAttribute("data-bg");
+          if (bg) {
+            el.style.backgroundImage = `url('${bg}')`;
+            el.classList.remove("lazy-bg");
+            el.removeAttribute("data-bg");
+          }
+        }
+      });
+    }
+
+    // Load when scroll or resize
+    window.addEventListener("scroll", lazyLoadBackgrounds);
+    window.addEventListener("resize", lazyLoadBackgrounds);
+    lazyLoadBackgrounds(); // Initial run on load
+  });
+</script>
+<script>
+function burstOut(wrapper) {
+  wrapper.classList.add('hover');
+  const stars = wrapper.querySelectorAll('.star');
+  stars.forEach((star) => {
+    star.style.visibility = 'visible'; // ✅ Show when animating
+    star.style.animation = 'none';
+    star.offsetHeight;
+    star.style.animation = '';
+    star.style.animation = 'burstOut 0.4s forwards';
+  });
+}
+
+function burstIn(wrapper) {
+  wrapper.classList.remove('hover');
+  const stars = wrapper.querySelectorAll('.star');
+  stars.forEach((star) => {
+    star.style.animation = 'none';
+    star.offsetHeight;
+    star.style.animation = '';
+    star.style.animation = 'burstIn 0.4s forwards';
+    setTimeout(() => {
+      star.style.visibility = 'hidden'; // ✅ Hide after animation completes
+    }, 400); // match the animation duration
+  });
+}
+
+</script>
+
+
+{% endblock content %}

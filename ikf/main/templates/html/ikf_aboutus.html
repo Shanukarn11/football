@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content">
+    <div style="height: 120px; background-color: white;"></div>
+    <!-- <div class="dez-bnr-inr overlay-black-middle" style="background-image:url('{{ aboutusimages.AboutUsBanner}}');">
+        <div class="container">
+            <div class="dez-bnr-inr-entry">
+                <h1 class="text-white">{{ about_us_heading }}</h1>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="breadcrumb-row">
+        <div class="container">
+            <ul class="list-inline">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>{{ about_us_heading }}</li>
+            </ul>
+        </div>
+    </div> -->
+
+    <!-- contact area -->
+    <div class="clearfix">
+        <!-- Our Awesome Services -->
+        <div class="section-full bg-white content-inner">
+            <div class="container">
+                <div class="section-content">
+                    <div class="row">
+                        <div class="col-lg-12 text-center section-head">
+                            <h3 class="h3">{{ about_us_heading2 }}</h3>
+                            <div class="dez-separator bg-primary"></div>
+                            <div class="clear"></div>
+                            <p class="text-justify">{{ about_us_paragraph_1 | safe }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+
+                        <div class="col-lg-4 col-md-6">
+                            {% for about1 in about_section1 %}
+                            <div class="icon-bx-wraper bx-style-2 m-b30 p-a20 right m-r50">
+                                <div class="icon-bx-md radius bg-primary"><a href="#" class="icon-cell"><i
+                                            class="fa fa-futbol-o"></i></a></div>
+                                <div class="icon-content p-r40">
+                                    <h5 class="dez-tilte">{{about1.heading1}}</h5>
+                                    <div class="dez-separator-outer ">
+                                        <div class="dez-separator bg-primary style-liner"></div>
+                                    </div>
+                                    <p>{{about1.paragraph1}}
+                                    </p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+
+                        <div class="col-lg-4 text-center align-self-center d-md-none d-lg-block">
+                            <div class="worker"> <img loading="lazy"  src="{{aboutusimages.Image2}}" alt="" /> </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6">
+                            {% for about1 in about_section1 %}
+                            <div class="icon-bx-wraper bx-style-2 m-b30 p-a20 left m-l50">
+                                <div class="icon-bx-md radius bg-primary"> <a href="#" class="icon-cell"><i
+                                            class="fa fa-calendar"></i></a> </div>
+                                <div class="icon-content p-l40">
+                                    <h5 class="dez-tilte ">{{about1.heading2}}</h5>
+                                    <div class="dez-separator-outer ">
+                                        <div class="dez-separator bg-primary style-liner"></div>
+                                    </div>
+                                    <p>{{about1.paragraph2}}
+                                    </p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Our Awesome Services END -->
+        <!-- Company Stats  -->
+        <div class="section-full bg-img-fix content-inner overlay-black-dark our-projects-galery"
+            style="background-image:url({{aboutusimages.AboutUsBanner}});">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-6 m-b15">
+                        <div class="icon-bx-wraper center text-white">
+                            <div class="icon-xl m-b20"> <span class="icon-cell"> <i class="fa fa-group"></i></span>
+                            </div>
+                            <div class="m-t10">
+                                <div class="dez-separator bg-primary"></div>
+                            </div>
+                            <div class="icon-content">
+                                <h3 class="dez-tilte text-uppercase h3"> <span
+                                        class="counter">{{numbers1_of_strip_aboutus}}</span> + </h3>
+                                <h6>{{heading1_of_strip_aboutus}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6 m-b15">
+                        <div class="icon-bx-wraper center text-white">
+                            <div class="icon-xl m-b20"> <span class="icon-cell"> <i class="fa fa-university"></i></span>
+                            </div>
+                            <div class="m-t10">
+                                <div class="dez-separator bg-primary"></div>
+                            </div>
+                            <div class="icon-content">
+                                <h3 class="dez-tilte text-uppercase h3"> <span
+                                        class="counter">{{numbers2_of_strip_aboutus}}</span> + </h3>
+                                <h6>{{heading2_of_strip_aboutus}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6 m-b15">
+                        <div class="icon-bx-wraper center text-white">
+                            <div class="icon-xl m-b20"> <span class="icon-cell"> <i class="fa fa-globe"></i></span>
+                            </div>
+                            <div class="m-t10">
+                                <div class="dez-separator bg-primary"></div>
+                            </div>
+                            <div class="icon-content">
+                                <h3 class="dez-tilte text-uppercase h3"> <span
+                                        class="counter">{{numbers3_of_strip_aboutus}}</span> + </h3>
+                                <h6>{{heading3_of_strip_aboutus}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6 m-b15">
+                        <div class="icon-bx-wraper center text-white">
+                            <div class="icon-xl m-b20"> <span class="icon-cell"> <i class="fa fa-trophy"></i></span>
+                            </div>
+                            <div class="m-t10">
+                                <div class="dez-separator bg-primary"></div>
+                            </div>
+                            <div class="icon-content">
+                                <h3 class="dez-tilte text-uppercase h3"> <span
+                                        class="counter">{{numbers4_of_strip_aboutus}}</span>
+                                    + </h3>
+                                <h6>{{heading4_of_strip_aboutus}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Company Stats END -->
+       
+    </div>
+        
+</div>
+    <!-- Content END-->
+    {% endblock content %}

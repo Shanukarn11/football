@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  .dez-post-media img {
+    width: 100%;
+    max-height: 150px;
+    object-fit: cover;
+  }
+
+  .scout-header {
+    height: 300px;
+    background-image: url('{% static "images/banners/cd.png" %}');
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 0;
+  }
+
+  .scout-title-wrapper {
+    padding: 30px 60px 10px;
+    text-align: left;
+    margin-bottom: 30px;
+  }
+
+  .scout-title {
+    color: black;
+    font-size: 42px;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  /* ===== Announcement line (as per screenshot) ===== */
+  .season6-note-wrap{
+    padding: 0 60px 40px;
+  }
+  .season6-note-label{
+    font-size: 48px;
+    font-weight: 500;
+    color: #111;
+    margin: 0 0 10px;
+  }
+  .season6-note-text{
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffc300; /* red */
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  /* Responsive */
+  @media(max-width: 900px){
+    .scout-title-wrapper{ padding: 24px 18px 8px; }
+    .season6-note-wrap{ padding: 0 18px 30px; }
+    .season6-note-label{ font-size: 30px; }
+    .season6-note-text{ font-size: 34px; }
+    .scout-title{ font-size: 34px; }
+  }
+
+  /* ===== Optional: hide all remaining content when announcement is ON ===== */
+  .ikf-hidden{
+    display:none !important;
+  }
+
+  /* Naari Shakti project name highlight */
+  .workshop-header h4.naari-shakti-title{
+    color: #e91e63;
+  }
+</style>
+
+
+
+<div class="page-content">
+
+  <!-- Keep banner + title as-is -->
+  <div class="scout-header"></div>
+  <div class="scout-title-wrapper">
+    <h1 class="scout-title">IKF Calendar</h1>
+  </div>
+
+  <!-- ✅ Announcement line (replaces dropdowns/cards visually) -->
+  <div class="season6-note-wrap">
+    
+    
+  </div>
+
+  
+  <div class="">
+
+    <form method="GET" action="" class="search-form">
+      <div class="filter-row">
+
+        <!-- Project Filter -->
+        <div class="filter-block">
+          <select name="project" class="form-input" id="projectSelect">
+            <option value="">All Projects</option>
+            {% for proj in project_names %}
+              <option value="{{ proj }}" {% if request.GET.project == proj %}selected{% endif %}>
+                {{ proj }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Status Filter -->
+        <div class="filter-block">
+          <select name="status_date" class="form-input" id="statusSelect">
+            <option value="">Tyger IKF Season 6 Trials</option>
+            {% for key, label in status_choices %}
+              <option value="{{ key }}" {% if request.GET.status_date == key %}selected{% endif %}>
+                {{ label }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- State Filter -->
+        <div class="filter-block">
+          <select name="project_state" class="form-input">
+            <option value="">All States</option>
+            {% for state in project_states %}
+              <option value="{{ state }}" {% if request.GET.project_state == state %}selected{% endif %}>
+                {{ state }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-summary-row">
+        <p class="result-count">
+          {% if request.GET.project %}
+            Projects in <b id="project-count">{{ project_result_count }}</b> Cit{{ project_result_count|pluralize:"y,ies" }}/Village{{ project_result_count|pluralize:" ,s" }}
+          {% else %}
+            Projects in <b id="project-count">{{ total_trials }}</b> Cit{{ total_trials|pluralize:"y,ies" }}/Village{{ total_trials|pluralize:" ,s" }}
+          {% endif %}
+        </p>
+
+        <p class="result-count">
+          {% if current_status == 'COMPLETED' %}
+            Trials at <b id="status-count">{{ result_count }}</b> Location{{ result_count|pluralize }} completed
+          {% elif current_status == 'DATE CONFIRMED' %}
+            Dates for <b id="status-count">{{ result_count }}</b> Location{{ result_count|pluralize }} finalized
+          {% elif current_status == 'CITY CONFIRMED' %}
+            <b id="status-count">{{ result_count }}</b> Cit{{ result_count|pluralize:"y,ies" }}/Village{{ result_count|pluralize:" ,s" }} has been identified but date yet to be finalized
+          {% elif current_status == 'COMING SOON' %}
+            <b id="status-count">{{ result_count }}</b> Cit{{ result_count|pluralize:"y,ies" }}/Village{{ result_count|pluralize:" ,s" }} coming soon
+          {% else %}
+            <b id="status-count">{{ project_result_count }}</b> Cit{{ project_result_count|pluralize:"y,ies" }}/Village{{ project_result_count|pluralize:" ,s" }}
+          {% endif %}
+        </p>
+
+        <p class="result-count">
+          {% if request.GET.project_state %}
+            <b id="state-count">{{ state_count }}</b> Cit{{ state_count|pluralize:"y,ies" }}/Village{{ state_count|pluralize:" ,s" }}
+          {% else %}
+            {% if current_status %}
+              <b id="state-count">{{ result_count }}</b> Cit{{ result_count|pluralize:"y,ies" }}/Village{{ result_count|pluralize:" ,s" }}
+            {% else %}
+              <b id="state-count">{{ project_result_count }}</b> Cit{{ project_result_count|pluralize:"y,ies" }}/Village{{ project_result_count|pluralize:" ,s" }}
+            {% endif %}
+          {% endif %}
+        </p>
+      </div>
+    </form>
+
+    <div id="masonry" class="ikf-calendar dez-blog-grid-2">
+      {% for item in Calender %}
+      <div class="workshop-card {% if item.status_date == 'COMPLETED' %}completed{% endif %}">
+        <div class="workshop-header">
+          <h4 class="{% if 'Naari Shakti' in item.project %}naari-shakti-title{% endif %}">{{ item.project|default:"Tyger IKF S6" }}</h4>
+          <button class="{{ item.status_date|default:'DATE CONFIRMED'|slugify|upper }}">
+            {{ item.status_date|default:"DATE CONFIRMED"|upper }}
+          </button>
+        </div>
+
+        <div class="workshop-fields">
+          <input type="text" class="input-box" placeholder="{{ item.project_city }}" readonly />
+          <input type="text" class="input-box" placeholder="{{ item.project_state }}" readonly />
+
+          <div class="date-box">
+            <p>
+              {% if item.date %}
+                {{ item.date|date:"d M" }}
+              {% else %}
+                TBA
+              {% endif %}
+            </p>
+          </div>
+
+          {% if item.attr1 %}
+            <a target="_blank" rel="noopener noreferrer" href="{{ item.attr1 }}" class="icon-btn">
+              <img loading="lazy" src="static/images/calender/Vector.png" alt="Location Pin" />
+            </a>
+          {% else %}
+            <a class="icon-btn"></a>
+          {% endif %}
+        </div>
+
+        {% if item.status_date == 'COMPLETED' %}
+          <div class="register-btn disabled">
+            <span>Registration Closed</span>
+          </div>
+        {% else %}
+          <a id="anchorforregister" href="https://app.myfirstkick.com/sign-in">
+            <div class="register-btn">Register Now</div>
+          </a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      function fetchFilteredCalendar() {
+        $.ajax({
+          url: "{% url 'calendar_partial' %}",
+          data: $(".search-form").serialize(),
+          dataType: 'json',
+          success: function(data) {
+            $("#masonry").html(data.html);
+            $("#project-count").text(data.project_result_count);
+            $("#status-count").text(data.result_count);
+            $("#state-count").text(data.state_count);
+          },
+          error: function(xhr, status, error) {
+            console.log("AJAX error:", error);
+          }
+        });
+      }
+
+      $(document).ready(function(){
+        $(".search-form").on("change", "select", function(){
+          fetchFilteredCalendar();
+        });
+      });
+    </script>
+
+  </div>
+  
+
+</div>
+
+
+{% endblock content %}

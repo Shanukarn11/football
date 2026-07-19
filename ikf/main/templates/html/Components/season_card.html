@@ -1,0 +1,83 @@
+<!-- <div class="ikf-card">
+  <div class="ikf-box">
+    <div class="ikf-season-label">
+      <p class="ikf-card-title">{{ title }}</p>
+      <p class="ikf-card-year">{{ year }}</p>
+    </div>
+    <div class="ikf-season-desc">
+      <p class="ikf-card-text">{{ description }}</p>
+    </div>
+  </div>
+  <div class="ikf-card-stats">
+    <div>
+      <span class="counter" data-target="{{ cities }}">0</span>
+      <small>Cities</small>
+    </div>
+    <div>
+      <span class="counter" data-target="{{ participants }}">0</span>
+      <small>Participants</small>
+    </div>
+    <div>
+      <span class="counter" data-target="{{ shortlisted }}">0</span>
+      <small>Shortlisted</small>
+    </div>
+    <div>
+      <span class="counter" data-target="{{ clubs }}">0</span>
+      <small>Clubs</small>
+    </div>
+  </div>
+</div> -->
+
+<div class="ikf-card">
+  <div class="ikf-box">
+    <div class="ikf-season-label">
+      <p class="ikf-card-title">{{ title }}</p>
+      <p class="ikf-card-year">{{ year }}</p>
+    </div>
+    <div class="ikf-season-desc">
+      <p class="ikf-card-text">{{ description }}</p>
+    </div>
+  </div>
+  {% with c=cities|cut:" "|cut:"-"|cut:"—"|cut:"–" p=participants|cut:" "|cut:"-"|cut:"—"|cut:"–" sh=shortlisted|cut:" "|cut:"-"|cut:"—"|cut:"–" sc=scouted|cut:" "|cut:"-"|cut:"—"|cut:"–" sch=scholarship|cut:" "|cut:"-"|cut:"—"|cut:"–" cl=clubs|cut:" "|cut:"-"|cut:"—"|cut:"–" %}
+  {% if c or p or sh or sc or sch or cl %}
+  <div class="ikf-card-stats">
+    {% if c %}
+    <div>
+      <span>{{ cities }}</span>
+      <small>City</small>
+    </div>
+    {% endif %}
+    {% if p %}
+    <div>
+      <span>{{ participants }}</span>
+      <small>Participants</small>
+    </div>
+    {% endif %}
+    {% if sh %}
+    <div>
+      <span>{{ shortlisted }}</span>
+      <small>National Shortlisted</small>
+    </div>
+    {% endif %}
+    {% if sc %}
+    <div>
+      <span>{{ scouted }}</span>
+      <small>National Scouted</small>
+    </div>
+    {% endif %}
+    {% if sch %}
+    <div>
+      <span>{{ scholarship }}</span>
+      <small>International Scholarship</small>
+    </div>
+    {% endif %}
+    {% if cl %}
+    <div>
+      <span>{{ clubs }}</span>
+      <small>Club</small>
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% endwith %}
+</div>

@@ -1,0 +1,434 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Scoring for a Cause | Anaya Sehgal - India Khelo Football{% endblock title %}
+
+{% block meta_description %}
+Anaya Sehgal, a 17-year-old midfielder in the Singapore Women’s Premier League (WPL), is using her goals to ignite hope and opportunity for girls in India who lack basic equipment.
+{% endblock meta_description %}
+
+{% block meta_keywords %}
+Anaya Sehgal IKF, IKF Brand Ambassador, Singapore Women’s Premier League WPL, donate for girls football India, football equipment fundraiser
+{% endblock meta_keywords %}
+
+{% block content %}
+<div class="page-content">
+  <style>
+    :root{
+      --ikf-yellow:#ffc300;
+      --ikf-ink:#0f172a;
+      --ikf-muted:#4b5563;
+      --ikf-line:#e5e7eb;
+      --ikf-ring:#eaeef4;
+      --ikf-butter:#fffef2;
+    }
+
+    /* ===== Base wrap ===== */
+    .ikf-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+    /* ===== Soft card ===== */
+    .ikf-soft{
+      background:#fff;
+      border:1px solid rgba(255,195,0,.35);
+      border-radius:16px;
+      box-shadow:0 14px 34px rgba(15,23,42,.06);
+      padding:18px 20px;
+    }
+
+    /* ===== Section spacing ===== */
+    .ikf-section{ padding:26px 0 32px; }
+
+    /* ===== Headings ===== */
+    .ikf-h2{
+      font-size:28px;
+      font-weight:700;
+      color:var(--ikf-ink);
+      margin:0 0 14px;
+      text-align:left;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:10px;
+    }
+    .section-head h2{
+      margin:0;
+      font-size:22px;
+      font-weight:800;
+      color:var(--ikf-ink);
+    }
+
+    /* ===== Typography ===== */
+    p, li{
+      font-size:15px;
+      line-height:1.7;
+      color:var(--ikf-muted);
+    }
+
+    /* ===== Pretty bullets ===== */
+    .ikf-list{
+      list-style:none;
+      padding-left:0;
+      margin:0;
+    }
+    .ikf-list li{
+      position:relative;
+      padding-left:22px;
+      margin-bottom:10px;
+      font-size:15px;
+      line-height:1.65;
+      color:#374151;
+      break-inside:avoid;
+      -webkit-column-break-inside:avoid;
+      page-break-inside:avoid;
+    }
+    .ikf-list li::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:10px;
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:#facc15;
+      box-shadow:0 0 0 3px rgba(250,204,21,.25);
+    }
+
+    /* ===== Two column bullets ===== */
+    .two-col{ column-count:2; column-gap:40px; }
+    @media(max-width:900px){ .two-col{ column-count:1; } }
+
+    /* ================= HERO (left | right) ================= */
+    .trials-hero{ padding:18px 0 10px; background:#fff; }
+
+    .trials-hero__grid{
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+    @media(min-width:900px){
+      .trials-hero__grid{
+        display:grid;
+        grid-template-columns:minmax(0,0.95fr) minmax(0,1.15fr);
+        gap:40px;
+        align-items:center;
+      }
+    }
+
+    .hero-pill{
+      display:inline-block;
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      background:#fff7d1;
+      border:1px solid rgba(255,195,0,.45);
+      color:#7a5c00;
+      padding:7px 12px;
+      border-radius:999px;
+      margin-bottom:10px;
+    }
+
+    .trials-hero__title{
+      font-size:40px;
+      font-weight:800;
+      margin:0 0 10px;
+      color:#111827;
+      line-height:1.15;
+    }
+    .trials-hero__subtitle{
+      font-size:16px;
+      font-weight:400;
+      margin:0;
+      color:var(--ikf-muted);
+      font-style:italic;
+    }
+
+    .trials-hero__media{
+      position:relative;
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow:0 20px 50px rgba(2,6,23,.18), 0 1px 0 var(--ikf-line) inset;
+      background:#000;
+      width:100%;
+      aspect-ratio:16 / 9;
+    }
+    .trials-hero__img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+    }
+
+    /* ===== Caption overlay ===== */
+    .ikf-media{ position:relative; display:block; }
+    .ikf-caption{
+      position:absolute;
+      right:12px;
+      bottom:12px;
+      z-index:2;
+      font-size:13px;
+      line-height:1.35;
+      font-style:italic;
+      color:#fff;
+      text-align:right;
+      padding:6px 10px;
+      border-radius:10px;
+      max-width:85%;
+    }
+    .ikf-caption::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,.65);
+      border-radius:10px;
+      z-index:-1;
+    }
+
+    /* ===== Side media (4:3) ===== */
+    .side-media{
+      position:relative;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 18px 44px rgba(15,23,42,.18);
+      background:#000;
+      width:100%;
+      aspect-ratio:4 / 3;
+    }
+    .side-media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    /* ===== Gallery (3 stacked images like your old right column) ===== */
+    .ikf-gallery{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:14px;
+      margin-top:12px;
+    }
+    .ikf-shot{
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid rgba(15,23,42,.10);
+      box-shadow:0 12px 26px rgba(2,6,23,.08);
+      background:#000;
+    }
+    .ikf-shot img{
+      width:100%;
+      height:auto;
+      display:block;
+      object-fit:cover;
+    }
+
+    /* ===== CTA button ===== */
+    .ikf-cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 18px;
+      border-radius:999px;
+      background:var(--ikf-yellow);
+      color:#111827;
+      font-weight:800;
+      text-decoration:none;
+      border:1px solid rgba(15,23,42,.12);
+      box-shadow:0 12px 26px rgba(2,6,23,.10);
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+    .ikf-cta:hover{
+      transform:translateY(-1px);
+      box-shadow:0 16px 32px rgba(2,6,23,.14);
+      color:#111827;
+      text-decoration:none;
+    }
+
+    .bold-ink{ font-weight:800; color:var(--ikf-ink); }
+
+    @media(max-width:900px){
+      .trials-hero__title{ font-size:30px; }
+      .ikf-wrap{ padding:0 14px; }
+    }
+  </style>
+
+  <!-- =============== HERO =============== -->
+  <section class="ikf-section trials-hero">
+    <div class="ikf-wrap">
+      <div class="trials-hero__grid">
+
+        <!-- LEFT: Text -->
+        <div>
+          <span class="hero-pill">Scoring for a Cause</span>
+          <h1 class="trials-hero__title">Anaya’s Mission to Empower Underprivileged Girls Through Football</h1>
+          <p class="trials-hero__subtitle">Every goal can spark hope, opportunity, and change.</p>
+        </div>
+
+        <!-- RIGHT: Banner Image -->
+        <div>
+          <div class="trials-hero__media ikf-media">
+  <img loading="lazy"
+       src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/anaya/anaya7.png' %}{% endif %}"
+       alt="Anaya Sehgal"
+       class="trials-hero__img" />
+
+  <div class="ikf-caption">
+    {% if hero_image and hero_image.caption %}
+      {{ hero_image.caption }}
+    {% else %}
+      Anaya Sehgal
+    {% endif %}
+  </div>
+</div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== CONTENT =============== -->
+  <section class="ikf-section">
+    <div class="ikf-wrap">
+
+      <!-- INTRO (soft card) -->
+      <div class="ikf-soft" style="margin-bottom:16px;">
+        <h2 class="ikf-h2" style="margin-bottom:10px;">The Story</h2>
+        <p style="margin:0;">
+          Anaya Sehgal, a 17-year-old midfielder in the Singapore Women’s Premier League (WPL),
+          is using her goals to ignite hope and opportunity for girls in India who lack basic equipment.
+        </p>
+      </div>
+
+      <!-- PERFORMANCE + RIGHT IMAGE (like your reference block) -->
+      <div class="ikf-soft" style="margin-bottom:16px;">
+        <div class="row" style="display:flex; align-items:center; gap:18px; flex-wrap:wrap;">
+          <div class="col-lg-8 col-md-8 col-sm-7" style="flex:1 1 560px; min-width:260px;">
+            <h2 class="ikf-h2" style="font-size:22px; margin-bottom:10px;">Ambitious Goal </h2>
+
+            
+
+            <p style="margin:0;">
+              At just 17 years old, she is already making waves in the Singapore Women’s Premier League (“WPL”) and her High School Varsity team,
+              where she scored a total of 14 goals in the 2024 season and raised Rs 1 Lac.
+              In the 2025 season she scored a total of 16 goals playing for Lion City Sailors in the WPL and her High School Varsity Team.
+              But beyond her personal achievements, she envisions a world where every girl, regardless of her background, gets the opportunity to play football—something many underprivileged girls in India can only dream of.
+            </p>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-5" style="flex:1 1 300px; min-width:240px;">
+            <div class="side-media ikf-media">
+  <img loading="lazy"
+       src="{% if page_images|length > 1 and page_images.1.image %}{{ page_images.1.image.url }}{% else %}{% static 'images/anaya/anaya2.jpg' %}{% endif %}"
+       alt="Anaya on the field" />
+
+  <div class="ikf-caption">
+    {% if page_images|length > 1 and page_images.1.caption %}
+      {{ page_images.1.caption }}
+    {% else %}
+      Turning goals into opportunity
+    {% endif %}
+  </div>
+</div>
+
+          </div>
+        </div>
+      </div>
+
+      
+      <!-- MISSION (image left + text right) -->
+<div class="ikf-soft" style="margin-bottom:16px;">
+  <div class="row" style="display:flex; align-items:center; gap:18px; flex-wrap:wrap;">
+
+    <!-- LEFT: Image -->
+    <div class="col-lg-4 col-md-4 col-sm-5" style="flex:1 1 300px; min-width:240px;">
+      <div class="side-media ikf-media">
+  <img loading="lazy"
+       src="{% if page_images|length > 2 and page_images.2.image %}{{ page_images.2.image.url }}{% else %}{% static 'images/anaya/anaya3.jpg' %}{% endif %}"
+       alt="Anaya photo 3" />
+
+  <div class="ikf-caption">
+    {% if page_images|length > 2 and page_images.2.caption %}
+      {{ page_images.2.caption }}
+    {% else %}
+      Scoring goals matter
+    {% endif %}
+  </div>
+</div>
+
+    </div>
+
+    <!-- RIGHT: Text -->
+    <div class="col-lg-8 col-md-8 col-sm-7" style="flex:1 1 560px; min-width:260px;">
+      <div class="section-head">
+        <h2>The Mission: Turning Goals into Opportunities</h2>
+      </div>
+
+      <p style="margin:0 0 10px;">
+        Anaya is on a mission to <strong>raise funds for football equipment</strong> for young girls in India who have the passion but lack the resources to play.
+        With every goal she scores, she hopes to <strong>inspire contributions</strong>—where supporters can donate an amount for each goal,
+        helping provide essentials like footballs, kits, and gear.
+      </p>
+
+      <p style="margin:0;">
+        Every rupee raised will go directly toward <strong>changing lives</strong>, giving these young girls access to a sport that can instill confidence,
+        discipline, and hope for a better future.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+
+      <!-- HOW YOU CAN HELP -->
+      <div class="ikf-soft" style="margin-bottom:16px;">
+        <div class="section-head">
+          <h2>How You Can Help</h2>
+        </div>
+
+        <ul class="ikf-list two-col">
+          <li><strong>Pledge a donation</strong> for every goal Anaya has scored in <strong>2025</strong>.</li>
+          <li><strong>Spread the word</strong> and encourage others to join the cause.</li>
+          <li><strong>Reach out</strong> for inquiries at <strong>+65 8586 3761</strong> to learn more.</li>
+        </ul>
+
+        <div style="margin-top:14px;">
+          <a href="{% url 'Donate' %}" class="ikf-cta">Donate Now</a>
+        </div>
+      </div>
+
+      <!-- TOGETHER -->
+      <div class="ikf-soft" style="margin-bottom:16px;">
+        <div class="section-head">
+          <h2>Together, We Can Change the Game</h2>
+        </div>
+
+        <p style="margin:0 0 10px;">
+          Football should not be a privilege—it should be a right for every aspiring girl.
+          By standing with <strong>Anaya and India Khelo Football</strong>, you are not just supporting a fundraiser; you are
+          <strong>fueling dreams, shaping futures, and proving that every goal counts—on and off the field.</strong>
+        </p>
+
+        <p style="margin:0;">
+          <strong>Contact us on <a href="https://mail.google.com/mail/?view=cm&fs=1&to=indiakhelofootball@gmail.com" target="_blank" rel="noopener">indiakhelofootball@gmail.com</a> to start a conversation.</strong>
+        </p>
+
+        <p class="bold-ink" style="margin:12px 0 0;">Let’s kickstart change, one goal at a time!</p>
+      </div>
+
+     
+      
+
+    </div>
+  </section>
+</div>
+{% endblock content %}

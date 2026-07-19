@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content bg-white">
+    <!-- inner page banner -->
+    <div class="dez-bnr-inr overlay-black-middle"
+        style="background-image:url('{{  Associate_Philanthropists_Image.BannerOfPhilanthropists}}');">
+        <div class="container">
+            <div class="dez-bnr-inr-entry">
+                <h1 class="text-white">{{Heading1_Associate_Philanthropists}}</h1>
+            </div>
+        </div>
+    </div>
+    <!-- inner page banner END -->
+    <!-- Breadcrumb row -->
+    <div class="breadcrumb-row">
+        <div class="container">
+            <ul class="list-inline">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>{{Heading1_Associate_Philanthropists}}</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Breadcrumb row END -->
+    <!-- contact area -->
+    <div class="section-full content-inner">
+        <!-- Career -->
+        <div class="container">
+            <div class="row">
+                <!-- Left part start -->
+                <div class="col-lg-9 m-b30">
+                    <h1 class="m-b20 m-t0">{{heading1_Philanthropists}}</h1>
+                    <div class="dez-separator bg-primary"></div>
+                    <p><strong>{{paragraph1_Philanthropists|safe}}</strong></p>
+                    <h2 class="m-t30 m-b10 ">{{heading2_Philanthropists}}</h2>
+                    <p>{{paragraph2_Philanthropists|safe}} </p>
+                    <h3>{{heading3_Philanthropists}}</h3>
+                    <ul class="list-check-circle primary">
+                        {% for Takeaway1 in TakeWay1 %}
+                        <li>{{Takeaway1.paragraph}}</li>
+                        {%endfor%}
+                    </ul>
+                </div>
+                <!-- Left part start END -->
+            </div>
+        </div>
+        <!-- Career END -->
+    </div>
+    <!-- contact area END -->
+</div>
+<!-- Content END-->
+<!-- Footer -->
+{% endblock content %}

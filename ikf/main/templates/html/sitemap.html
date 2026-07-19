@@ -1,0 +1,508 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Sitemap | India Khelo Football{% endblock %}
+
+{% block content %}
+<style>
+  :root{
+    --ikf-yellow:#ffc300;
+    --ikf-yellow-soft:#fff4cc;
+    --ikf-yellow-dark:#e5b800;
+    --ink:#0f172a;
+    --muted:#4b5563;
+    --navW: 140px;
+    --navGap: 16px;
+  }
+
+  .ikf-sitemap{
+    max-width:1400px;
+    margin:0 auto;
+    padding:0 0;
+    font-family:'Inter',sans-serif;
+  }
+
+  .ikf-sitemap h1{
+    font-size:30px;
+    font-weight:700;
+    margin-bottom:40px;
+    color:var(--ink);
+  }
+
+  /* GRID */
+  .sitemap-grid{
+    display:grid;
+    grid-template-columns: repeat(9, var(--navW));
+    column-gap: var(--navGap);
+    row-gap: 32px;
+    align-items:start;
+    justify-content: space-between;
+  }
+
+  /* MAIN NAV CARD */
+  .sitemap-card{
+    width: var(--navW);
+    background:transparent;
+    border:none;
+    padding:0;
+  }
+
+  .sitemap-card h3{
+    background:var(--ikf-yellow);
+    color:#000;
+    font-size:15px !important;
+    font-weight:500;
+    width:100%;
+    min-height:52px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:0 12px;
+    border-radius:10px;
+    margin-bottom:18px;
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+  }
+
+  /* SUB NAV ITEM */
+  .sitemap-item{
+    background:var(--ikf-yellow-soft);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:14px;
+    box-shadow:0 6px 14px rgba(0,0,0,.06);
+    transition:transform .15s ease, box-shadow .15s ease;
+    cursor:pointer;
+  }
+
+  .sitemap-item:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 22px rgba(0,0,0,.10);
+  }
+
+  .sitemap-item a{
+    font-size:13px;
+    font-weight:600;
+    color:#000;
+    text-decoration:none;
+    pointer-events: none;
+  }
+
+  .sitemap-item a:hover{
+    text-decoration:underline;
+  }
+
+  .sitemap-desc{
+    margin-top:6px;
+    font-size:13.5px;
+    line-height:1.6;
+    color:#3f3f3f;
+  }
+
+  /* ===== CONNECTOR LINES ===== */
+  .sitemap-children{
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .sitemap-children::before{
+    content:"";
+    position:absolute;
+    left:12px;
+    top:0;
+    bottom:0;
+    width:2px;
+    background:#e5b800;
+    border-radius:2px;
+  }
+
+  .sitemap-item{
+    position:relative;
+  }
+
+  .sitemap-item::before{
+    content:"";
+    position:absolute;
+    left:-16px;
+    top:22px;
+    width:16px;
+    height:2px;
+    background:#e5b800;
+  }
+
+  .sitemap-item:last-child::after{
+    content:"";
+    position:absolute;
+    left:-16px;
+    top:24px;
+    width:2px;
+    height:calc(100% - 24px);
+    background:#fff;
+  }
+
+  /* ===== HOVER PREVIEW CARD ===== */
+  #ikf-hover-card {
+    position: fixed;
+    z-index: 9999;
+    width: 240px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow:
+      0 4px 6px rgba(0,0,0,.04),
+      0 12px 32px rgba(0,0,0,.12),
+      0 0 0 2px var(--ikf-yellow);
+    padding: 0;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
+    overflow: hidden;
+  }
+
+  #ikf-hover-card.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .ikf-hc-bar {
+    height: 5px;
+    background: linear-gradient(90deg, var(--ikf-yellow), #ffdb4d);
+    width: 100%;
+  }
+
+  .ikf-hc-body {
+    padding: 14px 16px 16px;
+  }
+
+  .ikf-hc-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 7px;
+    line-height: 1.4;
+  }
+
+  .ikf-hc-desc {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: #4b5563;
+    margin-bottom: 14px;
+  }
+
+  .ikf-hc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--ikf-yellow);
+    color: #000;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.1s ease;
+    letter-spacing: 0.01em;
+  }
+
+  .ikf-hc-btn:hover {
+    background: var(--ikf-yellow-dark);
+    transform: translateX(2px);
+  }
+
+  .ikf-hc-btn svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1400px){
+    :root{ --navW: 150px; }
+    .ikf-sitemap{ padding: 0 16px; }
+    .sitemap-grid{
+      grid-template-columns: repeat(5, var(--navW));
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 1024px){
+    :root{ --navW: 160px; --navGap: 18px; }
+    .sitemap-grid{
+      grid-template-columns: repeat(3, var(--navW));
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 768px){
+    :root{ --navW: 170px; --navGap: 16px; }
+    .ikf-sitemap h1{ font-size: 26px; margin-bottom: 24px; }
+    .sitemap-grid{
+      grid-template-columns: repeat(2, var(--navW));
+      justify-content: center;
+    }
+
+    #ikf-hover-card {
+      position: fixed !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      top: auto !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      border-radius: 20px 20px 0 0 !important;
+      box-shadow: 0 -6px 40px rgba(0,0,0,.18), 0 0 0 2px var(--ikf-yellow) !important;
+      transform: translateY(100%) !important;
+      transition: transform 0.28s cubic-bezier(.32,1,.45,1), opacity 0.2s ease !important;
+      opacity: 1 !important;
+      z-index: 10000;
+    }
+
+    #ikf-hover-card.visible {
+      transform: translateY(0) !important;
+    }
+
+    #ikf-hover-card::before {
+      content: "";
+      display: block;
+      width: 40px;
+      height: 4px;
+      background: #d1d5db;
+      border-radius: 99px;
+      margin: 10px auto 0;
+    }
+
+    .ikf-hc-bar {
+      margin-top: 10px;
+      border-radius: 6px;
+      width: calc(100% - 32px);
+      margin-left: 16px;
+    }
+
+    .ikf-hc-body {
+      padding: 16px 20px 32px;
+    }
+
+    .ikf-hc-title { font-size: 15px; margin-bottom: 8px; }
+    .ikf-hc-desc  { font-size: 13.5px; }
+    .ikf-hc-btn   { font-size: 13px; padding: 9px 18px; width: 100%; justify-content: center; margin-top: 4px; }
+
+    #ikf-mobile-backdrop {
+      display: block;
+    }
+  }
+
+  @media (max-width: 420px){
+    :root{ --navW: 100%; }
+    .sitemap-card{ width: 100%; }
+    .sitemap-grid{
+      grid-template-columns: 1fr;
+      row-gap: 24px;
+    }
+    .sitemap-children{ padding-left: 22px; }
+    .sitemap-children::before{ left: 10px; }
+    .sitemap-item::before{ left: -12px; width: 12px; }
+  }
+
+  #ikf-mobile-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+  #ikf-mobile-backdrop.active { opacity: 1; }
+
+  @media (max-width: 768px) {
+    .sitemap-item.tapped {
+      background: #ffe680;
+      transform: scale(0.97);
+    }
+  }
+</style>
+
+<!-- ── Mobile backdrop ── -->
+<div id="ikf-mobile-backdrop"></div>
+
+<!-- ====== HOVER PREVIEW CARD (shared, moved by JS) ====== -->
+<div id="ikf-hover-card" role="tooltip" aria-live="polite">
+  <div class="ikf-hc-bar"></div>
+  <div class="ikf-hc-body">
+    <div class="ikf-hc-title" id="ikf-hc-title"></div>
+    <div class="ikf-hc-desc"  id="ikf-hc-desc"></div>
+    <a href="#" id="ikf-hc-btn" class="ikf-hc-btn" style="display:none;">
+      Know More
+      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<div class="ikf-sitemap">
+  <h1>Sitemap</h1>
+
+  <div class="sitemap-grid">
+
+    {% for column in columns %}
+    <div class="sitemap-card">
+      {% for entry in column %}
+
+        {# Add top margin between stacked categories (skip on the first one) #}
+        <h3{% if not forloop.first %} style="margin-top:20px;"{% endif %}>
+          {{ entry.category.name }}
+        </h3>
+
+        <div class="sitemap-children">
+          {% for item in entry.items %}
+          <div class="sitemap-item"
+            data-title="{{ item.title|escape }}"
+data-desc="{{ item.description|escape }}"
+            data-url="{{ item.url }}">
+            <a href="{{ item.url }}">{{ item.title }}</a>
+          </div>
+          {% endfor %}
+        </div>
+
+      {% endfor %}
+    </div>
+    {% empty %}
+    <p style="color:var(--muted);">No sitemap items have been added yet.</p>
+    {% endfor %}
+
+  </div>{# /.sitemap-grid #}
+</div>{# /.ikf-sitemap #}
+
+<script>
+(function () {
+  const card     = document.getElementById('ikf-hover-card');
+  const backdrop = document.getElementById('ikf-mobile-backdrop');
+  const hcTitle  = document.getElementById('ikf-hc-title');
+  const hcDesc   = document.getElementById('ikf-hc-desc');
+  const hcBtn    = document.getElementById('ikf-hc-btn');
+
+  let hideTimer  = null;
+  let activeItem = null;
+  const OFFSET_X = 16;
+  const OFFSET_Y = -10;
+
+  function isTouchDevice() {
+    return window.matchMedia('(max-width: 768px)').matches ||
+           ('ontouchstart' in window) ||
+           (navigator.maxTouchPoints > 0);
+  }
+
+  function fillCard(item) {
+    hcTitle.textContent = item.dataset.title || item.querySelector('a').textContent.trim();
+    hcDesc.textContent  = item.dataset.desc  || '';
+    const url = item.dataset.url || item.querySelector('a').getAttribute('href');
+    if (url) {
+      hcBtn.setAttribute('href', url);
+      hcBtn.style.display = 'inline-flex';
+    } else {
+      hcBtn.style.display = 'none';
+    }
+  }
+
+  /* ─── Desktop hover ─── */
+  function positionCard(e) {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const cw = card.offsetWidth  || 240;
+    const ch = card.offsetHeight || 150;
+    let x = e.clientX + OFFSET_X;
+    let y = e.clientY + OFFSET_Y;
+    if (x + cw + 12 > vw) x = e.clientX - cw - OFFSET_X;
+    if (y < 8)             y = e.clientY + 20;
+    if (y + ch + 8 > vh)   y = vh - ch - 8;
+    card.style.left = x + 'px';
+    card.style.top  = y + 'px';
+  }
+
+  function showDesktopCard(item, e) {
+    clearTimeout(hideTimer);
+    activeItem = item;
+    fillCard(item);
+    positionCard(e);
+    card.classList.add('visible');
+  }
+
+  function scheduleHide() {
+    hideTimer = setTimeout(function () {
+      card.classList.remove('visible');
+      activeItem = null;
+    }, 120);
+  }
+
+  /* ─── Mobile bottom-sheet ─── */
+  function showMobileSheet(item) {
+    item.classList.add('tapped');
+    setTimeout(function () { item.classList.remove('tapped'); }, 300);
+    fillCard(item);
+    activeItem = item;
+    backdrop.style.display = 'block';
+    requestAnimationFrame(function () { backdrop.classList.add('active'); });
+    card.classList.add('visible');
+  }
+
+  function hideMobileSheet() {
+    card.classList.remove('visible');
+    backdrop.classList.remove('active');
+    setTimeout(function () { backdrop.style.display = 'none'; }, 280);
+    activeItem = null;
+  }
+
+  /* ─── Wire up items ─── */
+  document.querySelectorAll('.sitemap-item').forEach(function (item) {
+    item.addEventListener('mouseenter', function (e) {
+      if (!isTouchDevice()) showDesktopCard(item, e);
+    });
+    item.addEventListener('mousemove', function (e) {
+      if (!isTouchDevice()) positionCard(e);
+    });
+    item.addEventListener('mouseleave', function () {
+      if (!isTouchDevice()) scheduleHide();
+    });
+    item.addEventListener('click', function (e) {
+      if (!isTouchDevice()) return;
+      if (activeItem === item && card.classList.contains('visible')) return;
+      e.preventDefault();
+      showMobileSheet(item);
+    }, { passive: false });
+  });
+
+  card.addEventListener('mouseenter', function () {
+    if (!isTouchDevice()) clearTimeout(hideTimer);
+  });
+  card.addEventListener('mouseleave', function () {
+    if (!isTouchDevice()) scheduleHide();
+  });
+
+  backdrop.addEventListener('click', hideMobileSheet);
+
+  let touchStartY = 0;
+  card.addEventListener('touchstart', function (e) {
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  card.addEventListener('touchmove', function (e) {
+    if (e.touches[0].clientY - touchStartY > 60) hideMobileSheet();
+  }, { passive: true });
+
+  window.addEventListener('scroll', function () {
+    if (!isTouchDevice()) {
+      clearTimeout(hideTimer);
+      card.classList.remove('visible');
+    }
+  }, { passive: true });
+})();
+</script>
+
+{% endblock %}

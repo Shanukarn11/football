@@ -1,0 +1,824 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}IKF for Donors | Support India Khelo Football — Fund the Future of Indian Football{% endblock %}
+
+{% block meta_description %}Support India Khelo Football as a donor. Every rupee funds trials, grassroots access, girls' football, and career pathways for players who have talent but no means. Donate transparently.{% endblock %}
+{% block meta_keywords %}donate IKF, support India Khelo Football, fund football India, grassroots football donation, IKF donor, Anaya Goal, Naari Shakti, football charity India{% endblock %}
+
+{% block og_title %}IKF for Donors | Support India Khelo Football{% endblock %}
+{% block og_description %}Your support funds real trials, removes financial barriers for girls, and builds a merit-based football ecosystem in India. Every rupee goes directly to the pitch.{% endblock %}
+{% block og_url %}https://indiakhelofootball.com/ikf-for-donors{% endblock %}
+
+{% block twitter_title %}IKF for Donors | Support India Khelo Football{% endblock %}
+{% block twitter_description %}Your support funds real trials, removes financial barriers for girls, and builds a merit-based football ecosystem in India. Every rupee goes directly to the pitch.{% endblock %}
+
+{% block content %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Where does my donation to IKF go?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your donation directly funds IKF trials, girls' free participation under Project IKF Naari Shakti, player support initiatives like Books & Boots and Heal to Play, and the infrastructure needed to run transparent, merit-based football evaluations across India."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I donate to a specific IKF initiative?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. IKF lets you choose which initiative to support — including Anaya's Goal (girls' football), Future Champions (trials access), Naari Shakti (women's football), Books & Boots (education + football), Heal to Play (medical support), and more."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my donation to IKF tax-deductible?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "IKF is a not-for-profit initiative. Please visit the donate page or contact IKF directly for current tax exemption status and documentation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I donate to India Khelo Football?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can donate online via Razorpay, by UPI using the IKF QR code, or by direct bank transfer. Visit indiakhelofootball.com/donate to access all payment options."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Anaya's Goal?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Anaya's Goal is an IKF initiative dedicated to funding girls' football participation — removing financial barriers so that no girl's dream ends because of money. Donations support free trials, kit, and travel for girls from underserved regions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the minimum donation amount for IKF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There is no minimum. Every rupee contributes to building a fair football ecosystem. A small recurring contribution often makes more impact than a single large one."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://indiakhelofootball.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "IKF for Donors",
+        "item": "https://indiakhelofootball.com/ikf-for-donors"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "IKF for Donors | Support India Khelo Football",
+    "url": "https://indiakhelofootball.com/ikf-for-donors",
+    "description": "Support India Khelo Football as a donor. Fund trials, girls' free participation, and grassroots football pathways across India.",
+    "inLanguage": "en",
+    "isPartOf": { "@id": "https://indiakhelofootball.com/" },
+    "about": {
+      "@type": "SportsOrganization",
+      "name": "India Khelo Football",
+      "alternateName": "IKF"
+    },
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "Donors and supporters of grassroots football in India"
+    },
+    "mainEntity": { "@type": "FAQPage" },
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".pp-hero-sub", ".pp-pullquote", ".pp-faq-item p"]
+    }
+  }
+]
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+  :root {
+    --gold:       #ffc300;
+    --gold-dim:   #d9a600;
+    --gold-soft:  rgba(255,195,0,0.10);
+    --gold-pale:  #fffbea;
+    --ink:        #111318;
+    --ink-2:      #1e2230;
+    --white:      #ffffff;
+    --off-white:  #f9f8f5;
+    --surface:    #f3f1ec;
+    --muted:      #6b7280;
+    --text-body:  #374151;
+    --line:       #e5e0d4;
+    --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --r-card:  16px;
+    --r-pill:  999px;
+    --r-block: 24px;
+  }
+
+  .pp * { box-sizing: border-box; margin: 0; padding: 0; }
+  .pp { font-family: var(--font-body); color: var(--ink); background: var(--white); overflow-x: hidden; }
+
+  .pp-shell { width: min(1160px, calc(100% - 40px)); margin-inline: auto; }
+
+  /* ═══ HERO ═══════════════════════════════════════════ */
+  .pp-hero {
+    position: relative;
+    background: linear-gradient(90deg, var(--white) 0%, var(--white) 58%, var(--gold-pale) 58%, var(--gold-pale) 100%);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 70px 0 62px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .pp-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(90deg, rgba(255,195,0,0.18), rgba(255,195,0,0));
+    opacity: .45;
+    pointer-events: none;
+  }
+
+  .pp-hero-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(340px, 0.75fr);
+    gap: 64px;
+    align-items: center;
+  }
+
+  .pp-hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(17,19,24,0.55);
+    margin-bottom: 16px;
+  }
+
+  .pp-hero-label span {
+    display: inline-block;
+    width: 22px; height: 2px;
+    background: var(--ink);
+    border-radius: 2px;
+    opacity: 0.4;
+  }
+
+  .pp-hero-h1 {
+    max-width: 720px;
+    font-size: clamp(44px, 6vw, 82px);
+    font-weight: 800;
+    line-height: 0.96;
+    letter-spacing: -0.055em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .pp-hero-h1 em { font-style: normal; color: #ffc300; }
+
+  .pp-hero-sub {
+    margin-top: 16px;
+    font-size: 17px;
+    line-height: 1.78;
+    color: rgba(17,19,24,0.68);
+    max-width: 500px;
+  }
+
+  .pp-hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+
+  /* ─── BUTTONS ───────────────────────────────────────── */
+  .pp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 22px;
+    border-radius: var(--r-pill);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    font-family: var(--font-body);
+  }
+
+  .pp-btn--gold { background: var(--ink); border-color: var(--ink); color: var(--gold); }
+  .pp-btn--gold:hover { color: var(--gold); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(17,19,24,0.28); }
+  .pp-btn--ghost-light { background: var(--white); border-color: var(--line); color: var(--ink); }
+  .pp-btn--ghost-light:hover { color: var(--ink); background: var(--gold-soft); border-color: rgba(255,195,0,0.55); }
+  .pp-btn--ghost-dark { background: transparent; border-color: var(--line); color: var(--ink); }
+  .pp-btn--ghost-dark:hover { border-color: var(--gold-dim); background: var(--gold-soft); color: var(--ink); }
+  .pp-btn--cta-dark { background: var(--ink); color: var(--gold); border-color: var(--ink); justify-content: center; }
+  .pp-btn--cta-dark:hover { color: var(--gold); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.2); }
+
+  /* ─── HERO VISUAL CARD ──────────────────────────────── */
+  .pp-hero-visual { position: relative; align-self: flex-end; }
+
+  .pp-hero-card {
+    background: var(--white);
+    border: 1px solid rgba(255,195,0,0.55);
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 26px 60px rgba(17,19,24,0.10);
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .pp-hero-card img {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%;
+    max-width: 440px;
+    display: block;
+  }
+
+  .pp-hero-stat {
+    display: flex;
+    gap: 0;
+    max-width: 470px;
+    margin-top: 26px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--white);
+  }
+
+  .pp-hero-stat-item { flex: 1; border-right: 1px solid var(--line); padding: 16px 18px; background: var(--white); }
+  .pp-hero-stat-item:last-child { border-right: 0; }
+  .pp-hero-stat-num { font-size: 22px; font-weight: 800; color: var(--ink); line-height: 1; }
+  .pp-hero-stat-lbl { font-size: 10px; color: var(--muted); margin-top: 3px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* ═══ INITIATIVES GRID ════════════════════════════════ */
+  .pp-initiatives {
+    background: var(--gold-pale);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 64px 0;
+  }
+
+  .pp-section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 10px; }
+  .pp-section-h2 { font-size: clamp(24px, 3vw, 34px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 12px; }
+  .pp-section-lead { font-size: 15px; color: var(--text-body); line-height: 1.75; max-width: 580px; margin-bottom: 32px; }
+
+  .pp-init-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .pp-init-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 22px 18px;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .pp-init-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(17,19,24,0.08);
+    border-color: rgba(255,195,0,0.5);
+  }
+
+  .pp-init-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .pp-init-card h3 { font-size: 14px; font-weight: 800; color: var(--ink); margin-bottom: 6px; line-height: 1.3; }
+  .pp-init-card p { font-size: 12px; color: var(--text-body); line-height: 1.68; }
+
+  .pp-init-tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--gold-soft);
+    color: var(--gold-dim);
+    border: 1px solid rgba(255,195,0,0.3);
+    border-radius: 4px;
+    padding: 2px 7px;
+    margin-bottom: 10px;
+  }
+
+  /* ═══ PROBLEM ══════════════════════════════════════════ */
+  .pp-problem { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 76px 0; }
+  .pp-problem-inner { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.15fr); gap: 52px; align-items: center; }
+  .pp-problem-kicker { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 14px; }
+
+  .pp-problem-h2 { font-size: clamp(26px, 3.2vw, 38px); font-weight: 800; line-height: 1.18; letter-spacing: -0.02em; color: var(--ink); }
+  .pp-problem-h2 em { font-style: normal; color: var(--gold-dim); }
+  .pp-problem-body { font-size: 15px; line-height: 1.78; color: var(--text-body); margin-top: 16px; }
+
+  .pp-problem-list { list-style: none; display: grid; gap: 10px; margin-top: 22px; }
+  .pp-problem-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: var(--text-body); line-height: 1.65; }
+  .pp-problem-list li::before { content: "—"; color: var(--gold-dim); font-weight: 700; flex-shrink: 0; }
+
+  .pp-pullquote {
+    border-left: 4px solid var(--gold);
+    padding: 16px 22px;
+    background: var(--gold-pale);
+    border-radius: 0 16px 16px 0;
+    font-size: clamp(16px, 1.8vw, 20px);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.45;
+    margin-top: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  /* ═══ WHAT ═════════════════════════════════════════════ */
+  .pp-what { background: var(--white); padding: 76px 0; }
+
+  .pp-what-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pp-what-card { background: var(--white); border: 1px solid var(--line); border-top: 0; border-left: 4px solid var(--gold); border-radius: var(--r-card); padding: 26px 22px 22px; transition: transform .2s ease, box-shadow .2s ease; }
+  .pp-what-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(17,19,24,0.08); }
+  .pp-what-num { font-size: 36px; font-weight: 800; color: rgba(255,195,0,0.3); margin-bottom: 12px; line-height: 1; letter-spacing: -0.02em; }
+  .pp-what-card h3 { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 8px; line-height: 1.35; }
+  .pp-what-card p { font-size: 13px; color: var(--text-body); line-height: 1.72; }
+
+  /* ═══ TRUST ════════════════════════════════════════════ */
+  .pp-trust { background: var(--white); padding: 64px 0; }
+  .pp-trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 30px; }
+  .pp-trust-card { border: 1px solid var(--line); border-left: 4px solid var(--gold); border-radius: var(--r-card); padding: 22px 20px; background: var(--white); transition: box-shadow .2s ease; }
+  .pp-trust-card:hover { box-shadow: 0 8px 28px rgba(17,19,24,0.07); }
+  .pp-trust-card h3 { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 7px; }
+  .pp-trust-card p { font-size: 13px; color: var(--text-body); line-height: 1.72; }
+
+  /* ═══ GIRLS ════════════════════════════════════════════ */
+  .pp-girls { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 64px 0; }
+  .pp-girls-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 44px; align-items: center; }
+  .pp-girls-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--gold); color: var(--ink); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 6px 12px; border-radius: var(--r-pill); margin-bottom: 14px; }
+  .pp-girls-inner h2 { font-size: clamp(22px, 2.8vw, 32px); font-weight: 800; color: var(--ink); line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .pp-girls-inner p { font-size: 14px; color: var(--text-body); line-height: 1.75; margin-bottom: 22px; }
+  .pp-girls-cards { display: grid; gap: 12px; }
+  .pp-girls-card { background: var(--white); border: 1px solid rgba(255,195,0,0.3); border-radius: var(--r-card); padding: 18px 20px; box-shadow: 0 4px 14px rgba(255,195,0,0.08); }
+  .pp-girls-card h3 { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
+  .pp-girls-card p { font-size: 13px; color: var(--text-body); line-height: 1.68; margin: 0; }
+
+  /* ═══ FAQ ══════════════════════════════════════════════ */
+  .pp-faq { background: var(--white); padding: 64px 0; }
+  .pp-faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 28px; }
+  .pp-faq-item { border: 1px solid var(--line); border-radius: var(--r-card); padding: 22px 20px; background: var(--white); transition: border-color .18s ease, box-shadow .18s ease; }
+  .pp-faq-item:hover { border-color: rgba(255,195,0,0.45); box-shadow: 0 4px 16px rgba(255,195,0,0.07); }
+  .pp-faq-item h3 { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px; line-height: 1.42; }
+  .pp-faq-item p { font-size: 13px; color: var(--text-body); line-height: 1.72; }
+  .pp-faq-grid .pp-faq-item:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+  /* ═══ CTA ══════════════════════════════════════════════ */
+  .pp-cta { background: var(--white); border-top: 1px solid var(--line); padding: 64px 0; position: relative; overflow: hidden; }
+  .pp-cta::before { content: ""; position: absolute; right: -60px; top: -60px; width: 380px; height: 380px; border-radius: 50%; background: rgba(255,195,0,0.18); pointer-events: none; }
+  .pp-cta-inner { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto; gap: 36px; align-items: center; }
+  .pp-cta-kicker { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(17,19,24,0.5); margin-bottom: 10px; }
+  .pp-cta h2 { font-size: clamp(28px, 3.5vw, 44px); font-weight: 800; color: var(--ink); line-height: 1.12; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .pp-cta-body { font-size: 15px; color: rgba(17,19,24,0.65); line-height: 1.72; max-width: 480px; margin-bottom: 24px; }
+  .pp-cta-panel { background: var(--gold-pale); border: 1px solid rgba(255,195,0,0.42); border-radius: var(--r-block); padding: 24px 26px; min-width: 260px; text-align: center; }
+  .pp-cta-panel strong { display: block; font-size: 16px; font-weight: 800; color: var(--ink); margin-bottom: 7px; line-height: 1.3; }
+  .pp-cta-panel p { font-size: 13px; color: rgba(17,19,24,0.6); line-height: 1.6; margin-bottom: 16px; }
+  .pp-cta-panel .pp-btn--cta-dark { width: 100%; }
+  .pp-cta-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .pp-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--line), transparent); }
+
+  @keyframes pp-fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .pp-hero-inner > * { animation: pp-fade-up .6s ease both; }
+  .pp-hero-inner > *:nth-child(2) { animation-delay: .1s; }
+
+  @media (max-width: 940px) {
+    .pp-hero::before { display: none; }
+    .pp-hero { background: var(--white); }
+    .pp-hero-inner, .pp-problem-inner, .pp-girls-inner, .pp-cta-inner { grid-template-columns: 1fr; }
+    .pp-hero-card { min-height: 320px; }
+    .pp-what-grid, .pp-trust-grid, .pp-faq-grid, .pp-init-grid { grid-template-columns: 1fr; }
+    .pp-init-grid { grid-template-columns: repeat(2, 1fr); }
+    .pp-cta-panel { min-width: 0; }
+  }
+
+  @media (max-width: 560px) {
+    .pp-shell { width: calc(100% - 28px); }
+    .pp-hero { padding: 48px 0 40px; }
+    .pp-init-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="pp">
+
+  <!-- ═══ HERO ═══════════════════════════════════════════ -->
+  <section class="pp-hero" aria-label="IKF for donors hero">
+    <div class="pp-shell">
+      <div class="pp-hero-inner">
+
+        <div>
+          <p class="pp-hero-label"><span></span> For Donors</p>
+          <h1 class="pp-hero-h1">
+            Your Donation
+            <em>Builds a<br>Football Dream.</em>
+          </h1>
+          <p class="pp-hero-sub">
+            Thousands of talented players across India are one trial away from changing their lives. The only thing standing between them and that chance — is resources. You can change that.
+          </p>
+          <div class="pp-hero-stat">
+            <div class="pp-hero-stat-item">
+              <div class="pp-hero-stat-num">100+</div>
+              <div class="pp-hero-stat-lbl">Cities Reached</div>
+            </div>
+            <div class="pp-hero-stat-item">
+              <div class="pp-hero-stat-num">50K+</div>
+              <div class="pp-hero-stat-lbl">Players</div>
+            </div>
+            <div class="pp-hero-stat-item">
+              <div class="pp-hero-stat-num">8+</div>
+              <div class="pp-hero-stat-lbl">Initiatives</div>
+            </div>
+          </div>
+          <div class="pp-hero-actions">
+            <a class="pp-btn pp-btn--gold" href="{% url 'Donate' %}">Donate Now</a>
+            <a class="pp-btn pp-btn--ghost-light" href="{% url 'invictus_donate' %}">Invictus Fund</a>
+            <a class="pp-btn pp-btn--ghost-light" href="{% url 'season5' %}">Support IKF Trials</a>
+          </div>
+        </div>
+
+        <div class="pp-hero-visual" aria-hidden="true">
+          <div class="pp-hero-card">
+            <img src="{% static 'images/homegrid/Donation.png' %}" alt="Donor supporting Indian football" loading="eager">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ INITIATIVES ════════════════════════════════════ -->
+  <section class="pp-initiatives" aria-labelledby="init-h2">
+    <div class="pp-shell">
+      <p class="pp-section-label">Where Your Money Goes</p>
+      <h2 class="pp-section-h2" id="init-h2">Choose an Initiative. Make It Personal.</h2>
+      <p class="pp-section-lead">
+        Every IKF initiative solves a specific barrier that stands between a talented player and their football future. Pick the one that speaks to you.
+      </p>
+      <div class="pp-init-grid">
+
+        <a class="pp-init-card" href="{% url 'Donate' %}">
+          <span class="pp-init-tag">Girls' Football</span>
+          <span class="pp-init-icon">⚽</span>
+          <h3>Anaya's Goal</h3>
+          <p>Fund free trials, kit, and travel for girls from underserved regions so no girl's football dream ends because of money.</p>
+        </a>
+
+        <a class="pp-init-card" href="{% url 'Donate' %}">
+          <span class="pp-init-tag">Trials Access</span>
+          <span class="pp-init-icon">🏆</span>
+          <h3>Future Champions</h3>
+          <p>Sponsor trials access for players who have the talent but cannot afford the cost of getting there.</p>
+        </a>
+
+        <a class="pp-init-card" href="{% url 'Donate' %}">
+          <span class="pp-init-tag">Women's Football</span>
+          <span class="pp-init-icon">🌟</span>
+          <h3>Naari Shakti</h3>
+          <p>Support the development of women's football infrastructure, visibility, and career pathways across India.</p>
+        </a>
+
+        <a class="pp-init-card" href="{% url 'Donate' %}">
+          <span class="pp-init-tag">Education + Football</span>
+          <span class="pp-init-icon">📚</span>
+          <h3>Books &amp; Boots</h3>
+          <p>Help young players balance academics and football — because a career in sport should not come at the cost of education.</p>
+        </a>
+
+        <a class="pp-init-card" href="{% url 'Donate' %}">
+          <span class="pp-init-tag">Medical</span>
+          <span class="pp-init-icon">🩺</span>
+          <h3>Heal to Play</h3>
+          <p>Fund medical support for players who are injured and cannot afford treatment — keeping them in the game.</p>
+        </a>
+
+        <a class="pp-init-card" href="{% url 'Donate' %}">
+          <span class="pp-init-tag">Grassroots</span>
+          <span class="pp-init-icon">🌱</span>
+          <h3>IKF 360 Field of Dreams</h3>
+          <p>Support grassroots football infrastructure — pitches, equipment, and coaching for communities that have none.</p>
+        </a>
+
+        <a class="pp-init-card" href="{% url 'parent-fuelling-ikf' %}">
+          <span class="pp-init-tag">Parents</span>
+          <span class="pp-init-icon">👨‍👩‍👧</span>
+          <h3>Parents Fueling IKF</h3>
+          <p>Parents who back IKF fuel a movement that gives every child — not just their own — a real chance at the football pathway.</p>
+        </a>
+
+        <a class="pp-init-card" href="{% url 'invictus_donate' %}">
+          <span class="pp-init-tag">i-Care</span>
+          <span class="pp-init-icon">💛</span>
+          <h3>i-Care by Invictus</h3>
+          <p>The Invictus Fund supports IKF's core operations — ensuring every trial runs to the highest standard, everywhere.</p>
+        </a>
+
+        <a class="pp-init-card" href="{% url 'season5' %}">
+          <span class="pp-init-tag">Trials</span>
+          <span class="pp-init-icon">🚀</span>
+          <h3>Support IKF Trials</h3>
+          <p>Directly sponsor IKF's ongoing trials — funding city rounds, zonal rounds, and national finals in real time.</p>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PROBLEM ══════════════════════════════════════════ -->
+  <section class="pp-problem" aria-labelledby="problem-h2">
+    <div class="pp-shell">
+      <div class="pp-problem-inner">
+
+        <div>
+          <p class="pp-problem-kicker">Why It Matters</p>
+          <h2 class="pp-problem-h2" id="problem-h2">
+            The Talent<br>
+            Is There.<br>
+            <em>The System Isn't.</em>
+          </h2>
+        </div>
+
+        <div>
+          <p class="pp-problem-body">
+            India has millions of footballers with the skill and hunger to compete at the highest levels. What it lacks is a funded, structured system that finds them — regardless of geography, gender, or income. That gap is what your donation closes.
+          </p>
+          <ul class="pp-problem-list">
+            <li>Girls who stop playing because no one funds their participation.</li>
+            <li>Players from small cities with no access to scouts or structured trials.</li>
+            <li>Injured players who cannot afford treatment and lose years of development.</li>
+            <li>Talented kids who have to choose between books and boots.</li>
+          </ul>
+          <div class="pp-pullquote">
+            Your donation does not build stadiums. It builds pathways.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WHAT YOUR DONATION DOES ══════════════════════════ -->
+  <section class="pp-what" aria-labelledby="what-h2">
+    <div class="pp-shell">
+      <p class="pp-section-label">What Your Donation Does</p>
+      <h2 class="pp-section-h2" id="what-h2">Every Rupee Has a Job.</h2>
+      <p class="pp-section-lead">
+        IKF is a not-for-profit. Every rupee donated goes into the field — no leakage, no overhead padding, no vague promises.
+      </p>
+      <div class="pp-what-grid">
+        <article class="pp-what-card">
+          <div class="pp-what-num">01</div>
+          <h3>Funds free participation for girls</h3>
+          <p>Your donation directly removes the registration cost for girls so that access to trials is never determined by a family's income. Thousands of girls have played free because of donors like you.</p>
+        </article>
+        <article class="pp-what-card">
+          <div class="pp-what-num">02</div>
+          <h3>Runs trials in more cities</h3>
+          <p>Every new city IKF reaches is a city full of unseen talent. Your donation funds the logistics, venues, and staff needed to take IKF trials where they have never been before.</p>
+        </article>
+        <article class="pp-what-card">
+          <div class="pp-what-num">03</div>
+          <h3>Supports players beyond the pitch</h3>
+          <p>Medical aid, educational support, and travel assistance — your donation funds the IKF ecosystem that keeps players in the game even when life tries to take them off it.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="pp-divider"></div>
+
+  <!-- ═══ TRUST ════════════════════════════════════════════ -->
+  <section class="pp-trust" aria-labelledby="trust-h2">
+    <div class="pp-shell">
+      <p class="pp-section-label">Why Donors Trust IKF</p>
+      <h2 class="pp-section-h2" id="trust-h2">Transparent. Accountable. Player-First.</h2>
+      <p class="pp-section-lead">
+        IKF is built on the same principle for donors as it is for players — no shortcuts, no vague promises, no money wasted on things that do not matter.
+      </p>
+      <div class="pp-trust-grid">
+        <article class="pp-trust-card">
+          <h3>You choose where it goes</h3>
+          <p>IKF lets you designate your donation to a specific initiative. Your money goes exactly where you direct it — not into a general fund with no accountability.</p>
+        </article>
+        <article class="pp-trust-card">
+          <h3>Not-for-profit structure</h3>
+          <p>IKF is a not-for-profit initiative. There is no profit motive. No shareholders. No board that benefits from your generosity. Every rupee serves the mission.</p>
+        </article>
+        <article class="pp-trust-card">
+          <h3>Auditable impact</h3>
+          <p>Trials happen. Players are evaluated. Scouted players are published. The outcomes of your donation are visible, real, and documented — not hidden in an annual report.</p>
+        </article>
+        <article class="pp-trust-card">
+          <h3>Multiple giving options</h3>
+          <p>Donate online via Razorpay, by UPI, or by direct bank transfer. IKF makes it as easy as possible to give — with full receipt and documentation provided.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ GIRLS ════════════════════════════════════════════ -->
+  <section class="pp-girls" aria-labelledby="girls-h2">
+    <div class="pp-shell">
+      <div class="pp-girls-inner">
+
+        <div>
+          <div class="pp-girls-badge">♀ Anaya's Goal &amp; Naari Shakti</div>
+          <h2 id="girls-h2">The Highest-Impact Gift You Can Give: A Girl's Trial.</h2>
+          <p>
+            Girls' football in India is underfunded, underscoured, and undervalued. IKF is changing that — but it takes donors to keep the door open. Anaya's Goal and Naari Shakti fund every dimension of girls' participation, from the first trial to the national stage.
+          </p>
+          <a class="pp-btn pp-btn--ghost-dark" href="{% url 'naari_shakti' %}">Learn About Project IKF Naari Shakti</a>
+        </div>
+
+        <div class="pp-girls-cards">
+          <article class="pp-girls-card">
+            <h3>Free trials for every girl</h3>
+            <p>Your donation to Anaya's Goal directly funds free registration for girls — meaning zero financial barrier between a girl and her first IKF trial.</p>
+          </article>
+          <article class="pp-girls-card">
+            <h3>Kit, travel &amp; logistics</h3>
+            <p>For girls from underserved regions, travel and kit are often bigger barriers than registration. Naari Shakti funds these directly so geography is never an excuse.</p>
+          </article>
+          <article class="pp-girls-card">
+            <h3>A dedicated, visible pathway</h3>
+            <p>Every girl who participates in IKF becomes part of a permanent, growing record of female footballers in India. Visibility that does not exist anywhere else.</p>
+          </article>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FAQ ════════════════════════════════════════════════ -->
+  <section class="pp-faq" aria-labelledby="faq-h2">
+    <div class="pp-shell">
+      <p class="pp-section-label">Donor Questions, Answered</p>
+      <h2 class="pp-section-h2" id="faq-h2">Everything You Need to Know Before You Give</h2>
+      <p class="pp-section-lead">
+        Direct answers for donors. No vague promises. No jargon.
+      </p>
+      <div class="pp-faq-grid">
+        <article class="pp-faq-item">
+          <h3>Where does my donation to IKF go?</h3>
+          <p>Directly to field operations — funding trials, girls' free participation, player support initiatives, and the infrastructure needed to run transparent evaluations across India. You can choose which initiative receives your donation.</p>
+        </article>
+        <article class="pp-faq-item">
+          <h3>Can I donate to a specific initiative?</h3>
+          <p>Yes. Choose from Anaya's Goal, Future Champions, Naari Shakti, Books & Boots, Heal to Play, IKF 360 Field of Dreams, i-Care by Invictus, or Support IKF Trials — your donation goes exactly where you direct it.</p>
+        </article>
+        <article class="pp-faq-item">
+          <h3>How do I donate to IKF?</h3>
+          <p>Online via Razorpay, by UPI using the IKF QR code, or by direct bank transfer. Visit indiakhelofootball.com/donate for all payment options with full receipt documentation.</p>
+        </article>
+        <article class="pp-faq-item">
+          <h3>Is my donation tax-deductible?</h3>
+          <p>IKF is a not-for-profit initiative. Visit the donate page or contact IKF directly for current tax exemption status and the documentation needed for your records.</p>
+        </article>
+        <article class="pp-faq-item">
+          <h3>What is the minimum donation?</h3>
+          <p>There is no minimum. Every rupee contributes to building a fair football ecosystem. A small recurring contribution often creates more sustained impact than a single large gift.</p>
+        </article>
+        <article class="pp-faq-item">
+          <h3>What is Anaya's Goal?</h3>
+          <p>Anaya's Goal is IKF's dedicated girls' football fund — covering free trials, kit, and travel for girls from underserved regions. It is one of the highest-impact donations you can make to Indian football.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ════════════════════════════════════════════════ -->
+  <section class="pp-cta" aria-labelledby="cta-h2">
+    <div class="pp-shell">
+      <div class="pp-cta-inner">
+
+        <div>
+          <p class="pp-cta-kicker">Your contribution starts here</p>
+          <h2 id="cta-h2">Fund a Trial.<br>Change a Life.<br>Build Indian Football.</h2>
+          <p class="pp-cta-body">
+            IKF will not promise you a stadium named after you. It will show you exactly where your money went — in the form of players evaluated, girls who played free, and a football ecosystem that keeps getting fairer.
+          </p>
+          <div class="pp-cta-actions">
+            <a class="pp-btn pp-btn--cta-dark" href="{% url 'Donate' %}">Donate Now</a>
+            <a class="pp-btn pp-btn--ghost-dark" href="{% url 'invictus_donate' %}">Invictus Fund</a>
+            <a class="pp-btn pp-btn--ghost-dark" href="{% url 'season5' %}">Support Season 6</a>
+            <a class="pp-btn pp-btn--ghost-dark" href="{% url 'naari_shakti' %}">Project IKF Naari Shakti</a>
+          </div>
+        </div>
+
+        <div class="pp-cta-panel">
+          <strong>Every rupee has a player's name on it.</strong>
+          <p>Choose your initiative, make your donation, and watch IKF turn it into real opportunity on real pitches across India.</p>
+          <a class="pp-btn pp-btn--cta-dark" href="{% url 'Donate' %}">Choose an Initiative &amp; Donate →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- IKF Floating Sidebar -->
+<div class="ikf-float-sidebar" id="ikfFloatSidebar">
+  <button class="ikf-float-toggle" id="ikfFloatToggle" aria-label="IKF Donor Quick Links">
+    <span class="ikf-float-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </span>
+    <span class="ikf-float-label">Donate</span>
+  </button>
+  <div class="ikf-float-menu" id="ikfFloatMenu">
+    <div class="ikf-float-menu-header">Donate to IKF</div>
+    <a class="ikf-float-link" href="{% url 'Donate' %}">
+      <span class="ikf-float-link-icon">&#9654;</span> All Initiatives
+    </a>
+    <a class="ikf-float-link" href="{% url 'invictus_donate' %}">
+      <span class="ikf-float-link-icon">&#9654;</span> Invictus Fund
+    </a>
+    <a class="ikf-float-link" href="{% url 'season5' %}">
+      <span class="ikf-float-link-icon">&#9654;</span> Support Season 6 <span class="ikf-badge">Live</span>
+    </a>
+    <a class="ikf-float-link" href="{% url 'naari_shakti' %}">
+      <span class="ikf-float-link-icon">&#9654;</span> Anaya's Goal
+    </a>
+    <a class="ikf-float-link" href="{% url 'noticeboard_home' %}">
+      <span class="ikf-float-link-icon">&#9654;</span> Noticeboard
+    </a>
+  </div>
+</div>
+
+<style>
+  .ikf-float-sidebar { position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 9999; display: flex; flex-direction: row-reverse; align-items: center; }
+  .ikf-float-toggle { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: #ffc300; color: #111318; border: none; cursor: pointer; padding: 14px 10px; border-radius: 10px 0 0 10px; box-shadow: -3px 0 18px rgba(0,0,0,0.18); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.04em; writing-mode: vertical-rl; text-orientation: mixed; transition: background 0.2s; min-height: 120px; }
+  .ikf-float-toggle:hover { background: #e6af00; }
+  .ikf-float-icon { writing-mode: horizontal-tb; margin-bottom: 4px; }
+  .ikf-float-label { writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.08em; text-transform: uppercase; font-size: 10px; font-weight: 800; }
+  .ikf-float-menu { background: #111318; border-radius: 10px 0 0 10px; box-shadow: -4px 0 24px rgba(0,0,0,0.25); overflow: hidden; width: 0; opacity: 0; pointer-events: none; transition: width 0.3s cubic-bezier(.4,0,.2,1), opacity 0.25s; display: flex; flex-direction: column; white-space: nowrap; }
+  .ikf-float-sidebar.open .ikf-float-menu { width: 210px; opacity: 1; pointer-events: auto; }
+  .ikf-float-menu-header { background: #ffc300; color: #111318; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; padding: 12px 18px; }
+  .ikf-float-link { display: flex; align-items: center; gap: 8px; padding: 12px 18px; color: #f0ead0; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13.5px; font-weight: 500; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.07); transition: background 0.15s, color 0.15s; }
+  .ikf-float-link:last-child { border-bottom: none; }
+  .ikf-float-link:hover { background: rgba(255,195,0,0.13); color: #ffc300; }
+  .ikf-float-link-icon { color: #ffc300; font-size: 9px; flex-shrink: 0; }
+  .ikf-badge { background: #ffc300; color: #111318; font-size: 9px; font-weight: 800; letter-spacing: 0.05em; border-radius: 4px; padding: 1px 5px; margin-left: 4px; text-transform: uppercase; vertical-align: middle; }
+  @media (max-width: 600px) { .ikf-float-toggle { padding: 10px 8px; min-height: 90px; } .ikf-float-sidebar.open .ikf-float-menu { width: 180px; } }
+</style>
+
+<script>
+  (function() {
+    var sidebar = document.getElementById('ikfFloatSidebar');
+    var toggle = document.getElementById('ikfFloatToggle');
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      sidebar.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!sidebar.contains(e.target)) sidebar.classList.remove('open');
+    });
+  })();
+</script>
+
+{% endblock %}

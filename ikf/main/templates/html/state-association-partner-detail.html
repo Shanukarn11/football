@@ -1,0 +1,358 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ partner.name }} | IKF State Association Partner{% endblock title %}
+
+{% block content %}
+<section class="sap3">
+  <div class="sap3-wrap">
+
+    <!-- Back -->
+    <div class="sap3-back">
+      <a class="sap3-backbtn" href="{% url 'state-association-partners' %}">← Back to Partners</a>
+    </div>
+
+    <!-- Header Card -->
+    <div class="sap3-head">
+      <div class="sap3-logo">
+        {% if partner.logo %}
+          <img src="{{ partner.logo.url }}" alt="{{ partner.name }}">
+        {% else %}
+          <img src="{% static 'images/placeholder.png' %}" alt="{{ partner.name }}">
+        {% endif %}
+      </div>
+
+      <h1 class="sap3-title">{{ partner.name }}</h1>
+
+      <p class="sap3-sub">
+        {% if partner.state_name %}
+          {{ partner.state_name }} 
+        {% endif %}
+        
+      </p>
+
+      {% if partner.short_description %}
+        <p class="sap3-desc">{{ partner.short_description }}</p>
+      {% endif %}
+
+      <div class="sap3-mini">
+        {% if partner.state_name %}
+          <span class="sap3-pill">📍 {{ partner.state_name }}</span>
+        {% endif %}
+        {% if partner.website %}
+          <a class="sap3-pill sap3-pill-link" href="{{ partner.website }}" target="_blank" rel="noopener">🌐 Website</a>
+        {% endif %}
+        {% if partner.contact_email %}
+          <a class="sap3-pill sap3-pill-link" href="https://mail.google.com/mail/?view=cm&fs=1&to={{ partner.contact_email }}" target="_blank" rel="noopener">✉️ Email</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- About -->
+    <div class="sap3-card">
+      <h3 class="sap3-h3">About</h3>
+      <div class="sap3-text">
+        {% if partner.about %}
+          {{ partner.about|linebreaksbr }}
+        {% else %}
+          Profile details will be updated soon.
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Stats (optional) -->
+    {% if partner_stats %}
+      <div class="sap3-card">
+        <h3 class="sap3-h3">Partner Stats</h3>
+
+        <div class="sap3-stats">
+          {% for s in partner_stats %}
+            <div class="sap3-stat">
+              <div class="sap3-stat-val">{{ s.value }}</div>
+              <div class="sap3-stat-lab">{{ s.label }}</div>
+              {% if s.note %}
+                <div class="sap3-stat-note">{{ s.note }}</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    <!-- Partner Info -->
+    <div class="sap3-card">
+      <h3 class="sap3-h3">Partner Info</h3>
+
+      <div class="sap3-info">
+        {% if partner.state_name %}
+          <div class="sap3-row"><b>State</b> 
+            <div class="sap3-text"><span>{{ partner.state_name }}</span></div></div>
+        {% endif %}
+
+        {% if partner.website %}
+          <div class="sap3-row">
+            <b>Website</b>
+            <span><a href="{{ partner.website }}" target="_blank" rel="noopener">{{ partner.website }}</a></span>
+          </div>
+        {% endif %}
+
+        {% if partner.contact_email %}
+          <div class="sap3-row">
+            <b>Email</b>
+            <span><a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ partner.contact_email }}" target="_blank" rel="noopener">{{ partner.contact_email }}</a></span>
+          </div>
+        {% endif %}
+
+        {% if partner.contact_phone %}
+          <div class="sap3-row"><b>Phone</b><span>{{ partner.contact_phone }}</span></div>
+        {% endif %}
+
+        {% if not partner.state_name and not partner.website and not partner.contact_email and not partner.contact_phone %}
+          <div class="sap3-empty">Information will be updated soon.</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Footer note -->
+    <div class="sap3-note">
+      This State Association Partner works with IKF to strengthen grassroots ecosystems, enable transparent scouting,
+      and create structured pathways for players across the state.
+    </div>
+
+  </div>
+</section>
+
+<style>
+  :root{
+    --ink:#0f172a;
+    --muted:#566070;
+    --brand:#ffc300;
+    --ring:#e5e7eb;
+    --card:#ffffff;
+  }
+
+  .sap3{
+    position:relative;
+    overflow:hidden;
+    padding:18px 0 60px;
+    isolation:isolate;
+  }
+
+  .sap3::before{
+    content:"";
+    position:absolute;
+    inset:-160px;
+    z-index:0;
+    filter:blur(26px);
+    opacity:.55;
+    pointer-events:none;
+    background:
+      radial-gradient(420px 300px at -8% -10%,rgba(255,195,0,.38),transparent 70%),
+      radial-gradient(380px 280px at 108% -10%,rgba(255,225,110,.28),transparent 72%),
+      radial-gradient(380px 280px at -8% 108%,rgba(255,225,110,.22),transparent 72%),
+      radial-gradient(420px 300px at 108% 108%,rgba(255,195,0,.26),transparent 70%);
+  }
+
+  .sap3-wrap{
+    position:relative;
+    z-index:1;
+    width:min(920px, 94vw);
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  /* back */
+  .sap3-back{ margin-bottom:2px; }
+  .sap3-backbtn{
+    display:inline-flex;
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:900;
+    background:var(--brand);
+    border:1px solid rgba(0,0,0,.08);
+    color:var(--ink);
+    text-decoration:none;
+    box-shadow:0 8px 18px rgba(15,23,42,.10);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .sap3-backbtn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 14px 26px rgba(15,23,42,.14);
+  }
+
+  /* header */
+  .sap3-head{
+    background:var(--card);
+    border:1px solid rgba(255,195,0,.40);
+    border-radius:22px;
+    padding:22px 20px 18px;
+    box-shadow:0 16px 40px rgba(15,23,42,.08);
+    text-align:center;
+  }
+
+  .sap3-logo{
+    width:140px;
+    height:140px;
+    margin:0 auto 12px;
+    border-radius:24px;
+    overflow:hidden;
+    border:1px solid var(--ring);
+    background:#fff;
+    box-shadow:0 10px 22px rgba(15,23,42,.14);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .sap3-logo img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    padding:16px;
+    display:block;
+  }
+
+  .sap3-title{
+    margin:0;
+    font-size:clamp(26px, 3.2vw, 36px);
+    font-weight:950;
+    color:var(--ink);
+    line-height:1.15;
+  }
+
+  .sap3-sub{
+    margin:8px 0 0;
+    color:var(--muted);
+    font-weight:800;
+    font-size:14px;
+  }
+
+  .sap3-desc{
+    margin:12px auto 0;
+    max-width:720px;
+    color:var(--muted);
+    font-size:15px;
+    line-height:1.65;
+  }
+
+  .sap3-mini{
+    margin-top:14px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+
+  .sap3-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border-radius:999px;
+    border:1px solid rgba(255,195,0,.40);
+    background:rgba(255,195,0,.10);
+    color:var(--ink);
+    font-weight:900;
+    font-size:13px;
+    text-decoration:none;
+  }
+  .sap3-pill-link:hover{
+    background:#fff;
+    border-color:rgba(15,23,42,.12);
+  }
+
+  /* cards */
+  .sap3-card{
+    background:var(--card);
+    border:1px solid rgba(255,195,0,.30);
+    border-radius:18px;
+    padding:16px 18px;
+    box-shadow:0 10px 22px rgba(15,23,42,.06);
+  }
+
+  .sap3-h3{
+    margin:0 0 8px;
+    font-size:14px;
+    font-weight:950;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink);
+  }
+
+  .sap3-text{
+    color:var(--muted);
+    font-size:15px;
+    line-height:1.7;
+  }
+
+  /* stats */
+  .sap3-stats{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0,1fr));
+    gap:10px;
+    margin-top:10px;
+  }
+  @media(max-width:900px){ .sap3-stats{ grid-template-columns:repeat(2, minmax(0,1fr)); } }
+  @media(max-width:520px){ .sap3-stats{ grid-template-columns:1fr; } }
+
+  .sap3-stat{
+    border:1px solid rgba(15,23,42,.08);
+    border-radius:16px;
+    padding:12px 12px;
+    background:#fff;
+  }
+  .sap3-stat-val{
+    font-size:20px;
+    font-weight:950;
+    color:var(--ink);
+  }
+  .sap3-stat-lab{
+    margin-top:6px;
+    font-size:12px;
+    font-weight:950;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink);
+    opacity:.9;
+  }
+  .sap3-stat-note{
+    margin-top:6px;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.55;
+  }
+
+  /* info rows */
+  .sap3-info{ margin-top:2px; }
+  .sap3-row{
+    display:flex;
+    justify-content:space-between;
+    gap:14px;
+    padding:10px 0;
+    border-bottom:1px solid rgba(15,23,42,.06);
+    color:var(--muted);
+    font-size:14px;
+  }
+  .sap3-row:last-child{ border-bottom:none; padding-bottom:0; }
+  .sap3-row b{ color:var(--ink); font-weight:950; }
+  .sap3-row a{ color:#0a3a99; font-weight:950; text-decoration:none; }
+  .sap3-row a:hover{ text-decoration:underline; }
+
+  .sap3-empty{
+    color:var(--muted);
+    font-size:14px;
+  }
+
+  /* bottom note */
+  .sap3-note{
+    text-align:center;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.6;
+    padding-top:6px;
+  }
+</style>
+{% endblock content %}

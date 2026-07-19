@@ -1,0 +1,658 @@
+{% extends "base.html" %}
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-soft:   #fff3b8;
+    --ikf-yellow-dim:    rgba(255, 195, 0, .10);
+    --ikf-yellow-border: rgba(255, 195, 0, .35);
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --line-2:            #f1f4f9;
+    --surface:           #ffffff;
+    --surface-2:         #fafbfd;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         24px;
+    --shadow-sm:         0 2px 8px  rgba(11,17,32,.05);
+    --shadow-md:         0 12px 32px rgba(11,17,32,.06), 0 2px 6px rgba(11,17,32,.04);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  .sp-wrap {
+    max-width: 1180px;
+    margin: 48px auto 80px;
+    padding: 0 24px;
+    color: var(--ink);
+    font-family: var(--font-body);
+  }
+
+  .sp-page-header {
+    margin-bottom: 36px;
+    text-align: center;
+  }
+  .sp-page-eyebrow {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    margin-bottom: 8px;
+  }
+  .sp-page-title {
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .sp-page-title span {
+    background: linear-gradient(90deg, #ffc300 0%, #ff9d00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Season tabs */
+  .sp-season-tabs__label {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 12px;
+  }
+  .sp-season-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 0 32px;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    padding: 12px 0;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: saturate(180%) blur(8px);
+    -webkit-backdrop-filter: saturate(180%) blur(8px);
+    border-bottom: 1px solid var(--line-2);
+  }
+  .sp-season-tab {
+    appearance: none;
+    border: 1.5px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-2);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: .02em;
+    padding: 10px 22px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background .18s ease, color .18s ease, border-color .18s ease, transform .12s ease;
+    box-shadow: var(--shadow-sm);
+  }
+  .sp-season-tab:hover {
+    border-color: var(--ikf-yellow-border);
+    background: var(--ikf-yellow-dim);
+    color: var(--ink);
+  }
+  .sp-season-tab.is-active {
+    background: linear-gradient(135deg, #ffc300 0%, #ffd84d 100%);
+    border-color: transparent;
+    color: #1a1300;
+    box-shadow: 0 8px 18px -8px rgba(255,195,0,.55);
+  }
+  .sp-card--hidden { display: none !important; }
+
+  /* Season block */
+  .sp-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 0;
+    margin-bottom: 36px;
+    overflow: hidden;
+  }
+  .sp-card:last-child { margin-bottom: 0; }
+
+  .sp-card-header {
+    background: linear-gradient(135deg, #ffc300 0%, #ffd84d 100%);
+    padding: 22px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .sp-card-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a1300;
+    margin: 0;
+    letter-spacing: -.01em;
+  }
+  .sp-card-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.12);
+    color: #1a1300;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+
+  .sp-card-body {
+    padding: 28px 32px 32px;
+  }
+
+  /* Stats grid */
+  .sp-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .sp-stat {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: background .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .sp-stat::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--ikf-yellow);
+    opacity: 0;
+    transition: opacity .2s ease;
+  }
+  .sp-stat:hover {
+    background: #fff;
+    border-color: var(--ikf-yellow-border);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+  .sp-stat:hover::before {
+    opacity: 1;
+  }
+  .sp-stat-label {
+    font-family: var(--font-body);
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .09em;
+    color: var(--muted-2);
+    line-height: 1.3;
+  }
+  .sp-stat-value {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  /* Remarks */
+  .sp-remarks {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin: 0 0 24px;
+    padding: 14px 18px;
+    background: var(--ikf-yellow-dim);
+    border-left: 3px solid var(--ikf-yellow);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+
+  /* Section heading */
+  .sp-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    margin: 32px 0 14px;
+  }
+  .sp-section::before {
+    content: '';
+    width: 4px;
+    height: 16px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+  }
+  .sp-section:first-of-type { margin-top: 0; }
+
+  /* Table */
+  .sp-table-wrap {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .sp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body);
+  }
+  .sp-table thead {
+    background: var(--surface-2);
+  }
+  .sp-table th {
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+  .sp-table td {
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--muted);
+    vertical-align: middle;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .sp-table tbody tr:last-child td { border-bottom: none; }
+  .sp-table td:first-child {
+    color: var(--muted-2);
+    font-size: 13px;
+    font-weight: 700;
+    width: 56px;
+    background: var(--surface-2);
+  }
+  .sp-table td.sp-player {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .sp-table td.sp-clubs {
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+  .sp-table tbody tr {
+    transition: background .15s ease;
+  }
+  .sp-table tbody tr:hover {
+    background: var(--ikf-yellow-dim);
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .sp-stats { grid-template-columns: repeat(2, 1fr); }
+    .sp-card-header { padding: 18px 22px; }
+    .sp-card-body { padding: 22px 22px 26px; }
+    .sp-card-title { font-size: 17px; }
+    .sp-stat-value { font-size: 24px; }
+    .sp-page-title { font-size: 26px; }
+  }
+  @media (max-width: 540px) {
+    .sp-wrap { padding: 0 16px; margin: 28px auto 60px; }
+    .sp-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .sp-table th, .sp-table td { padding: 11px 12px; font-size: 13px; }
+  }
+</style>
+
+<div class="sp-wrap">
+
+  <header class="sp-page-header">
+    <div class="sp-page-eyebrow">Scouted Players Reports</div>
+    <h1 class="sp-page-title">Tyger IKF <span>Players Reports</span></h1>
+  </header>
+
+  {% if roasters %}
+  <section class="sp-roasters" aria-labelledby="roasters-h2">
+    <div class="sp-roasters__head">
+      <h2 id="roasters-h2" class="sp-roasters__title">Player Roasters</h2>
+      <p class="sp-roasters__sub">Click a cover to open the full roaster PDF.</p>
+    </div>
+    <div class="sp-roasters__grid">
+      {% for r in roasters %}
+        {% if r.pdf_url %}
+          <a class="sp-roaster-card"
+             href="{{ r.pdf_url }}"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="Open {{ r.title }} PDF">
+        {% else %}
+          <div class="sp-roaster-card sp-roaster-card--disabled" aria-label="{{ r.title }} (PDF not available)">
+        {% endif %}
+          <div class="sp-roaster-card__cover">
+            <img src="{{ r.cover_image.url }}" alt="{{ r.title }} cover" loading="lazy">
+            <span class="sp-roaster-card__badge">{{ r.get_roaster_type_display }}</span>
+          </div>
+          <div class="sp-roaster-card__body">
+            <h3 class="sp-roaster-card__title">{{ r.title }}</h3>
+            {% if r.subtitle %}<p class="sp-roaster-card__sub">{{ r.subtitle }}</p>{% endif %}
+            <span class="sp-roaster-card__cta">
+              {% if r.pdf_url %}
+                Open PDF
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7 17 17 7"/>
+                  <path d="M8 7h9v9"/>
+                </svg>
+              {% else %}
+                Coming soon
+              {% endif %}
+            </span>
+          </div>
+        {% if r.pdf_url %}
+          </a>
+        {% else %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <style>
+    .sp-roasters {
+      margin: 28px 0 40px;
+    }
+    .sp-roasters__head { text-align: center; margin-bottom: 22px; }
+    .sp-roasters__title {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -.4px;
+      color: #0b1120;
+    }
+    .sp-roasters__sub {
+      margin: 8px 0 0;
+      font-family: 'Lato', 'Inter', sans-serif;
+      font-size: 14px;
+      color: #5a6478;
+    }
+    .sp-roasters__grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    @media (max-width: 640px) { .sp-roasters__grid { grid-template-columns: 1fr; gap: 18px; max-width: 360px; } }
+
+    .sp-roaster-card {
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      border: 1px solid #eef0f4;
+      border-radius: 18px;
+      box-shadow: 0 6px 18px rgba(11,17,32,.06);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .sp-roaster-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(11,17,32,.10);
+      border-color: rgba(255,195,0,.55);
+    }
+    .sp-roaster-card--disabled {
+      opacity: .65;
+      cursor: not-allowed;
+    }
+    .sp-roaster-card--disabled:hover {
+      transform: none;
+      box-shadow: 0 6px 18px rgba(11,17,32,.06);
+      border-color: #eef0f4;
+    }
+    .sp-roaster-card__cover {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1; /* square */
+      background: linear-gradient(135deg, #fffbe6 0%, #ffffff 100%);
+      overflow: hidden;
+    }
+    .sp-roaster-card__cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .35s ease;
+    }
+    .sp-roaster-card:hover .sp-roaster-card__cover img { transform: scale(1.03); }
+    .sp-roaster-card__badge {
+      position: absolute;
+      top: 12px; left: 12px;
+      background: rgba(11,17,32,.85);
+      color: #ffc300;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+    }
+    .sp-roaster-card__body {
+      padding: 16px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sp-roaster-card__title {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #0b1120;
+      letter-spacing: -.2px;
+    }
+    .sp-roaster-card__sub {
+      margin: 0;
+      font-family: 'Lato', sans-serif;
+      font-size: 13.5px;
+      color: #5a6478;
+    }
+    .sp-roaster-card__cta {
+      margin-top: 10px;
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: #ffc300;
+      color: #0b1120;
+      border-radius: 999px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: .03em;
+    }
+    .sp-roaster-card--disabled .sp-roaster-card__cta {
+      background: #e2e6ee;
+      color: #5a6478;
+    }
+  </style>
+  {% endif %}
+
+  {% if season_blocks %}
+  <p class="sp-season-tabs__label">View scouted players from</p>
+  <nav class="sp-season-tabs" role="tablist" aria-label="Select season">
+    {% for block in season_blocks %}
+      <button type="button"
+              class="sp-season-tab{% if forloop.first %} is-active{% endif %}"
+              role="tab"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              data-season-target="{{ block.season.season }}">
+        {{ block.season.tab_label|default:block.season.title|default_if_none:"" }}{% if not block.season.tab_label and not block.season.title %}Season {{ block.season.season }}{% endif %}
+      </button>
+    {% endfor %}
+  </nav>
+  {% endif %}
+
+  {% for block in season_blocks %}
+    <article class="sp-card{% if not forloop.first %} sp-card--hidden{% endif %}"
+             data-season-card="{{ block.season.season }}"
+             role="tabpanel"
+             {% if not forloop.first %}hidden{% endif %}>
+
+      <div class="sp-card-header">
+        <h2 class="sp-card-title">
+          {% if block.season.title %}
+            {{ block.season.title }}
+          {% else %}
+            Tyger IKF Season {{ block.season.season }} Players Report
+          {% endif %}
+        </h2>
+        <span class="sp-card-badge">Season {{ block.season.season }}</span>
+      </div>
+
+      <div class="sp-card-body">
+
+        {% with p=block.season.participants|cut:" "|cut:"-"|cut:"—"|cut:"–" sc=block.season.scouted_count|cut:" "|cut:"-"|cut:"—"|cut:"–" sh=block.season.shortlisted_count|cut:" "|cut:"-"|cut:"—"|cut:"–" intl=block.season.international_scholarship_count|cut:" "|cut:"-"|cut:"—"|cut:"–" %}
+        {% if p or sc or sh or intl %}
+        <div class="sp-stats">
+          {% if p %}
+            <div class="sp-stat">
+              <span class="sp-stat-label">Participants</span>
+              <span class="sp-stat-value">{{ block.season.participants }}</span>
+            </div>
+          {% endif %}
+          {% if sc %}
+            <div class="sp-stat">
+              <span class="sp-stat-label">National Scouted</span>
+              <span class="sp-stat-value">{{ block.season.scouted_count }}</span>
+            </div>
+          {% endif %}
+          {% if sh %}
+            <div class="sp-stat">
+              <span class="sp-stat-label">National Shortlisted</span>
+              <span class="sp-stat-value">{{ block.season.shortlisted_count }}</span>
+            </div>
+          {% endif %}
+          {% if intl %}
+            <div class="sp-stat">
+              <span class="sp-stat-label">International Scholarship</span>
+              <span class="sp-stat-value">{{ block.season.international_scholarship_count }}</span>
+            </div>
+          {% endif %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        {% if block.season.remarks %}
+          <div class="sp-remarks">{{ block.season.remarks }}</div>
+        {% endif %}
+
+        {% if block.scouted %}
+          <div class="sp-section">Players Scouted by Clubs at Nationals</div>
+
+          <div class="sp-table-wrap">
+            <table class="sp-table">
+              <thead>
+                <tr>
+                  <th>Sr No</th>
+                  <th>Player Name</th>
+                  <th>Clubs</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for p in block.scouted %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td class="sp-player">{{ p.player_name }}</td>
+                    <td class="sp-clubs">{{ p.clubs }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% endif %}
+
+        {% if block.shortlisted %}
+          <div class="sp-section">Players Shortlisted by Clubs at Nationals</div>
+
+          <div class="sp-table-wrap">
+            <table class="sp-table">
+              <thead>
+                <tr>
+                  <th>Sr No</th>
+                  <th>Player Name</th>
+                  <th>Clubs</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for p in block.shortlisted %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td class="sp-player">{{ p.player_name }}</td>
+                    <td class="sp-clubs">{{ p.clubs }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% endif %}
+
+      </div>
+    </article>
+  {% endfor %}
+
+</div>
+
+<script>
+  (function(){
+    const tabs  = document.querySelectorAll('.sp-season-tab');
+    const cards = document.querySelectorAll('[data-season-card]');
+    if (!tabs.length || !cards.length) return;
+
+    function activate(season){
+      tabs.forEach(t => {
+        const on = t.dataset.seasonTarget === season;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      cards.forEach(c => {
+        const on = c.dataset.seasonCard === season;
+        c.classList.toggle('sp-card--hidden', !on);
+        if (on) c.removeAttribute('hidden'); else c.setAttribute('hidden', '');
+      });
+    }
+
+    tabs.forEach(t => {
+      t.addEventListener('click', () => activate(t.dataset.seasonTarget));
+    });
+  })();
+</script>
+{% endblock %}

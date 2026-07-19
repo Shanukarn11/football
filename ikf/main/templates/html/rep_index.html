@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="rep-index">
+  <div class="wrap">
+
+    <!-- Eyebrow -->
+    
+
+    <!-- Header row -->
+    <header class="head">
+      <h1 class="page-title">All Representatives</h1>
+
+      <!-- Live search (filters instantly) -->
+      <form class="search" onsubmit="return false;">
+        <div class="searchbox">
+          <svg aria-hidden="true" class="icon" viewBox="0 0 24 24">
+            <path d="M21 21l-4.35-4.35m1.85-5.4a7.5 7.5 0 11-15 0 7.5 7.5 0 0115 0z"
+                  fill="none" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <input id="repSearch" type="text" value="{{ q }}" placeholder="Search reps…" autocomplete="off" />
+          <button id="clearSearch" type="button" aria-label="Clear">×</button>
+        </div>
+      </form>
+    </header>
+
+    <!-- Results count -->
+    <p class="result-note"><span id="resultCount"></span></p>
+
+    <!-- Grid -->
+    <div id="repGrid" class="grid">
+      {% for r in reps %}
+        <a class="grid-pill ikf-soft"
+           data-name="{{ r.rep_name|lower }}"
+           href="/rep/{{ r.template_link }}/"
+           title="{{ r.rep_name }}">
+          <div class="glogo">
+            {% if r.rep_logo %}
+              <img src="{{ r.rep_logo.url }}" alt="{{ r.rep_name }}">
+            {% else %}
+              <img src="{% static 'images/placeholder.png' %}" alt="{{ r.rep_name }}">
+            {% endif %}
+          </div>
+          <div class="gtext">
+            <h3>{{ r.rep_name }}</h3>
+            {% if r.cities_of_operation %}
+            <p class="gcity">{{ r.cities_of_operation }}</p>
+            {% endif %}
+          </div>
+        </a>
+      {% empty %}
+        <p>No reps found.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  :root{
+    --ink:#1a1f2b;
+    --muted:#566070;
+    --amber:#ffc300;
+    --amber-200:#ffe16e;
+    --pill-bg:#fffdf0;
+    --pill-border:#f3e8a3;
+    --ring:rgba(17,17,17,.08);
+  }
+
+  /* ===== ikf-soft card (white with yellow border) ===== */
+  .ikf-soft{
+    background:#fff;
+    border:1px solid rgba(255,195,0,.35);
+    border-radius:22px;
+    box-shadow:0 14px 34px rgba(15,23,42,.06);
+    padding:22px 24px;
+  }
+
+  /* Four-corner soft yellow ambience */
+  .rep-index{
+    position: relative;
+    overflow: hidden;
+    padding-top: 8px;
+    isolation: isolate;
+  }
+  .rep-index::before{
+    content: "";
+    position: absolute;
+    inset: -140px;
+    z-index: 0;
+    filter: blur(24px);
+    opacity: .55;
+    pointer-events: none;
+    background:
+      radial-gradient(460px 320px at -8% -10%,  rgba(255,195,0,.45), transparent 70%),
+      radial-gradient(420px 300px at 108% -10%, rgba(255,225,110,.38), transparent 72%),
+      radial-gradient(420px 300px at -8% 108%, rgba(255,225,110,.34), transparent 72%),
+      radial-gradient(460px 320px at 108% 108%, rgba(255,195,0,.32), transparent 70%);
+  }
+  .rep-index .wrap{
+    position: relative;
+    z-index: 1;
+  }
+
+  .wrap{
+    position:relative;
+    z-index:1;
+    padding:0 150px;
+    max-width:1400px;
+    margin:0 auto;
+  }
+  @media (max-width: 992px){
+    .wrap{ padding:0 24px; }
+  }
+
+  /* Eyebrow */
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background: var(--pill-bg);
+    border:1px solid var(--pill-border);
+    color:#8a6d00;
+    font-weight:700; font-size:12px; letter-spacing:.4px; text-transform:uppercase;
+    padding:6px 10px; border-radius:999px; margin:4px 0 10px;
+  }
+  .eyebrow::before{ content:"✦"; color:var(--amber); }
+
+  /* Header + underline */
+  .head{ display:flex; justify-content:space-between; align-items:center; gap:16px; }
+  .page-title{
+    margin:0;
+    display:inline-block;
+    font-size:32px; font-weight:700; letter-spacing:.2px; color:var(--ink);
+    position:relative;
+  }
+  .page-title::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:-10px;
+    height:4px; border-radius:4px; background:var(--amber);
+  }
+
+  /* Search */
+  .search{ margin-left:auto; }
+  .searchbox{
+    position:relative; display:flex; align-items:center;
+    background:#fff; border:1px solid var(--ring); border-radius:14px;
+    padding:0 12px; min-width:320px; box-shadow:0 6px 14px rgba(0,0,0,.04);
+  }
+  .searchbox .icon{ width:18px; height:18px; color:#9aa3af; flex:0 0 auto; }
+  #repSearch{
+    appearance:none; border:none; outline:none; background:transparent;
+    padding:12px 8px; flex:1; font-size:15px; color:var(--ink);
+  }
+  #clearSearch{
+    appearance:none; border:none; background:transparent; color:#9aa3af;
+    font-size:20px; line-height:1; padding:6px; cursor:pointer; border-radius:8px;
+  }
+  #clearSearch:hover{ color:#6b7280; background:#f3f4f6; }
+
+  .result-note{ margin:20px 0 8px; color:#7a8597; font-size:14px; }
+
+  /* Grid */
+  .grid{
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:26px; padding:10px 0 56px;
+  }
+  @media (max-width:900px){ .grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:640px){ .grid{ grid-template-columns:1fr; } }
+
+  /* Card layout – visuals now come from .ikf-soft */
+  .grid-pill{
+    display:flex; gap:18px; align-items:center;
+    text-decoration:none; color:inherit;
+    min-height:250px;
+    /* no background/border here – handled by .ikf-soft */
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .12s ease;
+  }
+  .grid-pill:hover{
+    transform:translateY(-3px);
+    box-shadow:0 20px 38px rgba(255,195,0,.20);
+    border-color:var(--amber-200);
+    background:#fffef7;
+  }
+
+  .glogo{
+  width:120px;              /* a bit bigger to match taller pill */
+  height:120px;             /* fixed height so we get a proper box */
+  border-radius:18px;
+  background:#fff;
+  border:1px solid #eee;
+  display:grid;
+  place-items:center;
+  overflow:hidden;          /* ensures nothing spills outside */
+  flex-shrink:0;
+}
+
+.glogo img{
+  width:100%;
+  height:100%;              /* fill the whole box */
+  display:block;
+  object-fit:cover;         /* crop nicely instead of squishing */
+  object-position:center;
+}
+
+
+  .gtext h3{
+    margin:0;
+    font-weight:800;
+    font-size:22px;
+    line-height:1.12;
+    color:var(--ink);
+  }
+
+  .gcity {
+    margin: 6px 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .gcity::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--amber);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+</style>
+
+<script>
+  (function(){
+    const qInput   = document.getElementById('repSearch');
+    const clearBtn = document.getElementById('clearSearch');
+    const grid     = document.getElementById('repGrid');
+    const items    = Array.from(grid.querySelectorAll('.grid-pill'));
+    const countEl  = document.getElementById('resultCount');
+
+    function applyFilter() {
+      const q = (qInput.value || '').trim().toLowerCase();
+      let shown = 0;
+      items.forEach(el => {
+        const name = el.getAttribute('data-name');
+        const match = !q || name.includes(q);
+        el.style.display = match ? '' : 'none';
+        if (match) shown++;
+      });
+      countEl.textContent = shown + (shown === 1 ? ' representative' : ' representatives');
+    }
+
+    qInput.addEventListener('input', applyFilter);
+    clearBtn.addEventListener('click', () => {
+      qInput.value = '';
+      qInput.focus();
+      applyFilter();
+    });
+
+    // initial count on load (with any prefilled q)
+    applyFilter();
+  })();
+</script>
+
+{% endblock %}

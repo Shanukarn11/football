@@ -1,0 +1,14 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+  <h1>Upload Players CSV</h1>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>
+      <input type="file" name="csv_file" accept=".csv" required>
+    </p>
+
+    <button class="default" type="submit">Upload</button>
+    <a href="..">Cancel</a>
+  </form>
+{% endblock %}

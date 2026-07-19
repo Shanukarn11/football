@@ -1,0 +1,534 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block title %}Invest in Social Impact | Empower India's Future - India Khelo Football{% endblock title %}
+
+{% block meta_description %}Invest in India's future through football with India Khelo Football (IKF). Your CSR investment supports essential life skills, health and well-being, gender equality, and community development. Join us in creating a lasting legacy of empowered youth, vibrant communities, and a healthier, more equitable society. Together, we can build a stronger India.{% endblock meta_description%}
+
+{% block meta_keywords %}Invest in Social Impact, India Khelo Football, CSR investment, football in India, youth empowerment, community development, gender equality, health and well-being, social impact through sport{% endblock meta_keywords%} 
+
+{% block content %}
+<div class="page-content">
+  <style>
+    :root{
+      --ikf-yellow:#ffc300;
+      --ikf-ink:#0f172a;
+      --ikf-muted:#4b5563;
+      --ikf-line:#e5e7eb;
+      --ikf-ring:#eaeef4;
+      --ikf-butter:#fffef2;
+    }
+
+    /* generic soft container */
+    .ikf-soft{
+      background:#ffffff;
+      border:1px solid rgba(255,195,0,.35);
+      border-radius:16px;
+      box-shadow:0 14px 34px rgba(15,23,42,.06);
+      padding:20px 22px;
+    }
+
+    /* ========= HERO (TEXT LEFT, IMAGE RIGHT) ========= */
+
+    .trials-hero{
+      padding: 40px 0 20px;
+      background:#ffffff;
+    }
+    .trials-hero-wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:0 16px;
+      font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+    }
+    .trials-hero__grid{
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+    @media(min-width:900px){
+      .trials-hero__grid{
+        display:grid;
+        grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); /* text | image */
+        gap:40px;
+        align-items:center;
+      }
+    }
+
+    .trials-hero__left{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      max-width:680px;
+    }
+    .trials-hero__title{
+      font-size:40px;
+      font-weight:800;
+      margin:0;
+      color:var(--ikf-ink);
+    }
+    .trials-hero__title span{
+      color:black;
+    }
+    .trials-hero__subtitle{
+      font-size:18px;
+      font-weight:500;
+      margin:0;
+      color:var(--ikf-muted);
+    }
+
+    .trials-hero__right{
+      width:100%;
+    }
+    .trials-hero__media{
+      position:relative;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 16px 40px rgba(15,23,42,.16), 0 1px 0 var(--ikf-line) inset;
+      background:#000;
+      width:100%;
+      aspect-ratio:3/2.5;
+    }
+    .trials-hero__img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+    }
+
+    /* ========= TYPO & BASE ========= */
+
+    p, li{
+      font-size:16px;
+      line-height:1.7;
+      color:var(--ikf-muted);
+    }
+
+    .season5-wrapper .section-content{
+      max-width:1100px;
+      margin:0 auto 50px;
+      padding:0 16px;
+    }
+
+    .season5-wrapper .dez-post-title h2{
+      font-size:22px;
+      font-weight:600;
+      color:var(--ikf-ink);
+    }
+
+    .season5-wrapper .blog-post .col-lg-4 img{
+      border-radius:18px;
+      box-shadow:0 15px 35px rgba(15,23,42,0.18);
+    }
+
+    .season5-wrapper table.table{
+      margin-top:16px;
+      border-radius:12px;
+      overflow:hidden;
+      background:#ffffff;
+      box-shadow:0 10px 30px rgba(15,23,42,0.07);
+      border-color:rgba(148,163,184,0.3);
+    }
+    .season5-wrapper table.table tr td{
+      padding:10px 18px;
+      vertical-align:middle;
+      font-size:15px;
+    }
+    .season5-wrapper table.table tr td:first-child{
+      background:rgba(248,250,252,0.9);
+      font-weight:500;
+      color:var(--ikf-ink);
+      width:40%;
+    }
+
+    .season5-wrapper .m-tb30 .site-button{
+      border-radius:999px;
+      padding:10px 28px;
+      font-size:14px;
+      font-weight:500;
+      border:none;
+      background:var(--ikf-yellow);
+      color:#111827 !important;
+      box-shadow:0 10px 25px rgba(234,179,8,0.45);
+      margin-right:8px;
+    }
+
+    /* ========= 4 FEATURE BOXES STRIP ========= */
+
+    .our-projects-galery{
+      background:linear-gradient(180deg,#fffefc, #fffaf0);
+      padding:40px 0 50px;
+    }
+
+    /* remove any dark overlay if overlay-black-middle adds one */
+    .our-projects-galery.overlay-black-middle:before,
+    .our-projects-galery.overlay-black-middle:after{
+      display:none !important;
+    }
+
+    .our-projects-galery .border-1{
+      background:#ffffff;
+      border-radius:16px;
+      border:1px solid rgba(255,195,0,0.6);
+      box-shadow:0 14px 35px rgba(15,23,42,0.12);
+      color:var(--ikf-ink);
+    }
+    .our-projects-galery .border-1 h4{
+      color:var(--ikf-ink);
+      font-weight:600;
+      margin-bottom:6px;
+    }
+    .our-projects-galery .border-1 p{
+      color:var(--ikf-muted);
+      font-size:14px;
+    }
+    .our-projects-galery .dez-separator.bg-primary{
+      background:var(--ikf-yellow) !important;
+    }
+
+    .our-projects-galery .sports-icon img{
+      filter:drop-shadow(0 6px 16px rgba(15,23,42,0.3));
+    }
+
+    /* ========= SUPPORT CARDS / CTA ========= */
+
+    .text-center .h3{
+      color:var(--ikf-ink);
+      font-weight:600;
+    }
+    .text-center .dez-separator.bg-primary{
+      background:var(--ikf-yellow);
+      height:3px;
+      width:80px;
+      margin:8px auto 0;
+    }
+
+    .funding-card{
+      min-height:320px;
+      border-radius:18px;
+      border:1px solid rgba(148,163,184,0.35);
+      box-shadow:0 16px 40px rgba(15,23,42,0.08);
+      background:#ffffff;
+      overflow:hidden;
+    }
+    .funding-card h3{
+      background:linear-gradient(90deg, rgba(255,195,0,0.16), rgba(255,221,102,0.6));
+      color:var(--ikf-ink);
+      border-bottom:1px solid rgba(148,163,184,0.35);
+    }
+    .funding-card ul li{
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .highlighted-button {
+      background: linear-gradient(90deg, rgba(255,195,0,0.15), var(--ikf-yellow), rgba(255,195,0,0.15));
+      background-size: 200% 100%;
+      animation: shimmer-animation 3s infinite;
+      border-radius: 0 0 16px 16px;
+      border-top:1px solid rgba(234,179,8,0.5);
+      font-weight:500;
+    }
+
+    @keyframes shimmer-animation {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ========= CAROUSEL CARDS ========= */
+
+    .owl-carousel.img-carousel-content .ow-carousel-entry{
+      background:#ffffff;
+      border-radius:16px;
+      padding:18px 16px 22px;
+      box-shadow:0 14px 32px rgba(15,23,42,0.1);
+      border:1px solid rgba(148,163,184,0.35);
+    }
+    .owl-carousel.img-carousel-content .ow-entry-media img{
+      border-radius:12px;
+      background:#ffffff;
+      padding:10px;
+    }
+    .owl-carousel.img-carousel-content .ow-entry-title{
+      margin-top:10px;
+      font-size:14px;
+      font-weight:500;
+      color:var(--ikf-ink);
+    }
+    .ikf-media{ position:relative; display:block; }
+  .ikf-media img{ display:block; width:100%; height:100%; object-fit:cover; }
+
+  .ikf-caption{
+    position:absolute;
+    right:12px;
+    bottom:12px;
+    z-index:2;
+    font-size:13px;
+    line-height:1.35;
+    font-style:italic;
+    color:#fff;
+    text-align:right;
+    padding:6px 10px;
+    border-radius:10px;
+    max-width:85%;
+  }
+  .ikf-caption::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.65); /* black bg */
+    border-radius:10px;
+    z-index:-1;}
+    @media(max-width:900px){
+      .trials-hero-wrap{ padding:0 14px; }
+      .trials-hero__title{ font-size:32px; }
+      .season5-wrapper .section-content{ padding:0 14px; }
+    }
+    
+  </style>
+
+  {# ======= HERO (unchanged layout) ======= #}
+  <section class="trials-hero">
+    <div class="trials-hero-wrap">
+      <div class="trials-hero__grid">
+        <div class="trials-hero__left">
+          <h1 class="trials-hero__title">
+            Tyger IKF Season 5 <span>National Finals</span>
+          </h1>
+          <p class="trials-hero__subtitle">Biggest trials in Asia</p>
+        </div>
+        <div class="trials-hero__right">
+          <div class="trials-hero__media ikf-media">
+  <img
+    loading="lazy"
+    src="{% if hero_image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/academy.png' %}{% endif %}"
+    alt="{% if hero_image and hero_image.caption %}{{ hero_image.caption }}{% else %}Tyger IKF National Finals{% endif %}"
+    class="trials-hero__img"
+  />
+
+  <div class="ikf-caption">
+    {% if hero_image and hero_image.caption %}
+      {{ hero_image.caption }}
+    {% else %}
+      Tyger IKF National Finals
+    {% endif %}
+  </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+    
+  <div class="container m-t40 season5-wrapper">
+    <div class="section-content">
+      <div>
+
+        {# ===== DETAILS + TABLE WRAPPED IN IKF-SOFT ===== #}
+        <div class="ikf-soft m-b30">
+          <div class="row blog-post blog-md date-style-2">
+            <div class="col-lg-4 col-md-4 col-sm-5 m-b30">
+  <div class="ikf-media" style="border-radius:18px; overflow:hidden;">
+    <img
+      loading="lazy"
+      src="{% if page_images|length > 1 %}{{ page_images.1.image.url }}{% else %}{% static 'images/banners/part3.png' %}{% endif %}"
+      alt="{% if page_images|length > 1 and page_images.1.caption %}{{ page_images.1.caption }}{% else %}detail{% endif %}"
+      style="width:100%; height:auto; display:block;"
+    />
+
+    <div class="ikf-caption">
+      {% if page_images|length > 1 and page_images.1.caption %}
+        {{ page_images.1.caption }}
+      {% else %}
+        Tyger-IKF Trials
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+            <div class="col-lg-8 col-md-8 col-sm-7">
+              <div class="dez-post-title ">
+                <h2 class="h5 m-t0">Tyger-IKF Trials</h2>
+              </div>
+
+              <p class="m-b10 text-justify">
+                IKF is a not-for-profit initiative working towards creating structured career pathway for aspiring football players in India. IKF conducts talent hunt across India every year in multiple cities and villages to hunt Desi Messis and showcase them to professional clubs thereby creating talent pipeline for Indian football
+              </p>
+
+              <table class="table table-bordered">
+                <tr>
+                  <td>Date of National Finals</td>
+                  <td>23rd January 2026</td>
+                </tr>
+                <tr>
+                  <td>Venue</td>
+                  <td>Cooperage Football Ground, Mumbai</td>
+                </tr>
+                <tr>
+                  <td>Timing</td>
+                  <td>8 AM to 5 PM</td>
+                </tr>
+                <tr>
+                  <td>Number of players to be showcased</td>
+                  <td>200 exceptional players scouted from 20,000+ players</td>
+                </tr>
+              </table>
+              <div class="m-tb30">
+                <a href="https://indiakhelofootball.com/team-behind-ikf" class="site-button text-dark">About IKF</a>
+                <a href="{% url 'season5' %}" class="site-button text-dark">About IKF Trials</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {# ===== FEATURE STRIP: ROW WRAPPED IN IKF-SOFT (inside band) ===== #}
+        <div class="section-full bg-img-fix content-inner overlay-black-middle our-projects-galery"
+             style="background-image:url('https://res.cloudinary.com/dqmmxqwiq/image/upload/v1733750240/India%20Khelo%20Football/jpeg-optimizer_BG1_ax1bb8.jpg'); background-position:center;">
+          <div class="container">
+            <div class="ikf-soft">
+              <div class="row">
+                {% for feature in featurestrips %}
+                <div class="col-lg-3 col-sm-6 m-b30">
+                  <div class="border-1 p-a15 text-center text-white skew-triangle left-top hvr-wobble-horizontal">
+                    <div class="sports-icon ">
+                      <img loading="lazy" width="85" height="85" src="{{ feature.pic }}" alt="" />
+                    </div>
+
+                    {% if forloop.counter == 1 %}
+                      <h4 class="text-capitalize">135 Cities Covered</h4>
+                      <div class="dez-separator-outer ">
+                        <div class="dez-separator bg-primary style-liner"></div>
+                      </div>
+                      <p class="m-b0">
+                        Physical trials were conducted in 135 cities and villages across India
+                      </p>
+                    {% elif forloop.counter == 2 %}
+                      <h4 class="text-capitalize">20000+ Participants</h4>
+                      <div class="dez-separator-outer ">
+                        <div class="dez-separator bg-primary style-liner"></div>
+                      </div>
+                      <p class="m-b0">
+                        Twenty thousand boys and girls 11 to 17 years old participated in Season 5 Trials
+                      </p>
+                    {% elif forloop.counter == 3 %}
+                      <h4 class="text-capitalize">200+ Exceptional Talent</h4>
+                      <div class="dez-separator-outer ">
+                        <div class="dez-separator bg-primary style-liner"></div>
+                      </div>
+                      <p class="m-b0">
+                        Top talent scouted from 20,000+ participants to be showcased in Finals
+                      </p>
+                    {% else %}
+                      <h4 class="text-capitalize">{{ feature.heading }}</h4>
+                      <div class="dez-separator-outer ">
+                        <div class="dez-separator bg-primary style-liner"></div>
+                      </div>
+                      <p class="m-b0">{{ feature.paragraph }}</p>
+                    {% endif %}
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center m-b30 m-t30">
+          <h2 class="h3">Support Us</h2>
+          <div class="dez-separator bg-primary"></div>
+        </div>
+
+        {# ===== SUPPORT CARDS WRAPPED IN IKF-SOFT ===== #}
+        <div class="container">
+          <div class="ikf-soft">
+            <div class="row">
+              <div class="col-12 col-lg-4 p-0 mb-3 mb-lg-0 px-lg-3">
+                <div class="d-flex flex-column funding-card">
+                  <h3 class="rounded-top h5 m-0 p-b10 p-t10 d-flex justify-content-center align-items-center">
+                    Sponsor
+                  </h3>
+                  <ul class="flex-grow-1 m-l30 m-t20 m-b20  p-1">
+                    <li>Get on ground branding, social media content, Docuseries brought to you by</li>
+                    <li>Media PR</li>
+                  </ul>
+                  <a class="highlighted-button m-b0 h6 site-button rounded-bottom text-dark w-100 p-2 d-flex justify-content-center align-items-center" href="https://youtu.be/z6ftIht_MQY?si=ecEQt9RbQna9JLEd">
+                    Click to Know More
+                  </a>
+                </div>
+              </div>
+              
+              <div class="col-12 col-lg-4 p-0 mb-3 mb-lg-0 px-lg-3">
+                <div class="d-flex flex-column funding-card">
+                  <h3 class="rounded-top h5 m-0 p-b10 p-t10 d-flex justify-content-center align-items-center">
+                    CSR driven Award
+                  </h3>
+                  <ul class="flex-grow-1 m-l30 m-t20 m-b20 p-1">
+                    <li>Utilize CSR budget in creating Legacy Award for Supporting “Emerging Talent from Finals”</li>
+                    <li>Get on ground branding and content</li>
+                    <li>Create huge impact by supporting future stars</li>
+                  </ul>
+                  <a class="highlighted-button rounded-bottom m-b0 h6 site-button text-dark w-100 p-2 d-flex justify-content-center align-items-center" href="https://indiakhelofootball.com/annual_impact">
+                    Click to Know More
+                  </a>
+                </div>
+              </div>
+              
+              <div class="col-12 col-lg-4 p-0 mb-3 mb-lg-0 px-lg-3">
+                <div class="d-flex flex-column funding-card">
+                  <h3 class="rounded-top h5 m-0 p-b10 p-t10 d-flex justify-content-center align-items-center">
+                    Donate
+                  </h3>
+                  <ul class="flex-grow-1 m-l30 m-t20 m-b20  p-1">
+                    <li>Donate to allow us to support these talented players from across India</li>
+                    <li>Get 80G certification</li>
+                    <li>Secure upto 50% tax deduction</li>
+                  </ul>
+                  <a class="rounded-bottom m-b0 h6 site-button text-dark w-100 p-2 d-flex justify-content-center align-items-center highlighted-button" href="{% url 'Donate'%}">
+                    Click to Donate
+                  </a>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center m-b30 m-t60">
+          <h2 class="h3">Our Partners for this Season</h2>
+          <div class="dez-separator bg-primary"></div>
+        </div>
+
+        {# ===== PARTNERS CAROUSEL WRAPPED IN IKF-SOFT ===== #}
+        <div class="ikf-soft">
+          <div
+            class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr"
+          >
+            {% for clubs in PartnerSeasonSupportIKF %}
+            <div class="item">
+              <div
+                class="ow-carousel-entry d-flex flex-column align-items-center; justify-content-center text-center"
+              >
+                <div
+                  class="ow-entry-media dez-img-effect zoom-slow d-flex justify-content-center"
+                >
+                  <img loading="lazy" 
+                    src="{{ clubs.pic }}"
+                    alt="{{ clubs.name }}"
+                    style="width: 200px; height: 200px"
+                  />
+                </div>
+                <div class="ow-entry-content">
+                  <div class="ow-entry-title">{{ clubs.name }}</div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+    
+</div>
+<!-- Content END-->
+{% endblock content %}

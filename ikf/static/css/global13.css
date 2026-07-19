@@ -1,0 +1,601 @@
+@font-face {
+  font-family: "Avenir" !important;
+  src: url("fonts/AvenirLTStd-Roman.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Fonts - START*/
+
+/* Fonts - END*/
+
+/* Fonts - START*/
+
+/* Season Card START */
+.ikf-card {
+  display: grid;
+  gap: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 2rem 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.ikf-card:hover {
+  transform: translateY(-5px);
+}
+
+.ikf-card-title {
+  font-size: 2.25rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  color: #000;
+}
+
+.ikf-card-year {
+  display: block; /* This will only push year to the next line */
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #000;
+  margin-top: 0.5rem;
+}
+
+.ikf-card-text {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.ikf-card-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.ikf-card-stats div {
+  flex: 1 1 100px;
+}
+
+.ikf-card-stats small {
+  display: block;
+  font-size: 1rem;
+  font-weight: 100;
+  color: #000;
+  margin-top: 0.25rem;
+}
+
+.ikf-box {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.ikf-season-label {
+  min-width: 120px;
+}
+
+.ikf-season-desc p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+  padding-left: 0;
+}
+/* Season Card END */
+
+/* FAQ START*/
+
+.ikf-faq-section {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+.ikf-faq-section h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  padding-bottom: 0.5rem;
+}
+
+.ikf-faq-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.ikf-faq-wrapper {
+  border-bottom: 1px solid #ccc;
+}
+
+.ikf-faq-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  color: #000;
+  cursor: pointer;
+}
+
+.ikf-faq-item span {
+  font-size: 1rem;
+}
+
+.ikf-faq-item .plus {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.ikf-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  font-size: 1rem;
+  line-height: 2;
+  color: #000;
+}
+/*FAQ END*/
+
+/*JOURNEY CARD START*/
+
+.ikf-journey-step {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1.25rem 1rem;
+  display: grid;
+  gap: 0.5rem;
+  background: #fff;
+  max-width: 100%;
+}
+
+.ikf-journey-title {
+  font-size: 2rem;
+  font-weight: 350;
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+  color: #000;
+  text-align: left;
+  padding-left: 0.75rem;
+}
+
+.ikf-journey-fee {
+  padding-left: 0.75rem;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  color: #000;
+  font-weight: 400;
+  text-align: left;
+}
+
+.ikf-journey-desc {
+  padding-left: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #000;
+}
+
+.ikf-journey-step:hover {
+  background: linear-gradient(to bottom, #fff8e1, #ffc300);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+/*JOURNEY CARD END*/
+
+/*Calendar workshop Section*/
+.filters-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.filter-block {
+  flex: 1 1 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* ensures select at top, result text at bottom */
+}
+
+@media (max-width: 768px) {
+  .filters-wrapper {
+    flex-direction: column;
+  }
+
+  .filter-block {
+    width: 100%;
+  }
+}
+
+.ikf-calendar-results .result-count {
+  font-size: 1.1rem; /* adjust as needed (e.g. 0.8rem for even smaller) */
+  line-height: 1.2;
+}
+
+
+.workshop-card {
+  width: 100%;
+  max-width: 380px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 0.75rem;
+  font-family: "Avenir", sans-serif;
+  margin: 0.25rem 0.5rem;
+}
+
+.workshop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.35rem;
+}
+
+.workshop-header h4 {
+  line-height: 1.2;
+}
+
+.DATE-CONFIRMED {
+  background-color: #b4fdbb;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: #1c8217;
+  cursor: default;
+}
+
+.CITY-CONFIRMED {
+  background-color: #fce472;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: #9c3606;
+  cursor: default;
+}
+
+.COMING-SOON {
+  background-color: #6defe5;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: #464f53;
+  cursor: default;
+}
+.COMPLETED {
+  background-color: #E9FFEB;
+  border: 1px solid #1E9219;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: #464f53;
+  cursor: default;
+}
+
+.workshop-fields {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  grid-template-rows: auto auto;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.input-box {
+  border-left: 5px solid #ffc300;
+  border-top: 2px solid #ffe073;
+  border-right: 2px solid #ffe073;
+  border-bottom: 2px solid #ffe073;
+  border-radius: 10px;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.input-box p {
+  font-family: "Avenir", sans-serif;
+  font-weight: 500;
+  color: #000;
+}
+
+.input-box:nth-child(1) {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+.input-box:nth-child(2) {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+
+.date-box {
+  border-left: 5px solid #ffc300;
+  border-top: 2px solid #ffe073;
+  border-right: 2px solid #ffe073;
+  border-bottom: 2px solid #ffe073;
+  border-radius: 10px;
+  padding: 0.2rem 0.2rem;
+  font-size: 1rem;
+  font-family: "Avenir", sans-serif;
+  font-weight: 500;
+  text-align: center;
+  width: 60px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+  color: #000;
+}
+
+.icon-btn {
+  border: 2px solid #ffc300;
+  border-radius: 10px;
+  background: white;
+  padding: 0.4rem;
+  width: 45px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  grid-column: 3 / 4;
+  grid-row: 1 / 3;
+}
+
+.icon-btn img {
+  width: 18px;
+  height: 18px;
+}
+
+.register-btn {
+  width: 100%;
+  padding: 0.5rem 0.5rem;
+  border: 2px solid #ffc300;
+  border-radius: 10px;
+  background-color: white;
+  font-size: 1rem;
+  font-family: "Avenir", sans-serif;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ikf-calendar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Force 4 cards per row */
+  gap: 1.5rem; /* Slight gap between cards */
+  padding: 2rem 1rem;
+  width: 100%;
+  max-width: 100%; /* Use full container width */
+
+  margin: 0 auto; /* Center inside parent if needed */
+  box-sizing: border-box;
+}
+
+@media (max-width: 1280px) {
+  .ikf-calendar {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 960px) {
+  .ikf-calendar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .ikf-calendar {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*Adding hover feature on location pin and register buttons*/
+
+.icon-btn:hover,
+.register-btn:hover {
+  background-color: #ffc300;
+  border-color: #ffc300;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.icon-btn:hover img,
+.register-btn:hover a {
+  filter: brightness(0); /* makes icon/text black */
+  color: black;
+}
+
+/* Make in
+puts and other fields grey with black text */
+.workshop-card.completed .input-box,
+.workshop-card.completed .date-box {
+  background-color: #E9FFEB !important;
+  border: 2px solid #1E9219 !important; /* black border instead of yellow */
+  border-left: 5px solid #1E9219 !important; /* black stripe */
+  color: #000 !important; /* black text */
+}
+
+.workshop-card.completed .icon-btn {
+  color: #000 !important;
+  background-color: #E9FFEB !important;
+  border: 2px solid #1E9219 !important;
+}
+
+.workshop-card.completed .input-box::placeholder {
+  color: #000 !important;
+}
+
+.workshop-card.completed .input-box,
+.workshop-card.completed .date-box p,
+.workshop-card.completed .icon-btn img {
+  color: #000;
+}
+
+/* Style the disabled register button like the input fields */
+.workshop-card.completed .register-btn.disabled {
+  background-color: #E9FFEB;
+  color: #000 !important;
+  border: 2px solid #1E9219 !important;
+  border-radius: 10px;
+  cursor: not-allowed;
+  pointer-events: none;
+  text-align: center;
+}
+
+.workshop-card.completed {
+  background-color: #E9FFEB;
+  border: 2px solid #1E9219 !important; /* black border */
+  opacity: 0.5;
+}
+
+/* Fixing the search and filter buttons */
+
+.search-form .form-row {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.search-form .form-row > * {
+  margin-right: 1rem; /* Add spacing between all elements */
+}
+
+.form-input {
+  flex: 1;
+  border: 2px solid #f5f5f7;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  font-family: "Avenir LT Std", sans-serif;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.form-input:focus {
+  border-color: #2c323a;
+}
+
+.form-button {
+  border: 2px solid #f5f5f7;
+  background-color: white;
+  color: #2c323a;
+  font-family: "Avenir LT Std", sans-serif;
+  font-size: 1rem;
+  line-height: 1.2; /* Ensure vertical alignment */
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center; /* ⬅️ Align text vertically */
+  justify-content: center;
+  height: 100%; /* Match height with inputs */
+}
+
+.form-button:hover {
+  background-color: #ffd600;
+  color: black;
+}
+
+.small-button {
+  flex: 0 0 auto;
+  min-width: 80px;
+  padding: 0.5rem 1rem;
+}
+
+.button-group-mobile {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+/* Responsive view for smaller screens */
+@media (max-width: 768px) {
+  .search-form .form-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .form-input,
+  .small-button {
+    width: 100%;
+  }
+
+  .button-group-mobile {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .button-group-mobile .form-button {
+    flex: 1;
+    min-width: 0; /* prevent forcing width */
+  }
+
+  .ikf-calendar-form {
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
+  }
+}
+
+/*Result count area*/
+
+.result-count {
+  margin: 1rem auto;
+  font-size: 1.05rem;
+  color: #333;
+  font-size: 1.25rem;
+  font-family: "Avenir", sans-serif !important;
+  font-weight: 500;
+}
+
+.container .ikf-calendar-results {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/*Re-Doing the filter area*/
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 600px;
+}
+
+.form-wrapper select,
+.form-wrapper .result-count {
+  width: 100%;
+}
+
+/*Registration closed if event COMPLETED */
+.register-btn.disabled {
+  background-color: #e0e0e0;
+  color: #777;
+  border-color: #ccc;
+  cursor: not-allowed;
+  pointer-events: none;
+  text-align: center;
+}
+
+.register-btn.disabled span {
+  color: #000;
+  font-weight: 500;
+  font-family: "Avenir", sans-serif;
+}
+
+/* .workshop-card.completed {
+  background-color: #ccc;
+  opacity: 0.7;
+  pointer-events: none;
+} */

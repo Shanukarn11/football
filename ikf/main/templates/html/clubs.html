@@ -1,0 +1,636 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-dim:    rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --surface:           #ffffff;
+    --surface-2:         #f8f9fb;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         22px;
+    --shadow-sm:         0 2px 8px  rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md:         0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg:         0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  /* ── Layout ── */
+  .ikf-wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  .ikf-section { padding: 36px 0 44px; }
+  .ikf-section + .ikf-section { padding-top: 18px; }
+
+  /* ── Soft panel ── */
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 28px;
+    position: relative;
+  }
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* ── Headings ── */
+  .ikf-h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 14px;
+    letter-spacing: -.3px;
+  }
+  .ikf-h2:first-child { margin-top: 0; }
+
+  /* ── Body copy ── */
+  p, li {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  .section-lead {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 16px;
+  }
+
+  /* ── Yellow-dot bullets ── */
+  .ikf-list { list-style: none; padding-left: 0; margin: 0; }
+  .ikf-list li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .ikf-list li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 8px;
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: #facc15;
+    box-shadow: 0 0 0 3px rgba(250,204,21,.25);
+  }
+
+  /* ═══════════════════════
+     HERO — Season 6 layout
+  ════════════════════════ */
+  .club-hero { padding-top: 24px; }
+
+  .club-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .club-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.15fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .club-title { display: flex; flex-direction: column; }
+
+  .club-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .club-pill::before {
+    content: '';
+    width: 22px; height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .club-title h1 {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    margin: 0 0 10px;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .club-title .lead {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0 0 10px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .club-title p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 10px;
+    max-width: 70ch;
+  }
+
+  /* hero media */
+  .club-heroimg {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .club-heroimg img {
+    width: 100%; height: 100%;
+    display: block; object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .club-heroimg:hover img { transform: scale(1.02); }
+
+  .ikf-media { position: relative; display: block; }
+
+  .ikf-caption {
+    position: absolute;
+    right: 14px; bottom: 12px; z-index: 2;
+    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    text-align: right;
+    max-width: 85%;
+    pointer-events: none;
+  }
+  .ikf-caption::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+    background: rgba(0,0,0,.5);
+    z-index: -1;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ═══════════════════════
+     WHO WE PARTNER WITH — 2 col
+  ════════════════════════ */
+  .club-partner-cols {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 20px;
+  }
+  @media (max-width: 768px) { .club-partner-cols { grid-template-columns: 1fr; } }
+
+  .club-partner-col {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 22px 22px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+  }
+  .club-partner-col:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .club-partner-col:hover h3,
+  .club-partner-col:hover p { color: #000 !important; }
+
+  .club-partner-col h3 {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: var(--ink-2);
+  }
+  .club-partner-col p {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ═══════════════════════
+     HOW WE PARTNER — 3 cards
+  ════════════════════════ */
+  .club-how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 16px;
+  }
+  @media (max-width: 900px) { .club-how-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @media (max-width: 600px) { .club-how-grid { grid-template-columns: 1fr; } }
+
+  .club-how-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 22px 20px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+  }
+  .club-how-card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .club-how-card:hover h3,
+  .club-how-card:hover p { color: #000 !important; }
+
+  .club-how-card h3 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: var(--ink-2);
+  }
+  .club-how-card p {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ═══════════════════════
+     CLUB / LOGO GRID
+  ════════════════════════ */
+  .club-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+  @media (max-width: 1100px) { .club-grid { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+  @media (max-width: 768px)  { .club-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @media (max-width: 520px)  { .club-grid { grid-template-columns: 1fr; } }
+
+  .club-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+  }
+  .club-card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .club-card:hover .club-name { color: #000 !important; }
+
+  .club-logo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .club-logo img { width: 88%; height: 88%; object-fit: contain; display: block; }
+
+  .club-name {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink-2);
+    line-height: 1.3;
+    margin: 0;
+    transition: color .2s ease;
+  }
+
+  /* ═══════════════════════
+     CONNECT / DOWNLOAD CARDS
+  ════════════════════════ */
+  .download-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 16px;
+  }
+  @media (max-width: 900px) { .download-wrapper { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @media (max-width: 600px) { .download-wrapper { grid-template-columns: 1fr; } }
+
+  .download-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 22px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+  }
+  .download-card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .download-card:hover h3 { color: #000 !important; }
+
+  .download-card h3 {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    padding: 0 24px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    background: var(--ikf-yellow);
+    color: #000;
+    box-shadow: 0 4px 14px rgba(255,195,0,.35);
+    transition: all .2s ease;
+    margin-top: auto;
+    align-self: flex-start;
+  }
+  .download-btn:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.45);
+  }
+
+  /* ═══════════════════════
+     RESPONSIVE
+  ════════════════════════ */
+  @media (max-width: 900px) {
+    .ikf-wrap { padding: 0 18px; }
+    .club-title h1 { font-size: 38px; letter-spacing: -1px; }
+    .ikf-soft { padding: 22px 18px; }
+  }
+  @media (max-width: 640px) {
+    .club-title h1 { font-size: 30px; }
+  }
+</style>
+
+
+<!-- =============== HERO =============== -->
+<section class="ikf-section club-hero">
+  <div class="ikf-wrap">
+    <div class="club-hero__grid">
+      <div class="club-title">
+       
+        <h1>Our Trusted Club &amp; Academy Network</h1>
+        <p class="lead">A year-round talent pathway linking India's clubs, academies, and players.</p>
+        <p>We partner with top-tier Indian clubs and football academies to create a robust talent pipeline and professional development ecosystem. From grassroots to top divisions, IKF connects the right players to the right environment through structured scouting and transparent pathways.</p>
+      </div>
+      <div>
+        <div class="club-heroimg ikf-media">
+          <img loading="lazy"
+               src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/club1.png' %}{% endif %}"
+               alt="{% if hero_image and hero_image.caption %}{{ hero_image.caption|striptags }}{% else %}IKF Club Network{% endif %}" />
+          <div class="ikf-caption">
+            {% if hero_image and hero_image.caption %}{{ hero_image.caption }}{% else %}IKF Club Network{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== WHO WE PARTNER WITH =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Who We Partner With</h2>
+    <div class="ikf-soft">
+      <div class="club-partner-cols">
+        <div class="club-partner-col">
+          <h3>Associate Clubs</h3>
+          <p>Collaborating with established clubs across all age groups and formats—from grassroots to professional level.</p>
+        </div>
+        <div class="club-partner-col">
+          <h3>Associate Academies</h3>
+          <p>Aligning with academies focused on player development, youth scouting, and eligibility for IKF's elite programs and trials.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== HOW WE PARTNER =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">How We Partner with Clubs &amp; Academies</h2>
+    <div class="ikf-soft">
+      <p class="section-lead">By joining IKF's network, clubs and academies unlock powerful benefits and streamlined access to talent and infrastructure:</p>
+      <div class="club-how-grid">
+        <div class="club-how-card">
+          <h3>Invitation to National Finals</h3>
+          <p>Showcase event of 250+ top players from 125+ cities and villages across India at an invite-only event.</p>
+        </div>
+        <div class="club-how-card">
+          <h3>Scouting Partner</h3>
+          <p>Access to IKF Trials across the year, from city rounds to national finals, for partner clubs &amp; academies.</p>
+        </div>
+        <div class="club-how-card">
+          <h3>Scouting Alliance</h3>
+          <p>We benchmark, analyse requirements, and deploy scouts to create a robust talent pipeline tailored to each club.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== OFFICIAL SCOUTING PARTNER =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Official Scouting Partner</h2>
+    <div class="ikf-soft">
+      <p class="section-lead">IKF has joined hands with organisations and clubs to provide a year-round talent pipeline so that the right talent connects to the right opportunities.</p>
+      <div class="club-grid">
+        {% for partner in official_partners %}
+          <div class="club-card">
+            <div class="club-logo">
+              {% if partner.image %}<img loading="lazy" src="{{ partner.image.url }}" alt="{{ partner.name }}">
+              {% else %}<img loading="lazy" src="{% static 'images/placeholder.png' %}" alt="No image">{% endif %}
+            </div>
+            <p class="club-name">{{ partner.name }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== ISL CLUBS =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">ISL Clubs</h2>
+    <div class="ikf-soft">
+      <p class="section-lead">Clubs who attend/attended IKF Trials for scouting.</p>
+      <div class="club-grid">
+        {% for club in indian_clubs1 %}
+          <div class="club-card">
+            <div class="club-logo">
+              {% if club.pic %}<img loading="lazy" src="{{ club.pic.url }}" alt="{{ club.name }}">
+              {% else %}<img loading="lazy" src="{% static 'images/placeholder.png' %}" alt="No image">{% endif %}
+            </div>
+            <p class="club-name">{{ club.name }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== IWL CLUBS =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">IWL Clubs</h2>
+    <div class="ikf-soft">
+      <p class="section-lead">Clubs who attend/attended IKF Trials for scouting.</p>
+      <div class="club-grid">
+        {% for partner in iwl_partners %}
+          <div class="club-card">
+            <div class="club-logo">
+              {% if partner.image %}<img loading="lazy" src="{{ partner.image.url }}" alt="{{ partner.name }}">
+              {% else %}<img loading="lazy" src="{% static 'images/placeholder.png' %}" alt="No image">{% endif %}
+            </div>
+            <p class="club-name">{{ partner.name }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== I-LEAGUE CLUBS =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">I-League, I-League 2 &amp; I-League 3 Clubs</h2>
+    <div class="ikf-soft">
+      <p class="section-lead">Clubs who attend/attended IKF Trials for scouting.</p>
+      <div class="club-grid">
+        {% for club in indian_clubs_pre_second %}
+          <div class="club-card">
+            <div class="club-logo">
+              {% if club.pic %}<img loading="lazy" src="{{ club.pic.url }}" alt="{{ club.name }}">
+              {% else %}<img loading="lazy" src="{% static 'images/placeholder.png' %}" alt="No image">{% endif %}
+            </div>
+            <p class="club-name">{{ club.name }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== OTHER CLUBS & ACADEMIES =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Other Clubs and Academies</h2>
+    <div class="ikf-soft">
+      <div class="club-grid">
+        {% for club in indian_clubs_other %}
+          <div class="club-card">
+            <div class="club-logo">
+              {% if club.pic %}<img loading="lazy" src="{{ club.pic.url }}" alt="{{ club.name }}">
+              {% else %}<img loading="lazy" src="{% static 'images/placeholder.png' %}" alt="No image">{% endif %}
+            </div>
+            <p class="club-name">{{ club.name }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== CONNECT WITH IKF =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Connect with IKF</h2>
+    <div class="ikf-soft">
+      <div class="download-wrapper">
+        <div class="download-card">
+          <h3>Proposal For Clubs &amp; Academies</h3>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=info@indiakhelofootball.com" target="_blank" rel="noopener" class="download-btn">Connect with IKF</a>
+        </div>
+        <div class="download-card">
+          <h3>Invitation for National Finals</h3>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=info@indiakhelofootball.com" target="_blank" rel="noopener" class="download-btn">Connect with IKF</a>
+        </div>
+        <div class="download-card">
+          <h3>Request an IKF Scouted Player</h3>
+          <a href="https://indiakhelofootball.com/request_for_player" class="download-btn" target="_blank" rel="noopener">Know More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

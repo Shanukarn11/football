@@ -1,0 +1,8 @@
+@media (min-width: 992px) {
+    .custom-partners-container {
+        min-height: 400px;
+    }
+    .custom-initiatives-name{
+        min-height: 80px;
+    }
+}

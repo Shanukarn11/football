@@ -1,0 +1,387 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  :root{
+    --ink:#0f172a;
+    --muted:#475569;
+    --line:#e5e7eb;
+    --butter:#fff4cc;
+    --butter-border:#ffe59a;
+    --accent:#ffc300;
+  }
+
+  /* ===== Page wrapper ===== */
+  .ikf-wrap{ max-width:1280px; margin:0 auto; padding:0 20px }
+  .ikf-section{ padding:28px 0 }
+  .ikf-section + .ikf-section{ padding-top:18px }
+
+  /* ===== Buttons ===== */
+  .ikf-btn{
+    appearance:none; border:1px solid transparent; border-radius:12px;
+    padding:12px 16px; font-weight:800; cursor:pointer; text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px; white-space:nowrap;
+    transition:transform .08s ease, box-shadow .12s ease, background .2s ease, border-color .2s ease;
+  }
+  .ikf-btn:active{ transform:translateY(1px) }
+  .ikf-btn--primary{ background:var(--accent); color:#111; border-color:#e3b100; box-shadow:0 6px 16px rgba(255,195,0,.35) }
+  .ikf-btn--ghost{ background:#fff; color:#111; border-color:var(--line); box-shadow:0 1px 0 rgba(2,6,23,.04) }
+  .ikf-btn--pill{ border-radius:999px; padding:10px 14px; letter-spacing:.2px }
+
+  /* ===== Soft card ===== */
+  .ikf-soft{
+    background:var(--butter);
+    border:1px solid var(--butter-border);
+    border-radius:18px;
+    box-shadow:0 12px 34px rgba(2,6,23,.06);
+  }
+
+  /* ================= HERO ================= */
+  .ikf-hero{ padding:8px 0 10px }
+  .ikf-hero__grid{
+    display:flex; flex-direction:column; gap:28px; align-items:stretch;
+  }
+  @media (min-width:1024px){
+    .ikf-hero__grid{
+      display:grid;
+      grid-template-columns:minmax(500px, 620px) 1fr;
+      align-items:start; gap:36px;
+    }
+  }
+
+  .ikf-hero__left{
+    max-width:760px; display:flex; flex-direction:column;
+    padding-left:24px; padding-right:10px; /* more margin for texts */
+  }
+  @media (min-width:1200px){ .ikf-hero__left{ padding-left:28px } }
+  .ikf-hero__chip{ display:none }
+
+  .ikf-hero__title{
+    color:var(--ink); font-weight:900; letter-spacing:.2px;
+    font-size:34px; line-height:1.15; margin:0 0 14px;
+  }
+  @media (min-width:900px){ .ikf-hero__title{ font-size:40px } }
+
+  .ikf-hero__lead{ color:var(--muted); max-width:62ch; font-size:20px; margin:0 0 18px }
+
+  /* ⬇️ buttons stacked one below the other */
+  .ikf-hero__cta{
+    display:flex; flex-direction:column; align-items:flex-start;
+    gap:12px; margin-top:6px;
+  }
+
+  .ikf-hero__right{ width:100% }
+
+  /* Right media: NO CROPPING + no black background  */
+  .ikf-hero__media{
+    position:relative; border-radius:24px; overflow:hidden;
+    box-shadow:0 20px 50px rgba(2,6,23,.18), 0 1px 0 var(--line) inset;
+    background:transparent; width:100%;
+    aspect-ratio:16/9;   /* consistent, prevents odd bars */
+  }
+  /* Image is fully contained (no crop) */
+  .ikf-hero__img{
+    width:100%; height:100%; display:block; object-fit:contain; object-position:center;
+  }
+  /* Remove scrim/black look entirely */
+  .ikf-hero__scrim{ display:none !important }
+
+  /* ================= FLOW ================= */
+  .ikf-flow__row{ display:flex; flex-wrap:wrap; gap:18px; align-items:center; justify-content:center }
+  .ikf-flow__step{
+    background:#ffc300; border:1px solid #e3b100; border-radius:14px; min-width:200px;
+    padding:12px 16px; text-align:center; font-weight:800; box-shadow:0 6px 20px rgba(255,195,0,.28)
+  }
+  .ikf-flow__arrow{ font-size:22px; user-select:none }
+  @media(max-width:900px){ .ikf-flow__arrow{ transform:rotate(90deg) } }
+
+  /* ================= COURSES ================= */
+  .ikf-course h2{ font-size:26px; font-weight:900; margin-bottom:10px }
+  .ikf-course .ikf-soft{ padding:16px }
+  .ikf-course__tag{ color:#6b7280; font-weight:700; margin-bottom:10px }
+  .ikf-course__grid{ display:grid; gap:16px }
+  @media(min-width:900px){ .ikf-course__grid{ grid-template-columns:1fr 1fr } }
+  .ikf-course__block{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px }
+  .ikf-course__block h3{ font-size:18px; font-weight:900; margin-bottom:8px }
+  .ikf-course__block p{ color:var(--muted) }
+  .ikf-course__block ul{ margin-left:1.1em; display:grid; gap:6px }
+  .ikf-course__cta{ margin-top:12px; display:flex; gap:10px; flex-wrap:wrap }
+
+  /* ================= BENEFITS — white pills, no bullets ================= */
+  .ikf-benefits h2{ font-size:26px; font-weight:900; margin-bottom:10px }
+  .ikf-benefits .ikf-soft{ padding:16px }
+  .ikf-benefits__list{
+    list-style:none !important; padding:0; margin:0;
+    display:grid; gap:12px;
+  }
+  @media(min-width:900px){ .ikf-benefits__list{ grid-template-columns:1fr 1fr } }
+  .ikf-benefits__item{
+    background:#fff; color:var(--ink);
+    border:1px solid var(--line);
+    border-radius:999px; padding:16px 20px; font-weight:800; letter-spacing:.2px;
+    font-size:17px; line-height:1.35;
+    box-shadow:0 1px 0 rgba(2,6,23,.04), 0 8px 24px rgba(2,6,23,.06);
+  }
+
+  /* ================= WHY — bigger & bolder ================= */
+  .ikf-why h2{ font-size:32px; font-weight:900; margin-bottom:18px; letter-spacing:.2px }
+  @media(min-width:900px){ .ikf-why h2{ font-size:36px } }
+  .ikf-why .ikf-soft{ padding:22px; border-width:2px }
+  .ikf-why ul{
+    list-style:none !important; padding:0; margin:0;
+    display:grid; gap:14px;
+  }
+  @media(min-width:900px){ .ikf-why ul{ grid-template-columns:1fr 1fr } }
+/* Tweak Why IKF card text size */
+.ikf-why li{
+  background:#0f172a; color:var(--accent);
+  border:1px solid rgba(2,6,23,.6); border-radius:14px;
+  padding:18px 20px;                 /* a touch tighter */
+  font-weight:800; letter-spacing:.2px;
+  font-size:clamp(16px, 1.1vw, 18px);/* ↓ slightly smaller & fluid */
+  line-height:1.45;
+  box-shadow:0 8px 24px rgba(2,6,23,.16), 0 0 0 2px rgba(255,195,0,.08) inset;
+}
+
+
+  /* ================= CTA FOOTER ================= */
+  .ikf-cta .ikf-soft{ padding:22px 16px; text-align:center }
+  .ikf-cta__title{ font-size:20px; font-weight:900 }
+  .ikf-cta__actions{ margin-top:12px; display:flex; flex-wrap:wrap; gap:12px; justify-content:center }
+</style>
+
+<!-- ================= HERO ================= -->
+<section class="ikf-hero">
+  <div class="ikf-wrap ikf-hero__grid">
+    <div class="ikf-hero__left">
+      <div class="ikf-hero__chip">IKF SCOUTING</div>
+      <h2 class="ikf-hero__title">India’s First Structured Football Scouting Pathway</h2>
+
+      <p class="ikf-hero__lead">
+        From fundamentals to professional club recruitment, IKF offers a step-by-step scouting certification
+        designed for Indian conditions — enriched with global best practices.
+      </p>
+
+      <div class="ikf-hero__cta">
+        <!-- <a class="ikf-btn ikf-btn--primary ikf-btn--pill" href="https://scout.myfirstkick.com/scoutpage/en/Scout" target="_blank" rel="noopener">
+          Start Your Journey — Enroll in Level 1
+        </a> -->
+        <a class="ikf-btn ikf-btn--primary ikf-btn--pill" href="https://scout.myfirstkick.com" target="_blank" rel="noopener">
+          Start Your Journey — Enroll in Level 1
+        </a>
+        <a class="ikf-btn ikf-btn--ghost ikf-btn--pill" href="https://thepfsa.co.uk/courses/talent-identification-in-football-level-1/" target="_blank" rel="noopener">
+          Explore PFSA Level 1
+        </a>
+        <a class="ikf-btn ikf-btn--ghost ikf-btn--pill" href="https://scout.myfirstkick.com/level2" target="_blank" rel="noopener">
+          Express Interest in Level 2
+        </a>
+      </div>
+    </div>
+
+    <div class="ikf-hero__right">
+      <div class="ikf-hero__media">
+        <img class="ikf-hero__img" loading="lazy" src="{% static 'images/banners/cfsa.png' %}" alt="IKF Scouting cohort" />
+        <div class="ikf-hero__scrim"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FLOW ================= -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <div class="ikf-flow__row">
+      <div class="ikf-flow__step">PFSA Level 1</div>
+      <div class="ikf-flow__arrow">→</div>
+      <div class="ikf-flow__step">IKF-CFSA Level 1</div>
+      <div class="ikf-flow__arrow">→</div>
+      <div class="ikf-flow__step">IKF-CFSA Level 2</div>
+      <div class="ikf-flow__arrow">→</div>
+      <div class="ikf-flow__step">Club Opportunities</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COURSES ================= -->
+<section class="ikf-section ikf-course" id="pfsa-l1">
+  <div class="ikf-wrap">
+    <h2>PFSA Level 1 — International Basics</h2>
+    <div class="ikf-soft">
+      <div class="ikf-course__tag">Learn from the world’s leading scouting body.</div>
+
+      <div class="ikf-course__grid">
+        <div class="ikf-course__block">
+          <h3>About the Course</h3>
+          <p>PFSA (Professional Football Scouts Association, UK) Level 1 is a 4-hour, self-paced online course trusted by scouts worldwide. As PFSA’s India partner, IKF makes this international foundation accessible to Indian aspirants.</p>
+        </div>
+        <div class="ikf-course__block">
+          <h3>What You’ll Learn</h3>
+          <ul>
+            <li>Fundamentals of talent ID in a global context</li>
+            <li>Core scouting principles and evaluation techniques</li>
+            <li>How to draft basic scouting reports</li>
+          </ul>
+        </div>
+        <div class="ikf-course__block">
+          <h3>Who It’s For</h3>
+          <p>Beginners who want to gain global exposure to scouting principles.</p>
+        </div>
+        <div class="ikf-course__block">
+          <h3>Outcome</h3>
+          <ul>
+            <li>Internationally recognized credential</li>
+            <li>A strong entry point before deep-diving into India-specific scouting with IKF</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ikf-course__cta">
+        <a class="ikf-btn ikf-btn--primary ikf-btn--pill" href="https://thepfsa.co.uk/courses/talent-identification-in-football-level-1/" target="_blank" rel="noopener">Explore PFSA Level 1</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ikf-section ikf-course" id="ikf-l1">
+  <div class="ikf-wrap">
+    <h2>IKF-CFSA Level 1 — Indian Context Foundation</h2>
+    <div class="ikf-soft">
+      <div class="ikf-course__tag">The first step to becoming a scout in India.</div>
+
+      <div class="ikf-course__grid">
+        <div class="ikf-course__block">
+          <h3>About the Course</h3>
+          <p>Designed by IKF exclusively for Indian conditions, Level 1 provides the theoretical foundation for football scouting in grassroots and professional environments.</p>
+        </div>
+        <div class="ikf-course__block">
+          <h3>What You’ll Learn</h3>
+          <ul>
+            <li>Scouting lexicon &amp; fundamentals</li>
+            <li>Talent discernment using the 4-Corner Model (Physical, Technical, Tactical, Psychosocial)</li>
+            <li>Spotting techniques &amp; report writing</li>
+          </ul>
+        </div>
+        <div class="ikf-course__block">
+          <h3>Who It’s For</h3>
+          <ul>
+            <li>Aspirants who want to enter India’s scouting ecosystem</li>
+            <li>Anyone looking to build a solid theoretical base before moving to applied scouting</li>
+          </ul>
+        </div>
+        <div class="ikf-course__block">
+          <h3>Outcome</h3>
+          <ul>
+            <li>IKF Scout Badge</li>
+            <li>Listed on the IKF Scout Map</li>
+            <li>Eligible for trial/match scouting assignments</li>
+            <li>Mandatory entry point for IKF-CFSA Level 2</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ikf-course__cta">
+        <!-- <a class="ikf-btn ikf-btn--primary ikf-btn--pill" href="https://scout.myfirstkick.com/scoutpage/en/Scout" target="_blank" rel="noopener">Enroll in IKF-CFSA Level 1</a> -->
+        <a class="ikf-btn ikf-btn--primary ikf-btn--pill" href="https://scout.myfirstkick.com" target="_blank" rel="noopener">Enroll in IKF-CFSA Level 1</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ikf-section ikf-course" id="ikf-l2">
+  <div class="ikf-wrap">
+    <h2>IKF-CFSA Level 2 — Elite Applied Certification</h2>
+    <div class="ikf-soft">
+      <div class="ikf-course__tag">From learning scouting to shaping the game.</div>
+
+      <div class="ikf-course__grid">
+        <div class="ikf-course__block">
+          <h3>About the Course</h3>
+          <p>Level 2 is where theory meets practice. In this 15-day intensive, scouts move beyond the basics to decode positional intelligence, apply advanced KPIs, and prove their skills through video and live scouting exams.</p>
+        </div>
+        <div class="ikf-course__block">
+          <h3>What You’ll Learn</h3>
+          <ul>
+            <li>Positional scouting for Goalkeepers, Defenders, Midfielders, and Attackers</li>
+            <li>Role-specific traits in modern tactical systems (false 9, inverted FB, box-to-box CM, etc.)</li>
+            <li>Formation analysis, transitions, and psychosocial profiling</li>
+            <li>Real match case studies + hands-on assignments</li>
+          </ul>
+        </div>
+        <div class="ikf-course__block">
+          <h3>Assessments</h3>
+          <ul>
+            <li><strong>Exam 1 (Video):</strong> Pro match analysis &amp; Mi-Tas reports (1 player per position line)</li>
+            <li><strong>Exam 2 (Live):</strong> On-ground scouting during IKF Zonal or Finals</li>
+          </ul>
+        </div>
+        <div class="ikf-course__block">
+          <h3>Who It’s For &amp; Outcome</h3>
+          <ul>
+            <li>Exclusively for IKF-CFSA Level 1 certified scouts</li>
+            <li>Recognition as part of an elite cohort of Indian scouts</li>
+            <li>Recruitment opportunities with I-League &amp; ISL clubs</li>
+            <li>High respect in the scouting ecosystem</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ikf-course__cta">
+        <a class="ikf-btn ikf-btn--primary ikf-btn--pill" href="https://scout.myfirstkick.com/level2" target="_blank" rel="noopener">Express Interest in Level 2</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BENEFITS ================= -->
+<section class="ikf-section ikf-benefits" id="benefits">
+  <div class="ikf-wrap">
+    <h2>Benefits</h2>
+    <div class="ikf-soft">
+      <ul class="ikf-benefits__list">
+        <li class="ikf-benefits__item">Be part of Asia's largest scouting ecosystem</li>
+        <li class="ikf-benefits__item">Get showcased to professional clubs</li>
+        <li class="ikf-benefits__item">Exclusive access to hunt &amp; recommend players all year round</li>
+        <li class="ikf-benefits__item">Learn the most advanced scouting program in India</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY IKF ================= -->
+<section class="ikf-section ikf-why" id="why-ikf">
+  <div class="ikf-wrap">
+    <h2>Why IKF?</h2>
+    <div class="ikf-soft">
+      <ul>
+        <li>India’s largest grassroots football movement — 25,000+ players scouted from 100+ cities</li>
+        <li>PFSA’s official India partner for international certifications</li>
+        <li>Only structured scouting pathway in India (from basics → applied → club careers)</li>
+        <li>Partnerships with ProSoccerGlobal, Subroto Cup, and leading clubs</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="ikf-section ikf-cta">
+  <div class="ikf-wrap">
+    <div class="ikf-soft">
+      <div class="ikf-cta__title">Your Scouting Journey Starts Here</div>
+      <div class="ikf-cta__actions">
+        <!-- <a class="ikf-btn ikf-btn--primary ikf-btn--pill" href="https://scout.myfirstkick.com/scoutpage/en/Scout" target="_blank" rel="noopener">
+          Enroll in IKF-CFSA Level 1
+        </a> -->
+        <a class="ikf-btn ikf-btn--primary ikf-btn--pill" href="https://scout.myfirstkick.com" target="_blank" rel="noopener">
+          Enroll in IKF-CFSA Level 1
+        </a>
+        <a class="ikf-btn ikf-btn--ghost ikf-btn--pill" href="https://thepfsa.co.uk/courses/talent-identification-in-football-level-1/" target="_blank" rel="noopener">
+          Explore PFSA Level 1
+        </a>
+        <a class="ikf-btn ikf-btn--ghost ikf-btn--pill" href="https://scout.myfirstkick.com/level2" target="_blank" rel="noopener">
+          Express Interest in Level 2
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

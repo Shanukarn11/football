@@ -1,0 +1,389 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --yellow:        #ffc300;
+    --yellow-soft:   rgba(255,195,0,0.10);
+    --yellow-border: rgba(255,195,0,0.30);
+    --ink:           #111318;
+    --muted:         #6b7280;
+    --border:        #e8e8e8;
+    --white:         #ffffff;
+    --light:         #f9f9f9;
+    --radius:        14px;
+    --shadow:        0 18px 45px rgba(15,23,42,.08);
+    --shadow-sm:     0 4px 14px rgba(15,23,42,.05);
+  }
+
+  .trd-page {
+    font-family: 'Sora', system-ui, -apple-system, sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .trd-topbar {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 16px 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+  }
+  .trd-back-link {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.9);
+    transition: border-color .15s, color .15s, background .15s;
+  }
+  .trd-back-link:hover {
+    border-color: var(--yellow);
+    color: var(--ink);
+    background: rgba(255,249,230,0.85);
+  }
+
+  .trd-outer {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 28px 8px 60px;
+  }
+
+  .trd-header {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .trd-header-top {
+    padding: 22px 24px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255,195,0,0.06) 0%, rgba(255,255,255,1) 100%);
+  }
+  .trd-title-block { flex: 1 1 auto; min-width: 0; }
+  .trd-title {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--ink);
+    letter-spacing: -0.4px;
+    margin: 0 0 6px;
+    line-height: 1.2;
+  }
+  .trd-project {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    margin: 0;
+  }
+  .trd-meta-row {
+    padding: 12px 24px 18px;
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .trd-meta-row .item { display: inline-flex; gap: 6px; }
+  .trd-meta-row .item strong { color: var(--ink); font-weight: 700; }
+
+  .trd-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    border: 1px solid var(--border);
+    background: #f8fafc;
+    color: var(--ink);
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+  .trd-status-pill::before {
+    content: "";
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.9;
+  }
+  .trd-status-pill.is-completed { color:#166534; background:#ecfdf5; border-color:#bbf7d0; }
+  .trd-status-pill.is-pending   { color:#92400e; background:#fffbeb; border-color:#fde68a; }
+  .trd-status-pill.is-upcoming  { color:#1d4ed8; background:#eff6ff; border-color:#bfdbfe; }
+  .trd-status-pill.is-cancelled { color:#991b1b; background:#fef2f2; border-color:#fecaca; }
+
+  .trd-body {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+
+  /* Desktop table */
+  .res-desktop { display: none; }
+  @media (min-width: 640px) { .res-desktop { display: block; } }
+  .res-wrap {
+    padding: 22px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .res-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid rgba(0,0,0,0.55);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+  }
+  .res-table th, .res-table td {
+    border: 1.5px solid rgba(255,195,0,0.45);
+    padding: 12px 14px;
+    vertical-align: top;
+    text-align: center;
+  }
+  .res-title-row  th { background: rgba(255,195,0,0.22); color: var(--ink); font-size: 15px; font-weight: 800; padding: 16px 14px; border-bottom: 2px solid rgba(255,195,0,0.55); }
+  .res-date-row   th { background: rgba(255,195,0,0.10); color: var(--ink); font-size: 13.5px; font-weight: 600; padding: 10px 14px; border-bottom: 1.5px solid rgba(255,195,0,0.45); }
+  .res-gender-row th { background: rgba(255,195,0,0.28); color: var(--ink); font-size: 14px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; padding: 10px 14px; border-bottom: 2px solid rgba(255,195,0,0.55); }
+  .res-cat-row    th { background: rgba(255,195,0,0.12); color: var(--muted); font-size: 12.5px; font-weight: 700; font-family: monospace; padding: 8px 12px; border-bottom: 2px solid rgba(255,195,0,0.45); }
+  .res-body-row   td { background: #ffffff; color: var(--ink); font-size: 13.5px; line-height: 1.55; font-weight: 500; padding: 14px; }
+  .res-extra-row  td { background: rgba(255,195,0,0.08); height: 22px; padding: 0; border-top: 1.5px solid rgba(255,195,0,0.35); }
+  .res-player { line-height: 1.5; padding: 3px 0; }
+  .res-player + .res-player { margin-top: 4px; padding-top: 8px; border-top: 1px solid rgba(255,195,0,0.35); }
+  .res-empty { color: var(--muted); font-style: italic; font-size: 12.5px; }
+
+  /* Mobile stacked */
+  .res-mobile { display: block; }
+  @media (min-width: 640px) { .res-mobile { display: none; } }
+  .res-mobile-wrap {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .res-m-header {
+    background: rgba(255,195,0,0.15);
+    border: 1.5px solid rgba(255,195,0,0.40);
+    border-radius: 12px;
+    padding: 14px 14px 12px;
+    text-align: center;
+  }
+  .res-m-header-title { font-size: 13.5px; font-weight: 800; color: var(--ink); line-height: 1.4; margin: 0 0 5px; }
+  .res-m-header-date  { font-size: 12px; font-weight: 600; color: var(--muted); margin: 0; }
+  .res-m-section {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1.5px solid rgba(255,195,0,0.40);
+    box-shadow: 0 2px 10px rgba(15,23,42,.06);
+  }
+  .res-m-section-header {
+    padding: 11px 14px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--ink);
+    background: rgba(255,195,0,0.28);
+    border-bottom: 1.5px solid rgba(255,195,0,0.55);
+  }
+  .res-m-age-block { background: var(--white); }
+  .res-m-age-block + .res-m-age-block { border-top: 1px solid rgba(255,195,0,0.30); }
+  .res-m-age-label {
+    padding: 9px 14px 7px;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: monospace;
+    color: var(--muted);
+    background: rgba(255,195,0,0.08);
+    border-bottom: 1px solid rgba(255,195,0,0.20);
+    letter-spacing: 0.04em;
+  }
+  .res-m-players { padding: 10px 14px 12px; display: flex; flex-direction: column; }
+  .res-m-player { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.5; padding: 6px 0; }
+  .res-m-player + .res-m-player { border-top: 1px solid var(--border); }
+  .res-m-player-name { font-weight: 700; display: block; margin-bottom: 1px; }
+  .res-m-player-dob  { font-size: 11.5px; color: var(--muted); font-weight: 600; }
+  .res-m-empty { font-size: 12px; font-style: italic; color: var(--muted); padding: 10px 14px 12px; text-align: center; }
+
+  .trd-foot-note {
+    margin-top: 20px;
+    padding: 14px 18px;
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .trd-foot-note strong { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .trd-title { font-size: 22px; }
+    .trd-header-top { padding: 18px 16px 14px; }
+    .trd-meta-row { padding: 10px 16px 14px; gap: 10px; }
+  }
+</style>
+
+<div class="trd-page">
+
+  <div class="trd-outer">
+
+    <div class="trd-header">
+      <div class="trd-header-top">
+        <div class="trd-title-block">
+          <h1 class="trd-title">{{ city_name|upper }} &mdash; Trial Result</h1>
+          {% if project_name %}
+            <p class="trd-project">{{ project_name }}{% if rep_name %} &middot; in association with {{ rep_name }}{% endif %}</p>
+          {% endif %}
+        </div>
+        {% if status_of_trial %}
+          {% with s=status_of_trial|lower %}
+          <span class="trd-status-pill {% if 'complet' in s %}is-completed{% elif 'pending' in s %}is-pending{% elif 'upcoming' in s %}is-upcoming{% elif 'cancel' in s %}is-cancelled{% endif %}">
+            Status: {{ status_of_trial }}
+          </span>
+          {% endwith %}
+        {% endif %}
+      </div>
+      <div class="trd-meta-row">
+        {% if trial_date %}<span class="item"><strong>Trial Date:</strong> {{ trial_date }}</span>{% endif %}
+        {% if latest_updated_on %}<span class="item"><strong>Last Updated:</strong> {{ latest_updated_on }}</span>{% endif %}
+      </div>
+    </div>
+
+    <div class="trd-body">
+
+      {% if total_columns == 0 %}
+        <div style="padding:40px 24px; text-align:center; color:var(--muted); font-size:14px;">
+          No selected players have been published for this trial yet.
+        </div>
+      {% else %}
+
+      <div class="res-desktop">
+        <div class="res-wrap">
+          <table class="res-table">
+            <tr class="res-title-row">
+              <th colspan="{{ total_columns }}">
+                {% if project_name %}{{ project_name }} &mdash; {{ city_name }} Results{% else %}{{ city_name }} Trial Results{% endif %}
+                {% if rep_name %} in association with {{ rep_name }}{% endif %}
+              </th>
+            </tr>
+            <tr class="res-date-row">
+              <th colspan="{{ total_columns }}">{{ trial_date|default:"—" }}</th>
+            </tr>
+            <tr class="res-gender-row">
+              {% if boys_columns %}<th colspan="{{ boys_columns|length }}">Boys</th>{% endif %}
+              {% if girls_columns %}<th colspan="{{ girls_columns|length }}">Girls</th>{% endif %}
+            </tr>
+            <tr class="res-cat-row">
+              {% for col in boys_columns %}<th>{{ col.age_group }}</th>{% endfor %}
+              {% for col in girls_columns %}<th>{{ col.age_group }}</th>{% endfor %}
+            </tr>
+            <tr class="res-body-row">
+              {% for col in boys_columns %}
+                <td>
+                  {% for player in col.players %}
+                    <div class="res-player">{{ player.name }} &ndash; {{ player.dob }}</div>
+                  {% endfor %}
+                </td>
+              {% endfor %}
+              {% for col in girls_columns %}
+                <td>
+                  {% for player in col.players %}
+                    <div class="res-player">{{ player.name }} &ndash; {{ player.dob }}</div>
+                  {% endfor %}
+                </td>
+              {% endfor %}
+            </tr>
+            <tr class="res-extra-row">
+              {% for _ in boys_columns %}<td></td>{% endfor %}
+              {% for _ in girls_columns %}<td></td>{% endfor %}
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="res-mobile">
+        <div class="res-mobile-wrap">
+          <div class="res-m-header">
+            <p class="res-m-header-title">
+              {% if project_name %}{{ project_name }}<br>{{ city_name }} Results{% else %}{{ city_name }} Trial Results{% endif %}
+              {% if rep_name %}<br>in association with {{ rep_name }}{% endif %}
+            </p>
+            <p class="res-m-header-date">{{ trial_date|default:"—" }}</p>
+          </div>
+
+          {% if boys_columns %}
+          <div class="res-m-section">
+            <div class="res-m-section-header">Boys</div>
+            {% for col in boys_columns %}
+              <div class="res-m-age-block">
+                <div class="res-m-age-label">{{ col.age_group }}</div>
+                <div class="res-m-players">
+                  {% for player in col.players %}
+                    <div class="res-m-player">
+                      <span class="res-m-player-name">{{ player.name }}</span>
+                      <span class="res-m-player-dob">{{ player.dob }}</span>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          {% if girls_columns %}
+          <div class="res-m-section">
+            <div class="res-m-section-header">Girls</div>
+            {% for col in girls_columns %}
+              <div class="res-m-age-block">
+                <div class="res-m-age-label">{{ col.age_group }}</div>
+                <div class="res-m-players">
+                  {% for player in col.players %}
+                    <div class="res-m-player">
+                      <span class="res-m-player-name">{{ player.name }}</span>
+                      <span class="res-m-player-dob">{{ player.dob }}</span>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {% endif %}
+
+    </div>
+
+    <p class="trd-foot-note">
+      <strong>Note:</strong> Selected players will be contacted directly by IKF for the next stage. If you can't see your name and believe this is an error, please reach out via the official channels listed on the Notice Board.
+    </p>
+
+  </div>
+</div>
+{% endblock %}

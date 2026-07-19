@@ -1,0 +1,587 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-dim:    rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --surface:           #ffffff;
+    --surface-2:         #f8f9fb;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         22px;
+    --shadow-sm:         0 2px 8px  rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md:         0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg:         0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  /* ── Layout ── */
+  .ikf-wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  .ikf-section { padding: 36px 0 44px; }
+  .ikf-section + .ikf-section { padding-top: 18px; }
+
+  /* ── Soft panel ── */
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 28px;
+    position: relative;
+  }
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* ── Headings ── */
+  .ikf-h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 14px;
+    letter-spacing: -.3px;
+  }
+  .ikf-h2:first-child { margin-top: 0; }
+
+  /* ── Body copy ── */
+  p, li {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  /* ── Yellow-dot bullets ── */
+  .ikf-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .ikf-list li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .ikf-list li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 8px;
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: #facc15;
+    box-shadow: 0 0 0 3px rgba(250,204,21,.25);
+    transition: background .25s ease, box-shadow .25s ease;
+  }
+
+  /* ═══════════════════════
+     HERO — Season 6 layout
+  ════════════════════════ */
+  .pg-hero { padding-top: 24px; }
+
+  .pg-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .pg-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .pg-title { display: flex; flex-direction: column; }
+
+  .pg-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .pg-hero__eyebrow::before {
+    content: '';
+    width: 22px; height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .pg-title h1 {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    margin: 0 0 14px;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .pg-title p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 10px;
+    max-width: 70ch;
+  }
+
+  /* hero media */
+  .pg-heroimg {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .pg-heroimg img {
+    width: 100%; height: 100%;
+    display: block; object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .pg-heroimg:hover img { transform: scale(1.02); }
+
+  .ikf-media { position: relative; display: block; }
+
+  .ikf-caption {
+    position: absolute;
+    right: 14px; bottom: 12px; z-index: 2;
+    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    text-align: right;
+    max-width: 85%;
+    pointer-events: none;
+  }
+  .ikf-caption::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+    background: rgba(0,0,0,.5);
+    z-index: -1;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ═══════════════════════
+     TWO-COL TEXT BLOCKS
+  ════════════════════════ */
+  .trusted-network-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 14px;
+  }
+  .trusted-column {
+    flex: 1 1 45%;
+    min-width: 250px;
+  }
+  .trusted-column h3 {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink-2);
+    margin: 0 0 8px;
+  }
+
+  /* ═══════════════════════
+     STEP CARDS (journey card style)
+  ════════════════════════ */
+  .howitworks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+  @media (max-width: 900px) { .howitworks-grid { grid-template-columns: 1fr; } }
+
+  .step-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 24px 22px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+  }
+  .step-card:hover,
+  .step-card.active {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .step-card:hover p,
+  .step-card.active p { color: #000 !important; }
+
+  .step-card p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* highlight paragraph */
+  .highlight-p {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink-2);
+    margin: 20px 0 14px;
+  }
+
+  /* ═══════════════════════
+     DUAL BULLET LIST
+  ════════════════════════ */
+  .dual-bullet-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 40px;
+    margin: 16px 0;
+    padding: 0;
+    list-style: none;
+  }
+  .dual-bullet-list li {
+    flex: 1 1 45%;
+    position: relative;
+    padding-left: 22px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .dual-bullet-list li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 8px;
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: #facc15;
+    box-shadow: 0 0 0 3px rgba(250,204,21,.25);
+  }
+  @media (max-width: 768px) {
+    .dual-bullet-list li { flex: 1 1 100%; }
+  }
+
+  /* ═══════════════════════
+     PARTNER GRID 2-COL
+  ════════════════════════ */
+  .partner-grid-2col {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 40px;
+    margin-top: 16px;
+  }
+  .partner-col { flex: 1 1 45%; min-width: 220px; }
+  .partner-col p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 12px;
+    position: relative;
+    padding-left: 22px;
+  }
+  .partner-col p::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 8px;
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: #facc15;
+    box-shadow: 0 0 0 3px rgba(250,204,21,.25);
+  }
+
+  /* ═══════════════════════
+     JOIN THE MOVEMENT
+  ════════════════════════ */
+  .join-center { text-align: center; }
+
+  .join-center h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 10px;
+  }
+
+  .join-center p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 8px;
+  }
+
+  .career360-icon-box {
+    background: var(--ikf-yellow);
+    width: 50px; height: 50px;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(255,195,0,.35);
+    margin-top: 20px;
+    transition: all .2s ease;
+    text-decoration: none;
+  }
+  .career360-icon-box:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.45);
+  }
+  .career360-icon-box img { width: 22px; height: 22px; object-fit: contain; }
+
+  /* ═══════════════════════
+     RESPONSIVE
+  ════════════════════════ */
+  @media (max-width: 900px) {
+    .ikf-wrap { padding: 0 18px; }
+    .pg-title h1 { font-size: 38px; letter-spacing: -1px; }
+    .ikf-soft { padding: 22px 18px; }
+  }
+  @media (max-width: 640px) {
+    .pg-title h1 { font-size: 30px; }
+    .partner-col { flex: 1 1 100%; }
+    .trusted-column { flex: 1 1 100%; }
+  }
+</style>
+
+
+<!-- =============== HERO =============== -->
+<section class="ikf-section pg-hero">
+  <div class="ikf-wrap">
+    <div class="pg-hero__grid">
+      <div class="pg-title">
+        
+        <h1>IKF Partnership Guidelines</h1>
+        <p>
+          At India Khelo Football (IKF), we don't just form partnerships — we build purposeful
+          collaborations rooted in service, trust, and a shared vision for India's football future.
+        </p>
+        <p>
+          As a Section-8 not-for-profit organization, IKF is committed to democratizing football dreams —
+          and that includes keeping our platform neutral, transparent, and free from commercial exploitation.
+        </p>
+      </div>
+      <div class="pg-heroimg ikf-media">
+        <img loading="lazy"
+             src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/guide.png' %}{% endif %}"
+             alt="IKF Partnership Guidelines">
+        <div class="ikf-caption">
+          {% if hero_image and hero_image.caption %}
+            {{ hero_image.caption }}
+          {% else %}
+            IKF Partnership Guidelines
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== No Commercial Deals =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">No Commercial Deals. Only Collaborative Upliftment.</h2>
+    <div class="ikf-soft">
+      <div class="trusted-network-columns">
+        <div class="trusted-column">
+          <p>
+            IKF will not enter into any commercial agreement with partners who are part of the football
+            ecosystem — whether you're a football club, academy, coach, scout, or service provider.
+          </p>
+        </div>
+        <div class="trusted-column">
+          <p>
+            We are not here to make money off your work — we are here to work with you, as a team,
+            to uplift Indian football.
+          </p>
+        </div>
+      </div>
+
+      <p class="highlight-p">
+        IKF will not charge commissions or cutbacks for any business done by ecosystem partners.
+      </p>
+
+      <p style="margin-bottom: 14px;">Instead, we encourage:</p>
+
+      <div class="howitworks-grid">
+        <div class="step-card active">
+          <p>Partners to support IKF's grassroots initiatives via CSR, donations, or sponsorship.</p>
+        </div>
+        <div class="step-card">
+          <p>Joint efforts to reach underserved players who cannot afford professional support.</p>
+        </div>
+        <div class="step-card">
+          <p>Alignment with our impact-first, non-exploitative philosophy.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== Player Data Privacy =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Player Data Privacy: Uncompromised &amp; Non Negotiable</h2>
+    <div class="ikf-soft">
+      <p style="margin-bottom: 10px;">IKF does not share player data with any external partner.</p>
+      <p style="margin-bottom: 14px;">
+        However, we welcome genuine opportunities (trials, scholarships, training) from partners, which IKF will:
+      </p>
+      <ul class="dual-bullet-list">
+        <li>Share with players only if aligned with their interests, not the partner's.</li>
+        <li>Verify for transparency and intent.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== Promotion Section =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Promotion: Self-Funded, Purpose-Driven</h2>
+    <div class="ikf-soft">
+      <p style="margin-bottom: 10px;">
+        While IKF offers a wide reach through its digital platforms and national on-ground presence,
+        all promotional efforts for a partner's service must be self-funded by the partner.
+      </p>
+      <p style="margin-bottom: 14px;">Visibility is possible only when:</p>
+      <ul class="dual-bullet-list">
+        <li>The offering is ethical, transparent, and aligned with our values.</li>
+        <li>Promotion helps empower the ecosystem, not just sell to it.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== Partnership = Purpose + Trust =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Partnership = Purpose + Trust</h2>
+    <div class="ikf-soft">
+      <div class="trusted-network-columns">
+        <div class="trusted-column">
+          <p>
+            IKF invites stakeholders who believe that football is a force for good — and who are ready to walk this
+            journey without commercial intent, but with collaborative spirit.
+          </p>
+        </div>
+        <div class="trusted-column" style="text-align: right;">
+          <p><strong>"We don't compete with you. We complete the ecosystem with you."</strong></p>
+        </div>
+      </div>
+
+      <p style="margin-top: 20px; margin-bottom: 14px;">We're proud to already collaborate with:</p>
+
+      <div class="partner-grid-2col">
+        <div class="partner-col">
+          <p>Top ISL &amp; I-League clubs</p>
+          <p>Grassroots academies and NGOs</p>
+          <p>Sports psychologist</p>
+          <p>Thought leaders, coaches, and changemakers across 125+ cities</p>
+        </div>
+        <div class="partner-col">
+          <p>US University networks</p>
+          <p>Nutrition expert</p>
+          <p>US University networks</p>
+          <p>Sports education</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== What We Expect =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">What We Expect from Our Partners</h2>
+    <div class="ikf-soft">
+      <div class="howitworks-grid">
+        <div class="step-card active">
+          <p>Respect for IKF's neutral and player-first approach.</p>
+        </div>
+        <div class="step-card">
+          <p>Support IKF in raising CSR, sharing success stories, and expanding our reach.</p>
+        </div>
+        <div class="step-card">
+          <p>Amplify the impact IKF is bringing to Indian society through football.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== Join the Movement =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Join the Movement</h2>
+    <div class="ikf-soft join-center">
+      <p>
+        If you share our vision of building a better football future for India —<br>
+        not as a client, but as a collaborator — write to us:
+      </p>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sanaskriti@indiakhelofootball.com" target="_blank" rel="noopener" class="career360-icon-box">
+        <img loading="lazy" src="{% static 'images/career360/Vector1.svg' %}" alt="Email Icon" />
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  const cards = document.querySelectorAll('.step-card');
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      const container = card.closest('.howitworks-grid');
+      const activeCard = container.querySelector('.step-card.active');
+      if (activeCard && activeCard !== card) activeCard.classList.remove('active');
+      card.classList.add('active');
+    });
+  });
+</script>
+
+{% endblock content %}

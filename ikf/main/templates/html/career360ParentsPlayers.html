@@ -1,0 +1,829 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ═══════════════════════
+     TOKENS  (exact Trials / Season 6)
+  ════════════════════════ */
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-dim:    rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --surface:           #ffffff;
+    --surface-2:         #f8f9fb;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         22px;
+    --shadow-sm:         0 2px 8px  rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md:         0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg:         0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  /* ── Layout ── */
+  .ikf-wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .ikf-section { padding: 36px 0 44px; }
+  .ikf-section + .ikf-section { padding-top: 18px; }
+
+  /* ── Soft panel ── */
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 28px;
+    position: relative;
+  }
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* ── Section heading ── */
+  .ikf-h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 18px;
+    letter-spacing: -.3px;
+  }
+
+  /* ── Body copy ── */
+  .ikf-p,
+  p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ═══════════════════════
+     HERO
+  ════════════════════════ */
+  .psop-hero { padding-top: 24px; }
+
+  .psop-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .psop-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .psop-title { display: flex; flex-direction: column; }
+
+  /* eyebrow dash */
+  .psop-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .psop-eyebrow::before {
+    content: '';
+    width: 22px;
+    height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .psop-title h1 {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    margin: 0 0 8px;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .psop-title .lead {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0 0 14px;
+    color: var(--muted);
+  }
+
+  .psop-title .copy {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+
+  /* icon buttons */
+  .psop-icons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .psop-icon {
+    width: 50px;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: var(--ikf-yellow);
+    box-shadow: 0 4px 14px rgba(255,195,0,.35);
+    transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+    text-decoration: none;
+  }
+  .psop-icon:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.45);
+  }
+  .psop-icon img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+  }
+
+  /* ── Hero media ── */
+  .psop-heroimg {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 4 / 2.5;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .psop-heroimg img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .psop-heroimg:hover img { transform: scale(1.02); }
+
+  .ikf-caption {
+    position: absolute;
+    right: 14px;
+    bottom: 12px;
+    z-index: 2;
+    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    text-align: right;
+    max-width: 85%;
+    pointer-events: none;
+  }
+  .ikf-caption::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+    background: rgba(0,0,0,.5);
+    z-index: -1;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ═══════════════════════
+     PURPOSE — two-col bullet cards
+  ════════════════════════ */
+  .psop-cols {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .psop-col {
+    flex: 1 1 280px;
+  }
+  /* each col is its own ikf-soft — no extra wrapper needed */
+
+  /* ── Yellow-dot bullets ── */
+  .ikf-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .ikf-list li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .ikf-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #facc15;
+    box-shadow: 0 0 0 3px rgba(250,204,21,.25);
+    transition: background .25s ease, box-shadow .25s ease;
+  }
+
+  /* ═══════════════════════
+     HOW IT WORKS — journey cards
+  ════════════════════════ */
+  .psop-steplist {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .s6-journey-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 32px 26px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+  }
+  /* step-number watermark */
+  .s6-journey-card::before {
+    content: attr(data-step);
+    position: absolute;
+    bottom: 14px;
+    right: 20px;
+    font-family: var(--font-display);
+    font-size: 56px;
+    font-weight: 800;
+    color: rgba(0,0,0,.05);
+    line-height: 1;
+    pointer-events: none;
+    transition: color .25s ease;
+  }
+  .s6-journey-card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .s6-journey-card:hover::before { color: rgba(0,0,0,.08); }
+  .s6-journey-card:hover * { color: #000 !important; }
+  .s6-journey-card:hover .step-sub-list li::before {
+    background: #000 !important;
+    box-shadow: 0 0 0 3px rgba(0,0,0,.12) !important;
+  }
+
+  .s6-step-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 4px;
+    line-height: 1.15;
+  }
+  .s6-step-sub {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--ikf-yellow);
+    margin: 0 0 12px;
+  }
+  .s6-step-desc {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* nested list inside journey card */
+  .step-sub-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 8px 0 0;
+  }
+  .step-sub-list li {
+    position: relative;
+    padding-left: 18px;
+    margin-bottom: 6px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .step-sub-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: #facc15;
+    box-shadow: 0 0 0 2px rgba(250,204,21,.25);
+    transition: background .25s ease, box-shadow .25s ease;
+  }
+
+  /* ═══════════════════════
+     WHAT YOU'LL GAIN — table
+  ════════════════════════ */
+  .table-soft {
+    padding: 0;
+    overflow: hidden;
+  }
+  .table-soft::before { left: 0; right: 0; border-radius: 0; }
+
+  .gain-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body);
+    font-size: 15px;
+  }
+  .gain-table th,
+  .gain-table td {
+    padding: 16px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+  .gain-table th {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    background: var(--surface);
+  }
+  .gain-table td { color: var(--muted); }
+  .gain-table td:first-child {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--ink-2);
+  }
+  .gain-table tr:nth-child(even) td { background: var(--surface-2); }
+  .gain-table tr:last-child td { border-bottom: none; }
+
+  .gain-table tbody tr {
+    transition: background .2s ease;
+    cursor: default;
+  }
+  .gain-table tbody tr:hover td {
+    background: var(--ikf-yellow) !important;
+    color: #000 !important;
+  }
+
+  /* ═══════════════════════
+     CTA
+  ════════════════════════ */
+  .psop-cta .ikf-soft {
+    text-align: center;
+    background:
+      radial-gradient(600px 220px at 10% -10%, rgba(255,195,0,.1), transparent 60%),
+      radial-gradient(600px 220px at 90% 110%, rgba(255,195,0,.1), transparent 60%),
+      var(--surface);
+  }
+
+  .psop-cta h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px;
+    letter-spacing: -.3px;
+  }
+
+  .psop-cta p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin: 0 auto 20px;
+    max-width: 62ch;
+  }
+
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    padding: 0 32px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    background: var(--ikf-yellow);
+    color: #000;
+    box-shadow: 0 4px 14px rgba(255,195,0,.35);
+    transition: all .2s ease;
+  }
+  .cta-btn:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.45);
+  }
+
+  /* ═══════════════════════
+     RESPONSIVE
+  ════════════════════════ */
+  @media (max-width: 900px) {
+    .ikf-wrap { padding: 0 18px; }
+    .psop-title h1 { font-size: 38px; letter-spacing: -1px; }
+    .psop-steplist { grid-template-columns: 1fr; }
+    .ikf-soft { padding: 22px 18px; }
+  }
+
+  @media (max-width: 640px) {
+    .psop-title h1 { font-size: 32px; }
+    .psop-cols { flex-direction: column; }
+  }
+</style>
+
+
+<!-- ═══════════════════════
+     HERO
+════════════════════════ -->
+<section class="ikf-section psop-hero">
+  <div class="ikf-wrap">
+    <div class="psop-hero__grid">
+
+      <div class="psop-title">
+        
+        <h1>Parent SOP</h1>
+        <p class="lead"><strong>Clarity for parents. Pathways for players.</strong></p>
+        <p class="copy">
+          IKF Parent SOP is a simple, parent-first framework for supporting your child's football journey under
+          <strong>IKF Pathway 360</strong>. It sets clear expectations, structure, and roles—so families can make confident,
+          balanced decisions.
+        </p>
+        <p class="copy">
+          In short: guidelines that help you champion both <em>football</em> and <em>education</em>, with zero pressure
+          and full transparency.
+        </p>
+        <div class="psop-icons">
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=career360@indiakhelofootball.com" target="_blank" rel="noopener" class="psop-icon">
+            <img loading="lazy" src="{% static 'images/career360/Vector1.svg' %}" alt="Email">
+          </a>
+          <a href="https://wa.me/918850119762" target="_blank" rel="noopener" class="psop-icon">
+            <img loading="lazy" src="{% static 'images/career360/vector4.svg' %}" alt="WhatsApp">
+          </a>
+        </div>
+      </div>
+
+      <div class="psop-heroimg ikf-media">
+        <img loading="lazy"
+             src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/career360/Parent.png' %}{% endif %}"
+             alt="IKF Parent SOP">
+        <div class="ikf-caption">
+          {% if hero_image and hero_image.caption %}
+            {{ hero_image.caption }}
+          {% else %}
+            IKF Parent SOP
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════
+     PURPOSE
+════════════════════════ -->
+<section class="ikf-section psop-purpose">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Purpose of IKF Parent SOP</h2>
+    <div class="psop-cols">
+
+      <div class="psop-col ikf-soft">
+        <ul class="ikf-list">
+          <li>Sport is treated as a platform for growth, identity, and resilience — not a distraction.</li>
+          <li>Helps parents understand the process and structure of IKF programs.</li>
+          <li>Clarifies the role parents play in supporting both sporting and personal development.</li>
+        </ul>
+      </div>
+
+      <div class="psop-col ikf-soft">
+        <ul class="ikf-list">
+          <li>Maintains discipline, transparency, and fairness across all IKF activities.</li>
+          <li>Promotes a positive, constructive environment for players and families.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════
+     PARENT SOP JOURNEY MAP
+════════════════════════ -->
+<section class="ikf-section psop-map-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2" style="text-align:center;">The Parent SOP Journey Map</h2>
+    <p class="psop-map-lead">Six areas where the Parent SOP helps IKF support your child's journey — from football pathways to emotional and financial planning.</p>
+    <div class="psop-map-card">
+      <img src="{% static 'images/ParentMap.png' %}" alt="Parent SOP Journey Map — Awareness of Football Pathways, Decision-Making Guidance, Education Balance, IKF Pathway 360 Parent and Player, Emotional Support, Financial Planning." loading="lazy">
+    </div>
+  </div>
+</section>
+
+<style>
+  .psop-map-section { padding: 36px 0 20px; }
+  .psop-map-lead {
+    text-align: center;
+    max-width: 720px;
+    margin: 8px auto 24px;
+    color: #6b7280;
+    line-height: 1.65;
+    font-size: 15px;
+  }
+  .psop-map-card {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 0 18px 40px -22px rgba(0,0,0,.15);
+  }
+  .psop-map-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+  @media (max-width: 900px) {
+    .psop-map-card { padding: 14px; border-radius: 16px; }
+    .psop-map-lead { font-size: 14px; padding: 0 16px; }
+  }
+</style>
+
+<!-- ═══════════════════════
+     HOW IT WORKS
+════════════════════════ -->
+<section class="ikf-section psop-steps">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">How it Works — 3 Simple Steps</h2>
+    <div class="ikf-soft">
+      <div class="psop-steplist">
+
+        <div class="s6-journey-card" data-step="01">
+          <p class="s6-step-title">Statement<br>of Purpose</p>
+          <p class="s6-step-sub">Step One</p>
+          <p class="s6-step-desc">Answer a few thoughtful questions about your child's football interests, education priorities, and family context.</p>
+        </div>
+
+        <div class="s6-journey-card" data-step="02">
+          <p class="s6-step-title">Get<br>Matched</p>
+          <p class="s6-step-sub">Step Two</p>
+          <p class="s6-step-desc">We review your SoP and map it to one of many profiles based on:</p>
+          <ul class="step-sub-list">
+            <li>Parenting style</li>
+            <li>Aspirations and Reality</li>
+            <li>Priority areas (academics, training, travel readiness, etc.)</li>
+          </ul>
+        </div>
+
+        <div class="s6-journey-card" data-step="03">
+          <p class="s6-step-title">Your IKF Pathway 360<br>Roadmap</p>
+          <p class="s6-step-sub">Step Three</p>
+          <p class="s6-step-desc">You'll get a region-specific list of verified service providers whom you can pick and choose to support your child's needs — outcome-based, with 3–6 month check-ins.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════
+     WHAT YOU'LL GAIN
+════════════════════════ -->
+<section class="ikf-section psop-gain">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">What You'll Gain</h2>
+    <div class="ikf-soft table-soft">
+      <table class="gain-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>What It Means for You</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Parent-first personalization</td>
+            <td>You're at the center of your child's football plan.</td>
+          </tr>
+          <tr>
+            <td>Verified experts</td>
+            <td>Every recommendation is vetted for quality and ethics.</td>
+          </tr>
+          <tr>
+            <td>Academic compatibility</td>
+            <td>Football supports — not competes with — education.</td>
+          </tr>
+          <tr>
+            <td>Cost-free and no pressure</td>
+            <td>You decide how and when to engage services.</td>
+          </tr>
+          <tr>
+            <td>Dynamic goal setting</td>
+            <td>Plans evolve as your child's needs, interests, and context change.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════
+     CTA
+════════════════════════ -->
+<section class="ikf-section psop-cta">
+  <div class="ikf-wrap">
+    <div class="ikf-soft">
+      <h2>Ready to Start?</h2>
+      <p>
+        IKF Pathway 360 is built to support families — not sell to them. Your journey starts with a single step.
+        Share your Parent SOP and we'll do the rest.
+      </p>
+      <div class="cta-actions">
+        <a class="cta-btn"
+           href="https://docs.google.com/forms/d/e/1FAIpQLSefRJj9rFCmY6VPicIIN0rcAtF5OU7Y55z3NuLhuUFTViwBKQ/viewform"
+           target="_blank" rel="noopener">
+          Apply Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     PARENT CONVERSATION — Floating quiz launcher
+══════════════════════════════════════════════════ -->
+<style>
+  .pcq-floaty {
+    position: fixed;
+    right: 20px;
+    bottom: 22px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px 12px 14px;
+    background: var(--ikf-yellow, #ffc300);
+    color: var(--ink, #0b1120);
+    border-radius: 999px;
+    box-shadow: 0 10px 30px rgba(11,17,32,.22), 0 2px 6px rgba(11,17,32,.10);
+    text-decoration: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: .02em;
+    border: 2px solid var(--ink, #0b1120);
+    transition: transform .15s ease, box-shadow .15s ease;
+    max-width: 360px;
+  }
+  .pcq-floaty:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 14px 36px rgba(11,17,32,.28), 0 3px 8px rgba(11,17,32,.12);
+    color: var(--ink, #0b1120);
+  }
+  .pcq-floaty__icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--ink, #0b1120);
+    color: var(--ikf-yellow, #ffc300);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .pcq-floaty__copy { display: flex; flex-direction: column; line-height: 1.2; }
+  .pcq-floaty__eyebrow {
+    font-size: 9.5px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: rgba(11,17,32,.65);
+    margin-bottom: 2px;
+  }
+  .pcq-floaty__title { font-size: 14px; font-weight: 800; }
+
+  .pcq-floaty__pulse {
+    position: absolute;
+    inset: -2px;
+    border-radius: 999px;
+    border: 2px solid var(--ikf-yellow, #ffc300);
+    animation: pcqPulse 2.4s ease-out infinite;
+    pointer-events: none;
+  }
+  @keyframes pcqPulse {
+    0%   { opacity: .9; transform: scale(1); }
+    80%  { opacity: 0;  transform: scale(1.18); }
+    100% { opacity: 0;  transform: scale(1.18); }
+  }
+  @media (max-width: 720px) {
+    .pcq-floaty {
+      right: 12px;
+      bottom: auto;
+      top: 130px;
+      transform: none;
+      padding: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border-width: 2px;
+      gap: 0;
+      max-width: none;
+      justify-content: center;
+      box-shadow: 0 6px 16px rgba(11,17,32,.22), 0 2px 5px rgba(11,17,32,.10);
+    }
+    .pcq-floaty:hover { transform: scale(1.05); }
+    .pcq-floaty__icon {
+      width: 26px;
+      height: 26px;
+      font-size: 14px;
+    }
+    .pcq-floaty__copy { display: none; }
+    .pcq-floaty::after {
+      content: "QUIZ";
+      position: absolute;
+      bottom: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 8.5px;
+      letter-spacing: .14em;
+      font-weight: 800;
+      color: var(--ink, #0b1120);
+      background: var(--ikf-yellow, #ffc300);
+      border: 1px solid var(--ink, #0b1120);
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+  }
+</style>
+
+<a class="pcq-floaty" href="{% url 'parent_conversation_quiz' %}" target="_blank" rel="noopener" aria-label="Take the IKF Parent Conversation quiz">
+  <span class="pcq-floaty__pulse" aria-hidden="true"></span>
+  <span class="pcq-floaty__icon" aria-hidden="true">★</span>
+  <span class="pcq-floaty__copy">
+    <span class="pcq-floaty__eyebrow">IKF Pathway 360</span>
+    <span class="pcq-floaty__title">The Parent Conversation · Fill SOP</span>
+  </span>
+</a>
+
+{% endblock content %}

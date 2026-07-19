@@ -1,0 +1,61 @@
+{% extends 'base.html' %} {% load static %} 
+
+{% block title %}India Khelo Football Trial Winners | Success Stories and Achievements{% endblock title %}
+
+{% block meta_description %}Celebrate the achievements of India Khelo Football trial winners! Read inspiring stories of young talent who excelled in IKF trials, showcasing their journeys, dedication, and passion for football.{% endblock meta_description %}
+
+{% block meta_keywords %}India Khelo Football winners, IKF trial winners, football success stories, IKF achievements, young football talent, Indian football trials, player stories, sports achievements, IKF winning stories{% endblock meta_keywords %}
+
+{% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content">
+    <div style="height: 120px; background-color: white;"></div>
+    
+    <!-- contact area -->
+    <div class="container m-t40">
+        <div class="section-content">
+            <div class="text-justify">
+                <div class="col-lg-12 text-center section-head m-0">
+                    <h1 class="h4">Impact Created
+                    </h1>
+                    <div class="dez-separator bg-primary"></div>
+                </div>
+
+                <div class="p-b30">
+                    <div class="section-content">
+                        <ul class="row gap-3 p-2 d-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;">
+                            {% for winner in winners %}
+                            <div class="item">
+                              <div class="dez-box m-b30 dez-img-effect vertical-pan dez-staff">
+                                <div class="dez-media vertical-pan dez-img-effect">
+                                  
+                                    <img loading="lazy" src="{{winner.pic}}" alt="{{winner.attr1}}" width="358" height="460" loading="lazy"/>
+                                  
+                                </div>
+                                <div class="p-a15 text-white dez-team" style="background: transparent !important;">
+
+                                  <p class="h6 dez-title text-capitalize m-t0">
+                                    {{ winner.name|safe }}
+                                  </p>
+                                  <div class="dez-separator-outer">
+                                    <div class="dez-separator bg-white style-liner"></div>
+                                  </div>
+                                  <p class="text-white m-t0" style="font-weight: 600;">
+                                    {{ winner.attr1|safe }}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                            {% endfor %}
+                        </ul>
+                        
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+        <!-- contact area END -->
+</div>
+    <!-- Content END-->
+    {% endblock content %}

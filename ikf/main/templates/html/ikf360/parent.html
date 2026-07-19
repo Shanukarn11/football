@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}IKF Pathway 360 Parent: Guide Your Child the Right Way | India Khelo Football{% endblock %}
+
+{% block content %}
+{% include 'html/ikf360/_base_styles.html' %}
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="ikf-section i360-hero">
+  <div class="ikf-wrap">
+    <div class="i360-hero__grid">
+      <div class="i360-hero__left">
+        <div class="i360-hero__eyebrow">IKF Pathway 360 · Parent</div>
+        <h1 class="i360-hero__title">
+          Your Child's Journey Needs the Right Guidance, <span>Not Guesswork</span>
+        </h1>
+        <p class="i360-hero__lead">
+          Behind every young player is a parent navigating uncertainty, sacrifice, and hope. IKF Pathway 360 Parent is designed to ensure that parents are not just supporters but informed partners in their child's journey.
+        </p>
+        <div class="i360-ctas">
+          <a class="i360-btn primary" href="{% url 'career360parentsplayers' %}">Submit Parent SOP for next step</a>
+        </div>
+      </div>
+      <div class="i360-hero__right">
+        <div class="i360-hero__media">
+          <img src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/ikf360.jpg' %}{% endif %}"
+               alt="IKF Pathway 360 Parent"
+               loading="eager" />
+          {% if hero_image and hero_image.caption %}
+            <div class="i360-hero__caption">{{ hero_image.caption }}</div>
+          {% else %}
+            <div class="i360-hero__caption">IKF Pathway 360 Parent</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ WE HELP PARENTS ═══════════════════════ -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">We help parents</h2>
+    <div class="ikf-soft">
+      <ul class="i360-bullets">
+        <li>Understand realistic football pathways both on and off the field.</li>
+        <li>Assess the parent and player journey to give feedback.</li>
+        <li>Make informed decisions at critical stages.</li>
+      </ul>
+      <p style="margin-top:12px;"><em>Because a player's journey is never individual. It is always a shared journey with the family.</em></p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ PARENT MAP ═══════════════════════ -->
+<section class="ikf-section" id="parent-map">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">The IKF Pathway 360 <span>Parent Map</span></h2>
+    <p style="margin-bottom:14px;">Center: IKF Pathway 360 Parent + Player. Surrounding nodes:</p>
+    <div class="i360-parentmap-image">
+      <img src="{% static 'images/ParentMap.png' %}"
+           alt="Parent SOP Journey Map — six areas IKF supports: Awareness of Football Pathways, Decision-Making Guidance, Education Balance, IKF Pathway 360 Parent and Player, Emotional Support, Financial Planning."
+           loading="lazy">
+    </div>
+  </div>
+</section>
+
+<style>
+  .i360-parentmap-image {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 8px;
+  }
+  .i360-parentmap-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+  }
+</style>
+
+
+<!-- ═══════════════════════ YOUR ROLE ═══════════════════════ -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Your Role as a Parent</h2>
+    <div class="ikf-soft">
+      <p>
+        As a parent you must support the journey of your child but always keep on asking what is next.
+      </p>
+      <ul class="i360-bullets" style="margin-top:12px;">
+        <li>Support your child journey for them to stay in the game.</li>
+        <li>Understand player's pathways both on and off the field.</li>
+        <li>Be prepared for the best and not so best.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ BOTTOM CTA ═══════════════════════ -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <div class="i360-banner">
+      <div class="i360-ctas">
+        <a class="i360-btn primary" href="{% url 'parent-fuelling-ikf' %}">Join Parent Community</a>
+        <a class="i360-btn" href="{% url 'career360parentsplayers' %}">Speak to IKF Mentor and Fill Parent SOP</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

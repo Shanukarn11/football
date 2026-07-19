@@ -1,0 +1,80 @@
+{% extends 'base.html' %} {% load static %} 
+
+{% block title %}India Khelo News Archive | Latest Updates & Past Publications{% endblock title %}
+
+{% block meta_description %}Stay informed with the India Khelo News Archive, featuring the latest updates, press releases, and past publications about our initiatives and achievements in Indian football. Catch up on all news and announcements here.{% endblock meta_description%}
+
+{% block meta_keywords %}India Khelo news, football news archive, Indian football updates, IndiaKhelo publications, sports news, football announcements, Indian sports organization news, IndiaKhelo press releases, football events news{% endblock meta_keywords%} 
+
+{% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content">
+    <div style="height: 120px; background-color: white;"></div>
+    
+    <!-- contact area -->
+    <div class="container m-t40">
+        <div class="section-content">
+            <div class="text-justify">
+                <div class="col-lg-12 text-center section-head m-0">
+                    <h1 class="h4">IKF in News
+                    </h1>
+                    <div class="dez-separator bg-primary"></div>
+                </div>
+
+                <div class="p-b30">
+                    <div class="section-content">
+                        <ul class="row gap-3 p-2 d-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;">
+                            {% for headlines in news %}
+                            <div class="col d-flex flex-column h-100">
+                                <div class="ow-event-post date-style-2">
+                                <div class="ow-event-media dez-img-effect zoom-slow">
+                                    <img loading="lazy" src="{{ headlines.pic }}" alt="ikf news" loading="lazy"/>
+                                </div>
+                                <div class="ow-event-info">
+                                    <div class="ow-event-title">
+                                    <p class="event-title h6">
+                                    {{ headlines.heading }}
+                                    </p>
+                                    </div>
+                                    <div class="ow-event-text">
+                                    <p>{{ headlines.description }}</p>
+                                    </div>
+                                    <div class="ow-event-readmore">
+                                    <a
+                                        area-label="{{ headlines.attr1}}"
+                                        href="{{ headlines.attr1}}"
+                                        title="READ MORE"
+                                        rel="bookmark"
+                                        class="site-button-link"
+                                        area-label="more about IKF"
+                                    >
+                                        {{headlines.button_text}}
+                                        <i class="fa fa-angle-double-right"></i
+                                    ></a>
+                                    </div>
+                                    <div class="ow-event-meta">
+                                    <ul class="icon-list">
+                                        <li class="event-date">
+                                        <i class="fa fa-calendar"></i>{{headlines.date}}
+                                        </li>
+                                        <li class="event-address">
+                                        <i class="fa fa-map-marker"></i>{{headlines.name}}
+                                        </li>
+                                    </ul>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </ul>
+                        
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+        <!-- contact area END -->
+</div>
+    <!-- Content END-->
+    {% endblock content %}

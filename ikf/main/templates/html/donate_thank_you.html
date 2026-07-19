@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.ty-wrap{
+  max-width:720px;
+  margin:0 auto;
+  padding:60px 24px 100px;
+  font-family:'Avenir', sans-serif;
+  color:#1a1a1a;
+}
+.ty-card{
+  background:#fff;
+  border:1px solid #ecc34a;
+  border-radius:18px;
+  padding:48px 40px;
+  text-align:center;
+  box-shadow:0 18px 40px -18px rgba(176, 130, 0, .3);
+  position:relative;
+  overflow:hidden;
+}
+.ty-card::before{
+  content:"";
+  position:absolute;
+  top:-60px; left:50%;
+  transform:translateX(-50%);
+  width:240px; height:240px;
+  background: radial-gradient(circle, rgba(255, 236, 168, .85) 0%, rgba(255, 236, 168, 0) 70%);
+  pointer-events:none;
+}
+.ty-check{
+  position:relative;
+  width:64px;
+  height:64px;
+  margin:0 auto 20px;
+  border-radius:50%;
+  background:#ffc107;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 8px 20px -6px rgba(255, 193, 7, .55);
+}
+.ty-check svg{ width:32px; height:32px; }
+.ty-card h1{
+  font-size:28px;
+  font-weight:700;
+  margin:0 0 12px;
+  position:relative;
+}
+.ty-card .lede{
+  font-size:15px;
+  color:#555;
+  line-height:1.6;
+  margin:0 0 28px;
+  position:relative;
+}
+.ty-details{
+  text-align:left;
+  background:#fffaf0;
+  border:1px solid #f0d97a;
+  border-radius:12px;
+  padding:18px 22px;
+  margin:0 0 24px;
+  position:relative;
+}
+.ty-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+  padding:10px 0;
+  border-bottom:1px dashed rgba(122, 90, 0, .25);
+  font-size:14px;
+}
+.ty-row:last-child{ border-bottom:none; }
+.ty-row .k{
+  color:#7a5a00;
+  text-transform:uppercase;
+  font-size:11px;
+  letter-spacing:.5px;
+  font-weight:600;
+  flex-shrink:0;
+}
+.ty-row .v{
+  color:#1a1a1a;
+  font-weight:600;
+  text-align:right;
+  word-break:break-word;
+}
+.ty-80g{
+  background:#fffaf0;
+  border-left:3px solid #ffc107;
+  padding:12px 14px;
+  border-radius:6px;
+  font-size:13px;
+  color:#5d4f1a;
+  line-height:1.5;
+  margin:0 0 24px;
+  text-align:left;
+  position:relative;
+}
+.ty-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  position:relative;
+}
+.ty-btn{
+  display:inline-block;
+  padding:11px 22px;
+  font-size:14px;
+  font-weight:600;
+  border-radius:8px;
+  text-decoration:none;
+  border:1px solid transparent;
+  cursor:pointer;
+  transition:all .15s ease;
+}
+.ty-btn-primary{
+  background:#ffc107;
+  color:#1a1a1a;
+}
+.ty-btn-primary:hover{ background:#e0a800; color:#000; text-decoration:none; }
+.ty-btn-ghost{
+  background:#fff;
+  color:#1a1a1a;
+  border-color:#e5e7eb;
+}
+.ty-btn-ghost:hover{ border-color:#ffc107; color:#7a5a00; text-decoration:none; }
+
+@media (max-width:560px){
+  .ty-card{ padding:36px 22px; }
+  .ty-card h1{ font-size:22px; }
+  .ty-row{ flex-direction:column; }
+  .ty-row .v{ text-align:left; }
+}
+</style>
+
+<div class="ty-wrap">
+  <div class="ty-card">
+
+    <div class="ty-check" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M5 12.5l4.5 4.5L19 7.5" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <h1>Thank you. Your support has been recorded.</h1>
+    <p class="lede">
+      {% if anonymous %}
+        Your anonymous contribution to India Khelo Football is appreciated.
+      {% else %}
+        We are grateful for your contribution to India Khelo Football.
+      {% endif %}
+    </p>
+
+    <div class="ty-details">
+      {% if project %}
+        <div class="ty-row">
+          <span class="k">You supported</span>
+          <span class="v">{{ project }}</span>
+        </div>
+      {% endif %}
+      {% if amount %}
+        <div class="ty-row">
+          <span class="k">Amount</span>
+          <span class="v">&#8377; {{ amount }}</span>
+        </div>
+      {% endif %}
+      {% if method %}
+        <div class="ty-row">
+          <span class="k">Method</span>
+          <span class="v">
+            {% if method == 'razorpay' %}Razorpay
+            {% elif method == 'upi' %}UPI
+            {% elif method == 'bank' %}Bank Transfer
+            {% else %}{{ method }}
+            {% endif %}
+          </span>
+        </div>
+      {% endif %}
+      {% if pid %}
+        <div class="ty-row">
+          <span class="k">Payment ID</span>
+          <span class="v">{{ pid }}</span>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if email %}
+      <p class="ty-80g">
+        Your 80G certificate will be sent to <strong>{{ email }}</strong> within 7 working days.
+      </p>
+    {% endif %}
+
+    {% if method == 'upi' or method == 'bank' %}
+      <p class="ty-80g">
+        Our team will reconcile your payment with the bank statement. We will reach out
+        on your email or mobile number if anything needs clarification.
+      </p>
+    {% endif %}
+
+    <div class="ty-actions">
+      {% if method == 'razorpay' and pid %}
+        <a class="ty-btn ty-btn-primary"
+           href="https://dashboard.razorpay.com/app/payments/{{ pid }}"
+           target="_blank" rel="noopener noreferrer">
+          Download Payment Receipt (PDF)
+        </a>
+      {% endif %}
+      <a class="ty-btn ty-btn-ghost" href="{% url 'Donate' %}">Back to Donate</a>
+      <a class="ty-btn ty-btn-ghost" href="{% url 'home' %}">Go to Home</a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

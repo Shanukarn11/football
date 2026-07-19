@@ -1,0 +1,322 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+.section {
+  
+  border-bottom: 1px solid #ddd;
+}
+.section:last-child {
+  border-bottom: none;
+}
+
+.section-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.section-text {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.section-text.highlight {
+  background: #f9f9f9;
+  padding: 10px;
+  border-left: 4px solid #28a745;
+}
+
+.table td, .table th {
+    white-space: nowrap; /* Prevents text wrapping */
+}
+#hero h2 {
+  padding-top: 40px;
+  margin-bottom: 10px;
+}
+
+#hero p {
+  margin-bottom: 20px;
+}
+.career360-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .career360-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 2px;
+    flex: 1;
+
+  }
+
+  .career360-title h1 {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .career360-title p {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 900px;
+  }
+
+  .career360-icons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 40px; 
+  }
+
+  .header-icon {
+    background-color: #ffc300;
+    padding: 2px;
+    border-radius: 6px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 60px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .header-icon img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+  }
+
+  .career360-image img {
+  display: block;
+  margin-bottom: 0;
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  max-height: 460px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding-bottom: 0;
+}
+.career360-image {
+  margin-bottom: 0;
+  padding: 0;
+}
+
+
+@media screen and (max-width: 768px) {
+    .table td, .table th {
+        font-size: 14px;
+        padding: 5px;
+    }
+}
+
+</style>
+
+<!-- Hero Section -->
+<div class="page-content bg-white">
+  <div class="career360-container">
+    <!-- Title and Contact Icons -->
+    <div class="career360-top">
+      <div class="career360-title">
+        <h1>IKF Pathway 360</h1>
+        <p class="career360-subtitle">Empowering Football Futures</p>
+  
+        <p>
+          Discover IKF Pathway 360’s transformative vision to redefine football and build India into a true sporting nation through<br>parent-first, ecosystem-driven support.
+        </p>
+        
+      </div>
+      <div class="career360-icons">
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=career360@indiakhelofootball.com" target="_blank" rel="noopener" class="header-icon">
+          <img loading="lazy" src="{% static 'images/career360/Vector1.svg' %}" alt="Email Icon" />
+        </a>
+        <a href="https://wa.me/918850119762" target="_blank" class="header-icon">
+          <img loading="lazy" src="{% static 'images/career360/vector4.svg' %}" alt="WhatsApp Icon" />
+        </a>
+        
+      </div>
+    </div>
+  
+    <!-- Image -->
+    <div class="career360-image">
+      <img loading="lazy" src="{% static 'images/career360/vision1.png' %}" alt="IKF Career Vision" />
+    </div>
+  
+  
+
+  <!-- A Platform for Every Player -->
+  <section id="platform" class="section">
+    <div class="container">
+      <h2 class="section-title">A Platform for Every Player</h2>
+      <p class="section-text">
+        The IKF National Trials are India Khelo Football’s flagship talent‑scouting program. Born from the belief that <strong>“Aap khelo, mauka hum denge”</strong>—you play, we provide the opportunity—these trials exist to bridge the gap between grassroots passion and professional pathways. Whether a youngster is mastering nutmegs on a dusty village pitch or captaining a school team in a metro, the National Trials give every aspiring footballer a level playing field to be seen by the right eyes.
+
+      </p>
+    </div>
+  </section>
+
+  <!-- Why We Run the Trials -->
+  <section id="why" class="bg-light py-5">
+    <div class="container">
+      <h2 class="h3 font-weight-bold mb-3">Why We Run the Trials</h2>
+      <ul class="list-check-circle primary">
+        <li><strong>Democratising Access</strong> — Professional clubs can only reach so far on their own. By taking the trial to the player, we remove the cost and geography barriers that keep talent hidden.</li>
+        <li><strong>Nation-Building Vision</strong>  — Each season, we expand our map—From 17 cities in year one, to 40, then 58, and over 100 last year—
+          Now, with 125 cities on the horizon, we’re not slowing down.
+          Because no dream should be left off the grid.</li>
+        <li><strong>Neutral & Non-Profit</strong> — IKF is not an academy, agent, or commercial scout. We evaluate talent objectively and hand clubs a shortlist they can trust, at zero cost to them or to the player beyond the first local screening.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- How the Journey Works -->
+  <section id="journey" class="py-5">
+    <div class="container">
+      <h2 class="h3 font-weight-bold mb-4">How the Journey Works</h2>
+      <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Phase</th>
+                    <th>What Happens</th>
+                    <th>Cost to Player</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>City Trials</td>
+                    <td>Players register online and perform in front of scouts.</td>
+                    <td>Nominal one-time fee</td>
+                </tr>
+                <tr>
+                    <td>Zonal Finals</td>
+                    <td>Short-listed players advance to zonal hubs.</td>
+                    <td>Free</td>
+                </tr>
+                <tr>
+                    <td>National Finals</td>
+                    <td>Top talents play before ISL & I-League clubs.</td>
+                    <td>Free</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+      <p class="text-muted"><em>Note: No fee beyond the first screening. Later phases run on donations and CSR grants.</em></p>
+    </div>
+  </section>
+
+  <!-- What Parents Can Expect -->
+  <section id="parents" class="bg-light py-5">
+    <div class="container">
+      <h2 class="h3 font-weight-bold mb-4">What Parents Can Expect</h2>
+      <ul class="list-check-circle primary">
+        <li><strong>Transparent Scores</strong> — Shortlisted players receive a written report detailing strengths, gaps, and next steps.</li>
+        <li><strong>Safe Setup</strong> — Certified coaches, first-aid, strict age checks ensure player growth remains the focus.</li>
+        <li><strong>Girls Play Free</strong> — Registration fees waived for female footballers.</li>
+        <li><strong>No Hidden Hooks</strong> — IKF sells no academy seats, contracts, or agent deals. We only connect talent with real opportunities.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- The Road Ahead -->
+  <section id="road-ahead" class="py-5">
+    <div class="container">
+      <h2 class="h3 font-weight-bold mb-4">The Road Ahead</h2>
+      <p class="section-text highlight">
+        <strong>Season 5 (2025)</strong> is our boldest yet: <strong>125 cities, 5 countries</strong>. If your child has the passion, the IKF National Trials have the stage.
+      </p>
+    </div>
+  </section>
+
+<!-- FAQ Section -->
+<section id="faq" class="bg-light py-5">
+  <div class="container">
+      <h2 class="h3 font-weight-bold mb-4">Frequently Asked Questions</h2>
+      <div class="accordion" id="faqAccordion">
+          
+          <!-- Question 1 -->
+          <div class="card">
+              <div class="card-header" id="faq1">
+                  <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse1">Who can register for the City Trials?</button>
+                  </h5>
+              </div>
+              <div id="collapse1" class="collapse" data-parent="#faqAccordion">
+                  <div class="card-body">
+                      Boys and girls aged 8‑20, with a valid government ID and medical clearance.
+                  </div>
+              </div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="card">
+              <div class="card-header" id="faq2">
+                  <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse2">What is the registration fee?</button>
+                  </h5>
+              </div>
+              <div id="collapse2" class="collapse" data-parent="#faqAccordion">
+                  <div class="card-body">
+                      A small, one‑time processing fee for City Trials; Zonal and National rounds are free.
+                  </div>
+              </div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="card">
+              <div class="card-header" id="faq3">
+                  <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse3">What if my city isn’t on the list?</button>
+                  </h5>
+              </div>
+              <div id="collapse3" class="collapse" data-parent="#faqAccordion">
+                  <div class="card-body">
+                      We add new locations every year. Follow our socials or sign up for alerts.
+                  </div>
+              </div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="card">
+              <div class="card-header" id="faq4">
+                  <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse4">Does selection guarantee a club contract?</button>
+                  </h5>
+              </div>
+              <div id="collapse4" class="collapse" data-parent="#faqAccordion">
+                  <div class="card-body">
+                      Selection earns exposure. Final signings are decided solely by the clubs.
+                  </div>
+              </div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="card">
+              <div class="card-header" id="faq5">
+                  <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse5">Is accommodation provided for Zonal or National Finals?</button>
+                  </h5>
+              </div>
+              <div id="collapse5" class="collapse" data-parent="#faqAccordion">
+                  <div class="card-body">
+                      IKF shares discounted hostel options and travel‑aid links but does not cover costs directly.
+                  </div>
+              </div>
+          </div>
+
+      </div>
+  </div>
+</section>
+
+{% endblock content %}

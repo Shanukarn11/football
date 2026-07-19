@@ -1,0 +1,452 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-dim:    rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --surface:           #ffffff;
+    --surface-2:         #f8f9fb;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         22px;
+    --shadow-sm:         0 2px 8px  rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md:         0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg:         0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  /* ── Layout ── */
+  .fod-wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 24px;
+    color: var(--ink);
+  }
+
+  .fod-section { padding: 36px 0 0; }
+
+  /* ── Soft panel ── */
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 28px;
+    position: relative;
+  }
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* table-soft: flush edges */
+  .table-soft { padding: 0; overflow: hidden; }
+  .table-soft::before { left: 0; right: 0; border-radius: 0; }
+
+  /* ── Headings ── */
+  .fod-h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 18px;
+    letter-spacing: -.3px;
+  }
+
+  /* ── Body copy ── */
+  .fod-copy {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ═══════════════════════
+     HERO — text left, image right (Season 6)
+  ════════════════════════ */
+  .fod-hero {
+    padding: 24px 0 44px;
+  }
+
+  .fod-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .fod-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .fod-hero__left { display: flex; flex-direction: column; }
+
+  /* eyebrow dash */
+  .fod-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .fod-kicker::before {
+    content: '';
+    width: 22px;
+    height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .fod-title {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    margin: 0 0 10px;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .fod-sub {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0 0 6px;
+    color: var(--muted);
+  }
+
+  .fod-presented {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--muted-2);
+    margin: 0 0 14px;
+  }
+
+  .fod-mission {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* hero media */
+  .fod-hero__right { width: 100%; }
+
+  .fod-hero__media {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .fod-hero__img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .fod-hero__media:hover .fod-hero__img { transform: scale(1.02); }
+
+  .fod-hero__caption {
+    position: absolute;
+    right: 14px;
+    bottom: 12px;
+    z-index: 2;
+    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    text-align: right;
+    max-width: 85%;
+    pointer-events: none;
+  }
+  .fod-hero__caption::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+    background: rgba(0,0,0,.5);
+    z-index: -1;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ═══════════════════════
+     TABLE
+  ════════════════════════ */
+  .fod-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body);
+    font-size: 15px;
+  }
+  .fod-table th,
+  .fod-table td { padding: 16px 18px; text-align: left; border-bottom: 1px solid var(--line); }
+  .fod-table th {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    background: var(--surface);
+  }
+  .fod-table td { color: var(--muted); }
+  .fod-table td:first-child { font-family: var(--font-display); font-weight: 700; color: var(--ink-2); }
+  .fod-table tr:nth-child(even) td { background: var(--surface-2); }
+  .fod-table tr:last-child td { border-bottom: none; }
+  .fod-table tbody tr { transition: background .2s ease; cursor: default; }
+  .fod-table tbody tr:hover td { background: var(--ikf-yellow) !important; color: #000 !important; }
+
+  /* ═══════════════════════
+     DONATE CARDS
+  ════════════════════════ */
+  .donate-grid { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 18px; }
+  .donate-card { flex: 1 1 280px; }
+
+  /* card hover — flat yellow fill */
+  .ikf-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 24px 22px;
+    box-shadow: var(--shadow-sm);
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+    position: relative;
+  }
+  .ikf-card::before { display: none; }
+  .ikf-card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .ikf-card:hover * { color: #000 !important; }
+
+  /* donate button */
+  .donate-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    padding: 0 32px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    background: var(--ikf-yellow);
+    color: #000;
+    box-shadow: 0 4px 14px rgba(255,195,0,.35);
+    transition: all .2s ease;
+    margin-top: 20px;
+  }
+  .donate-cta:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.45);
+  }
+
+  /* ═══════════════════════
+     CONTACT
+  ════════════════════════ */
+  .contact-slab {
+    margin: 36px 0 44px;
+    text-align: center;
+    background:
+      radial-gradient(600px 220px at 10% -10%, rgba(255,195,0,.1), transparent 60%),
+      radial-gradient(600px 220px at 90% 110%, rgba(255,195,0,.1), transparent 60%),
+      var(--surface);
+  }
+
+  .contact-row {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    margin-bottom: 20px;
+  }
+
+  .contact-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: var(--radius-sm);
+    background: var(--ikf-yellow);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(255,195,0,.35);
+    transition: all .2s ease;
+    text-decoration: none;
+  }
+  .contact-icon:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.45);
+  }
+  .contact-icon img { width: 22px; height: 22px; object-fit: contain; }
+
+  .tagline {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  /* ═══════════════════════
+     RESPONSIVE
+  ════════════════════════ */
+  @media (max-width: 900px) {
+    .fod-wrap { padding: 0 18px; }
+    .fod-title { font-size: 38px; letter-spacing: -1px; }
+    .ikf-soft { padding: 22px 18px; }
+  }
+  @media (max-width: 640px) {
+    .fod-title { font-size: 32px; }
+    .donate-grid { flex-direction: column; }
+  }
+</style>
+
+<div class="fod-wrap">
+
+  <!-- HERO -->
+  <div class="fod-hero">
+    <div class="fod-hero__grid">
+
+      <div class="fod-hero__left">
+        <span class="fod-kicker">IKF Pathway 360 • Social Impact</span>
+        <h1 class="fod-title">Field of Dreams Campaign</h1>
+        <p class="fod-sub">Empowering Futures Through Football</p>
+        <p class="fod-presented">Presented by <strong>India Khelo Football (IKF)</strong></p>
+        <p class="fod-mission">
+          A mission under IKF Pathway 360 — nurturing not just football players but well-rounded individuals
+          ready to lead life with purpose, strength, and skill.
+        </p>
+      </div>
+
+      <div class="fod-hero__right">
+        <div class="fod-hero__media">
+          <img loading="lazy"
+               src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/demo.png' %}{% endif %}"
+               alt="Field of Dreams"
+               class="fod-hero__img" />
+          <div class="fod-hero__caption">
+            {% if hero_image and hero_image.caption %}
+              {{ hero_image.caption }}
+            {% else %}
+              Field of Dreams — IKF Pathway 360 Social Impact
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Vision -->
+  <section class="fod-section">
+    <h2 class="fod-h2">A Vision Beyond the Pitch</h2>
+    <div class="ikf-soft">
+      <p class="fod-copy">
+        Field of Dreams is a powerful social impact initiative by IKF Pathway 360 that supports aspiring athletes on and off the field.
+        Our approach blends professional football development with critical life skills and modern literacy, enabling young
+        players to survive challenges, navigate life, and thrive in any environment.
+      </p>
+    </div>
+  </section>
+
+  <!-- Categories table -->
+  <section class="fod-section">
+    <h2 class="fod-h2">Field Of Dreams — Your Support, Their Dream</h2>
+    <p class="fod-copy" style="margin-bottom: 18px;">Every child deserves a chance. IKF's Field of Dreams categorizes player pathways to tailor their development journey and connect them with sponsors, mentors, and experts who can amplify their growth.</p>
+    <div class="ikf-soft table-soft">
+      <table class="fod-table">
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Focus</th>
+            <th>Age Group</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Future Champions</td><td>Player Development + Life Skills</td><td>All Ages</td></tr>
+          <tr><td>Books &amp; Boots</td><td>Development + Literacy Skills</td><td>11th &amp; 12th Std</td></tr>
+          <tr><td>Heal To Play</td><td>Development + Medic Rehab</td><td>All Ages</td></tr>
+          <tr><td>That Kicks</td><td>Development + Life Skills + Extracurriculars</td><td>All Ages</td></tr>
+          <tr><td>Maidaan Ki Rani</td><td>Female Development + Life Skills</td><td>All Ages</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Donate -->
+  <section class="fod-section">
+    <h2 class="fod-h2">Get Involved: Donate to Transform a Life</h2>
+    <div class="ikf-soft">
+      <p class="fod-copy">Help us create leaders, not just football players. Your contribution fuels training, education, healthcare, and mentorship for under-resourced players across India.</p>
+      <div class="donate-grid">
+        <div class="donate-card ikf-card">
+          <p class="fod-copy"><strong>Sponsor a Player</strong>: Fund a child's journey through any Field of Dreams category.</p>
+        </div>
+        <div class="donate-card ikf-card">
+          <p class="fod-copy"><strong>Adopt a Program</strong>: Back an entire sub-project like <em>Maidaan Ki Rani</em> or <em>Heal To Play</em>.</p>
+        </div>
+      </div>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=career360@indiakhelofootball.com" target="_blank" rel="noopener" class="donate-cta">Donate / Partner 🤝</a>
+      <p class="fod-copy" style="margin-top: 8px;">Every donation brings a dream closer to reality.</p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact-slab ikf-soft">
+    <h2 class="fod-h2" style="margin-top: 0;">Contact Us</h2>
+    <div class="contact-row">
+      <a class="contact-icon" href="https://mail.google.com/mail/?view=cm&fs=1&to=career360@indiakhelofootball.com" target="_blank" rel="noopener" aria-label="Email">
+        <img src="{% static 'images/career360/Vector1.svg' %}" alt="">
+      </a>
+      <a class="contact-icon" href="https://www.indiakhelofootball.com" target="_blank" rel="noopener" aria-label="Website">
+        <img src="{% static 'images/career360/vector4.svg' %}" alt="">
+      </a>
+    </div>
+    <p class="tagline">IKF — Building Futures, One Kick at a Time</p>
+  </section>
+
+</div>
+{% endblock content %}

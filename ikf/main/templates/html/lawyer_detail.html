@@ -1,0 +1,334 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="lawyer-profile">
+  <div class="law-wrap">
+
+    <!-- Top-left back button -->
+    <div class="law-back">
+      <a class="law-btn-back" href="{% url 'lawyer_index' %}">← All Lawyers</a>
+    </div>
+
+    <!-- HERO CARD -->
+    <div class="law-hero-card">
+      <div class="law-photo">
+        {% if lawyer.photo %}
+          <img src="{{ lawyer.photo.url }}" alt="{{ lawyer.name }}">
+        {% else %}
+          <img src="{% static 'images/placeholder.png' %}" alt="{{ lawyer.name }}">
+        {% endif %}
+      </div>
+
+      <div class="law-hero-main">
+        <div class="law-eyebrow">Legal Network</div>
+
+        <h1 class="law-name">{{ lawyer.name }}</h1>
+
+        {# removed the tagline line to avoid repetition #}
+        {# chips below will show city / expertise only once #}
+
+        <!-- Pills: city / expertise -->
+        <div class="law-chips">
+          {% if lawyer.city %}
+            <span class="law-chip">📍 {{ lawyer.city }}</span>
+          {% endif %}
+          {% if lawyer.expertise_area %}
+            <span class="law-chip">⚖️ {{ lawyer.expertise_area }}</span>
+          {% endif %}
+        </div>
+
+        <!-- CTAs (only LinkedIn here) -->
+        <div class="law-hero-actions">
+          {% if lawyer.linkedin_url %}
+            <a class="law-btn" href="{{ lawyer.linkedin_url }}" target="_blank" rel="noopener">
+              Connect on LinkedIn
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAIL GRID -->
+    <div class="law-grid">
+
+      <!-- About -->
+      <article class="law-card">
+        <h3>About</h3>
+        <p>
+          {% if lawyer.expertise_area and lawyer.city %}
+            {{ lawyer.name }} specializes in <strong>{{ lawyer.expertise_area }}</strong> and is based in
+            <strong>{{ lawyer.city }}</strong>.
+          {% elif lawyer.expertise_area %}
+            {{ lawyer.name }} specializes in <strong>{{ lawyer.expertise_area }}</strong>.
+          {% elif lawyer.city %}
+            {{ lawyer.name }} is based in <strong>{{ lawyer.city }}</strong>.
+          {% else %}
+            Profile details will be updated soon.
+          {% endif %}
+        </p>
+      </article>
+
+      {% if lawyer.city %}
+        <article class="law-card">
+          <h3>Primary City</h3>
+          <p>{{ lawyer.city }}</p>
+        </article>
+      {% endif %}
+
+      {% if lawyer.expertise_area %}
+        <article class="law-card">
+          <h3>Expertise Area</h3>
+          <p>{{ lawyer.expertise_area }}</p>
+        </article>
+      {% endif %}
+
+      {% if lawyer.linkedin_url %}
+        <article class="law-card law-card--link">
+          <h3>Connect</h3>
+          <p>
+            Prefer LinkedIn?&nbsp;
+            <a href="{{ lawyer.linkedin_url }}" target="_blank" rel="noopener">
+              View {{ lawyer.name }}’s profile
+            </a>
+          </p>
+        </article>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  :root{
+    --ink:#0f172a;
+    --muted:#566070;
+    --brand:#ffc300;
+    --brand-soft:rgba(255,195,0,.12);
+    --ring:#e5e7eb;
+    --pill-bg:#fffdf0;
+    --pill-border:#f3e8a3;
+  }
+
+  .lawyer-profile{
+    position:relative;
+    overflow:hidden;
+    padding-top:10px;
+    isolation:isolate;
+  }
+
+  /* soft yellow ambience */
+  .lawyer-profile::before{
+    content:"";
+    position:absolute;
+    inset:-160px;
+    z-index:0;
+    filter:blur(24px);
+    opacity:.55;
+    pointer-events:none;
+    background:
+      radial-gradient(420px 300px at -8% -10%,rgba(255,195,0,.45),transparent 70%),
+      radial-gradient(380px 280px at 108% -10%,rgba(255,225,110,.34),transparent 72%),
+      radial-gradient(380px 280px at -8% 108%,rgba(255,225,110,.30),transparent 72%),
+      radial-gradient(420px 300px at 108% 108%,rgba(255,195,0,.32),transparent 70%);
+  }
+
+  .law-wrap{
+    position:relative;
+    z-index:1;
+    width:min(1100px, 94vw);
+    margin:0 auto;
+    padding:24px 0 60px;
+    font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  }
+
+  /* top-left back button */
+  .law-back{
+    margin-bottom:12px;
+  }
+  .law-btn-back{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:7px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:700;
+    border:1px solid var(--ring);
+    background:#ffc300;
+    color:var(--ink);
+    text-decoration:none;
+    box-shadow:0 4px 10px rgba(15,23,42,.06);
+    transition:background .12s ease, transform .12s ease, box-shadow .12s ease;
+  }
+  .law-btn-back:hover{
+    background:#f9fafb;
+    transform:translateY(-1px);
+    box-shadow:0 8px 18px rgba(15,23,42,.10);
+  }
+
+  /* HERO CARD */
+  .law-hero-card{
+    display:flex;
+    gap:24px;
+    align-items:flex-start; /* so image doesn’t stretch card */
+    background:#fff;
+    border:1px solid rgba(255,195,0,.45);
+    border-radius:24px;
+    padding:20px 22px;
+    box-shadow:0 16px 40px rgba(15,23,42,.08);
+    margin-bottom:22px;
+  }
+
+  /* FIX: image fully contained, no stretching */
+  .law-photo{
+    width:clamp(200px, 26vw, 240px);
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid var(--ring);
+    box-shadow:0 8px 20px rgba(15,23,42,.16);
+    background:#fff;
+    flex-shrink:0;
+  }
+  .law-photo img{
+    width:100%;
+    height:auto;
+    display:block;
+    object-fit:cover;
+    object-position:center;
+  }
+
+  .law-hero-main{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:6px;
+  }
+
+  .law-eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--pill-bg);
+    border:1px solid var(--pill-border);
+    color:#8a6d00;
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:6px 10px;
+    border-radius:999px;
+    margin-bottom:4px;
+  }
+  .law-eyebrow::before{
+    content:"✦";
+    color:var(--brand);
+  }
+
+  .law-name{
+    margin:0;
+    font-size:clamp(26px, 4vw, 32px);
+    font-weight:800;
+    color:var(--ink);
+  }
+
+  .law-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:10px 0 8px;
+  }
+  .law-chip{
+    font-size:13px;
+    padding:6px 10px;
+    border-radius:999px;
+    background:var(--brand-soft);
+    border:1px solid rgba(255,195,0,.55);
+    color:var(--ink);
+  }
+
+  .law-hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:6px;
+  }
+
+  .law-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:9px 16px;
+    border-radius:999px;
+    font-size:14px;
+    font-weight:800;
+    border:1px solid rgba(255,195,0,.8);
+    background:var(--brand);
+    color:#1a1a1a;
+    text-decoration:none;
+    box-shadow:0 8px 20px rgba(15,23,42,.16);
+    transition:transform .15s ease, box-shadow .15s ease, background .12s ease;
+  }
+  .law-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 12px 28px rgba(15,23,42,.20);
+  }
+
+  /* DETAIL GRID */
+  .law-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+  }
+
+  @media (max-width:800px){
+    .law-hero-card{
+      flex-direction:column;
+      align-items:flex-start;
+    }
+    .law-photo{
+      width:clamp(220px, 70vw, 320px);
+      margin:0 auto;
+    }
+    .law-hero-main{
+      align-items:flex-start;
+    }
+    .law-grid{
+      grid-template-columns:1fr;
+    }
+  }
+
+  .law-card{
+    background:#fff;
+    border-radius:16px;
+    padding:16px 18px;
+    border:1px solid rgba(255,195,0,.35);
+    box-shadow:0 8px 18px rgba(15,23,42,.06);
+  }
+  .law-card h3{
+    margin:0 0 6px;
+    font-size:16px;
+    font-weight:800;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    color:var(--ink);
+  }
+  .law-card p{
+    margin:0;
+    font-size:15px;
+    line-height:1.6;
+    color:var(--muted);
+  }
+
+  .law-card--link a{
+    color:#0a3a99;
+    font-weight:700;
+    text-decoration:none;
+  }
+  .law-card--link a:hover{
+    text-decoration:underline;
+  }
+</style>
+
+{% endblock %}

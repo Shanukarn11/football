@@ -1,0 +1,512 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}IKF State Association Partners | Strengthening Local Roots - India Khelo Football{% endblock title %}
+
+{% block meta_description %}
+Partner with India Khelo Football (IKF) as a State Association Partner to strengthen grassroots football ecosystems, enable transparent talent identification, and create a unified national pathway for players across India.
+{% endblock meta_description %}
+
+{% block meta_keywords %}
+IKF State Association Partners, India Khelo Football state partnership, state football association, grassroots football India, IKF trials, scouting pathway, merit based selection, IKF Pathway 360
+{% endblock meta_keywords %}
+
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-dim:    rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --surface:           #ffffff;
+    --surface-2:         #f8f9fb;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         22px;
+    --shadow-sm:         0 2px 8px  rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md:         0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg:         0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  /* ── Layout ── */
+  .ikf-wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  .ikf-section { padding: 36px 0 44px; }
+  .ikf-section + .ikf-section { padding-top: 18px; }
+
+  /* ── Soft panel ── */
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 28px;
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .ikf-soft:last-child { margin-bottom: 0; }
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* ── Headings ── */
+  .ikf-h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 46px 0 14px;
+    letter-spacing: -.3px;
+  }
+
+  /* ── Body copy ── */
+  p, li {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  /* ── Bold ink highlight ── */
+  .bold-ink {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--ink-2);
+  }
+
+  /* ── Yellow-dot bullets ── */
+  .ikf-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .ikf-list li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .ikf-list li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 8px;
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: #facc15;
+    box-shadow: 0 0 0 3px rgba(250,204,21,.25);
+    transition: background .25s ease, box-shadow .25s ease;
+  }
+
+  .two-col { column-count: 2; column-gap: 40px; }
+  @media (max-width: 900px) { .two-col { column-count: 1; } }
+
+  /* ═══════════════════════
+     HERO — Season 6 layout
+  ════════════════════════ */
+  .trials-hero { padding-top: 24px; }
+
+  .trials-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .trials-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.15fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .trials-hero__left { display: flex; flex-direction: column; }
+
+  .trials-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .trials-hero__eyebrow::before {
+    content: '';
+    width: 22px; height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .trials-hero__title {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    margin: 0 0 10px;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .trials-hero__subtitle {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .trials-hero__media {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .trials-hero__img {
+    width: 100%; height: 100%;
+    display: block; object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .trials-hero__media:hover .trials-hero__img { transform: scale(1.02); }
+
+  .ikf-media { position: relative; display: block; }
+
+  .ikf-caption {
+    position: absolute;
+    right: 14px; bottom: 12px; z-index: 2;
+    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    text-align: right;
+    max-width: 85%;
+    pointer-events: none;
+  }
+  .ikf-caption::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+    background: rgba(0,0,0,.5);
+    z-index: -1;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ═══════════════════════
+     SPLIT (text left + image right)
+  ════════════════════════ */
+  .split-row {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .split-row__text { flex: 1 1 560px; min-width: 260px; }
+  .split-row__media { flex: 1 1 280px; min-width: 240px; }
+
+  .split-row__text h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink-2);
+    margin: 0 0 12px;
+    letter-spacing: -.2px;
+  }
+
+  .side-media {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+  .side-media img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform .4s ease;
+  }
+  .side-media:hover img { transform: scale(1.02); }
+
+  /* ═══════════════════════
+     PARTNER CARDS GRID
+  ════════════════════════ */
+  .ikf-partner-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+  @media (max-width: 1100px) { .ikf-partner-grid { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+  @media (max-width: 850px)  { .ikf-partner-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @media (max-width: 520px)  { .ikf-partner-grid { grid-template-columns: 1fr; } }
+
+  .ikf-partner-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    text-decoration: none;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+  }
+  .ikf-partner-card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .ikf-partner-card:hover .ikf-partner-name,
+  .ikf-partner-card:hover .ikf-partner-desc { color: #000 !important; }
+
+  .ikf-partner-logo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .ikf-partner-logo img { width: 88%; height: 88%; object-fit: contain; display: block; }
+
+  .ikf-partner-name {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink-2);
+    line-height: 1.25;
+    margin: 0;
+    transition: color .2s ease;
+  }
+  .ikf-partner-desc {
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
+    transition: color .2s ease;
+  }
+
+  /* ═══════════════════════
+     RESPONSIVE
+  ════════════════════════ */
+  @media (max-width: 900px) {
+    .ikf-wrap { padding: 0 18px; }
+    .trials-hero__title { font-size: 38px; letter-spacing: -1px; }
+    .ikf-soft { padding: 22px 18px; }
+  }
+  @media (max-width: 640px) {
+    .trials-hero__title { font-size: 30px; }
+  }
+</style>
+
+<div class="page-content">
+
+  <!-- =============== HERO =============== -->
+  <section class="ikf-section trials-hero">
+    <div class="ikf-wrap">
+      <div class="trials-hero__grid">
+        <div class="trials-hero__left">
+
+          <h1 class="trials-hero__title">IKF State Association Partners</h1>
+          <p class="trials-hero__subtitle">Strengthening Local Roots. Creating National Opportunities.</p>
+          <p style="margin: 14px 0 0; font-size: 15px; line-height: 1.75; color: var(--muted);">
+            India Khelo Football (IKF) believes that the future of Indian football is built from the ground up—in districts, towns, villages,
+            and local communities across every state. Our State Association Partners are the backbone of this vision, enabling structured growth,
+            inclusive access, and authentic talent identification rooted in local ecosystems.
+          </p>
+          <p style="margin: 10px 0 0; font-size: 15px; line-height: 1.75; color: var(--muted);">
+            Together, we are building a unified national pathway where every talented player—regardless of geography, background, or resources—
+            has a fair opportunity to be seen, trained, and supported.
+          </p>
+        </div>
+
+        <div>
+          <div class="trials-hero__media ikf-media">
+            <img loading="lazy"
+                 src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/ass5.png' %}{% endif %}"
+                 alt="IKF State Association Partners"
+                 class="trials-hero__img" />
+            <div class="ikf-caption">
+              {% if hero_image and hero_image.caption %}{{ hero_image.caption }}{% else %}IKF State Association Partners{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============== CONTENT =============== -->
+  <section class="ikf-section">
+    <div class="ikf-wrap">
+
+      <!-- TEXT LEFT + IMAGE RIGHT -->
+      <h2 class="ikf-h2">A Partnership That Drives State-Level Growth</h2>
+      <div class="ikf-soft">
+        <div class="split-row">
+          <div class="split-row__text">
+            <p style="margin: 0 0 14px;">
+              IKF's collaboration with State Associations is not transactional—it is transformational. Through these partnerships, we:
+            </p>
+            <ul class="ikf-list two-col">
+              <li>Strengthen state-level football ecosystems</li>
+              <li>Empower local associations with national exposure and structure</li>
+              <li>Enable transparent and merit-based talent identification</li>
+              <li>Bring opportunities directly to grassroots and underrepresented regions</li>
+              <li>Align state football development with a national high-performance pathway</li>
+            </ul>
+            <p style="margin: 14px 0 0;">
+              Each association brings deep local knowledge, trusted networks, and cultural understanding—while IKF brings scale, structure,
+              visibility, and opportunity.
+            </p>
+          </div>
+
+          <div class="split-row__media">
+            <div class="side-media ikf-media">
+              <img loading="lazy"
+                   src="{% if page_images|length > 1 and page_images.1.image %}{{ page_images.1.image.url }}{% else %}{% static 'images/banners/ass3.png' %}{% endif %}"
+                   alt="State Association Partnership" />
+              <div class="ikf-caption">
+                {% if page_images|length > 1 and page_images.1.caption %}{{ page_images.1.caption }}{% else %}State Association Partnership{% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- COMMUNITY -->
+      <h2 class="ikf-h2">Building Strong Ties to Local Football Communities</h2>
+      <div class="ikf-soft">
+        <p style="margin: 0 0 14px;">
+          Our State Association Partners act as custodians of grassroots football in their regions. By working closely with districts,
+          academies, schools, coaches, and community leaders, they ensure that football development remains:
+        </p>
+        <ul class="ikf-list two-col">
+          <li>Inclusive</li>
+          <li>Accessible</li>
+          <li>Community-led</li>
+          <li>Future-focused</li>
+        </ul>
+        <p style="margin: 14px 0 0;">
+          This partnership model ensures that talent is not forced to migrate early—but instead is nurtured locally and showcased nationally.
+        </p>
+      </div>
+
+
+      <!-- OPPORTUNITIES -->
+      <h2 class="ikf-h2">Unlocking Opportunities Through Partnership</h2>
+      <div class="ikf-soft">
+        <p style="margin: 0 0 14px;">State Associations partnering with IKF gain access to:</p>
+        <ul class="ikf-list two-col">
+          <li>National-level IKF trials, zonals, and finals</li>
+          <li>Exposure to ISL, I-League, and professional club scouts</li>
+          <li>Capacity-building support for coaches, referees, and administrators</li>
+          <li>Integration into IKF Pathway 360 (life skills, education, financial literacy, mental conditioning)</li>
+          <li>Visibility through media, digital storytelling, and national platforms</li>
+        </ul>
+        <p style="margin: 14px 0 0;">
+          Most importantly, these partnerships open doors for players who may otherwise never be seen.
+        </p>
+      </div>
+
+
+      <!-- PARTNERS GRID -->
+      <h2 class="ikf-h2">Our State Association Partners</h2>
+      <div class="ikf-soft">
+        <div class="ikf-partner-grid">
+          {% for p in state_partners %}
+            <a href="{% url 'state-association-partner-detail' p.slug %}" class="ikf-partner-card">
+              <div class="ikf-partner-logo">
+                {% if p.logo %}
+                  <img loading="lazy" src="{{ p.logo.url }}" alt="{{ p.name }}">
+                {% else %}
+                  <img loading="lazy" src="{% static 'images/placeholder.png' %}" alt="{{ p.name }}">
+                {% endif %}
+              </div>
+              <p class="ikf-partner-name">{{ p.name }}</p>
+              <p class="ikf-partner-desc">
+                {{ p.short_description|default:"A committed IKF State Partner working to strengthen grassroots football and create structured pathways for young players across the state." }}
+              </p>
+            </a>
+          {% empty %}
+            <p style="margin: 0;">Partners will be updated soon.</p>
+          {% endfor %}
+        </div>
+      </div>
+
+
+      <!-- IMPACT -->
+      <h2 class="ikf-h2">Partnership Impact at a Glance</h2>
+      <div class="ikf-soft">
+        <ul class="ikf-list two-col">
+          <li>Multi-location state trials</li>
+          <li>Grassroots-to-national scouting pathway</li>
+          <li>Zero-cost participation for players</li>
+          <li>Focus on girls and under-resourced communities</li>
+          <li>Long-term player development, not just selection</li>
+        </ul>
+      </div>
+
+
+      <!-- CTA -->
+      <h2 class="ikf-h2">Join the IKF State Partnership Network</h2>
+      <div class="ikf-soft">
+        <p style="margin: 0 0 10px;">
+          If you are a State Football Association committed to growth, inclusion, and opportunity, IKF invites you to collaborate
+          in shaping the future of Indian football.
+        </p>
+        <p class="bold-ink" style="margin: 0 0 10px;">Together, we can:</p>
+        <ul class="ikf-list two-col">
+          <li>Discover hidden talent</li>
+          <li>Strengthen state football systems</li>
+          <li>Build a truly national football movement</li>
+        </ul>
+        <p class="bold-ink" style="margin: 14px 0 0;">
+          Because when states grow stronger, Indian football grows stronger.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+{% endblock content %}

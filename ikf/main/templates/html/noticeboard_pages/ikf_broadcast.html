@@ -1,0 +1,366 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Official Circular &amp; Notice | IKF Broadcast — India Khelo Football{% endblock %}
+{% block meta_description %}Official circulars, notices and announcements from India Khelo Football — read the latest IKF broadcast updates in one place, newest first.{% endblock %}
+
+{% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --gold:        #ffc300;
+    --gold-soft:   rgba(255,195,0,0.10);
+    --gold-border: rgba(255,195,0,0.35);
+    --ink:         #111318;
+    --muted:       #6b7280;
+    --border:      #e8e3da;
+    --white:       #ffffff;
+    --surface:     #f9f8f5;
+    --radius:      16px;
+  }
+
+  .ikfb-page {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Top bar ── */
+  .ikfb-topbar {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .ikfb-crumb-link {
+    color: var(--muted);
+    text-decoration: none;
+    padding: 5px 13px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    transition: border-color .15s, background .15s, color .15s;
+  }
+  .ikfb-crumb-link:hover {
+    border-color: var(--gold);
+    background: rgba(255,249,220,.7);
+    color: var(--ink);
+  }
+  .ikfb-crumb-sep { color: #ccc; }
+  .ikfb-crumb-cur { color: var(--ink); font-weight: 700; }
+
+  /* ── Outer wrapper ── */
+  .ikfb-outer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 36px 24px 100px;
+  }
+
+  /* ── Page header ── */
+  .ikfb-header {
+    padding-bottom: 28px;
+    margin-bottom: 36px;
+    border-bottom: 1px solid var(--border);
+  }
+  .ikfb-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #b38a00;
+    margin-bottom: 8px;
+  }
+  .ikfb-page-title {
+    font-size: clamp(24px, 4vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+  .ikfb-page-sub {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 500;
+    line-height: 1.7;
+    max-width: 580px;
+    margin: 0;
+  }
+
+  /* ── Items list ── */
+  .ikfb-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Single item (vertical) ── */
+  .ikfb-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+    overflow: hidden;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .ikfb-item:hover {
+    border-color: var(--gold-border);
+    box-shadow: 0 8px 32px rgba(17,19,24,0.08);
+  }
+
+  /* Banner image (after heading/context) */
+  .ikfb-item-img-wrap {
+    width: 100%;
+    max-height: 240px;
+    background: var(--surface);
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .ikfb-item-img-wrap img {
+    width: 100%;
+    height: 240px;
+    max-height: 240px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Content */
+  .ikfb-item-body {
+    min-width: 0;
+    padding: 26px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ikfb-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .ikfb-date-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #7a6300;
+    background: var(--gold-soft);
+    border: 1px solid rgba(255,195,0,0.3);
+    padding: 3px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+  }
+
+  .ikfb-heading {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.35;
+    margin: 0;
+    letter-spacing: -0.2px;
+  }
+
+  .ikfb-context {
+    font-size: 13px;
+    font-weight: 600;
+    color: #b38a00;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .ikfb-body {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 500;
+    line-height: 1.75;
+    margin: 0;
+    white-space: pre-wrap;
+  }
+
+  /* CTAs */
+  .ikfb-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .ikfb-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 7px 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background .15s, color .15s, border-color .15s;
+    letter-spacing: 0.01em;
+  }
+  .ikfb-btn-primary {
+    background: var(--ink);
+    color: var(--gold);
+    border: 1.5px solid var(--ink);
+  }
+  .ikfb-btn-primary:hover {
+    background: #222;
+    color: var(--gold);
+  }
+  .ikfb-btn-outline {
+    background: transparent;
+    color: var(--muted);
+    border: 1.5px solid var(--border);
+  }
+  .ikfb-btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--ink);
+    background: var(--gold-soft);
+  }
+
+  /* Gold accent stripe (top) */
+  .ikfb-item::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 4px;
+    background: var(--gold);
+    flex-shrink: 0;
+    border-radius: var(--radius) var(--radius) 0 0;
+    opacity: 0;
+    transition: opacity .2s;
+  }
+  .ikfb-item:hover::before { opacity: 1; }
+
+  /* ── Empty state ── */
+  .ikfb-empty {
+    border: 1.5px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 80px 32px;
+    text-align: center;
+    background: var(--surface);
+  }
+  .ikfb-empty-icon { font-size: 42px; margin-bottom: 16px; }
+  .ikfb-empty-title { font-size: 20px; font-weight: 800; color: var(--ink); margin: 0 0 8px; }
+  .ikfb-empty-text  { font-size: 14px; color: var(--muted); font-weight: 500; line-height: 1.7; margin: 0; }
+
+  /* ── Responsive ── */
+  @media (max-width: 720px) {
+    .ikfb-item-img-wrap { max-height: 220px; }
+    .ikfb-item-img-wrap img { max-height: 220px; }
+    .ikfb-item-body { padding: 20px; }
+    .ikfb-heading { font-size: 16px; }
+  }
+
+  @media (max-width: 480px) {
+    .ikfb-outer { padding: 20px 16px 60px; }
+    .ikfb-item-img-wrap { max-height: 180px; }
+    .ikfb-item-img-wrap img { max-height: 180px; }
+  }
+</style>
+
+<div class="ikfb-page">
+
+  <!-- Breadcrumb -->
+  <div class="ikfb-topbar">
+    <a class="ikfb-crumb-link" href="{% url 'noticeboard_home' %}">← Notice Board</a>
+    <span class="ikfb-crumb-sep">/</span>
+    <span class="ikfb-crumb-cur">IKF Broadcast</span>
+  </div>
+
+  <div class="ikfb-outer">
+
+    <!-- Page header -->
+    
+
+    {% if items %}
+    <div class="ikfb-list">
+      {% for item in items %}
+
+      <div class="ikfb-item">
+
+        <div class="ikfb-item-body">
+
+          {% if item.date %}
+          <div class="ikfb-item-meta">
+            <span class="ikfb-date-pill">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              {{ item.date|date:"d M Y" }}
+            </span>
+          </div>
+          {% endif %}
+
+          {% if item.heading %}
+          <h2 class="ikfb-heading">{{ item.heading }}</h2>
+          {% endif %}
+
+          {% if item.context %}
+          <p class="ikfb-context">{{ item.context }}</p>
+          {% endif %}
+
+        </div>
+
+        {% if item.image %}
+        <div class="ikfb-item-img-wrap">
+          <img src="{{ item.image.url }}" alt="{{ item.heading|default:'IKF Broadcast' }}" loading="lazy">
+        </div>
+        {% endif %}
+
+        <div class="ikfb-item-body" style="padding-top: 20px;">
+
+          {% if item.body %}
+          <p class="ikfb-body">{{ item.body }}</p>
+          {% endif %}
+
+          {% if item.cta_url or item.cta_url_2 %}
+          <div class="ikfb-ctas">
+            {% if item.cta_url %}
+            <a class="ikfb-btn ikfb-btn-primary"
+               href="{{ item.cta_url }}"
+               target="_blank" rel="noopener noreferrer">
+              {{ item.cta_label|default:"Learn More" }}
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            {% endif %}
+            {% if item.cta_url_2 %}
+            <a class="ikfb-btn ikfb-btn-outline"
+               href="{{ item.cta_url_2 }}"
+               target="_blank" rel="noopener noreferrer">
+              {{ item.cta_label_2|default:"More Info" }}
+            </a>
+            {% endif %}
+          </div>
+          {% endif %}
+
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="ikfb-empty">
+      <div class="ikfb-empty-icon">📢</div>
+      <p class="ikfb-empty-title">No broadcasts yet</p>
+      <p class="ikfb-empty-text">
+        Official circulars and notices will appear here once published.<br>
+        Check back soon.
+      </p>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

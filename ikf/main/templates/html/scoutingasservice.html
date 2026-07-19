@@ -1,0 +1,532 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-dim:    rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --surface:           #ffffff;
+    --surface-2:         #f8f9fb;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         22px;
+    --shadow-sm:         0 2px 8px  rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md:         0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg:         0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  /* ── Layout ── */
+  .ikf-wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  .ikf-section { padding: 36px 0 44px; }
+  .ikf-section + .ikf-section { padding-top: 18px; }
+
+  /* ── Soft panel ── */
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 28px;
+    position: relative;
+  }
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* ── Headings ── */
+  .ikf-h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 36px 0 14px;
+    letter-spacing: -.3px;
+  }
+  .ikf-h2:first-child { margin-top: 0; }
+
+  /* ── Body copy ── */
+  p, li {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  /* ── Yellow-dot bullets ── */
+  .ikf-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .ikf-list li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .ikf-list li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 8px;
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: #facc15;
+    box-shadow: 0 0 0 3px rgba(250,204,21,.25);
+    transition: background .25s ease, box-shadow .25s ease;
+  }
+
+  /* ═══════════════════════
+     HERO — Season 6 layout
+  ════════════════════════ */
+  .saas-hero { padding-top: 24px; }
+
+  .saas-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .saas-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .saas-title { display: flex; flex-direction: column; }
+
+  .saas-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .saas-hero__eyebrow::before {
+    content: '';
+    width: 22px; height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .saas-title h1 {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    margin: 0 0 10px;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .saas-title .lead {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0 0 14px;
+    color: var(--muted);
+  }
+
+  .saas-title p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 10px;
+    max-width: 70ch;
+  }
+
+  /* CTA button */
+  .saas-call-wrap { margin-top: 20px; }
+
+  .saas-call-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 50px;
+    padding: 0 28px;
+    border-radius: var(--radius-sm);
+    background: var(--ikf-yellow);
+    border: none;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    color: #000;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(255,195,0,.35);
+    transition: all .2s ease;
+  }
+  .saas-call-btn:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.45);
+  }
+
+  /* hero media */
+  .saas-heroimg {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .saas-heroimg img {
+    width: 100%; height: 100%;
+    display: block; object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .saas-heroimg:hover img { transform: scale(1.02); }
+
+  .ikf-media { position: relative; }
+
+  .ikf-caption {
+    position: absolute;
+    right: 14px; bottom: 12px; z-index: 2;
+    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    text-align: right;
+    max-width: 85%;
+    pointer-events: none;
+  }
+  .ikf-caption::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+    background: rgba(0,0,0,.5);
+    z-index: -1;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ═══════════════════════
+     WHY PARTNER — 2×2 grid of cards
+  ════════════════════════ */
+  .partner-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 16px;
+  }
+  @media (max-width: 768px) { .partner-grid { grid-template-columns: 1fr; } }
+
+  .partner-block {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: 22px 22px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+  }
+  .partner-block:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+  .partner-block:hover h4,
+  .partner-block:hover li { color: #000 !important; }
+  .partner-block:hover li::before {
+    background: #000 !important;
+    box-shadow: 0 0 0 3px rgba(0,0,0,.12) !important;
+  }
+
+  .partner-block h4 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink-2);
+    margin: 0 0 12px;
+  }
+
+  /* divider between two partner-grid rows */
+  .partner-divider {
+    grid-column: 1 / -1;
+    height: 1px;
+    background: var(--line);
+    margin: 4px 0;
+  }
+
+  /* ═══════════════════════
+     COVERAGE — two-col lists
+  ════════════════════════ */
+  .mission-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 16px 40px;
+  }
+  @media (max-width: 768px) { .mission-columns { grid-template-columns: 1fr; } }
+
+  .note {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--muted-2);
+    margin-top: 18px;
+  }
+
+  /* ═══════════════════════
+     HOW TO PARTNER — journey cards
+  ════════════════════════ */
+  .steps-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    overflow-x: auto;
+  }
+
+  .step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 0 0 auto;
+    min-width: 150px;
+  }
+
+  .step-box {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 18px 16px;
+    min-width: 150px;
+    min-height: 72px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink-2);
+    line-height: 1.3;
+    text-align: center;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    cursor: default;
+  }
+  .step-box:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+    color: #000;
+  }
+
+  .step-desc {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 10px;
+    max-width: 180px;
+    line-height: 1.5;
+  }
+
+  .arrow {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--muted-2);
+    padding-top: 26px;
+    flex: 0 0 auto;
+    user-select: none;
+  }
+
+  @media (max-width: 1024px) {
+    .steps-grid { flex-direction: column; align-items: center; }
+    .arrow { transform: rotate(90deg); padding: 0; margin: 4px 0; }
+  }
+
+  /* ═══════════════════════
+     RESPONSIVE
+  ════════════════════════ */
+  @media (max-width: 900px) {
+    .ikf-wrap { padding: 0 18px; }
+    .saas-title h1 { font-size: 38px; letter-spacing: -1px; }
+    .ikf-soft { padding: 22px 18px; }
+  }
+  @media (max-width: 640px) {
+    .saas-title h1 { font-size: 30px; }
+  }
+</style>
+
+
+<!-- =============== HERO =============== -->
+<section class="ikf-section saas-hero">
+  <div class="ikf-wrap">
+    <div class="saas-hero__grid">
+      <div class="saas-title">
+        
+        <h1>IKF Scouting-as-a-Service</h1>
+        <p class="lead">Any pitch. Any event. One expert scouting squad. Take your talent discovery to the next level.</p>
+        <p>
+          Elevate your talent discovery process with IKF's professional scouting services, tailored for tournaments,
+          clubs, academies, and educational institutions. IKF scouts identify, assess, and elevate top performers
+          while providing data-driven reports that aid in talent development and recruitment.
+        </p>
+        <div class="saas-call-wrap">
+          <a href="tel:+918287076345" class="saas-call-btn">📞&nbsp;Request a Call</a>
+        </div>
+      </div>
+
+      <div class="saas-heroimg ikf-media">
+        <img loading="lazy"
+             src="{% if hero_image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/na.png' %}{% endif %}"
+             alt="{% if hero_image and hero_image.caption %}{{ hero_image.caption }}{% else %}Scouting Service{% endif %}">
+        <div class="ikf-caption">
+          {% if hero_image and hero_image.caption %}{{ hero_image.caption }}{% else %}Scouting Service{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== WHY PARTNER =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Why Partner with IKF Scouts?</h2>
+    <div class="ikf-soft">
+      <div class="partner-grid">
+
+        <div class="partner-block">
+          <h4>Tournament Organisers</h4>
+          <ul class="ikf-list">
+            <li>Enhance brand prestige and social reach.</li>
+            <li>Receive top-5 player reports with direct entry to IKF Zonal Finals.</li>
+            <li>Ensure fair, data-driven judging.</li>
+          </ul>
+        </div>
+
+        <div class="partner-block">
+          <h4>Professional Clubs</h4>
+          <ul class="ikf-list">
+            <li>Nationwide scouting coverage.</li>
+            <li>Objective reports formatted for recruitment.</li>
+            <li>Optional full-season scouting retainers.</li>
+          </ul>
+        </div>
+
+        <div class="partner-divider"></div>
+
+        <div class="partner-block">
+          <h4>Football Academies</h4>
+          <ul class="ikf-list">
+            <li>Independent talent benchmarking.</li>
+            <li>Scholarship lead funnel.</li>
+            <li>Video-aided skill-gap analysis.</li>
+          </ul>
+        </div>
+
+        <div class="partner-block">
+          <h4>Schools &amp; Colleges</h4>
+          <ul class="ikf-list">
+            <li>Career pathways beyond trophies.</li>
+            <li>Elevated event credibility to attract sponsors.</li>
+            <li>Talent insights for Physical Education departments.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== COVERAGE & CONSIDERATION =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Coverage &amp; Consideration</h2>
+    <div class="ikf-soft">
+      <div class="mission-columns">
+        <ul class="ikf-list">
+          <li>Scouting administration fees.</li>
+          <li>On-ground and video scouting charges.</li>
+        </ul>
+        <ul class="ikf-list">
+          <li>Comprehensive player reports.</li>
+          <li>Event and match videography.</li>
+        </ul>
+      </div>
+      <p class="note">Consideration of these above-mentioned heads on a case-to-case basis.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== HOW TO PARTNER =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">How to Partner</h2>
+    <div class="ikf-soft">
+      <div class="steps-grid">
+
+        <div class="step-item">
+          <div class="step-box">Submit<br>Request Form</div>
+          <div class="step-desc">Initial screening by IKF operations team.</div>
+        </div>
+        <div class="arrow">→</div>
+
+        <div class="step-item">
+          <div class="step-box">Discovery<br>Call</div>
+          <div class="step-desc">Finalize dates and scope (if needed).</div>
+        </div>
+        <div class="arrow">→</div>
+
+        <div class="step-item">
+          <div class="step-box">Sign MOU</div>
+          <div class="step-desc">Formalize the agreement.</div>
+        </div>
+        <div class="arrow">→</div>
+
+        <div class="step-item">
+          <div class="step-box">Event Day</div>
+          <div class="step-desc">IKF scouts conduct on-ground assessments following standard operating procedures.</div>
+        </div>
+        <div class="arrow">→</div>
+
+        <div class="step-item">
+          <div class="step-box">Receive Reports<br>&amp; Social Posts</div>
+          <div class="step-desc">Enhance your brand with detailed reports and promotional content.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

@@ -1,0 +1,332 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<style>
+:root{
+  --ikf-yellow:#ffc107;
+  --ikf-yellow-dark:#e0a800;
+  --ikf-yellow-soft:#fff8e1;
+  --ink:#1a1a1a;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --soft:#fffaf0;
+}
+
+/* Page wrapper */
+.donate-wrap{
+  max-width:1240px;
+  margin:0 auto;
+  padding:24px 24px 80px;
+  font-family:'Avenir', sans-serif;
+  color:var(--ink);
+}
+
+/* Banner */
+.donate-banner-img{
+  width:100%;
+  display:block;
+  border-radius:12px;
+  object-fit:cover;
+  object-position:center;
+  height:300px;
+}
+
+/* Section A - Why Support + trust markers */
+.why-support{
+  margin-top:28px;
+  display:grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
+  gap:36px;
+  align-items:start;
+}
+.why-copy h1{
+  font-size:30px;
+  font-weight:700;
+  margin:0 0 14px;
+  line-height:1.2;
+}
+.why-copy p{
+  font-size:15px;
+  line-height:1.7;
+  color:#333;
+  margin:0 0 14px;
+}
+
+/* Trust card on the right */
+.trust-card{
+  position:relative;
+  background: linear-gradient(155deg, #fff8d6 0%, #ffe89a 55%, #f5c94a 100%);
+  border:1px solid #ecc34a;
+  border-radius:16px;
+  padding:16px 20px 14px;
+  box-shadow:0 14px 32px -16px rgba(176, 130, 0, .35);
+  overflow:hidden;
+}
+.trust-card::before{
+  content:"";
+  position:absolute;
+  top:-40px; right:-40px;
+  width:140px; height:140px;
+  background: radial-gradient(circle, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 70%);
+  border-radius:50%;
+  pointer-events:none;
+}
+.trust-card-title{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+  color:#7a5a00;
+  margin:0 0 8px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.trust-card-title::before{
+  content:"";
+  display:inline-block;
+  width:6px; height:6px;
+  background:#7a5a00;
+  border-radius:50%;
+}
+.trust-row{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  padding:8px 0;
+  border-bottom:1px dashed rgba(122, 90, 0, .35);
+}
+.trust-row:last-of-type{ border-bottom:none; }
+.trust-row .label{
+  font-size:12px;
+  color:#7a5a00;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  font-weight:600;
+}
+.trust-row .value{
+  font-size:18px;
+  font-weight:700;
+  color:#1a1a1a;
+  letter-spacing:.3px;
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+}
+.trust-card-foot{
+  font-size:11px;
+  color:#7a5a00;
+  margin:8px 0 0;
+  line-height:1.4;
+  font-style:italic;
+}
+
+@media (max-width: 900px){
+  .why-support{ grid-template-columns: 1fr; gap:22px; }
+  .trust-card{ padding:22px 20px; }
+}
+
+/* Section B - Project cards */
+.projects-section{
+  margin-top:-18px;
+}
+.projects-section h2{
+  font-size:24px;
+  font-weight:600;
+  margin:0 0 18px;
+}
+.project-cards{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.project-card{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:18px 20px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#fff;
+  transition:box-shadow .2s ease, transform .2s ease;
+}
+.project-card:hover{
+  box-shadow:0 4px 14px rgba(0,0,0,.06);
+  transform:translateY(-1px);
+}
+.project-card .info{
+  flex:1;
+  min-width:0;
+}
+.project-card .name{
+  font-size:18px;
+  font-weight:700;
+  margin:0 0 4px;
+  color:var(--ink);
+}
+.project-card .desc{
+  font-size:14px;
+  color:var(--muted);
+  margin:0;
+  line-height:1.45;
+}
+.name-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:0 0 4px;
+}
+.read-more{
+  display:inline;
+  font-size:13px;
+  font-weight:600;
+  color:var(--ikf-yellow-dark);
+  text-decoration:underline;
+  text-underline-offset:3px;
+  text-decoration-thickness:1px;
+  white-space:nowrap;
+  margin-left:4px;
+  transition:color .15s ease;
+}
+.read-more:hover{
+  color:#000;
+  text-decoration:underline;
+}
+
+.card-actions{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:8px;
+  width:220px;
+  flex-shrink:0;
+}
+
+.support-btn{
+  background:var(--ikf-yellow);
+  color:#1a1a1a;
+  border:none;
+  padding:12px 16px;
+  font-size:14px;
+  font-weight:600;
+  border-radius:8px;
+  cursor:pointer;
+  transition:background .2s ease;
+  display:block;
+  width:100%;
+  text-align:center;
+  text-decoration:none;
+  box-sizing:border-box;
+  line-height:1.2;
+}
+.support-btn:hover{ background:var(--ikf-yellow-dark); color:#000; text-decoration:none; }
+
+@media (max-width:768px){
+  .donate-banner-img{ height:180px; }
+  .project-card{
+    flex-wrap:wrap;
+    align-items:stretch;
+    padding:16px;
+  }
+  .project-card .info{ flex:1 1 100%; }
+  .card-actions{
+    flex:1 1 100%;
+    margin-top:14px;
+  }
+  .card-actions .support-btn{
+    width:100%;
+    padding:13px 18px;
+    font-size:15px;
+    border-radius:10px;
+    box-shadow:0 4px 12px -4px rgba(245, 201, 74, .6);
+  }
+}
+</style>
+{% include 'html/_donor_panel_styles.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="donate-wrap">
+
+  <!-- Banner -->
+  <img class="donate-banner-img"
+       src="{% static 'images/donate.png' %}"
+       alt="Support IKF"
+       loading="eager"
+       fetchpriority="high"
+       decoding="async" />
+
+  <!-- Section A: Why Support + Trust markers -->
+  <section class="why-support">
+    <div class="why-copy">
+      <h1>Why Support India Khelo Football</h1>
+      <p>
+        India Khelo Football (IKF) is a non-profit movement working to build the grassroots
+        football ecosystem of India. Through structured trials, scouting partnerships,
+        coaching workshops, and player development programs, we open doors for young
+        athletes &mdash; girls and boys &mdash; across the country who would otherwise
+        have no pathway into the sport.
+      </p>
+      <p>
+        Every contribution directly fuels a project: equipping a player, running a trial,
+        training a coach, or sending a child to a national-level showcase. Your support
+        keeps these opportunities alive.
+      </p>
+    </div>
+
+    <aside class="trust-card" aria-label="Compliance and tax information">
+      <p class="trust-card-title">Verified &amp; Tax-Compliant</p>
+      <div class="trust-row">
+        <span class="label">80G Registration</span>
+        <span class="value">{{ donate_settings.reg_80g }}</span>
+      </div>
+      <div class="trust-row">
+        <span class="label">CSR Number</span>
+        <span class="value">{{ donate_settings.csr_number }}</span>
+      </div>
+      <p class="trust-card-foot">
+        Donations are eligible for tax exemption under Section 80G of the Income Tax Act.
+      </p>
+    </aside>
+  </section>
+
+  <!-- Section B: Project Cards -->
+  <section class="projects-section">
+    <h2>Select the project you want to support</h2>
+
+    <div class="project-cards" id="projectCards">
+      {% for project in donate_projects %}
+        <div class="project-card"
+             data-project="{{ project.name }}"
+             data-razorpay="{{ project.razorpay_enabled|yesno:'1,0' }}"
+             data-upi="{{ project.upi_enabled|yesno:'1,0' }}"
+             data-bank="{{ project.bank_enabled|yesno:'1,0' }}"
+             data-presets="{{ project.preset_amounts }}">
+          <div class="info">
+            <p class="name">{{ project.name }}</p>
+            <p class="desc">{{ project.description }}{% if project.has_detail_content %} <a class="read-more" href="{% url 'donate_project_detail' project.slug %}">Know more &rarr;</a>{% elif project.read_more_url %} <a class="read-more" href="{{ project.read_more_url }}{% if '?' in project.read_more_url %}&{% else %}?{% endif %}from=donate">Know more &rarr;</a>{% endif %}</p>
+          </div>
+          <div class="card-actions">
+            {% if 'Naari' in project.name %}
+              <a class="support-btn" href="{% url 'naari_shakti_bihar' %}">Support Bihar Girls</a>
+              <a class="support-btn" href="{% url 'naari_shakti_rajasthan' %}">Support Rajasthan Girls</a>
+              <a class="support-btn" href="{% url 'naari_shakti_meerut' %}">Support Meerut Girls</a>
+              <a class="support-btn" href="{% url 'donate_project_detail' project.slug %}">Support Girls from Rest of India</a>
+            {% else %}
+              <button class="support-btn" type="button">Support This</button>
+            {% endif %}
+          </div>
+        </div>
+      {% empty %}
+        <p style="color:var(--muted); padding:20px;">No projects are currently active. Please check back soon.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+</div>
+
+{% include 'html/_donor_panel.html' %}
+
+{% endblock %}

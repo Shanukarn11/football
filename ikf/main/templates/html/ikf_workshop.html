@@ -1,0 +1,646 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block content %}
+
+<style>
+  .empowerment-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+}
+
+.text-heading {
+  flex: 1 1 70%;
+}
+
+.text-heading h1 {
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.donate-button {
+  display: inline-block;
+  background-color: #FFC800;
+  color: #000;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: 500;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+.donate-button-wrapper {
+  flex: 1 1 25%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.empowerment-image img {
+  display: block;
+  margin-bottom: 0;
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  max-height: 460px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 30px;
+}
+.just h3{
+  padding: 0 150px; /* Extra left and right padding */
+  overflow-x: auto; 
+}
+.ikf-trial-table-wrapper {
+  padding: 0 150px; /* Extra left and right padding */
+  overflow-x: auto; /* Adds horizontal scroll on small screens */
+}
+
+.ikf-trial-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background-color: #fff;
+  margin-top: 20px;
+}
+
+.ikf-trial-table th,
+.ikf-trial-table td {
+  padding: 18px 15px;
+  text-align: left;
+  vertical-align: top;
+  font-size: 15px;
+  line-height: 1.6;
+  width: 33.3%;
+  word-wrap: break-word;
+  border: 1px solid #eee;
+}
+
+.ikf-trial-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+.ikf-trial-table th small {
+  font-weight: 400;
+  font-size: 13px;
+  color: #777;
+}
+
+.donate-button1 {
+  position: fixed;
+  top: 150px;     /* adjust based on your header height */
+  right: 100px;    /* aligns with Support IKF button */
+  background-color: #ffc300;
+  color: black;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.donate-button1:hover {
+  background-color: #e6b100;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .donate-button1 {
+    top: 80px;
+    right: 20px;
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}
+</style>
+
+<div class="full">
+
+  
+
+  <!-- ✅ All central content starts here -->
+  <div class="newpage-wrapper">
+
+    <!-- =============== HERO ================= -->
+   <div class="empowerment-content">
+        <div class="text-heading">
+          <h1>IKF International Workshops</h1>
+        </div>
+        <div class="donate-button-wrapper">
+            <!-- <a target="_blank" rel="noopener noreferrer" href="https://app.myfirstkick.com/IKF-Workshop" class="donate-button1">Know More</a> -->
+            <!-- <a href="{% url 'calender' %}" class="calendar-button">
+              <img loading="lazy" src="static/images/season_5_landing_images/solar_calendar-outline.png" alt="Calendar">
+            </a> -->
+        </div> 
+    </div>
+    <div class="ikf-workshops-description">
+      <div class="ikf-workshops-toptext">
+        <p>
+          Indian football’s growth rests on two parallel engines: organic and inorganic development. It has the potential to grow significantly, but this growth can be achieved through two primary pathways – organic and inorganic.
+        </p>
+      </div>
+      
+      <div class="ikf-workshops-growth">
+        <div class="growth-block">
+          <h4>Organic growth via IKF Trials</h4>
+          <p>
+            This involves focusing on players for Indian ecosystem and steadily create a talent pipeline which improves the quality of Indian football. IKF is already doing it via IKF Trials.
+          </p>
+        </div>
+        <div class="growth-block">
+          <h4>Inorganic Growth via IKF’s International Workshop</h4>
+          <p>
+            This involves sending Indian players abroad to train in more advanced and competitive environments. When these players return, they bring with them enhanced skills, experiences, and a deeper understanding of the game.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  
+    <div class="empowerment-image">
+      <img  loading="lazy" src="{% static 'images/banners/c3.png' %}" alt="IKF International Workshops" />
+    </div>
+
+    <!-- =============== INFO STRIP ================= -->
+    <div class="info-strip">
+      <div class="info-block">
+        <h4>Workshop 2026 Cities</h4>
+        <p class="black-bold2">Coming Back Soon</p>
+      </div>
+      <div class="divider"></div>
+
+      <div class="info-block">
+        <h4>Date</h4>
+        <p class="black-bold2">Coming Back Soon</p>
+      </div>
+      <div class="divider"></div>
+
+      <div class="info-block">
+        <h4>For more info <br> +91-7506741310</h4>
+      </div>
+    </div>
+    <!-- =============== Why IKF's International Workshops Are Essential ================= -->
+    
+    <div class="ikf-workshop-international-workshops">
+      <div class="ikf-workshop-intl-text-section">
+        <h3>Why IKF's International Workshops Are Essential</h3>
+        <div class="ikf-workshop-intl-text">
+          <p>Currently, many Indian players are indeed going abroad in hopes of bettering their football skills. However, a significant number of these players do not end up in the right places or with the right opportunities that align with their footballing aspirations. This inefficiency hampers the potential benefits of inorganic growth.</p>
+          <p>Workshops may involve a participant fee—collected by MFK purely to cover logistics & operations. IKF remains a 100% non-profit icnitiative.</p>
+        </div>
+      </div>
+      <div class="ikf-workshop-intl-buttons">
+        <!-- <a target="_blank" rel="noopener noreferrer" href="https://app.myfirstkick.com/IKF-Workshop">Know More</a> -->
+        <!-- <a href="{% url 'calender' %}"><img loading="lazy" src="static/images/season_5_landing_images/solar_calendar-outline.png" alt="Calendar"></a> -->
+      </div>
+    </div>
+
+        <!-- =============== Global Collaboration ================= -->
+    <div class="ikf-workshop-collaboration-focus">
+      <div class="ikf-workshop-collab">
+        <h3>IKF as a Platform for Global Collaboration</h3>
+        <p>IKF brings together</p>
+        <ul>
+          <li>International Experts to India</li>
+          <li>International Academies who are seeking Indian talent</li>
+          <li>Tech platform to be able to showcase players efficiently</li>
+        </ul>
+      </div>
+      <div class="ikf-workshop-focus">
+        <h3>Focus of IKF’s International Workshop</h3>
+        <ul>
+          <li>Go to the right places for the right purposes</li>
+          <li>Get aware about their footballing abilities</li>
+          <li>Create clear global pathways</li>
+          <li>Honest feedback</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- =============== Purpose-Driven Approach ================= -->
+
+    <div class="ikf-workshop-purpose">
+      <div class="ikf-workshop-purpose-text">
+        <h3>IKF’s Purpose-Driven Approach</h3>
+        <h4>Mission-first, not money-first</h4>
+        <p>
+          As a Section-8 non-profit, IKF exists to identify and nurture talent—never to profit.
+          Every workshop is designed around player development and opportunity.
+        </p>
+      </div>
+
+      <div class="ikf-workshop-purpose-cards">
+        <div class="ikf-workshop-purpose-card">
+          <h4>Global standards, local access</h4>
+          <p>
+            We bring international experts to Indian grounds, giving players the same insight and
+            feedback they’d get abroad—right here at home.
+          </p>
+        </div>
+        <div class="ikf-workshop-purpose-card">
+          <h4>Holistic advancement</h4>
+          <p>
+            Our programs follows the sports-based youth development model, focusing on skill-building,
+            psychology, and community.
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- =============== IMPACT ================= -->
+
+    <div class="ikf-workshop-impact-section">
+      <h3>Impact You Can Trust</h3>
+      <div class="ikf-workshop-impact-grid">
+        <div class="ikf-workshop-impact-card">
+          <h4>Parents see real change</h4>
+          <p>Players walk away from workshops with detailed technical feedback and enhanced confidence—backed by trusted global credentials.</p>
+        </div>
+        <div class="ikf-workshop-impact-card">
+          <h4>Communities gain mentors</h4>
+          <p>Coaches and scouts often guide players toward next steps—whether trials, scholarships, or continued support.</p>
+        </div>
+        <div class="ikf-workshop-impact-card">
+          <h4>Players get noticed</h4>
+          <p>Many have gained trial invites, academy placement options, and academic scholarships thanks to their workshop performance and visibility.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- =============== LOCATIONS ================= -->
+<!-- <h3>Locations</h3>
+<table class="ikf-table">
+  <thead>
+    <tr><th>City</th><th>Dates</th><th>Venue</th></tr>
+  </thead>
+  <tbody>
+    {% for loc in workshop_locations %}
+    <tr>
+      <td>{{ loc.city }}</td>
+      <td>{{ loc.dates }}</td>
+      <td class="venue-cell">
+        <span class="venue-name">{{ loc.venue }}</span>
+        {% if loc.maps_link %}
+        <a target="_blank" rel="noopener noreferrer" href="{{ loc.maps_link }}">
+          <img loading="lazy" class="venue-icon" src="{% static 'images/workshop/map-pin.png' %}" alt="Map Pin" />
+        </a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+  </div> END .newpage-wrapper -->
+
+<style>
+@media (max-width: 768px) {
+  .just h3,
+  .ikf-trial-table-wrapper {
+    padding: 0 15px; /* Reduce left/right padding */
+  }
+
+  .ikf-trial-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .ikf-trial-table thead {
+    display: none; /* Hide table headers */
+  }
+
+  .ikf-trial-table tbody tr {
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .ikf-trial-table td {
+    display: block;
+    width: 100%;
+    padding: 10px 10px 15px;
+    position: relative;
+    border: none;
+    border-bottom: 1px solid #eee;
+    box-sizing: border-box;
+  }
+
+  .ikf-trial-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+  }
+}
+
+</style>
+  <!-- {% for schedule in trial_schedules %}
+  <div class="just">
+    <h3>{{ schedule.city }} Workshop Schedule</h3>
+  </div>
+  <div class="ikf-trial-table-wrapper">
+    <table class="ikf-trial-table">
+      <thead>
+        <tr>
+          {% for day in schedule.days.all %}
+            <th>{{ day.day_title }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {% for day in schedule.days.all %}
+            <td data-label="{{ day.day_title }}">{{ day.description|linebreaks }}</td>
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{% endfor %} -->
+
+
+
+  
+
+    <!-- =============== COACHES ================= -->
+      {% if coaches %}
+      <div class="highlight-carousel-container">
+<div class="p-b30">
+  <div class="section-head inner-haed">
+    <h3 class="col-lg-12 text-center section-head" style="padding-top: 50px">Affiliated Scouts</h3>
+  </div>
+  <div class="custom-carousel-container">
+    <button class="custom-carousel-nav left" onclick="moveSlide(-1)">&#10094;</button>
+
+    <div class="custom-carousel-wrapper" id="coachCarousel">
+      {% for coach in coaches %}
+      <div class="custom-carousel-item">
+        <div class="custom-carousel-card">
+  <div class="coach-text">
+    <h3 class="coach-name">{{ coach.name }}</h3>
+    <p class="coach-description">{{ coach.description }}</p>
+    <a target="_blank" rel="noopener noreferrer" href="{{ coach.attr1 }}" class="coach-button">
+      <img loading="lazy" src="static/images/coachesicon/arrow-up-right.svg" alt="Learn More" />
+    </a>
+  </div>
+  <div class="coach-image-absolute">
+    <img loading="lazy" src="{{ coach.pic }}" alt="{{ coach.name }}" />
+  </div>
+</div>
+
+      </div>
+      {% endfor %}
+    </div>
+
+    <button class="custom-carousel-nav right" onclick="moveSlide(1)">&#10095;</button>
+  </div>
+</div>
+</div>
+{% endif %}
+
+<!-- =============== CLUB LOGOS ================= -->
+    {% if clubs_partner_home %}
+  <div class="p-b30">
+    <div class="section-head inner-haed">
+      <h3 class="col-lg-12 text-center section-head" style="padding-top: 50px">International Partner</h3>
+    </div>
+    <div class="section-content">
+      <div class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr">
+        {% for club in clubs_partner_home %}
+        <div class="item">
+          <div class="ow-carousel-entry">
+            <div class="ow-entry-media dez-img-effect zoom-slow">
+              <img loading="lazy" src="{{ club.pic }}" alt="" />
+            </div>
+            <!-- <div class="dez-info p-a20 p-t40 border-1">
+              <h4 class="dez-title m-tb0">{{ finalist.name }}</h4>
+              <div class="bg-primary skew-content-box">
+                <ul class="dez-social-icon">
+                  <li>
+                    <a class="fa fa-linkedin" href="{{ finalist.link }}" target="_blank"></a>
+                  </li>
+                </ul>
+              </div>
+              <p class="m-t10 m-b0">{{ Team1.about }}</p>
+            </div> -->
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- =============== WINNERS ================= -->
+  {% if winners %}
+  <div class="p-b30">
+    <div class="section-head inner-haed">
+      <h3 class="col-lg-12 text-center section-head" style="padding-top: 50px">Winners of Scholarship</h3>
+    </div>
+    <div class="section-content">
+      <div class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr">
+        {% for finalist in winners %}
+        <div class="item">
+          <div class="ow-carousel-entry">
+            <div class="ow-entry-media dez-img-effect zoom-slow">
+              <img loading="lazy" src="{{ finalist.pic }}" alt="{{ finalist.name }}" />
+            </div>
+            <!-- Winner Name -->
+            {% if finalist.name %}
+            <h4 class="dez-title" style="text-align: center; margin-top: 10px; font-size: 16px; font-weight: 500; color: #333;">
+              {{ finalist.name }}
+            </h4>
+            {% endif %}
+            
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+ {% if testimonials %}
+                <!-- Testimonials --->
+              <div class="clearfix">
+                <!-- content start -->
+                <!-- What people are saying style 1 -->
+                <div class="section-full bg-white bg-img-fix content-inner-1">
+                  <div class="container">
+                    <div class="section-head text-center">
+                      <h2 class="text-uppercase">{{Testimonials_Workshop}}</h2>
+                      <div class="dez-separator bg-primary"></div>
+                    </div>
+                    <div class="section-content">
+                      <div class="owl-carousel owl-theme testimonial-one">
+                        {% for testimonial in testimonials %}
+                        <div class="item">
+                          <div class="testimonial-1">
+                            <div class="testimonial-pic quote-left radius shadow">
+                              <img
+                              loading="lazy"
+                                src="{{testimonial.pic}}"
+                                width="100"
+                                height="100"
+                                alt="ikf workshops testimoniol"
+                              />
+                            </div>
+                            <div class="testimonial-text" id="workshopTestimonials">
+                              {% if testimonial.description|striptags|length > 300 %}
+                              <p class="short-text">
+                                {{ testimonial.description|truncatechars:300|safe }}...
+                              </p>
+                              <p class="full-text" style="display: none">
+                                {{ testimonial.description|safe }}
+                              </p>
+                              <button
+                                style="
+                                  background: #f3bb0171;
+                                  color: #585858;
+                                  padding: 5px 10px;
+                                  font-weight: 500;
+                                "
+                                class="read-more-btn border-0 px-3 rounded text-dark"
+                              >
+                                Read more
+                              </button>
+                              <button
+                                style="
+                                  background: #f3bb0171;
+                                  color: #585858;
+                                  padding: 5px 10px;
+                                  font-weight: 500;
+                                  display: none;
+                                "
+                                class="read-less-btn border-0 px-3 rounded text-dark"
+                              >
+                                Read less
+                              </button>
+                              {% else %}
+                              <p>{{ testimonial.description|safe }}</p>
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  {% endif %}
+  <br>
+              <!--- Testimonials END --->
+  <!-- =============== FAQ ================= -->
+  <section class="ikf-faq-section">
+    <h3>Frequently Asked Questions</h3>
+    <div class="ikf-faq-list">
+      {% for faq in faqs %}
+        <div class="ikf-faq-wrapper">
+          <div class="ikf-faq-item">
+            <span>{{ faq.question|safe }}</span>
+            <span class="ikf-plus">+</span>
+          </div>
+          <div class="ikf-faq-answer">
+            {{ faq.answer|safe }}
+          </div>
+        </div>
+      {% empty %}
+        <p>No FAQs available at the moment.</p>
+      {% endfor %}
+    </div>
+  </section>
+  
+</div>
+
+<script>
+    document.querySelectorAll(".ikf-faq-item").forEach((item) => {
+      item.addEventListener("click", () => {
+        const isOpen = item.classList.contains("active");
+        const answer = item.nextElementSibling;
+        const plus = item.querySelector(".ikf-plus");
+
+        // Close all
+        document.querySelectorAll(".ikf-faq-item").forEach((el) => {
+          el.classList.remove("active");
+          el.querySelector(".ikf-plus").textContent = "+";
+          el.nextElementSibling.style.maxHeight = null;
+        });
+
+        // Open this one if it wasn't already open
+        if (!isOpen) {
+          item.classList.add("active");
+          plus.textContent = "−";
+          answer.style.maxHeight = answer.scrollHeight + "px";
+        }
+      });
+    });
+  </script>
+
+<script>
+  window.onload = function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const refer = urlParams.get("refer");
+    //const registerButton = document.getElementById("anchorforregister");
+
+    // if (refer) {
+    //   // registerButton.href = `https://openinapp.link/m6b42?refer=${refer}`;
+    //   registerButton.href = `https://app.myfirstkick.com/IKF-Workshop?refer=${refer}`;
+      
+      
+    // } else {
+    //   // registerButton.href = `https://openinapp.link/m6b42`;
+    //   registerButton.href = `https://app.myfirstkick.com/IKF-Workshop`;
+    // }
+  };
+</script>
+
+<script>
+  let currentSlide = 0;
+
+  function moveSlide(direction) {
+    const wrapper = document.getElementById("coachCarousel");
+    const items = wrapper.querySelectorAll(".custom-carousel-item");
+    const totalSlides = Math.ceil(items.length / getVisibleCount());
+    const visibleCount = getVisibleCount();
+
+    currentSlide += direction;
+    if (currentSlide < 0) currentSlide = totalSlides - 1;
+    if (currentSlide >= totalSlides) currentSlide = 0;
+
+    const slideWidth = wrapper.clientWidth / visibleCount;
+    wrapper.style.transform = `translateX(-${currentSlide * slideWidth * visibleCount}px)`;
+  }
+
+  function getVisibleCount() {
+    return window.innerWidth < 768 ? 1 : 2;
+  }
+
+  // Reset position on resize
+  window.addEventListener("resize", () => {
+    currentSlide = 0;
+    moveSlide(0);
+  });
+
+  // Auto-move (optional)
+  setInterval(() => moveSlide(1), 10000);
+</script>
+
+<script src="{% static 'js/workshops.js' %}"></script>
+
+
+
+{% endblock content %}

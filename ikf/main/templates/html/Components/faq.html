@@ -1,0 +1,82 @@
+<section class="ikf-faq-section">
+    <h3>Frequently Asked Questions</h3>
+    <div class="ikf-faq-list">
+      <div class="ikf-faq-wrapper">
+        <div class="ikf-faq-item">
+          <span>Who can register for the City Trials?</span>
+          <span class="ikf-plus">+</span>
+        </div>
+        <div class="ikf-faq-answer">
+          Boys and girls aged 10‑17, with a valid government ID and medical
+          clearance.
+        </div>
+      </div>
+
+      <div class="ikf-faq-wrapper">
+        <div class="ikf-faq-item">
+          <span>What is the registration fee?</span>
+          <span class="ikf-plus">+</span>
+        </div>
+        <div class="ikf-faq-answer">
+          INR 295 (250+45 GST ), one‑time processing
+fee for City Trials; no fees for girls; Zonal and
+National rounds are free´
+        </div>
+      </div>
+
+      <div class="ikf-faq-wrapper">
+        <div class="ikf-faq-item">
+          <span>What if my City isn’t on the list?</span>
+          <span class="ikf-plus">+</span>
+        </div>
+        <div class="ikf-faq-answer">
+          We add new locations every year. Follow our Instagram for updates. 
+        </div>
+      </div>
+
+      <div class="ikf-faq-wrapper">
+        <div class="ikf-faq-item">
+          <span>Does selection guarantee a club contract?</span>
+          <span class="ikf-plus">+</span>
+        </div>
+        <div class="ikf-faq-answer">
+          Selection earns exposure. Final signings are decided solely by the
+          clubs.
+        </div>
+      </div>
+
+      <div class="ikf-faq-wrapper">
+        <div class="ikf-faq-item">
+          <span>Is accommodation provided for National and Zonal Finals?</span>
+          <span class="ikf-plus">+</span>
+        </div>
+        <div class="ikf-faq-answer">
+          IKF can share discounted options on request but does not cover costs directly.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll(".ikf-faq-item").forEach((item) => {
+      item.addEventListener("click", () => {
+        const isOpen = item.classList.contains("active");
+        const answer = item.nextElementSibling;
+        const plus = item.querySelector(".ikf-plus");
+
+        // Close all
+        document.querySelectorAll(".ikf-faq-item").forEach((el) => {
+          el.classList.remove("active");
+          el.querySelector(".ikf-plus").textContent = "+";
+          el.nextElementSibling.style.maxHeight = null;
+        });
+
+        // Open this one if it wasn't already open
+        if (!isOpen) {
+          item.classList.add("active");
+          plus.textContent = "−";
+          answer.style.maxHeight = answer.scrollHeight + "px";
+        }
+      });
+    });
+  </script>

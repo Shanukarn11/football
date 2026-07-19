@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content bg-white">
+    <!-- inner page banner -->
+    <div class="dez-bnr-inr overlay-black-middle"
+        style="background-image:url('{{ Associate_PSUS_Image.BannerOfPSUS}}');">
+        <div class="container">
+            <div class="dez-bnr-inr-entry">
+                <h1 class="text-white">{{Heading1_Associate_PSUS}}</h1>
+            </div>
+        </div>
+    </div>
+    <!-- inner page banner END -->
+    <!-- Breadcrumb row -->
+    <div class="breadcrumb-row">
+        <div class="container">
+            <ul class="list-inline">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>{{Heading1_Associate_PSUS}}</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Breadcrumb row END -->
+    <!-- contact area -->
+    <div class="section-full content-inner">
+        <!-- Career -->
+        <div class="container">
+            <div class="row">
+                <!-- Left part start -->
+                <div class="col-lg-9 m-b30">
+
+                    <h1 class="m-b20 m-t0">{{Heading2_Associate_PSUS}}</h1>
+                    <div class="dez-separator bg-primary"></div>
+                    <p><strong>{{Paragraph1_Associate_PSUS|safe}}</strong></p>
+                    <h2 class="m-b20 m-t0">{{Heading3_Associate_PSUS}}</h2>
+                    <div class="dez-separator bg-primary"></div>
+                    <p>{{Paragraph2_Associate_PSUS|safe}}</p>
+                    <h3 class="m-t30 m-b10 ">{{Heading4_Associate_PSUS}}</h3>
+                    <ul class="list-check-circle primary">
+                        {% for Takeaway1 in TakeWay1 %}
+                        <li>{{Takeaway1.paragraph}}</li>
+                        {%endfor%}
+                    </ul>
+                    <h2 class="m-b20 m-t0">{{Heading5_Associate_PSUS}}</h2>
+                    <div class="dez-separator bg-primary"></div>
+                    <p>{{Paragraph3_Associate_PSUS|safe}}</p>
+                    <h3>{{Heading4_Associate_PSUS}}</h3>
+                    <ul class="list-check-circle primary">
+                        {% for Takeaway2 in TakeWay2 %}
+                        <li>{{Takeaway2.paragraph}}</li>
+                        {%endfor%}
+                    </ul>
+                    <h2 class="m-t30 m-b10 ">{{Heading6_Associate_PSUS}}</h2>
+                    <p> {{Paragraph4_Associate_PSUS|safe}} </p>
+                    <h3>{{Heading4_Associate_PSUS}}</h3>
+                    <ul class="list-check-circle mb-0 primary">
+                        {% for Takeaway3 in TakeWay3 %}
+                        <li>{{Takeaway3.paragraph}}</li>
+                        {%endfor%}
+                    </ul>
+                </div>
+                <!-- Left part start END -->
+                <!-- Right part start -->
+                <!-- Right part start END -->
+            </div>
+        </div>
+        <!-- Career END -->
+    </div>
+    <!-- contact area END -->
+</div>
+<!-- Content END-->
+<!-- Footer -->
+{% endblock content %}

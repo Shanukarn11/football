@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Terms & Conditions | India Khelo Football{% endblock %}
+
+{% block content %}
+<style>
+  .tnc-page {
+    background: #ffffff;
+    padding: -90px 0 50px;
+  }
+
+  .tnc-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ── Header ── */
+  .tnc-top {
+    margin-bottom: 40px;
+  }
+
+  .tnc-top h1 {
+    font-size: 38px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+  }
+
+  .tnc-top p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 4px;
+  }
+
+  .tnc-updated {
+    font-size: 13px;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  /* ── Section cards ── */
+  .tnc-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    padding: 24px 28px;
+    background: #ffffff;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .tnc-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-color: #ffc300;
+    background: #fffef5;
+  }
+
+  .tnc-card-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .tnc-card-title h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+    transition: color 0.2s ease;
+  }
+
+  .tnc-card:hover .tnc-card-title h2 {
+    color: #c49a00;
+  }
+
+  .tnc-divider {
+    width: 40px;
+    height: 3px;
+    background: #ffc300;
+    border-radius: 2px;
+    margin-bottom: 14px;
+    transition: width 0.3s ease;
+  }
+
+  .tnc-card:hover .tnc-divider {
+    width: 70px;
+  }
+
+  .tnc-content {
+    color: #444;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .tnc-content p  { margin: 0 0 10px; }
+  .tnc-content ul,
+  .tnc-content ol { padding-left: 20px; margin: 0 0 10px; }
+  .tnc-content li { margin-bottom: 6px; }
+
+  /* content-only: no title above, so remove extra top gap */
+  .tnc-content-only { margin-top: 0; }
+
+  /* empty state */
+  .tnc-empty {
+    text-align: center;
+    color: #888;
+    padding: 80px 20px;
+    font-size: 16px;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    .tnc-top h1            { font-size: 26px; }
+    .tnc-card              { padding: 18px 16px; }
+    .tnc-card-title h2     { font-size: 16px; }
+    .tnc-content           { font-size: 14px; }
+    .tnc-container         { padding: 0 14px; }
+  }
+
+  @media (max-width: 480px) {
+    .tnc-top h1  { font-size: 22px; }
+    .tnc-page    { padding: 10px 0 60px; }
+  }
+</style>
+
+<!-- Spacer for sticky header -->
+<div style="height: 5px; background-color: #ffffff;"></div>
+
+<div class="tnc-page bg-white">
+  <div class="tnc-container">
+
+    <!-- Page header -->
+    <div class="tnc-top">
+      <h1>Terms &amp; Conditions</h1>
+      
+      {% if sections %}
+        <p class="tnc-updated">Last updated: {{ sections.last.updated_at|date:"F j, Y" }}</p>
+      {% endif %}
+    </div>
+
+    <!-- Sections -->
+    {% if sections %}
+      {% for section in sections %}
+      <div class="tnc-card">
+
+        {% if section.title %}
+        <div class="tnc-card-title">
+          <h2>{{ section.title }}</h2>
+        </div>
+        {% endif %}
+
+        {% if section.title and section.content %}
+        <div class="tnc-divider"></div>
+        {% endif %}
+
+        {% if section.content %}
+        <div class="tnc-content {% if not section.title %}tnc-content-only{% endif %}">
+          {{ section.content|safe }}
+        </div>
+        {% endif %}
+
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="tnc-empty">
+        <p>Terms &amp; Conditions are being updated. Please check back soon.</p>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

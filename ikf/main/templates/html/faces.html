@@ -1,0 +1,394 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<style>
+  .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1.3fr 0.4fr 1.3fr;
+    grid-auto-columns: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+  }
+
+  .full {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+
+  .area1 {
+    display: grid;
+    grid-template-columns: 0.9fr 1.2fr 0.6fr 1.1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas: "a1_column1 a1_column2 a1_column3 a1_column4";
+    grid-area: 1 / 1 / 2 / 2;
+  }
+
+  .a1_column1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1.5fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "haokip mohnish"
+      "parth mohnish"
+      "ayansh mohnish"
+      "ridhuvan tanmay"
+      "chittransh mohnish2"
+      "amitabh amitabh";
+    grid-area: a1_column1;
+  }
+
+  .haokip {
+    grid-area: haokip;
+  }
+
+  .parth {
+    grid-area: parth;
+  }
+
+  .ayansh {
+    grid-area: ayansh;
+  }
+
+  .ridhuvan {
+    grid-area: ridhuvan;
+  }
+
+  .chittransh {
+    grid-area: chittransh;
+  }
+
+  .mohnish {
+    grid-area: mohnish;
+  }
+
+  .tanmay {
+    grid-area: tanmay;
+  }
+
+  .mohnish2 {
+    grid-area: mohnish2;
+  }
+
+  .amitabh {
+    grid-area: amitabh;
+  }
+
+  .a1_column2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.8fr 1.2fr;
+    grid-auto-columns: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "Maidaan"
+      "Mascot";
+    grid-area: a1_column2;
+  }
+
+  .Maidaan {
+    grid-area: Maidaan;
+  }
+
+  .Mascot {
+    grid-area: Mascot;
+  }
+
+  .a1_column3 {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "nitesh"
+      "kanda"
+      "Swara"
+      "meitei"
+      "vemai"
+      "tungoe";
+    grid-area: a1_column3;
+  }
+
+  .nitesh {
+    grid-area: nitesh;
+  }
+
+  .kanda {
+    grid-area: kanda;
+  }
+
+  .Swara {
+    grid-area: Swara;
+  }
+
+  .meitei {
+    grid-area: meitei;
+  }
+
+  .vemai {
+    grid-area: vemai;
+  }
+
+  .tungoe {
+    grid-area: tungoe;
+  }
+
+  .a1_column4 {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-rows: 0.8fr 1.4fr 0.8fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "shubham shubham"
+      "shabbir a1_c4_grid"
+      "ananya ananya";
+    grid-area: a1_column4;
+  }
+
+  .shubham {
+    grid-area: shubham;
+  }
+
+  .shabbir {
+    grid-area: shabbir;
+  }
+
+  .ananya {
+    grid-area: ananya;
+  }
+
+  .a1_c4_grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "kutal"
+      "chetla"
+      "shehroz";
+    grid-area: a1_c4_grid;
+  }
+
+  .kutal {
+    grid-area: kutal;
+  }
+
+  .chetla {
+    grid-area: chetla;
+  }
+
+  .shehroz {
+    grid-area: shehroz;
+  }
+
+  .area2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas: "jaden jonathan thanzil moinuddin siddhant";
+    grid-area: 2 / 1 / 3 / 2;
+  }
+
+  .jaden {
+    grid-area: jaden;
+  }
+
+  .jonathan {
+    grid-area: jonathan;
+  }
+
+  .thanzil {
+    grid-area: thanzil;
+  }
+
+  .moinuddin {
+    grid-area: moinuddin;
+  }
+
+  .siddhant {
+    grid-area: siddhant;
+  }
+
+  .area3 {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr 0.6fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas: "a3_column1 a3_column2 a3_column3";
+    grid-area: 3 / 1 / 4 / 2;
+  }
+
+  .a3_column1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "amarjeet jonathan2"
+      "amarjeet anjal"
+      "ngamgoulen niten"
+      "bendi chottan"
+      "vemai2 bada";
+    grid-area: a3_column1;
+  }
+
+  .amarjeet {
+    grid-area: amarjeet;
+  }
+
+  .ngamgoulen {
+    grid-area: ngamgoulen;
+  }
+
+  .bendi {
+    grid-area: bendi;
+  }
+
+  .vemai2 {
+    grid-area: vemai2;
+  }
+
+  .jonathan2 {
+    grid-area: jonathan2;
+  }
+
+  .anjal {
+    grid-area: anjal;
+  }
+
+  .niten {
+    grid-area: niten;
+  }
+
+  .chottan {
+    grid-area: chottan;
+  }
+
+  .bada {
+    grid-area: bada;
+  }
+
+  .a3_column2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1.2fr 0.8fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "mascot2"
+      "haokip2";
+    grid-area: a3_column2;
+  }
+
+  .mascot2 {
+    grid-area: mascot2;
+  }
+
+  .haokip2 {
+    grid-area: haokip2;
+  }
+
+  .a3_column3 {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1.8fr 0.6fr 0.6fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "suren"
+      "pritam"
+      "khuraijam";
+    grid-area: a3_column3;
+  }
+
+  .suren {
+    grid-area: suren;
+  }
+
+  .pritam {
+    grid-area: pritam;
+  }
+
+  .khuraijam {
+    grid-area: khuraijam;
+  }
+</style>
+<div class="container">
+  <div class="full"></div>
+  <div class="area1">
+    <div class="a1_column1">
+      <div class="haokip"></div>
+      <div class="parth"></div>
+      <div class="ayansh"></div>
+      <div class="ridhuvan"></div>
+      <div class="chittransh"></div>
+      <div class="mohnish"></div>
+      <div class="tanmay"></div>
+      <div class="mohnish2"></div>
+      <div class="amitabh"></div>
+    </div>
+    <div class="a1_column2">
+      <div class="Maidaan"></div>
+      <div class="Mascot"></div>
+    </div>
+    <div class="a1_column3">
+      <div class="nitesh"></div>
+      <div class="kanda"></div>
+      <div class="Swara"></div>
+      <div class="meitei"></div>
+      <div class="vemai"></div>
+      <div class="tungoe"></div>
+    </div>
+    <div class="a1_column4">
+      <div class="shubham"></div>
+      <div class="shabbir"></div>
+      <div class="ananya"></div>
+      <div class="a1_c4_grid">
+        <div class="kutal"></div>
+        <div class="chetla"></div>
+        <div class="shehroz"></div>
+      </div>
+    </div>
+  </div>
+  <div class="area2">
+    <div class="jaden"></div>
+    <div class="jonathan"></div>
+    <div class="thanzil"></div>
+    <div class="moinuddin"></div>
+    <div class="siddhant"></div>
+  </div>
+  <div class="area3">
+    <div class="a3_column1">
+      <div class="amarjeet"></div>
+      <div class="ngamgoulen"></div>
+      <div class="bendi"></div>
+      <div class="vemai2"></div>
+      <div class="jonathan2"></div>
+      <div class="anjal"></div>
+      <div class="niten"></div>
+      <div class="chottan"></div>
+      <div class="bada"></div>
+    </div>
+    <div class="a3_column2">
+      <div class="mascot2"></div>
+      <div class="haokip2"></div>
+    </div>
+    <div class="a3_column3">
+      <div class="suren"></div>
+      <div class="pritam"></div>
+      <div class="khuraijam"></div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

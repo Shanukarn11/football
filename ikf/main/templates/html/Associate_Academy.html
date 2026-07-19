@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content bg-white">
+    <div style="height: 120px; background-color: white;"></div>
+    <!-- <div class="dez-bnr-inr overlay-black-middle"
+        style="background-image:url('{{  Associate_Academy_Images.BannerOfAcademy}}');">
+        <div class="container">
+            <div class="dez-bnr-inr-entry">
+                <h1 class="text-white">{{Heading1_Associate_Academy}}</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="breadcrumb-row">
+        <div class="container">
+            <ul class="list-inline">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>{{Heading1_Associate_Academy}}</li>
+            </ul>
+        </div>
+    </div> -->
+
+    <!-- contact area -->
+    <div class="section-full content-inner">
+        <!-- Career -->
+        <div class="container">
+            <div class="row">
+                <!-- Left part start -->
+                <div class="col-lg-9 m-b30">
+                    <h1 class="m-b20 m-t0">{{heading1_Academy}}</h1>
+                    <div class="dez-separator bg-primary"></div>
+                    <p><strong>{{paragraph1_Academy|safe}}</strong></p>
+                    <h1 class="m-b20 m-t0">{{heading2_Academy}}</h1>
+                    <div class="dez-separator bg-primary"></div>
+                    <p><strong>{{paragraph2_Academy|safe}}</strong></p>
+                    <h3>{{heading3_Academy}}</h3>
+                    <ul class="list-check-circle primary">
+                        {% for keytakeway1 in TakeWay1 %}
+                        <li>{{keytakeway1.paragraph}}</li>
+                        {%endfor%}
+                    </ul>
+                    <h3>{{heading4_Academy}}</h3>
+                    <ul class="list-check-circle primary">
+                        {% for keytakeway2 in TakeWay2 %}
+                        <li>{{keytakeway2.paragraph}}</li>
+                        {%endfor%}
+                    </ul>
+                    <div class="dez-separator bg-primary"></div>
+                    <p><strong>Contact us on indiakhelofootball@gmail.com to start conversation.</strong></p></strong>
+                    </p>
+                </div>
+                <!-- Left part start END -->
+            </div>
+        </div>
+        <!-- Career END -->
+    </div>
+    <!-- contact area END -->
+</div>
+<!-- Content END-->
+<!-- Footer -->
+{% endblock content %}

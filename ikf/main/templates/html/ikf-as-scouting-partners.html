@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content">
+    <div style="height: 120px; background-color: white;"></div>
+    
+    <!-- contact area -->
+    <div class="section-full content-inner bg-white">
+        <!-- Services -->
+        <div class="container">
+            <div class="row">
+                <div class="p-3 w-100">
+                    <h2 class="text-uppercase m-b10 h2">IKF as Scouting Partner</h2>
+                    <p>IKF is official Scouting Partner of the below mentioned clubs, academies and tournament.</p>
+
+                    <div class="row">
+                        {%for clubs_partners in indian_clubs1 %}
+                        <div class="col-12 col-sm-4">
+                            <div class="dez-box m-2 border rounded-lg text-center">
+                                <img loading="lazy"  style="width: 200px; height: 200px;" src="{{clubs_partners.pic}}" alt="{{clubs_partners.name}}" />
+                                
+                                <h4 class="dez-title m-t0">{{clubs_partners.name}}</h4>
+                            </div>
+                        </div>
+                        {%endfor%}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Services END -->
+    </div>
+    <!-- contact area  END -->
+</div>
+<!-- Content END-->
+<!-- Footer -->
+{%endblock content%}

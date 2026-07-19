@@ -1,0 +1,291 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ikf-yellow:#ffc300;
+    --ikf-yellow-dark:#e0a800;
+    --ikf-yellow-soft:#fff8e1;
+    --ink:#0b1120;
+    --muted:#5a6478;
+    --line:#e8ecf2;
+  }
+  .nsm-wrap{
+    box-sizing:border-box;
+    max-width:1120px;
+    margin:0 auto;
+    padding:32px 24px 96px;
+    font-family:'Lato', sans-serif;
+    color:var(--ink);
+  }
+  .nsm-hero{
+    text-align:center;
+    padding:48px 16px 32px;
+    background:linear-gradient(180deg, var(--ikf-yellow-soft) 0%, #fff 100%);
+    border-radius:18px;
+    margin-bottom:32px;
+  }
+  .nsm-hero h1{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-size:40px;
+    font-weight:800;
+    margin:0 0 12px;
+    letter-spacing:-0.5px;
+  }
+  .nsm-hero .subtitle{
+    font-size:18px;
+    font-weight:700;
+    color:var(--ink);
+    margin:0 0 12px;
+  }
+  .nsm-hero .tagline{
+    font-size:16px;
+    font-weight:700;
+    color:var(--ikf-yellow-dark);
+    margin:0 0 12px;
+    letter-spacing:.5px;
+  }
+  .nsm-hero .lead{
+    font-size:15px;
+    color:var(--muted);
+    margin:0 auto;
+    max-width:680px;
+    line-height:1.6;
+  }
+  .nsm-section{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:28px;
+    margin-bottom:20px;
+    box-shadow:0 6px 18px -12px rgba(0,0,0,.10);
+  }
+  .nsm-section h2{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-size:24px;
+    font-weight:800;
+    margin:0 0 14px;
+    padding-left:14px;
+    position:relative;
+    line-height:1.25;
+  }
+  .nsm-section h2::before{
+    content:"";
+    position:absolute;
+    left:0; top:6px; bottom:6px;
+    width:4px;
+    border-radius:3px;
+    background:var(--ikf-yellow);
+  }
+  .nsm-section p{
+    font-size:15px;
+    line-height:1.75;
+    color:#3a3a3a;
+    margin:0 0 12px;
+  }
+  .nsm-list{
+    margin:0;
+    padding-left:18px;
+  }
+  .nsm-list li{
+    font-size:15px;
+    line-height:1.85;
+    color:#3a3a3a;
+    margin-bottom:6px;
+  }
+  .nsm-iconlist{
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  .nsm-iconlist li{
+    font-size:15px;
+    line-height:1.85;
+    color:#3a3a3a;
+    margin-bottom:8px;
+  }
+  .nsm-stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+    gap:14px;
+    margin-top:8px;
+  }
+  .nsm-stat{
+    background:var(--ikf-yellow-soft);
+    border:1px solid #f1d97b;
+    border-radius:14px;
+    padding:18px 14px;
+    text-align:center;
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--ink);
+  }
+  .nsm-cta-strip{
+    margin-top:40px;
+    padding:32px 28px;
+    text-align:center;
+    background:linear-gradient(135deg, #fff8d6 0%, #ffe89a 60%, #f5c94a 100%);
+    border:1px solid #ecc34a;
+    border-radius:20px;
+  }
+  .nsm-cta-strip h3{
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-size:22px;
+    font-weight:800;
+    margin:0 0 6px;
+  }
+  .nsm-cta-strip .sub{
+    margin:0 0 6px;
+    color:#5d4f1a;
+    font-size:14px;
+  }
+  .nsm-cta-strip .tag{
+    margin:0 0 18px;
+    color:var(--ink);
+    font-size:14px;
+    font-weight:700;
+  }
+  .nsm-cta{
+    background:var(--ikf-yellow);
+    color:#1a1a1a;
+    border:none;
+    padding:14px 36px;
+    font-size:15px;
+    font-weight:700;
+    font-family:'Plus Jakarta Sans', sans-serif;
+    border-radius:12px;
+    cursor:pointer;
+    box-shadow:0 10px 24px -8px rgba(245, 201, 74, .7);
+    transition:all .2s ease;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .nsm-cta::after{
+    content:"\2192";
+    font-size:18px;
+    transition:transform .2s ease;
+  }
+  .nsm-cta:hover{
+    background:var(--ikf-yellow-dark);
+    transform:translateY(-2px);
+  }
+  .nsm-cta:hover::after{ transform:translateX(4px); }
+  .nsm-closing{
+    text-align:center;
+    margin-top:32px;
+    font-family:'Plus Jakarta Sans', sans-serif;
+  }
+  .nsm-closing .play{
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:1px;
+    margin:0 0 8px;
+    color:var(--ink);
+  }
+  .nsm-closing .line{
+    font-size:14px;
+    color:var(--muted);
+    margin:0 0 6px;
+  }
+  .nsm-closing .slogan{
+    font-size:16px;
+    font-weight:700;
+    color:var(--ikf-yellow-dark);
+    margin:0;
+  }
+  @media (max-width:768px){
+    .nsm-hero h1{ font-size:28px; }
+    .nsm-hero .subtitle{ font-size:15px; }
+    .nsm-section{ padding:20px; }
+    .nsm-section h2{ font-size:20px; }
+  }
+</style>
+{% include 'html/_donor_panel_styles.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="nsm-wrap">
+
+  <section class="nsm-hero">
+    <h1>IKF Naari Shakti &ndash; Meerut Edition</h1>
+    <p class="subtitle">Meerut's First Mobile Campaign for Girls in Football</p>
+    <p class="tagline">FOR THE GIRLS. BY THE GIRLS. OF THE GIRLS.</p>
+    <p class="lead">In partnership with Meerut Youth Football Academy, IKF Naari Shakti is bringing a first-of-its-kind mobile football campaign to Meerut with one mission &mdash; to create safe, inclusive and empowering opportunities for girls through sport.</p>
+  </section>
+
+  <section class="nsm-section">
+    <h2>Why Naari Shakti?</h2>
+    <p>Nearly half of girls discontinue sports during adolescence due to limited opportunities, safety concerns and a lack of structured programs designed for them. Yet sports remain one of the strongest tools to build confidence, leadership, resilience and lifelong skills.</p>
+    <p>IKF Naari Shakti aims to bridge this gap and ensure every girl gets the opportunity to play, learn and grow through football.</p>
+  </section>
+
+  <section class="nsm-section">
+    <h2>What is IKF Naari Shakti Meerut?</h2>
+    <p>IKF Naari Shakti Meerut is a 7-day mobile football roadshow that will travel across the city, visiting schools and communities before culminating in a Mega Girls Football Trial.</p>
+    <p><strong>The Campaign Includes:</strong></p>
+    <ul class="nsm-iconlist">
+      <li>&#9917; Girls-only football clinics and assessments</li>
+      <li>&#127800; Menstrual health and wellbeing sessions</li>
+      <li>&#127919; IKF Pathway 360 and football awareness sessions</li>
+      <li>&#128105; Female coaches and women-led leadership sessions</li>
+      <li>&#128104;&#8205;&#128105;&#8205;&#128103; Parent engagement and support workshops</li>
+      <li>&#127942; Access to long-term football development opportunities through Meerut Youth Football Academy</li>
+    </ul>
+    <p>The entire initiative is designed to create a safe environment where girls feel confident stepping onto the football field while parents feel assured about their daughters' sporting journey.</p>
+  </section>
+
+  <section class="nsm-section">
+    <h2>Driving Change Across Meerut</h2>
+    <div class="nsm-stats">
+      <div class="nsm-stat">&#128666; 1 Vehicle</div>
+      <div class="nsm-stat">&#128197; 6 Days</div>
+      <div class="nsm-stat">&#127979; 6 Schools</div>
+      <div class="nsm-stat">&#9917; 1 Mega Trial</div>
+      <div class="nsm-stat">&#128640; One Movement for Change</div>
+    </div>
+    <p style="margin-top:18px;">After successfully impacting girls across cities including Jaipur, Mathura, Siwan, Ranipet, Pune and Gorakhpur, IKF Naari Shakti now arrives in Meerut to inspire the next generation of footballers and leaders. The initiative has already engaged 444+ girls across India, proving the demand for safe and structured football opportunities for girls at the grassroots level.</p>
+  </section>
+
+  <section class="nsm-section">
+    <h2>Why Schools Should Join</h2>
+    <ul class="nsm-list">
+      <li>Empower girls through sport and leadership.</li>
+      <li>Promote a safe and inclusive sporting culture.</li>
+      <li>Provide access to football pathways and opportunities.</li>
+      <li>Strengthen community engagement and school reputation.</li>
+      <li>Become a torchbearer for girls' participation in sports.</li>
+    </ul>
+    <p>Schools become more than hosts &mdash; they become partners in building the future of women's football in India.</p>
+  </section>
+
+  <div class="nsm-cta-strip">
+    <h3>Support IKF Naari Shakti &ndash; Meerut Edition</h3>
+    <p class="sub">Every contribution goes directly into this initiative.</p>
+    <p class="tag">80G tax exemption applicable.</p>
+    <button type="button" class="nsm-cta support-btn"
+            data-project="IKF Naari Shakti - Meerut Edition"
+            data-razorpay="1"
+            data-upi="0"
+            data-bank="0"
+            data-presets="500,1000,2500,5000">
+      Support Naari Shakti Meerut
+    </button>
+  </div>
+
+  <div class="nsm-closing">
+    <p class="play">PLAY. LEARN. LEAD. GROW.</p>
+    <p class="line">Creating pathways for young girls across India through football, awareness and opportunity.</p>
+    <p class="slogan">Aap Khelo, Mauka Hum Denge!</p>
+  </div>
+
+</div>
+
+{% include 'html/_donor_panel.html' %}
+
+{% endblock %}

@@ -1,0 +1,512 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  :root{
+    --ikf-yellow:#ffc300;
+    --ink:#0f172a;
+    --muted:#4b5563;
+    --ring:#e5e7eb;
+    --butter: rgba(255,195,0,.08);
+    --butter-border: rgba(255,195,0,.28);
+  }
+
+  /* ========= Shared layout ========= */
+  .ikf-wrap{
+    max-width:1240px;
+    margin:0 auto;
+    padding:0 24px;
+    font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  }
+  .ikf-section{
+    padding:20px 0 32px;
+  }
+  .ikf-soft{
+    background:#fff;
+    border:1px solid rgba(255,195,0,.35);
+    border-radius:16px;
+    box-shadow:0 14px 34px rgba(15,23,42,.06);
+    padding:20px 22px;
+  }
+  .ikf-h2{
+    font-size:28px;
+    font-weight:600;
+    color:var(--ink);
+    margin:0 0 18px;
+    text-align:left;
+  }
+
+  .global-intro{
+    font-size:15px;
+    color:#111827;
+    margin:0 0 14px;
+    max-width:70ch;
+  }
+
+  .trusted-list{
+    font-size:15px;
+    line-height:1.7;
+    padding-left:20px;
+    max-width:800px;
+    margin:0;
+  }
+  .trusted-list li{
+    margin-bottom:8px;
+  }
+
+  /* ========= HERO (LAWYERS) ========= */
+  .law-hero{
+    padding-top:32px;
+  }
+  .law-hero__grid{
+    display:grid;
+    grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);
+    gap:28px;
+    align-items:center;
+  }
+
+  .law-title h1{
+    font-size:48px;
+    font-weight:800;
+    margin:0 0 6px;
+  }
+  .law-title .subtitle{
+    font-size:20px;
+    font-weight:500;
+    margin:0 0 10px;
+  }
+  .law-title p{
+    font-size:16px;
+    line-height:1.7;
+    color:var(--muted);
+    margin:0 0 10px;
+    max-width:70ch;
+  }
+
+  .law-heroimg{
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 18px 44px rgba(15,23,42,.18);
+    background:#000;
+    aspect-ratio:4 / 2.5;
+  }
+  .law-heroimg img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  /* ========= LAWYER CAROUSEL ========= */
+  .law-season-head{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    align-items:flex-end;
+    margin-bottom:10px;
+  }
+  .law-season-head h2{
+    font-size:28px;
+    font-weight:400;
+    margin:0;
+  }
+  .law-view-all{
+    font-size:14px;
+    text-decoration:none;
+    color:#111827;
+    font-weight:600;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid rgba(255,195,0,0.6);
+    background:#fffef5;
+    transition:background .15s ease, transform .15s ease, box-shadow .15s ease;
+  }
+  .law-view-all:hover{
+    background:#ffc300;
+    box-shadow:0 10px 24px rgba(255,195,0,0.28);
+    transform:translateY(-1px);
+  }
+
+  .law-carousel-wrap{
+    margin-top:8px;
+  }
+  .law-carousel-wrap .section-content{
+    margin-top:4px;
+  }
+
+  .rep-owl .owl-stage-outer{ overflow:visible; }
+  .rep-owl .owl-item{ padding:6px 12px; }
+
+  .rep-card{
+    background:white;
+    border:1px solid #f7e8a6;
+    border-radius:18px;
+    box-shadow:0 10px 24px rgba(255,195,0,0.10);
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .rep-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 18px 36px rgba(255,195,0,0.20);
+    border-color:#ffc300;
+  }
+
+  .rep-logo{
+    padding:18px 18px 8px;
+  }
+  .rep-logo img{
+    width:100%;
+    height:160px;
+    object-fit:contain;
+    background:#ffffff;
+    border:1px solid #eee;
+    border-radius:14px;
+  }
+
+  .rep-caption{
+    padding:12px 18px 18px;
+    text-align:center;
+  }
+  .rep-caption .dez-title{
+    margin:0;
+    font-size:17px;
+    font-weight:700;
+    color:#111827;
+  }
+  .rep-caption .rep-role{
+    margin:4px 0 0;
+    font-size:13px;
+    color:var(--muted);
+  }
+  .rep-caption .rep-location{
+    margin:2px 0 0;
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .rep-owl .owl-nav [class*='owl-']{
+    width:40px;
+    height:40px;
+    border-radius:999px;
+    background:#fff;
+    color:#111;
+    border:1px solid rgba(15,23,42,0.08);
+    box-shadow:0 8px 18px rgba(0,0,0,0.10);
+    display:grid;
+    place-items:center;
+    transition:transform .15s ease, box-shadow .15s ease, background .12s ease;
+  }
+  .rep-owl .owl-nav [class*='owl-']:hover{
+    background:#ffc300;
+    transform:translateY(-1px);
+    box-shadow:0 10px 22px rgba(255,195,0,0.22);
+  }
+
+  /* ========= TWO-COLUMN LISTS ========= */
+  .law-two-col{
+    display:flex;
+    gap:40px;
+    flex-wrap:wrap;
+    margin-top:8px;
+  }
+  .law-two-col ul{
+    flex:1 1 260px;
+    padding-left:18px;
+    margin:0 0 10px;
+  }
+  .law-two-col li{
+    margin-bottom:8px;
+  }
+
+  /* ========= CTA ========= */
+  .law-cta-box{
+    text-align:center;
+  }
+  .law-cta-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px 26px;
+    margin-top:14px;
+    border-radius:999px;
+    border:none;
+    background:#ffc300;
+    color:#111827;
+    font-weight:700;
+    text-decoration:none;
+    box-shadow:0 12px 30px rgba(255,195,0,0.35);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .law-cta-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 16px 40px rgba(255,195,0,0.42);
+  }
+
+   /* ========= LEGAL ARTICLE BLOCKS ========= */
+  .law-article-stack{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .law-article-box h2.ikf-h2,
+  .law-article-box h3{
+    margin-bottom:10px;
+  }
+  .law-article-box h3{
+    font-size:18px;
+    font-weight:600;
+    color:var(--ink);
+    margin-top:0;
+  }
+  .law-article-box p{
+    font-size:15px;
+    line-height:1.7;
+    color:#111827;
+    margin:0 0 12px;
+    
+  }
+  .law-article-box ul{
+    font-size:15px;
+    line-height:1.7;
+    padding-left:20px;
+    margin:0 0 12px;
+  }
+  .law-article-box ul li{
+    margin-bottom:6px;
+  }
+  .law-article-note{
+  font-size:13px;
+  color:var(--muted);
+  margin:0;
+  font-style: italic;   /* ← add this */
+}
+
+
+
+  /* ========= Responsive ========= */
+  @media (max-width:768px){
+    .law-hero__grid{
+      grid-template-columns:1fr;
+      gap:18px;
+    }
+    .law-title h1{ font-size:34px; }
+    .law-title .subtitle{ font-size:18px; }
+    .law-title p{ font-size:14px; }
+
+    .law-season-head{
+      flex-direction:column;
+      align-items:flex-start;
+    }
+  }
+</style>
+
+<!-- =============== HERO =============== -->
+<section class="ikf-section law-hero">
+  <div class="ikf-wrap law-hero__grid">
+    <div class="law-title">
+      <h1>Legal Corner</h1>
+      <p class="subtitle">Trusted legal partners protecting football dreams</p>
+
+      <p>
+        At India Khelo Football (IKF), the journey doesn’t end on the pitch.
+        Our Partner Lawyers and Legal Advisors ensure that players, parents, clubs
+        and partners get the right legal guidance at every step of their football journey.
+      </p>
+      <p>
+        From contracts and consent forms to safeguarding, compliance and dispute resolution,
+        this network helps us operate responsibly and transparently — so the focus
+        stays on talent, opportunity and growth.
+      </p>
+    </div>
+
+    <div class="law-heroimg">
+      <!-- change the banner path as needed -->
+      <img loading="lazy" src="{% static 'images/banners/lawyer.png' %}" alt="IKF Partner Lawyers and Legal Advisors">
+    </div>
+  </div>
+</section>
+
+<!-- =============== OUR LEGAL NETWORK (CAROUSEL) =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+
+    <div class="law-season-head">
+      <h2>Our Legal Network</h2>
+      <a class="law-view-all" href="{% url 'lawyer_index' %}">
+        See full lawyer network →
+      </a>
+    </div>
+
+    {% if lawyers %}
+      <div class="law-carousel-wrap">
+        <div class="section-content">
+          <div class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr rep-owl">
+            {% for l in lawyers %}
+              <div class="item">
+                <div class="ow-carousel-entry rep-card">
+                  <div class="ow-entry-media rep-logo">
+                    <a href="{% url 'lawyer_detail' l.template_link %}" title="{{ l.name }}">
+                      {% if l.photo %}
+                        <img loading="lazy" src="{{ l.photo.url }}" alt="{{ l.name }}">
+                      {% else %}
+                        <img loading="lazy" src="{% static 'images/placeholder.png' %}" alt="{{ l.name }}">
+                      {% endif %}
+                    </a>
+                  </div>
+                  <div class="dez-info rep-caption">
+                    <h4 class="dez-title">{{ l.name }}</h4>
+
+                    {% if l.practice_area %}
+                      <p class="rep-role">{{ l.practice_area }}</p>
+                    {% endif %}
+
+                    {% if l.city %}
+                      <p class="rep-location">
+                        {{ l.city }}{% if l.state %}, {{ l.state }}{% endif %}
+                      </p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <p class="global-intro">Our Partner Lawyer network for this season will be published soon.</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- =============== LEGAL ARTICLE: ACADEMIES & MINOR TRAINEES =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <div class="law-article-stack">
+
+      <!-- Box 1: Title + Context -->
+      <div class="ikf-soft law-article-box">
+        <h2 class="ikf-h2">
+          The Legal Relationship between Football Academies and Minor Trainees – Status Quo and the Way Forward
+        </h2>
+        <p>
+          As operators at the grassroot level, it is a pervasive (and legitimate) concern among football academies in
+          India as to how they can secure proportionate compensation for their role in the training and development of
+          athletes who subsequently turn professional. After all, it is these academies who identify athletes, train and
+          prepare them for the professional world.
+        </p>
+        <p>
+          The rewards for the efforts of such academies start flowing much later, after the athlete successfully turns
+          professional. By that time, the academies have virtually no legal standing to claim rewards for their efforts
+          and it is only the athlete and clubs which said athlete represents that share such rewards to the exclusion of
+          the academies. In other words, the academies are left out of the value chain unless they are affiliated to a
+          club. This bears significance for standalone academies which are not affiliated to clubs and for whom such
+          compensation would be a crucial component of their revenue stream.
+        </p>
+      </div>
+
+      <!-- Box 2: Indian Legal Position -->
+      <div class="ikf-soft law-article-box">
+        <h3>The Indian legal position on contracts with minors</h3>
+        <p>
+          The legal regime in India is of limited assistance in this regard, since contracts entered into with athletes
+          before they turn 18 years of age are invalid and those entered into with their guardians before they turn 18 do
+          not bind the athlete once they attain majority.
+        </p>
+      </div>
+
+      <!-- Box 3: FIFA Regulatory Solution (Overview) -->
+      <div class="ikf-soft law-article-box">
+        <h3>The solution under the FIFA regulatory regime</h3>
+        <p>
+          However, all is not lost. It turns out that academies around the world (including in countries with more
+          favourable laws on contracts with minors) were facing similar issues. Recognising the crucial role played by
+          academies in sustaining the football ecosystem and to address challenges, FIFA introduced two new concepts of
+          “Training Compensation” and “Solidarity Mechanism” in the FIFA Regulation on the Status and Transfer of Players
+          (“RSTP”).
+        </p>
+      
+
+      <!-- Box 4: Training Compensation -->
+      
+        <h3>a) Training Compensation</h3>
+        <p>
+          Article 20 of the RSTP (read with its Annex 4) entitles training clubs to compensation whenever a player
+          trained by it is registered for the first time as well as each time the player is transferred till the end of
+          the calendar year in which he turns 23. All clubs/academies that train players between the ages of 12 and 21
+          are entitled to this payment.
+        </p>
+        <p>
+          Further, it is the responsibility of the club registering the player to make payment to the training
+          club/academy within 30 days of registration.
+        </p>
+      
+
+      <!-- Box 5: Solidarity Mechanism -->
+      
+        <h3>b) Solidarity Mechanism</h3>
+        <p>
+          Article 21 of the RSTP (read with its Annex 5) entitles training clubs to receive a proportion (5%) of the
+          transfer fee/compensation, payable by the player’s new club when a player is transferred, provided the player
+          is registered with such training club between ages 12–23.
+        </p>
+        <p>
+          Solidarity mechanism is due for any transfer throughout the lifetime of the player, unlike training
+          compensation.
+        </p>
+      </div>
+
+      <!-- Box 6: Training Club Status for Private Academies -->
+      <div class="ikf-soft law-article-box">
+        <h3>Is an academy not affiliated to a club a “training club” under the RSTP?</h3>
+        <p>
+          Strictly speaking, a private academy, not affiliated to a club, does not qualify as a “training club” under the
+          RSTP. The 2023 Commentary to the FIFA RSTP (pg. 382) has clarified that a training club does not have the
+          standing to sue for training compensation unless it is duly affiliated to a member association and
+          participating regularly in competitions at the time of its claim. For a club to be entitled to training
+          compensation, it must have met these same requirements during the period it spent training the player
+          concerned.
+        </p>
+        <p>
+          By the same token, this means that private academies and similar entities that are not affiliated to a member
+          association cannot claim training compensation.
+        </p>
+        <p>
+          While an academy that does not run a club (i.e., a purely training academy with no competition club) could
+          struggle to qualify as a “training club” for solidarity payments, this can be remedied if there is a national
+          (or supra-national) regime recognizing it as a club, or unless the national association’s rules treat it
+          analogously to a club.
+        </p>
+        <p>
+          In this regard, the on-ground reality suggests that for private academies to claim training rewards, it is
+          necessary that:
+        </p>
+        <ul>
+          <li>the private academy is affiliated to the member association (in our case, AIFF);</li>
+          <li>it is registered on the AIFF CRS platform which appears to recognise and provide accreditation to private
+            academies (see AIFF RSTP 2025); and</li>
+          <li>the player’s EPP clearly identifies the said private academy as the entity that trained the player sometime
+            between the ages of 12–21.</li>
+        </ul>
+        <p>
+          Moreover, such academies shall comply with their reporting obligations and not violate the criteria for
+          protection of minors contained in Article 19bis RSTP. This could be the starting point for private academies to
+          have a claim for training rewards. This does not, however, extend to pay-to-play academies, as they are
+          considered to be reaping rewards by collecting upfront payments prior to players training with them.
+        </p>
+      </div>
+
+      <!-- Box 7: Footer Note -->
+      <div class="ikf-soft law-article-box">
+        <p class="law-article-note">
+          This is the first in series of posts on relevant issues affecting IKF stakeholders.
+        </p>
+        <p class="law-article-note">
+          For further advice on the issues addressed hereinabove, please reach out to the IKF Legal Team.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+.section {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+.section:last-child {
+  border-bottom: none;
+}
+
+.section-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.section-text {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.section-text.highlight {
+  background: #f9f9f9;
+  padding: 10px;
+  border-left: 4px solid #28a745;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table td, .table th {
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 768px) {
+    .table td, .table th {
+        font-size: 14px;
+        padding: 5px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .season-row {
+        flex-direction: column;
+        text-align: center;
+    }
+    .season-image {
+        margin-top: 20px;
+    }
+}
+</style>
+
+<!-- Hero Section -->
+<div class="page-content bg-white">
+  <section id="hero" class="bg-success text-white text-center py-5">
+    <div class="container">
+      <h2 class="display-5 font-weight-bold mt-5" style="padding: 95px 0px 0px 0px;">IKF Past Trials – Season-by-Season Growth Story</h2>
+      <p class="lead mt-1">
+        From 17 cities in Season 1 (2021) to 100 cities in Season 4 (2024-25), IKF National Trials have grown into India’s largest grassroots talent hunt.
+      </p>
+    </div>
+  </section>
+
+  <!-- Growth at a Glance -->
+  <section id="growth" class="py-5">
+    <div class="container">
+      <h2 class="h3 font-weight-bold mb-4">Growth at a Glance</h2>
+      <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Season</th>
+                    <th>Year</th>
+                    <th>Cities Covered</th>
+                    <th>Participants</th>
+                    <th>Players Shortlisted</th>
+                    <th>Clubs Participated</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>S‑1</td>
+                    <td>2021–22</td>
+                    <td>17</td>
+                    <td>2,000+</td>
+                    <td>20</td>
+                    <td>8</td>
+                </tr>
+                <tr>
+                    <td>S‑2</td>
+                    <td>2022–23</td>
+                    <td>40</td>
+                    <td>5,000+</td>
+                    <td>25+</td>
+                    <td>16</td>
+                </tr>
+                <tr>
+                    <td>S‑3</td>
+                    <td>2023–24</td>
+                    <td>58</td>
+                    <td>8,000+</td>
+                    <td>116</td>
+                    <td>20+</td>
+                </tr>
+                <tr>
+                    <td>S‑4</td>
+                    <td>2024–25</td>
+                    <td>100</td>
+                    <td>10,000+</td>
+                    <td>120+</td>
+                    <td>25+</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+      <p class="text-muted"><em>Figures marked with “+” indicate minimum confirmed counts; final audited numbers are available in the Season Reports PDF archive.</em></p>
+    </div>
+  </section>
+
+<!-- Season Capsules -->
+<section id="season-capsules" class="bg-light py-5">
+  <div class="container">
+      <h2 class="h3 font-weight-bold mb-4">Season Capsules</h2>
+
+      <!-- Season 1 -->
+      <div class="row align-items-center season-row">
+          <div class="col-md-6">
+              <h3 class="section-title">Season 1 – The Pilot (Jan 2021 → Jan 2022)</h3>
+              <p class="section-text">
+                  Our inaugural <strong>17-city</strong> run laid the foundation for a neutral, data-driven scouting culture. 
+                  <strong>Twenty talented youngsters</strong> earned official trials with ISL & I-League academies—
+                  proving that structured access can beat pure chance.
+              </p>
+          </div>
+          <div class="col-md-6 text-center season-image">
+              <img loading="lazy" src="{% static 'images/season/Season1a.png' %}" alt="Season 1 Trials Image" class="img-fluid rounded">
+          </div>
+      </div>
+      <hr>
+
+      <!-- Season 2 -->
+      <div class="row align-items-center season-row">
+          <div class="col-md-6">
+              <h3 class="section-title">Season 2 – The Expansion (Jul 2022 → Feb 2023)</h3>
+              <p class="section-text">
+                  40 cities, 5,000+ participants, and the launch of village-level satellite events made Season 2 a breakthrough year. 
+                  16 professional clubs attended the National Finals, shortlisting 25+ players on the spot.
+              </p>
+          </div>
+          <div class="col-md-6 text-center season-image">
+              <img loading="lazy" src="{% static 'images/season/Season2a.png' %}" alt="Season 2 Trials Image" class="img-fluid rounded">
+          </div>
+      </div>
+      <hr>
+
+      <!-- Season 3 -->
+      <div class="row align-items-center season-row">
+          <div class="col-md-6">
+              <h3 class="section-title">Season 3 – Raising the Bar (May 2023 → Feb 2024)</h3>
+              <p class="section-text">
+                  With 58 host locations and 8,000+ young footballers in action, Season 3 set new benchmarks for inclusivity.
+                  Over 20 clubs identified 116 prospects, while IKF Pathway 360 debuted to guide families beyond the pitch.
+              </p>
+          </div>
+          <div class="col-md-6 text-center season-image">
+              <img loading="lazy" src="{% static 'images/season/Season3a.png' %}" alt="Season 3 Trials Image" class="img-fluid rounded">
+          </div>
+      </div>
+      <hr>
+
+      <!-- Season 4 -->
+      <div class="row align-items-center season-row">
+          <div class="col-md-6">
+              <h3 class="section-title">Season 4 – Century Cities (Mar 2024 → Jan 2025)</h3>
+              <p class="section-text">
+                  Concluding at Pune’s Balewadi Stadium on Republic Day, our 100-city trials welcomed 10,000+ participants. 
+                  A record 25+ clubs attended, making Season 4 the most competitive Finals yet.
+              </p>
+          </div>
+          <div class="col-md-6 text-center season-image">
+              <img loading="lazy" src="{% static 'images/season/Season4a.png' %}" alt="Season 4 Trials Image" class="img-fluid rounded">
+          </div>
+      </div>
+  </div>
+</section>
+
+  <!-- Download Reports -->
+  <section id="reports" class="py-5 text-center">
+    <div class="container">
+      <h2 class="h3 font-weight-bold mb-3">Download Detailed Season Reports</h2>
+      <p class="mb-4">Full stats, success stories, and media coverage for each season are available in our PDF archive.</p>
+      <!-- <a href="/season-reports.pdf" class="btn btn-success btn-lg">📥 Download Reports</a> -->
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="bg-light py-5">
+    <div class="container">
+      <h2 class="h3 font-weight-bold mb-4">Frequently Asked Questions</h2>
+      <div class="accordion" id="faqAccordion">
+        <div class="card">
+          <div class="card-header" id="faq1">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapse1">Where can I find past season reports?</button>
+            </h5>
+          </div>
+          <div id="collapse1" class="collapse" data-parent="#faqAccordion">
+            <div class="card-body">
+              You can download them directly from our season reports archive.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}

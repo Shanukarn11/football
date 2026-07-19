@@ -1,0 +1,685 @@
+.ikf-table {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: inherit;
+  margin: 2rem auto;
+}
+
+.ikf-table th,
+.ikf-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+  font-size: 15px;
+}
+
+.ikf-table thead {
+  background-color: #fafafa;
+  font-weight: 600;
+}
+
+.ikf-table tr:last-child td {
+  border-bottom: none;
+}
+
+.ikf-table,
+.ikf-table th,
+.ikf-table td {
+  border: 1px solid #d0d0d0; /* thin border all around */
+  border-collapse: collapse;
+}
+
+/* Centering stuff */
+.newpage-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem; /* breathing space on sides */
+}
+
+/* Workshop Format */
+.workshop-title {
+  margin-bottom: 0.5rem; /* reduce gap below heading */
+}
+
+.workshop-list li {
+  margin-bottom: 0.75rem; /* increase gap between bullet points */
+}
+
+/* Fixing colum spacing */
+.right-col2 {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0 !important;
+}
+
+.left-col2 {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 0.25rem;
+  margin: 0 !important;
+}
+
+.part-two-container2 {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 4rem;
+  background-color: #fff;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.black-bold2 {
+  font-size: 1.5rem;
+  color: #000;
+  font-family: "Avenir", sans-serif;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.youth_open_age {
+  display: flex;
+  justify-content: space-between; /* Pushes items to opposite ends */
+  align-items: center;
+  gap: 1rem;
+}
+
+.youth_open_age p {
+  margin: 0; /* Optional: remove extra spacing */
+}
+
+@media (max-width: 768px) {
+  .part-two-container2 {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* space between stacked sections */
+    padding-left: 0.5rem;
+  }
+
+  .left-col2,
+  .right-col2 {
+    width: 100%;
+  }
+}
+
+.ikf-workshop-subtitle {
+  margin: 0 !important;
+}
+
+.workshop-desc {
+  margin: 0.5rem !important;
+}
+
+/*Carousel*/
+.custom-carousel-container {
+  position: relative; /* 🔑 Needed for absolute child positioning */
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.custom-carousel-wrapper {
+  display: flex;
+  transition: transform 1s ease-in-out;
+  will-change: transform;
+}
+
+.custom-carousel-item {
+  flex: 0 0 50%;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .custom-carousel-item {
+    flex: 0 0 100%;
+  }
+}
+
+.custom-carousel-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 20px;
+  height: 100%;
+  gap: 20px;
+  border-color: #000;
+}
+
+.coach-image img {
+  max-width: 140px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.highlight-carousel-container {
+  position: relative;
+}
+
+.custom-carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  background: black;
+  color: white;
+  border: none;
+  font-size: 1.12rem;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0;
+}
+
+.custom-carousel-nav.left {
+  left: 0;
+}
+
+.custom-carousel-nav.right {
+  right: 0;
+}
+
+/*Hover effect on carousel cards and button*/
+.custom-carousel-item {
+  padding: 2rem 1.5rem 1.5rem 2rem;
+  position: relative;
+}
+
+.custom-carousel-card {
+  background: white;
+  padding: 1rem 1.5rem;
+  border: 1px solid #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.custom-carousel-card:hover {
+  background: linear-gradient(to top right, #ffc300, #fff8e1);
+}
+
+.custom-carousel-card:hover * {
+  color: black !important;
+}
+
+/* Button */
+.coach-button {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 1rem;
+  transition: transform 0.2s ease;
+  transform-origin: center;
+}
+
+.coach-button img {
+  width: 50px;
+  height: 50px;
+  background-color: #ffc300;
+  border-radius: 50%;
+}
+
+.coach-button:hover {
+  transform: scale(1.1);
+}
+
+/* Coaches carousel on workshop page */
+
+.owl-carousel-entry-2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 800px !important;
+  width: 100% !important;
+  margin: 0 auto;
+  background: #fff;
+  padding: 30px;
+}
+
+.coach-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 0 0 60%;
+  height: 100%;
+}
+
+.coach-name {
+  margin: 0 0 10px 0;
+  font-size: 1.5rem;
+  font-weight: 725;
+}
+
+.coach-description {
+  margin: 0;
+  max-width: 100%;
+  font-size: 1rem;
+}
+
+.coach-image {
+  flex: 0 0 40%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0; /* Ensure no internal padding */
+  margin-right: 0; /* Ensure no external spacing */
+  padding-bottom: 0; /* Ensure no internal padding */
+  margin-bottom: 0; /* Ensure no external spacing */
+}
+
+.coach-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.section-content2 .item {
+  padding: 10px;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 768px) {
+  .custom-carousel-item {
+    padding: 1rem 0.5rem; /* Less padding to reduce height */
+  }
+
+  .custom-carousel-card {
+    padding: 1rem;
+    gap: 12px;
+  }
+
+  .coach-name {
+    font-size: 1.1rem;
+  }
+
+  .coach-description {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .coach-button img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .coach-image img {
+    max-width: 90%;
+    margin-top: 0; /* No extra vertical spacing */
+    margin-right: 0; /* Touch right edge */
+  }
+}
+
+.custom-carousel-card {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Allow space at bottom */
+  background: #fff;
+  padding: 1rem 1.5rem;
+  border: 1px solid #000;
+  height: 100%;
+}
+
+.coach-image-absolute {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.coach-image-absolute img {
+  display: block;
+  width: 220px;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .coach-image-absolute img {
+    width: 200px;  /* Smaller image for tablets/phones */
+  }
+}
+
+@media (max-width: 480px) {
+  .coach-image-absolute img {
+    width: 180px;  /* Even smaller for very small phones */
+  }
+}
+
+/*Hover Feature on button*/
+
+/*Venue icon in tables*/
+.venue-cell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.venue-name {
+  display: inline-block;
+}
+
+.venue-cell a {
+  background-color: #ffc400;       /* bright yellow */
+  padding: 6px;
+  border-radius: 5px;              /* makes it circular */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.venue-icon {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+@media (max-width: 768px) {
+  .venue-cell {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 0; /* prevent extra space under icon */
+  }
+
+  .venue-cell a {
+    margin-top: 0.4rem;
+    border-bottom: none !important; /* no accidental border below icon */
+    display: inline-block;
+  }
+
+  .venue-icon {
+    display: block;
+    margin-bottom: 0; /* eliminate spacing below icon */
+  }
+
+  /* Clean up default table cell spacing */
+  .ikf-table td {
+    padding-bottom: 8px;
+  }
+}
+
+
+.ikf-workshop-impact-section h3 {
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.ikf-workshop-impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.ikf-workshop-impact-card {
+  border: 1px solid #000;
+  border-radius: 8px;
+  padding: 2.5rem;
+  box-sizing: border-box;
+}
+
+.ikf-workshop-impact-card h4 {
+  margin-bottom: 1rem;
+}
+
+.ikf-workshop-impact-card p {
+  color: #000;
+}
+
+
+/* International Workshop Essential Section */
+.ikf-workshop-international-workshops {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* align top */
+  gap: 3rem;
+}
+
+.ikf-workshop-intl-text-section {
+  flex-basis: 65%;
+}
+
+.ikf-workshop-intl-buttons {
+  flex-basis: 35%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.ikf-workshop-intl-buttons a {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.ikf-workshop-intl-buttons a:first-child {
+  background-color: #f4b400;
+  color: black;
+  padding: 15px 30px; /* increased padding for bigger button */
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.1rem; /* slightly larger text */
+}
+
+.ikf-workshop-intl-buttons a img {
+  width: 72px;
+  height: 50px;
+  padding: 12px 24px; /* top-bottom: 8px, left-right: 20px */
+  background-color: #f4b400;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .ikf-workshop-international-workshops {
+    flex-direction: column;
+    align-items: center; /* changed from flex-start to center */
+  }
+
+  .ikf-workshop-intl-text-section,
+  .ikf-workshop-intl-buttons {
+    flex-basis: 100%;
+  }
+
+  .ikf-workshop-intl-buttons {
+    flex-direction: row;
+    justify-content: center; /* keep buttons centered horizontally */
+    margin-bottom: 2rem;
+  }
+}
+
+/* Colab */
+
+.ikf-workshop-collaboration-focus {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
+.ikf-workshop-collab,
+.ikf-workshop-focus {
+  flex: 1;
+}
+
+.ikf-workshop-collab ul,
+.ikf-workshop-focus ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.ikf-workshop-collab li,
+.ikf-workshop-focus li {
+  margin-bottom: 12px; /* increased spacing between bullet points */
+  line-height: 1.6; /* better readability */
+}
+
+.ikf-workshop-collab h3,
+.ikf-workshop-focus h3,
+.ikf-workshop-international-workshops h3 {
+   margin-bottom: 2rem; /* all p tags black */
+   font-size: 1.8rem;
+}
+
+.ikf-workshop-collab p,
+.ikf-workshop-focus p,
+.ikf-workshop-international-workshops p {
+  color: black; /* all p tags black */
+}
+
+.ikf-workshop-collab {
+  flex: 1.1; /* slightly increase width share if using flex */
+}
+.ikf-workshop-focus {
+  flex: 0.9; /* slightly reduce focus block width */
+}
+
+@media (max-width: 768px) {
+  .ikf-workshop-collaboration-focus {
+    flex-direction: column;
+  }
+}
+
+/* Purpose Driven Section */
+
+.ikf-workshop-purpose{
+  margin-bottom: 4rem;
+  margin-top: 3rem;
+}
+
+.ikf-workshop-purpose-cards {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.ikf-workshop-purpose-card {
+  flex: 1;
+  min-width: 280px;
+  border: 1px solid #000;
+  border-radius: 6px;
+  padding: 2.5rem;
+  box-sizing: border-box;
+}
+
+.ikf-workshop-purpose-card h4 {
+  margin-bottom: 1.5rem;
+}
+
+.ikf-workshop-purpose p {
+  color: black; /* ensures p text is black */
+}
+
+@media (max-width: 768px) {
+  .ikf-workshop-purpose-cards {
+    flex-direction: column;
+  }
+}
+
+.ikf-workshop-purpose-text {
+  width: 50%;
+}
+
+.ikf-workshop-purpose-text h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.ikf-workshop-purpose-text h4 {
+  margin-bottom: 1.5rem;
+}
+
+.ikf-workshop-purpose-text p {
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .ikf-workshop-purpose-text {
+    width: 100%; /* full width on mobile */
+  }
+}
+
+ /* Hero section text */
+ .ikf-workshops-description {
+  margin-top: 2rem;
+}
+
+.ikf-workshops-description p {
+  max-width: 900px;
+  margin-bottom: 2rem;
+  color: #000;
+}
+
+.ikf-workshops-growth {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.growth-block {
+  flex: 1 1 45%;
+}
+
+.growth-block h4 {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.growth-block p {
+  line-height: 1.6;
+}
+
+.ikf-workshops-toptext {
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  .ikf-workshops-toptext {
+    width: 100%;
+  }
+}
+/* calendar button hero section */
+.donate-button-wrapper {
+  flex: 1 1 25%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem; /* spacing between Register and calendar buttons */
+  align-items: center; /* vertical alignment */
+}
+
+.calendar-button {
+  display: inline-block;
+  background-color: #FFC800;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.calendar-button img {
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+}
+
+/*Card hover*/
+.ikf-workshop-purpose-card:hover,
+.ikf-workshop-impact-card:hover {
+  background: linear-gradient(to bottom, #fff8e1, #ffc300);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}IKF Pathway 360 Supporter: Powering the Mission | India Khelo Football{% endblock %}
+
+{% block content %}
+{% include 'html/ikf360/_base_styles.html' %}
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="ikf-section i360-hero">
+  <div class="ikf-wrap">
+    <div class="i360-hero__grid">
+      <div class="i360-hero__left">
+        <div class="i360-hero__eyebrow">IKF Pathway 360 · Supporter</div>
+        <h1 class="i360-hero__title">
+          IKF Pathway 360 Supporter: <span>Powering the Mission</span>
+        </h1>
+        <p class="i360-hero__lead">
+          IKF operates with a simple belief: Football development should be accessible, not limited by affordability.
+        </p>
+        <div class="i360-ctas">
+          <a class="i360-btn primary" href="{% url 'Donate' %}">Support a Player</a>
+          <a class="i360-btn" href="{% url 'parent-fuelling-ikf' %}">Join the Community</a>
+        </div>
+      </div>
+      <div class="i360-hero__right">
+        <div class="i360-hero__media">
+          <img src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/ikf360.jpg' %}{% endif %}"
+               alt="IKF Pathway 360 Supporter"
+               loading="eager" />
+          {% if hero_image and hero_image.caption %}
+            <div class="i360-hero__caption">{{ hero_image.caption }}</div>
+          {% else %}
+            <div class="i360-hero__caption">IKF Pathway 360 Supporter</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ WHY IT MATTERS ═══════════════════════ -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">IKF Pathway 360 Supporter is a community of individuals and well-wishers who</h2>
+    <div class="ikf-soft">
+      <ul class="i360-bullets">
+        <li>Believe in the vision of democratizing football.</li>
+        <li>Want to contribute to grassroots development.</li>
+        <li>Support players who otherwise lack access.</li>
+      </ul>
+      <p style="margin-top:12px;">
+        As IKF currently operates without a traditional revenue model, supporters play a crucial role in sustaining and scaling the mission.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ EVERY CONTRIBUTION ═══════════════════════ -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Every contribution, big or small, <span>directly impacts</span></h2>
+    <div class="i360-grid">
+      <div class="i360-card" data-step="01">
+        <h3 class="i360-card__title">A player's opportunity</h3>
+      </div>
+      <div class="i360-card" data-step="02">
+        <h3 class="i360-card__title">A parent's confidence</h3>
+      </div>
+      <div class="i360-card" data-step="03">
+        <h3 class="i360-card__title">A community's growth</h3>
+      </div>
+    </div>
+    <p style="margin-top:14px;font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--ink);">
+      Support a Dream. Strengthen the Ecosystem.
+    </p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ BOTTOM CTA ═══════════════════════ -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <div class="i360-banner">
+      <div class="i360-ctas">
+        <a class="i360-btn primary" href="{% url 'parent-fuelling-ikf' %}">Join the Community</a>
+        <a class="i360-btn" href="{% url 'Donate' %}">Support a Player</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

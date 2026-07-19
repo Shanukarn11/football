@@ -1,0 +1,656 @@
+{% load static %}
+{% load explore_nav_tags %}
+{% with current_url=request.resolver_match.url_name current_slug=request.resolver_match.kwargs.slug %}
+{% get_explore_nav as explore_nav %}
+
+<div class="ikf-loop-stack" aria-label="Persona quick navigation"
+{% if current_url == 'home' %} data-suppress-persona="1"
+{% elif current_url == 'ikf_for_players' %} data-landing-persona="player"
+{% elif current_url == 'ikf_for_parents' %} data-landing-persona="parent"
+{% elif current_url == 'ikf_for_donors' %} data-landing-persona="donor"
+{% elif current_url == 'ikf_for_scouts' %} data-landing-persona="scout"
+{% endif %}>
+
+{% if current_url == 'naari_shakti' %}
+  <div class="ikf-loop-rail ikf-loop-statewise" data-loop-rail>
+    <button class="ikf-loop-toggle" type="button" aria-label="Naari Shakti Statewise navigation" aria-expanded="false">
+      <span class="ikf-loop-label">Statewise</span>
+      <span class="ikf-loop-menu-icon" aria-hidden="true">☰</span>
+    </button>
+    <nav class="ikf-loop-menu" aria-label="Naari Shakti Statewise links">
+      <div class="ikf-loop-menu-header">Naari Shakti Statewise</div>
+      {% if current_url != 'naari_shakti_bihar' %}<a class="ikf-loop-link" href="{% url 'naari_shakti_bihar' %}"><span>▶</span> IKF Naari Shakti - Bihar</a>{% endif %}
+      {% if current_url != 'naari_shakti_rajasthan' %}<a class="ikf-loop-link" href="{% url 'naari_shakti_rajasthan' %}"><span>▶</span> IKF Naari Shakti - Rajasthan</a>{% endif %}
+      {% if current_url != 'naari_shakti_meerut' %}<a class="ikf-loop-link" href="{% url 'naari_shakti_meerut' %}"><span>▶</span> IKF Naari Shakti - Meerut</a>{% endif %}
+      {% if current_url != 'naari_shakti' %}<a class="ikf-loop-link" href="{% url 'naari_shakti' %}"><span>▶</span> IKF Naari Shakti - India</a>{% endif %}
+      <a class="ikf-loop-link" href="{% url 'home' %}"><span>▶</span> Home</a>
+    </nav>
+  </div>
+{% endif %}
+
+<div class="ikf-loop-rail ikf-loop-player" data-loop-rail data-persona="player">
+  <button class="ikf-loop-toggle" type="button" aria-label="Player navigation" aria-expanded="false">
+    <span class="ikf-loop-label">Player</span>
+    <span class="ikf-loop-menu-icon" aria-hidden="true">☰</span>
+  </button>
+  <nav class="ikf-loop-menu" aria-label="Player navigation links">
+    <div class="ikf-loop-menu-header">Player</div>
+    {% if current_url != 'season5' %}<a class="ikf-loop-link" href="{% url 'season5' %}"><span>▶</span> Register for Trials</a>{% endif %}
+    {% if current_url != 'IkfTrials' %}<a class="ikf-loop-link" href="{% url 'IkfTrials' %}"><span>▶</span> What are Trials</a>{% endif %}
+    {% if current_url != 'noticeboard_slug' or current_slug != 'trialcalendar' %}<a class="ikf-loop-link" href="{% url 'noticeboard_slug' 'trialcalendar' %}"><span>▶</span> Trial Schedule</a>{% endif %}
+    {% if current_url != 'noticeboard_slug' or current_slug != 'ikftrialresults' %}<a class="ikf-loop-link" href="{% url 'noticeboard_slug' 'ikftrialresults' %}"><span>▶</span> Trial Result</a>{% endif %}
+    {% if current_url != 'international-alliance' and current_url != 'faces' %}<a class="ikf-loop-link" href="{% url 'international-alliance' %}"><span>▶</span> Inspirations</a>{% endif %}
+    {% if current_url != 'naari_shakti' %}<a class="ikf-loop-link" href="{% url 'naari_shakti' %}"><span>▶</span> Exclusive Female Trials</a>{% endif %}
+    {% if current_url != 'career360vision' %}<a class="ikf-loop-link" href="{% url 'career360vision' %}"><span>▶</span> IKF Pathway 360</a>{% endif %}
+    {% if current_url != 'ikf360_player' %}<a class="ikf-loop-link" href="{% url 'ikf360_player' %}"><span>▶</span> IKF Pathway 360 Player</a>{% endif %}
+    <a class="ikf-loop-link" href="{% url 'home' %}"><span>▶</span> Home</a>
+  </nav>
+</div>
+
+<div class="ikf-loop-rail ikf-loop-parent" data-loop-rail data-persona="parent">
+  <button class="ikf-loop-toggle" type="button" aria-label="Parent navigation" aria-expanded="false">
+    <span class="ikf-loop-label">Parent</span>
+    <span class="ikf-loop-menu-icon" aria-hidden="true">☰</span>
+  </button>
+  <nav class="ikf-loop-menu" aria-label="Parent navigation links">
+    <div class="ikf-loop-menu-header">Parent</div>
+    {% if current_url != 'ikf360_parent' %}<a class="ikf-loop-link" href="{% url 'ikf360_parent' %}"><span>▶</span> IKF Pathway 360 Parent</a>{% endif %}
+    {% if current_url != 'career360parentsplayers' %}<a class="ikf-loop-link" href="{% url 'career360parentsplayers' %}"><span>▶</span> Parent SOP</a>{% endif %}
+    {% if current_url != 'parent-fuelling-ikf' %}<a class="ikf-loop-link" href="{% url 'parent-fuelling-ikf' %}"><span>▶</span> Parent fueling IKF</a>{% endif %}
+    {% if current_url != 'season5' %}<a class="ikf-loop-link" href="{% url 'season5' %}"><span>▶</span> Register for Trials</a>{% endif %}
+    {% if current_url != 'IkfTrials' %}<a class="ikf-loop-link" href="{% url 'IkfTrials' %}"><span>▶</span> What are Trials</a>{% endif %}
+    {% if current_url != 'noticeboard_slug' or current_slug != 'trialcalendar' %}<a class="ikf-loop-link" href="{% url 'noticeboard_slug' 'trialcalendar' %}"><span>▶</span> Trial Schedule</a>{% endif %}
+    {% if current_url != 'noticeboard_slug' or current_slug != 'ikftrialresults' %}<a class="ikf-loop-link" href="{% url 'noticeboard_slug' 'ikftrialresults' %}"><span>▶</span> Trial Result</a>{% endif %}
+    {% if current_url != 'naari_shakti' %}<a class="ikf-loop-link" href="{% url 'naari_shakti' %}"><span>▶</span> Exclusive Female Trials</a>{% endif %}
+    <a class="ikf-loop-link" href="{% url 'home' %}"><span>▶</span> Home</a>
+  </nav>
+</div>
+
+<div class="ikf-loop-rail ikf-loop-scout" data-loop-rail data-persona="scout">
+  <button class="ikf-loop-toggle" type="button" aria-label="Scout navigation" aria-expanded="false">
+    <span class="ikf-loop-label">Scout</span>
+    <span class="ikf-loop-menu-icon" aria-hidden="true">☰</span>
+  </button>
+  <nav class="ikf-loop-menu" aria-label="Scout navigation links">
+    <div class="ikf-loop-menu-header">Scout</div>
+    {% if current_url != 'ikf360_career' %}<a class="ikf-loop-link" href="{% url 'ikf360_career' %}"><span>▶</span> IKF Pathway 360 Career</a>{% endif %}
+    {% if current_url != 'discovery_call' %}<a class="ikf-loop-link" href="{% url 'discovery_call' %}"><span>▶</span> Become IKF Scout</a>{% endif %}
+    {% if current_url != 'scoutingcommunity' %}<a class="ikf-loop-link" href="{% url 'scoutingcommunity' %}"><span>▶</span> Scout Network</a>{% endif %}
+    {% if current_url != 'scout_landing' and current_url != 'scout_index' and current_url != 'scout_detail' %}<a class="ikf-loop-link" href="{% url 'scout_landing' %}"><span>▶</span> Level 2 Certified Scouts</a>{% endif %}
+    {% if current_url != 'team-behind-ikf' %}<a class="ikf-loop-link" href="{% url 'team-behind-ikf' %}"><span>▶</span> About IKF</a>{% endif %}
+    <a class="ikf-loop-link" href="{% url 'home' %}"><span>▶</span> Home</a>
+  </nav>
+</div>
+
+{% if current_url == 'rep_landing' or current_url == 'rep_become_partner' or current_url == 'rep_public' or current_url == 'rep_index' or current_url == 'regionalpartners' %}
+  <div class="ikf-loop-rail ikf-loop-rep" data-loop-rail>
+    <button class="ikf-loop-toggle" type="button" aria-label="REP navigation" aria-expanded="false">
+      <span class="ikf-loop-label">REP</span>
+      <span class="ikf-loop-menu-icon" aria-hidden="true">☰</span>
+    </button>
+    <nav class="ikf-loop-menu" aria-label="REP navigation links">
+      <div class="ikf-loop-menu-header">Regional Execution Partner</div>
+      {% if current_url != 'rep_landing' %}<a class="ikf-loop-link" href="{% url 'rep_landing' %}"><span>▶</span> REP</a>{% endif %}
+      {% if current_url != 'rep_become_partner' %}<a class="ikf-loop-link" href="{% url 'rep_become_partner' %}"><span>▶</span> Become a Partner</a>{% endif %}
+      <a class="ikf-loop-link" href="{% url 'home' %}"><span>▶</span> Home</a>
+    </nav>
+  </div>
+{% endif %}
+
+{% if current_url == 'state-association-partners' or current_url == 'state-association-partner-detail' %}
+  <div class="ikf-loop-rail ikf-loop-state" data-loop-rail>
+    <button class="ikf-loop-toggle" type="button" aria-label="State Associations navigation" aria-expanded="false">
+      <span class="ikf-loop-label">State</span>
+      <span class="ikf-loop-menu-icon" aria-hidden="true">☰</span>
+    </button>
+    <nav class="ikf-loop-menu" aria-label="State Associations navigation links">
+      <div class="ikf-loop-menu-header">State Associations</div>
+      {% if current_url != 'state-association-partners' %}<a class="ikf-loop-link" href="{% url 'state-association-partners' %}"><span>▶</span> State Associations</a>{% endif %}
+      <a class="ikf-loop-link" href="{% url 'home' %}"><span>▶</span> Home</a>
+    </nav>
+  </div>
+{% endif %}
+
+{% if current_url == 'request_for_player' or current_url == 'clubs' or current_url == 'internationalpartners' %}
+  <div class="ikf-loop-rail ikf-loop-clubs" data-loop-rail>
+    <button class="ikf-loop-toggle" type="button" aria-label="Clubs navigation" aria-expanded="false">
+      <span class="ikf-loop-label">Clubs</span>
+      <span class="ikf-loop-menu-icon" aria-hidden="true">☰</span>
+    </button>
+    <nav class="ikf-loop-menu" aria-label="Clubs navigation links">
+      <div class="ikf-loop-menu-header">ISL &amp; I-League Clubs</div>
+      {% if current_url != 'request_for_player' %}<a class="ikf-loop-link" href="{% url 'request_for_player' %}"><span>▶</span> Request Talent</a>{% endif %}
+      {% if current_url != 'clubs' %}<a class="ikf-loop-link" href="{% url 'clubs' %}"><span>▶</span> Indian Clubs &amp; Academies</a>{% endif %}
+      {% if current_url != 'internationalpartners' %}<a class="ikf-loop-link" href="{% url 'internationalpartners' %}"><span>▶</span> International Clubs &amp; Academies</a>{% endif %}
+      <a class="ikf-loop-link" href="{% url 'home' %}"><span>▶</span> Home</a>
+    </nav>
+  </div>
+{% endif %}
+
+{% if current_url == 'lawyer_landing' or current_url == 'lawyer_index' or current_url == 'lawyer_detail' %}
+  <div class="ikf-loop-rail ikf-loop-legal" data-loop-rail>
+    <button class="ikf-loop-toggle" type="button" aria-label="Legal navigation" aria-expanded="false">
+      <span class="ikf-loop-label">Legal</span>
+      <span class="ikf-loop-menu-icon" aria-hidden="true">☰</span>
+    </button>
+    <nav class="ikf-loop-menu" aria-label="Legal navigation links">
+      <div class="ikf-loop-menu-header">Legal Corner</div>
+      {% if current_url != 'lawyer_landing' %}<a class="ikf-loop-link" href="{% url 'lawyer_landing' %}"><span>▶</span> Legal Corner</a>{% endif %}
+      <a class="ikf-loop-link" href="{% url 'home' %}"><span>▶</span> Home</a>
+    </nav>
+  </div>
+{% endif %}
+
+{% if current_url == 'associate_tournamentorganizer' %}
+  <div class="ikf-loop-rail ikf-loop-tournament" data-loop-rail>
+    <button class="ikf-loop-toggle" type="button" aria-label="Tournament navigation" aria-expanded="false">
+      <span class="ikf-loop-label">Tourney</span>
+      <span class="ikf-loop-menu-icon" aria-hidden="true">☰</span>
+    </button>
+    <nav class="ikf-loop-menu" aria-label="Tournament navigation links">
+      <div class="ikf-loop-menu-header">Tournament Partner</div>
+      {% if current_url != 'associate_tournamentorganizer' %}<a class="ikf-loop-link" href="{% url 'associate_tournamentorganizer' %}"><span>▶</span> Tournament Partner</a>{% endif %}
+      <a class="ikf-loop-link" href="{% url 'home' %}"><span>▶</span> Home</a>
+    </nav>
+  </div>
+{% endif %}
+
+<div class="ikf-loop-rail ikf-loop-donor" data-loop-rail data-persona="donor">
+  <button class="ikf-loop-toggle" type="button" aria-label="CSR navigation" aria-expanded="false">
+    <span class="ikf-loop-label">CSR</span>
+    <span class="ikf-loop-menu-icon" aria-hidden="true">☰</span>
+  </button>
+  <nav class="ikf-loop-menu" aria-label="CSR navigation links">
+    <div class="ikf-loop-menu-header">CSR / Donor</div>
+    {% if current_url != 'ikf360_partner' %}<a class="ikf-loop-link" href="{% url 'ikf360_partner' %}"><span>▶</span> IKF Pathway 360 Partner</a>{% endif %}
+    {% if current_url != 'ikf360_supporter' %}<a class="ikf-loop-link" href="{% url 'ikf360_supporter' %}"><span>▶</span> IKF Pathway 360 Supporter</a>{% endif %}
+    {% if current_url != 'supporters' %}<a class="ikf-loop-link" href="{% url 'supporters' %}"><span>▶</span> Annual Impact</a>{% endif %}
+    {% if current_url != 'woman-empowerment' %}<a class="ikf-loop-link" href="{% url 'woman-empowerment' %}"><span>▶</span> Empower her through football</a>{% endif %}
+    {% if current_url != 'Donate' %}<a class="ikf-loop-link" href="{% url 'Donate' %}"><span>▶</span> Support Initiative</a>{% endif %}
+    {% if current_url != 'invest-social-impact' %}<a class="ikf-loop-link" href="{% url 'invest-social-impact' %}"><span>▶</span> Make an impact - Project Northeast Rising</a>{% endif %}
+    {% if current_url != 'professional_pathway' %}<a class="ikf-loop-link" href="{% url 'professional_pathway' %}"><span>▶</span> Make an impact - Scout on Wheels</a>{% endif %}
+    {% if current_url != 'naari_shakti' %}<a class="ikf-loop-link" href="{% url 'naari_shakti' %}"><span>▶</span> Make an impact - Project IKF Naari Shakti</a>{% endif %}
+    <a class="ikf-loop-link" href="{% url 'home' %}"><span>▶</span> Home</a>
+  </nav>
+</div>
+
+{% if explore_nav %}
+<div class="ikf-loop-rail ikf-loop-explore" data-loop-rail data-explore-rail data-explore-active="1">
+  <button class="ikf-loop-toggle" type="button" aria-label="{{ explore_nav.label }}" aria-expanded="false">
+    <span class="ikf-loop-label">{{ explore_nav.label }}</span>
+    <span class="ikf-loop-menu-icon" aria-hidden="true">☰</span>
+  </button>
+  <nav class="ikf-loop-menu" aria-label="{{ explore_nav.label }} links">
+    <div class="ikf-loop-menu-header">{{ explore_nav.heading }}</div>
+    {% for link in explore_nav.resolved_links %}
+      {% if not link.is_current_page %}
+        {% if link.group_header %}{% ifchanged link.group_header %}<div class="ikf-loop-group-header">{{ link.group_header }}</div>{% endifchanged %}{% endif %}
+        <a class="ikf-loop-link" href="{{ link.get_href }}"><span>▶</span> {{ link.label }}</a>
+      {% endif %}
+    {% endfor %}
+    {% if explore_nav.show_home_link %}<a class="ikf-loop-link" href="{% url 'home' %}"><span>▶</span> Home</a>{% endif %}
+  </nav>
+</div>
+{% else %}
+<div class="ikf-loop-rail ikf-loop-explore" data-loop-rail data-explore-rail>
+  <button class="ikf-loop-toggle" type="button" aria-label="Explore more" aria-expanded="false">
+    <span class="ikf-loop-label">Explore More</span>
+    <span class="ikf-loop-menu-icon" aria-hidden="true">☰</span>
+  </button>
+  <nav class="ikf-loop-menu" aria-label="Explore more links">
+    <div class="ikf-loop-menu-header">Explore More</div>
+
+    {% if current_url == 'ikf_for_players' or current_url == 'season5' or current_url == 'IkfTrials' or current_url == 'scouted_players' or current_url == 'faces' or current_url == 'international-alliance' or current_url == 'career360vision' or current_url == 'ikf360_player' %}
+      <div class="ikf-loop-group-header">Players:</div>
+      {% if current_url != 'season5' %}<a class="ikf-loop-link" href="{% url 'season5' %}"><span>▶</span> Register for Trials</a>{% endif %}
+      {% if current_url != 'IkfTrials' %}<a class="ikf-loop-link" href="{% url 'IkfTrials' %}"><span>▶</span> What are Trials</a>{% endif %}
+      <a class="ikf-loop-link" href="{% url 'noticeboard_slug' 'trialcalendar' %}"><span>▶</span> Trial Schedule</a>
+      <a class="ikf-loop-link" href="{% url 'noticeboard_slug' 'ikftrialresults' %}"><span>▶</span> Trial Result</a>
+      {% if current_url != 'international-alliance' and current_url != 'faces' %}<a class="ikf-loop-link" href="{% url 'international-alliance' %}"><span>▶</span> Inspirations</a>{% endif %}
+      <a class="ikf-loop-link" href="{% url 'naari_shakti' %}"><span>▶</span> Exclusive Female Trials</a>
+      {% if current_url != 'career360vision' %}<a class="ikf-loop-link" href="{% url 'career360vision' %}"><span>▶</span> IKF Pathway 360</a>{% endif %}
+      {% if current_url != 'ikf360_player' %}<a class="ikf-loop-link" href="{% url 'ikf360_player' %}"><span>▶</span> IKF Pathway 360 Player</a>{% endif %}
+    {% endif %}
+
+    {% if current_url == 'ikf_for_parents' or current_url == 'career360parentsplayers' or current_url == 'parent-fuelling-ikf' or current_url == 'season5' or current_url == 'IkfTrials' or current_url == 'ikf360_parent' %}
+      <div class="ikf-loop-group-header">Parents:</div>
+      {% if current_url != 'ikf360_parent' %}<a class="ikf-loop-link" href="{% url 'ikf360_parent' %}"><span>▶</span> IKF Pathway 360 Parent</a>{% endif %}
+      {% if current_url != 'career360parentsplayers' %}<a class="ikf-loop-link" href="{% url 'career360parentsplayers' %}"><span>▶</span> Parent SOP</a>{% endif %}
+      {% if current_url != 'parent-fuelling-ikf' %}<a class="ikf-loop-link" href="{% url 'parent-fuelling-ikf' %}"><span>▶</span> Parent fueling IKF</a>{% endif %}
+    {% endif %}
+
+    {% if current_url == 'ikf_for_scouts' or current_url == 'discovery_call' or current_url == 'scoutingcommunity' or current_url == 'scout_landing' or current_url == 'scout_index' or current_url == 'scout_detail' or current_url == 'team-behind-ikf' or current_url == 'ikf360_career' %}
+      <div class="ikf-loop-group-header">Scouts:</div>
+      {% if current_url != 'ikf360_career' %}<a class="ikf-loop-link" href="{% url 'ikf360_career' %}"><span>▶</span> IKF Pathway 360 Career</a>{% endif %}
+      {% if current_url != 'discovery_call' %}<a class="ikf-loop-link" href="{% url 'discovery_call' %}"><span>▶</span> Become IKF Scout</a>{% endif %}
+      {% if current_url != 'scoutingcommunity' %}<a class="ikf-loop-link" href="{% url 'scoutingcommunity' %}"><span>▶</span> Scout Network</a>{% endif %}
+      {% if current_url != 'scout_landing' and current_url != 'scout_index' and current_url != 'scout_detail' %}<a class="ikf-loop-link" href="{% url 'scout_landing' %}"><span>▶</span> Level 2 Certified Scouts</a>{% endif %}
+      {% if current_url != 'team-behind-ikf' %}<a class="ikf-loop-link" href="{% url 'team-behind-ikf' %}"><span>▶</span> About IKF</a>{% endif %}
+    {% endif %}
+
+    {% if current_url == 'ikf_for_donors' or current_url == 'supporters' or current_url == 'woman-empowerment' or current_url == 'Donate' or current_url == 'invest-social-impact' or current_url == 'professional_pathway' or current_url == 'ikf360_partner' or current_url == 'ikf360_supporter' %}
+      <div class="ikf-loop-group-header">Donors / CSR:</div>
+      {% if current_url != 'ikf360_partner' %}<a class="ikf-loop-link" href="{% url 'ikf360_partner' %}"><span>▶</span> IKF Pathway 360 Partner</a>{% endif %}
+      {% if current_url != 'ikf360_supporter' %}<a class="ikf-loop-link" href="{% url 'ikf360_supporter' %}"><span>▶</span> IKF Pathway 360 Supporter</a>{% endif %}
+      {% if current_url != 'supporters' %}<a class="ikf-loop-link" href="{% url 'supporters' %}"><span>▶</span> Annual Impact</a>{% endif %}
+      {% if current_url != 'woman-empowerment' %}<a class="ikf-loop-link" href="{% url 'woman-empowerment' %}"><span>▶</span> Empower her through football</a>{% endif %}
+      {% if current_url != 'Donate' %}<a class="ikf-loop-link" href="{% url 'Donate' %}"><span>▶</span> Support Initiative</a>{% endif %}
+      {% if current_url != 'invest-social-impact' %}<a class="ikf-loop-link" href="{% url 'invest-social-impact' %}"><span>▶</span> Make an impact - Project Northeast Rising</a>{% endif %}
+      {% if current_url != 'professional_pathway' %}<a class="ikf-loop-link" href="{% url 'professional_pathway' %}"><span>▶</span> Make an impact - Scout on Wheels</a>{% endif %}
+    {% endif %}
+
+    <a class="ikf-loop-link" href="{% url 'home' %}"><span>▶</span> Home</a>
+  </nav>
+</div>
+{% endif %}
+
+</div>
+
+<style>
+  .ikf-float-sidebar {
+    display: none !important;
+  }
+
+  .ikf-loop-rail[data-persona],
+  .ikf-loop-rail[data-explore-rail] {
+    display: none !important;
+  }
+  .ikf-loop-rail[data-persona].is-active-persona,
+  .ikf-loop-rail[data-explore-rail].is-active-persona {
+    display: flex !important;
+  }
+
+  .ikf-loop-group-header {
+    background: #fff8e1;
+    color: #5d4f1a;
+    padding: 10px 18px 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-top: 1px solid #edf0f5;
+    border-bottom: 1px solid #edf0f5;
+  }
+  .ikf-loop-group-header:first-of-type {
+    border-top: 0;
+  }
+
+  .ikf-loop-stack {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    pointer-events: none;
+  }
+
+  .ikf-loop-rail {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    position: relative;
+    pointer-events: auto;
+  }
+
+  .ikf-loop-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 118px;
+    padding: 14px 10px;
+    border: 1.5px solid rgba(17,19,24,0.08);
+    border-right: 0;
+    border-radius: 12px 0 0 12px;
+    background: #ffc300;
+    color: #111318;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.18);
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+  }
+
+  .ikf-loop-toggle:hover,
+  .ikf-loop-rail.open .ikf-loop-toggle {
+    background: #ffd343;
+  }
+
+  .ikf-loop-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  .ikf-loop-menu-icon {
+    writing-mode: horizontal-tb;
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .ikf-loop-menu {
+    position: absolute;
+    right: calc(100% + 8px);
+    top: 50%;
+    width: min(340px, calc(100vw - 92px));
+    max-height: min(680px, calc(100vh - 40px));
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    background: #fff;
+    border: 1px solid rgba(17,19,24,0.1);
+    border-radius: 14px;
+    box-shadow: 0 18px 42px rgba(17,19,24,0.18);
+    transform: translateY(-50%) translateX(8px);
+    transition: opacity 0.2s ease, transform 0.22s ease, visibility 0.2s ease;
+    white-space: normal;
+  }
+
+  .ikf-loop-rail.open .ikf-loop-menu {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .ikf-loop-menu-header {
+    background: #ffc300;
+    color: #111318;
+    padding: 14px 18px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .ikf-loop-link {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 13px 18px;
+    color: #172033;
+    text-decoration: none;
+    border-bottom: 1px solid #edf0f5;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13.5px;
+    font-weight: 650;
+    line-height: 1.25;
+  }
+
+  .ikf-loop-link:last-child {
+    border-bottom: 0;
+  }
+
+  .ikf-loop-link span {
+    color: #ffc300;
+    font-size: 9px;
+    flex: 0 0 auto;
+  }
+
+  .ikf-loop-link b {
+    margin-left: auto;
+    background: #ffc300;
+    color: #111318;
+    border-radius: 999px;
+    padding: 3px 7px;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .ikf-loop-link:hover,
+  .ikf-loop-link:focus-visible {
+    background: rgba(255,195,0,0.14);
+    color: #111318;
+    outline: none;
+  }
+
+  @media (max-width: 768px) {
+    .ikf-loop-stack {
+      left: auto;
+      right: 0;
+      bottom: auto;
+      top: 50%;
+      transform: translateY(-50%);
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 5px;
+      z-index: 1200;
+      width: auto;
+    }
+
+    .ikf-loop-toggle {
+      flex-direction: column;
+      min-height: 76px;
+      height: auto;
+      padding: 9px 7px;
+      border-radius: 10px 0 0 10px;
+      border-right: 0;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.16);
+      margin-right: 0;
+    }
+
+    .ikf-loop-label {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 9px;
+    }
+
+    .ikf-loop-menu {
+      position: absolute;
+      left: auto;
+      right: calc(100% + 6px);
+      bottom: auto;
+      top: 50%;
+      border-radius: 12px;
+      width: min(280px, calc(100vw - 62px));
+      max-height: calc(100vh - 28px);
+      transform: translateY(-50%) translateX(8px);
+    }
+
+    .ikf-loop-rail.open .ikf-loop-menu {
+      transform: translateY(-50%) translateX(0);
+    }
+
+    .ikf-loop-link {
+      white-space: normal;
+      padding: 12px 14px;
+      font-size: 12.5px;
+    }
+
+    .ikf-loop-stack.has-multiple-loops {
+      gap: 4px;
+    }
+
+    .ikf-loop-stack.has-multiple-loops .ikf-loop-toggle {
+      min-height: 58px;
+      padding: 7px 5px;
+      gap: 5px;
+      border-radius: 9px 0 0 9px;
+    }
+
+    .ikf-loop-stack.has-multiple-loops .ikf-loop-label {
+      font-size: 7.5px;
+      letter-spacing: 0.05em;
+    }
+
+    .ikf-loop-stack.has-multiple-loops .ikf-loop-menu-icon {
+      font-size: 15px;
+    }
+
+    .ikf-loop-stack.has-multiple-loops .ikf-loop-menu {
+      width: min(260px, calc(100vw - 52px));
+      right: calc(100% + 5px);
+    }
+  }
+
+  @media (max-width: 420px) {
+    .ikf-loop-stack {
+      right: 0;
+      gap: 4px;
+    }
+
+    .ikf-loop-toggle {
+      height: auto;
+      min-height: 70px;
+      padding: 8px 6px;
+      gap: 6px;
+    }
+
+    .ikf-loop-label {
+      font-size: 9px;
+      letter-spacing: 0.05em;
+    }
+
+    .ikf-loop-menu {
+      left: auto;
+      right: calc(100% + 5px);
+      width: min(265px, calc(100vw - 56px));
+    }
+
+    .ikf-loop-stack.has-multiple-loops .ikf-loop-toggle {
+      min-height: 52px;
+      padding: 6px 5px;
+    }
+
+    .ikf-loop-stack.has-multiple-loops .ikf-loop-label {
+      font-size: 7px;
+    }
+
+    .ikf-loop-stack.has-multiple-loops .ikf-loop-menu {
+      width: min(250px, calc(100vw - 48px));
+    }
+  }
+</style>
+
+<script>
+  (function(){
+    var PERSONA_KEY = 'ikf_active_persona';
+    var VALID_PERSONAS = ['player', 'parent', 'scout', 'donor'];
+
+    function readStoredPersona(){
+      try {
+        var v = sessionStorage.getItem(PERSONA_KEY);
+        return VALID_PERSONAS.indexOf(v) !== -1 ? v : null;
+      } catch(e) { return null; }
+    }
+    function readLandingPersona(){
+      var stack = document.querySelector('.ikf-loop-stack');
+      if (!stack) return null;
+      var v = stack.getAttribute('data-landing-persona');
+      return VALID_PERSONAS.indexOf(v) !== -1 ? v : null;
+    }
+    function readPersona(){
+      return readLandingPersona() || readStoredPersona();
+    }
+    function writePersona(v){
+      try { sessionStorage.setItem(PERSONA_KEY, v); } catch(e) {}
+    }
+
+    function isPersonaSuppressed(){
+      var stack = document.querySelector('.ikf-loop-stack');
+      return !!(stack && stack.getAttribute('data-suppress-persona'));
+    }
+
+    function applyActivePersona(){
+      var suppressed = isPersonaSuppressed();
+      if (suppressed) {
+        try { sessionStorage.removeItem(PERSONA_KEY); } catch(e) {}
+      }
+      var active = suppressed ? null : readPersona();
+      if (active) writePersona(active);
+
+      document.querySelectorAll('.ikf-loop-rail[data-persona], .ikf-loop-rail[data-explore-rail]').forEach(function(rail){
+        rail.classList.remove('is-active-persona');
+      });
+
+      if (suppressed) return;
+
+      var explore = document.querySelector('.ikf-loop-rail[data-explore-rail]');
+      // Admin-managed Explore menu (backend links added for this page).
+      var exploreAdmin = !!(explore && explore.getAttribute('data-explore-active') === '1');
+      var exploreHasContent = !!(explore && (exploreAdmin || explore.querySelectorAll('.ikf-loop-group-header').length > 0));
+
+      // Only ONE rail shows at a time:
+      if (exploreAdmin) {
+        // A backend Explore menu exists for this page → it replaces the persona rail.
+        explore.classList.add('is-active-persona');
+      } else if (active) {
+        // No backend menu, but the visitor is browsing as a persona → show that rail.
+        var match = document.querySelector('.ikf-loop-rail[data-persona="' + active + '"]');
+        if (match) match.classList.add('is-active-persona');
+      } else if (exploreHasContent) {
+        // No persona either → fall back to the built-in Explore menu.
+        explore.classList.add('is-active-persona');
+      }
+    }
+
+    function wirePersonaTiles(){
+      document.querySelectorAll('.persona-tile[data-persona]').forEach(function(tile){
+        tile.addEventListener('click', function(){
+          var p = tile.getAttribute('data-persona');
+          if (VALID_PERSONAS.indexOf(p) !== -1) writePersona(p);
+        });
+      });
+    }
+
+    function initPersonaLoops(){
+      applyActivePersona();
+      wirePersonaTiles();
+
+      var rails = Array.prototype.slice.call(
+        document.querySelectorAll('[data-loop-rail]:not([data-persona]), .ikf-loop-rail[data-persona].is-active-persona')
+      );
+      if (!rails.length) return;
+      var stack = document.querySelector('.ikf-loop-stack');
+      if (stack && rails.length > 1) stack.classList.add('has-multiple-loops');
+
+      document.querySelectorAll('.ikf-float-sidebar').forEach(function(legacy){
+        legacy.remove();
+      });
+
+      rails.forEach(function(rail){
+        var toggle = rail.querySelector('.ikf-loop-toggle');
+        if (!toggle) return;
+        toggle.addEventListener('click', function(e){
+          e.stopPropagation();
+          var willOpen = !rail.classList.contains('open');
+          rails.forEach(function(other){
+            other.classList.remove('open');
+            var otherToggle = other.querySelector('.ikf-loop-toggle');
+            if (otherToggle) otherToggle.setAttribute('aria-expanded', 'false');
+          });
+          rail.classList.toggle('open', willOpen);
+          toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+        });
+      });
+
+      document.addEventListener('click', function(e){
+        if (e.target.closest('[data-loop-rail]')) return;
+        rails.forEach(function(rail){
+          rail.classList.remove('open');
+          var toggle = rail.querySelector('.ikf-loop-toggle');
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPersonaLoops);
+    } else {
+      initPersonaLoops();
+    }
+  })();
+</script>
+{% endwith %}

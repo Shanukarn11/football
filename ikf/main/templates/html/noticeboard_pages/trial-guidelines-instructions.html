@@ -1,0 +1,499 @@
+{# templates/html/noticeboard_pages/trial-guidelines-instructions.html #}
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    --yellow: #ffc300;
+    --yellow-soft: rgba(255,195,0,0.10);
+    --yellow-border: rgba(255,195,0,0.30);
+    --ink: #111318;
+    --muted: #6b7280;
+    --border: #e8e8e8;
+    --white: #ffffff;
+    --light: #f9f9f9;
+    --radius: 14px;
+    --shadow: 0 18px 45px rgba(15,23,42,.08);
+  }
+
+  .ng-page{
+    font-family: 'Sora', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── TOP BAR ─────────────────────────────── */
+  .ng-topbar{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 16px 24px 14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ng-back-link{
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    transition: border-color .15s ease, color .15s ease, background .15s ease;
+    background: rgba(255,255,255,0.9);
+  }
+  .ng-back-link:hover{
+    border-color: var(--yellow);
+    color: var(--ink);
+    background: rgba(255,249,230,0.85);
+  }
+
+  /* ── OUTER WRAP ──────────────────────────── */
+  .ng-outer{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 20px 24px 72px;
+    overflow: visible;
+  }
+
+  /* ── BANNER ──────────────────────────────── */
+ .ng-banner-img{
+  width: 100%;
+  display: block;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--light);
+  box-shadow: var(--shadow);
+  margin-bottom: 22px;
+
+  height: 340px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Tablet */
+@media (max-width: 900px){
+  .ng-banner-img{
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .ng-page-title{ font-size: 26px; }
+
+  .ng-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .ng-right{
+    position: static;
+    order: 1;
+  }
+
+  .ng-left{
+    order: 2;
+  }
+}
+
+/* Mobile - show full banner image */
+@media (max-width: 520px){
+  .ng-outer{ padding: 16px 16px 72px; }
+
+  .ng-banner-img{
+    height: auto;          /* remove fixed crop height */
+    object-fit: contain;   /* show full image */
+    object-position: center;
+    background: #fff;      /* optional */
+  }
+
+  .ng-page-title{ font-size: 22px; }
+}
+
+  /* ── HEADING ─────────────────────────────── */
+  .ng-heading-block{ margin-bottom: 18px; }
+
+  .ng-page-title{
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+
+  .ng-page-kicker{
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  /* ── TWO COLUMN LAYOUT (LEFT + RIGHT) ─────── */
+  .ng-grid{
+    display:grid;
+    grid-template-columns: minmax(0, 1fr) 350px;
+    gap: 18px;
+    align-items:start;
+    overflow: visible;
+  }
+  .ng-right .ng-block-body {
+  padding: 12px 14px;
+}
+
+.ng-right .ng-block-body {
+  padding: 8px 12px;
+}
+
+.ng-right .ng-block-head {
+  padding: 7px 12px;
+}
+
+.ng-right .ng-block-head h2 {
+  font-size: 11px;
+}
+
+.ng-right .ng-p {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0 0 6px;
+}
+
+.ng-right .ng-note {
+  font-size: 11px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+}
+
+.ng-right .ng-list li {
+  font-size: 12px;
+  line-height: 1.6;
+  margin-bottom: 5px;
+}
+
+  .ng-right{
+    position: sticky;
+    top: 175px; /* adjust if your base header overlaps */
+    align-self: start;
+    bottom: 100px;
+    
+  }
+
+  /* ── CONTENT BLOCKS ───────────────────────── */
+  .ng-block{
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 16px;
+    background: var(--white);
+  }
+  .ng-block:last-child{ margin-bottom: 0; }
+
+  .ng-block-head{
+    padding: 14px 20px 13px;
+    background: var(--yellow-soft);
+    border-bottom: 1px solid var(--yellow-border);
+  }
+  .ng-block-head h2{
+    margin: 0;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .ng-block-body{
+    padding: 22px 22px 24px;
+    background: var(--white);
+  }
+
+  .ng-p{
+    font-size: 14px;
+    line-height: 1.85;
+    color: #374151;
+    font-weight: 500;
+    margin: 0 0 16px;
+  }
+  .ng-p:last-child{ margin-bottom: 0; }
+
+  .ng-strong{ color: var(--ink); font-weight: 900; }
+
+  .ng-link{
+    color: #1a56db;
+    text-decoration: none;
+    font-weight: 800;
+  }
+  .ng-link:hover{ text-decoration: underline; }
+
+  .ng-note{
+    display:flex;
+    align-items:flex-start;
+    gap: 10px;
+    padding: 13px 16px;
+    border-radius: 10px;
+    border-left: 3px solid var(--yellow);
+    background: var(--yellow-soft);
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .ng-note::before{
+    content: '!';
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: #111;
+    font-size: 11px;
+    font-weight: 900;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .ng-list{
+    margin: 0;
+    padding-left: 20px;
+  }
+  .ng-list li{
+    font-size: 14px;
+    line-height: 1.8;
+    color: #374151;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .ng-list li:last-child{ margin-bottom: 0; }
+
+  /* ── FLOATING BACK BUTTON ────────────────── */
+  .ng-float-back{
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 50;
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    padding: 11px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--yellow-border);
+    background: rgba(255,255,255,0.96);
+    box-shadow: 0 8px 30px rgba(15,23,42,0.12);
+    color: var(--ink);
+    text-decoration:none;
+    font-weight: 900;
+    font-size: 13px;
+    transform: translateY(12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .18s ease, opacity .18s ease, border-color .15s;
+    backdrop-filter: blur(8px);
+  }
+  .ng-float-back:hover{ border-color: var(--yellow); }
+  .ng-float-back.show{
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ── RESPONSIVE ──────────────────────────── */
+  @media (max-width: 900px){
+    
+    .ng-page-title{ font-size: 26px; }
+
+    .ng-grid{
+      grid-template-columns: 1fr; /* stack sidebar below on mobile */
+    }
+    .ng-right{
+      position: static;
+    }
+  }
+  @media (max-width: 520px){
+    .ng-outer{ padding: 16px 16px 72px; }
+   
+    .ng-page-title{ font-size: 22px; }
+  }
+  /* Make all auto-links (urlize) look like IKF yellow links */
+.ng-block-body a{
+  color: var(--yellow);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  font-weight: 900;
+  word-break: break-word;
+}
+
+.ng-block-body a:hover{
+  text-decoration-thickness: 3px;
+  opacity: .95;
+}
+/* Label + value row for sidebar (Fee: ₹125...) */
+@media (max-width: 900px){
+  
+  .ng-page-title{ font-size: 26px; }
+
+  .ng-grid{
+    grid-template-columns: 1fr;
+  }
+
+  /* ✅ Mobile: show RIGHT (sidebar) first */
+  .ng-right{ 
+    position: static;
+    order: 1;
+  }
+
+  /* ✅ Mobile: show LEFT after */
+  .ng-left{
+    order: 2;
+  }
+}
+
+
+
+</style>
+
+<div class="ng-page">
+
+  <!-- Top bar -->
+  <div class="ng-topbar">
+    <a class="ng-back-link" href="{% url 'noticeboard_home' %}">← Notice Board</a>
+  </div>
+
+  <div class="ng-outer">
+
+    <!-- Banner (static) -->
+    <img class="ng-banner-img"
+         src="{% static 'images/noticeboard3.jpeg' %}"
+         alt="Trial Guidelines & Instructions">
+
+    <!-- Heading (backend) -->
+    <div class="ng-heading-block">
+      <h1 class="ng-page-title">{{ page.page_title }}</h1>
+      {% if page.page_kicker %}
+        <p class="ng-page-kicker">{{ page.page_kicker }}</p>
+      {% endif %}
+    </div>
+
+    <!-- TWO column layout -->
+    <div class="ng-grid">
+
+      <!-- LEFT: main content -->
+      <div class="ng-left">
+        {% for sec in sections %}
+          {% if sec.is_active and sec.area == "main" %}
+            <div class="ng-block">
+              <div class="ng-block-head"><h2>{{ sec.title }}</h2></div>
+              <div class="ng-block-body">
+
+                {# Notes #}
+                {% for it in sec.items.all %}
+                  {% if it.is_active and it.item_type == "note" %}
+                    <div class="ng-note">{{ it.text|urlize|linebreaksbr }}
+</div>
+                  {% endif %}
+                {% endfor %}
+
+                {# Paragraphs #}
+                {% for it in sec.items.all %}
+                  {% if it.is_active and it.item_type == "paragraph" %}
+                    <p class="ng-p">
+  {% if it.bold_label %}<span class="ng-strong">{{ it.bold_label }}</span> {% endif %}
+  {{ it.text|urlize|linebreaksbr }}
+</p>
+
+
+                  {% endif %}
+                {% endfor %}
+
+                {# List Items #}
+                <ol class="ng-list">
+                  {% for it in sec.items.all %}
+                    {% if it.is_active and it.item_type == "list_item" %}
+                      <li>{{ it.text|urlize|linebreaksbr }}
+</li>
+                    {% endif %}
+                  {% endfor %}
+                </ol>
+
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- RIGHT: sidebar -->
+      <aside class="ng-right">
+        {% for sec in sections %}
+          {% if sec.is_active and sec.area == "sidebar" %}
+            <div class="ng-block">
+              <div class="ng-block-head"><h2>{{ sec.title }}</h2></div>
+              <div class="ng-block-body">
+
+                {# Notes #}
+                {% for it in sec.items.all %}
+                  {% if it.is_active and it.item_type == "note" %}
+                    <div class="ng-note">{{ it.text|urlize|linebreaksbr }}
+</div>
+                  {% endif %}
+                {% endfor %}
+
+                {# Paragraphs #}
+                {% for it in sec.items.all %}
+                  {% if it.is_active and it.item_type == "paragraph" %}
+                    <p class="ng-p ng-row">
+  {% if it.bold_label %}
+    <span class="ng-strong">{{ it.bold_label }}</span>
+  {% endif %}
+  <span>{{ it.text|urlize|linebreaksbr }}</span>
+</p>
+
+                  {% endif %}
+                {% endfor %}
+
+                {# List Items #}
+                <ol class="ng-list">
+                  {% for it in sec.items.all %}
+                    {% if it.is_active and it.item_type == "list_item" %}
+                      <li>{{ it.text|urlize|linebreaksbr }}
+</li>
+                    {% endif %}
+                  {% endfor %}
+                </ol>
+
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Floating back button -->
+  <a class="ng-float-back" id="ngBackBtn" href="{% url 'noticeboard_home' %}">
+    ← Back to Notice Board
+  </a>
+</div>
+
+<script>
+  (function(){
+    const btn = document.getElementById('ngBackBtn');
+    if (!btn) return;
+
+    const onScroll = () => btn.classList.toggle('show', window.scrollY > 140);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>
+{% endblock %}

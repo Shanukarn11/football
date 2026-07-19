@@ -1,0 +1,320 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  :root{
+    --ikf-yellow:#ffc300;
+    --ikf-ink:#0f172a;
+    --ikf-muted:#475569;
+    --ikf-line:#e5e7eb;
+    --ikf-butter:#fffef2;
+  }
+
+  /* Page wrapper */
+  .ikf-donate-page{
+    background:#fff;
+    font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+    color:var(--ikf-ink);
+    padding: 40px 0 70px;
+  }
+
+  /* Safe container (NOT .container) */
+  .ikf-donate-wrap{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ikf-donate-title{
+    font-size: 32px;
+    font-weight: 800;
+    margin: 0 0 18px;
+    letter-spacing: -0.02em;
+  }
+
+  .ikf-donate-sub{
+    color: var(--ikf-muted);
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0 0 26px;
+    max-width: 780px;
+  }
+
+  /* Layout */
+  .ikf-donate-grid{
+  display: grid;
+  grid-template-columns: 1fr;  /* ✅ full width */
+  gap: 24px;
+  align-items: start;
+}
+
+
+  /* Card */
+  .ikf-card{
+    background:#fff;
+    border: 1px solid rgba(15,23,42,.12);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(15,23,42,.06);
+    padding: 22px;
+  }
+
+  .ikf-card h3{
+    margin: 0 0 14px;
+    font-size: 26px;
+    font-weight: 500;
+    color: #111827;
+  }
+
+  /* Razorpay form styling */
+  .ikf-form{
+    display: grid;
+    gap: 18px;
+  }
+
+  .ikf-input{
+    width: 100%;
+    border: 2px solid #d1d5db;
+    border-radius: 10px;
+    padding: 18px 16px;
+    font-size: 18px;
+    outline: none;
+    transition: .2s ease;
+    background:#fff;
+  }
+  .ikf-input:focus{
+    border-color: rgba(255,195,0,.85);
+    box-shadow: 0 0 0 4px rgba(255,195,0,.18);
+  }
+
+  .ikf-btn{
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 16px;
+    font-weight: 700;
+    background: var(--ikf-yellow);
+    color:#000;
+    cursor: pointer;
+    transition: .2s ease;
+  }
+  .ikf-btn:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(255,195,0,.25);
+  }
+
+  /* QR section */
+  .ikf-qr-card{
+    text-align: center;
+    background:#fff;
+  }
+
+  .ikf-qr-text{
+    font-size: 16px;
+    line-height: 1.7;
+    color: #374151;
+    margin: 6px 0 14px;
+  }
+
+  .ikf-qr-img{
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    display: block;
+    margin: 10px auto 12px;
+  }
+
+  .ikf-qr-upi{
+    margin: 0;
+    font-size: 16px;
+    color:#374151;
+  }
+
+  /* Bank table */
+  .ikf-bank-card{
+    grid-column: 1 / -1;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .ikf-bank-head{
+    padding: 18px 22px;
+    border-bottom: 1px solid rgba(15,23,42,.10);
+    background: #fff;
+  }
+  .ikf-bank-head h3{
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .ikf-bank-table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .ikf-bank-table td{
+    padding: 14px 16px;
+    border-top: 1px solid rgba(15,23,42,.10);
+    vertical-align: top;
+  }
+
+  .ikf-bank-table td:first-child{
+    width: 260px;
+    font-weight: 700;
+    color:#111827;
+    background: rgba(255,195,0,.08);
+  }
+
+  /* Responsive */
+  @media (max-width: 980px){
+    .ikf-donate-grid{
+      grid-template-columns: 1fr;
+    }
+    .ikf-bank-table td:first-child{
+      width: 180px;
+    }
+  }
+
+  @media (max-width: 520px){
+    .ikf-donate-title{ font-size: 26px; }
+    .ikf-input{ font-size: 16px; padding: 16px 14px; }
+  }
+  .ikf-donate-sub a{
+  color: var(--ikf-ink);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,195,0,.9);
+  padding-bottom: 2px;
+  transition: .2s ease;
+}
+
+.ikf-donate-sub a:hover{
+  color: #000;
+  border-bottom-color: #000;
+}
+
+.ikf-donate-sub a:focus{
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(255,195,0,.22);
+  border-radius: 6px;
+  padding: 2px 4px;
+  margin: -2px -4px; /* keeps layout same */
+}
+
+</style>
+
+<div class="ikf-donate-page">
+  <div class="ikf-donate-wrap">
+
+    <h2 class="ikf-donate-title">Donate</h2>
+    <p class="ikf-donate-sub">
+  Choose a payment method below. Razorpay will redirect you to the payment page.
+      Bank transfer details are also available.
+  Once you complete the payment, please share the payment details to
+  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nirja@indiakhelofootball.com" target="_blank" rel="noopener">nirja@indiakhelofootball.com</a> 
+  
+</p>
+
+
+    <div class="ikf-donate-grid">
+
+      <!-- Razorpay -->
+      <div class="ikf-card">
+        <h3>Through Razorpay</h3>
+
+        <form method="post" class="ikf-form" id="form1" action="">
+          {% csrf_token %}
+          <input type="hidden" name="dzToDo" value="Contact">
+
+          <input class="ikf-input" type="text" name="name" id="name" placeholder="Your Name" required />
+          <input class="ikf-input" type="email" name="email" id="email" placeholder="Your Email ID" />
+          <input class="ikf-input" type="text" name="mobile" id="mobile" placeholder="Mobile No." required />
+          <input class="ikf-input" type="number" name="amount" id="amount" placeholder="Amount (INR)" required />
+
+          <button class="ikf-btn" type="button" onclick="donate()">Donate</button>
+        </form>
+      </div>
+
+      
+      
+
+      <!-- Bank details -->
+      <div class="ikf-card ikf-bank-card">
+        <div class="ikf-bank-head">
+          <h3>Bank Transfer Details</h3>
+        </div>
+
+        <table class="ikf-bank-table">
+          <tr><td>Account Name</td><td>KHELO FOOTBALL ECOSYSTEM DEVELOPMENT FEDERATION</td></tr>
+          <tr><td>Account Number</td><td>10064068880</td></tr>
+          <tr><td>IFSC Code</td><td>IDFB0040162</td></tr>
+          <tr><td>SWIFT Code</td><td>IDFBINBBMUM</td></tr>
+          <tr><td>Bank Name</td><td>IDFC FIRST</td></tr>
+          <tr><td>Branch</td><td>THANE - HIRANANDANI ESTATE BRANCH</td></tr>
+          <tr><td>80G Registration number</td><td>AAICK4512EF20214</td></tr>
+          <tr><td>CSR Number</td><td>CSR00022415</td></tr>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function order(inputdata){
+    var AMOUNT = parseFloat(inputdata["amount"]);
+
+    $.ajax({
+      type: "POST",
+      url: "{% url 'order' %}",
+      data: { mobile: inputdata["mobile"], amount: AMOUNT, csrfmiddlewaretoken: '{{ csrf_token }}' }
+    })
+    .done(function(result){
+      var resultdata = JSON.parse(result);
+
+      if(resultdata['error'] === "true"){
+        alert(resultdata['message']);
+      } else {
+        sessionStorage.setItem("donation_order_id", resultdata['order_id']);
+        sessionStorage.setItem("donation_IKF_unique_id", resultdata['ikfplayerunique']);
+        window.location = "{% url 'payment' %}";
+      }
+    })
+    .fail(function(){
+      alert("Order API Error. Please Try Again");
+    });
+  }
+
+  function donate(){
+    // ✅ mark this flow as Invictus
+    sessionStorage.setItem("donation_source", "invictus");
+
+    var mobiledoc = document.getElementById('mobile').value;
+
+    if (mobiledoc.indexOf('0') === 0) {
+      alert("Mobile Number should not start with 0");
+      return;
+    } else if (mobiledoc.length !== 10) {
+      alert("Mobile Number Should be 10 Digits");
+      return;
+    }
+
+    var dict = {};
+    $('#form1').serializeArray().forEach(function(item){
+      dict[item.name] = item.value;
+    });
+
+    if(dict['csrfmiddlewaretoken']) delete dict['csrfmiddlewaretoken'];
+    if(dict['_token']) delete dict['_token'];
+
+    dict["purpose"] = ["Invictus-iCare"];
+    sessionStorage.setItem("ikfdonationdata", JSON.stringify(dict));
+    order(dict);
+  }
+</script>
+
+
+{% endblock %}

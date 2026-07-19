@@ -1,0 +1,902 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>The Parent Conversation</title>
+<link rel="icon" href="{% static 'images/ikflogo3.png' %}" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #f8f9fb; }
+</style>
+
+<style>
+  /* ── IKF tokens (match parent SOP) ── */
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-dim:    rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.40);
+    --ikf-yellow-soft:   #fff6d6;
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --surface:           #ffffff;
+    --surface-2:         #f8f9fb;
+    --green:             #1D9E75;
+    --green-dark:        #085041;
+    --coral:             #D85A30;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         22px;
+    --shadow-sm:         0 2px 8px  rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md:         0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg:         0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  .pcq-page {
+    background: var(--surface-2);
+    padding: 36px 16px 80px;
+    min-height: 80vh;
+    font-family: var(--font-body);
+    color: var(--ink);
+  }
+
+  .pcq-shell {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+  }
+
+  .pcq-banner {
+    background: var(--ikf-yellow-soft);
+    color: var(--ink);
+    padding: 18px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--ikf-yellow-border);
+  }
+  .pcq-banner__left {
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    font-weight: 700;
+  }
+  .pcq-banner__mark {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--ink);
+    letter-spacing: .05em;
+    background: var(--ikf-yellow);
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  .pcq-progress {
+    height: 4px;
+    background: var(--line);
+  }
+  .pcq-progress__fill {
+    height: 100%;
+    background: var(--ikf-yellow);
+    width: 0%;
+    transition: width .35s ease;
+  }
+
+  .pcq-inner { padding: 32px 32px 24px; }
+
+  .pcq-header {
+    text-align: center;
+    padding: 8px 0 28px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 28px;
+  }
+  .pcq-header h1 {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.2;
+    margin: 0 0 12px;
+    letter-spacing: -.4px;
+  }
+  .pcq-header p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .pcq-time-note {
+    display: inline-block;
+    margin-top: 14px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    background: var(--ikf-yellow-soft);
+    border: 1px solid var(--ikf-yellow-border);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  .pcq-movement-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #8c5a00;
+    background: var(--ikf-yellow-soft);
+    border: 1px solid var(--ikf-yellow-border);
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .pcq-movement-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: -.2px;
+  }
+
+  .pcq-q { margin-bottom: 30px; }
+  .pcq-q__num {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .pcq-q__text {
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.55;
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+
+  .pcq-options { display: flex; flex-direction: column; gap: 10px; }
+  .pcq-opt {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color .15s, background .15s, transform .1s;
+    line-height: 1.55;
+  }
+  .pcq-opt:hover {
+    border-color: var(--ikf-yellow);
+    background: var(--ikf-yellow-dim);
+  }
+  .pcq-opt.selected {
+    border-color: var(--ikf-yellow);
+    background: var(--ikf-yellow-soft);
+    color: var(--ink);
+    font-weight: 700;
+    box-shadow: inset 0 0 0 1px var(--ikf-yellow);
+  }
+
+  .pcq-field { margin-bottom: 18px; }
+  .pcq-field__label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink-2);
+    margin-bottom: 6px;
+    letter-spacing: .04em;
+  }
+  .pcq-field input[type="text"],
+  .pcq-field input[type="email"],
+  .pcq-field input[type="number"],
+  .pcq-field select,
+  .pcq-q textarea,
+  textarea.pcq-textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+    line-height: 1.55;
+  }
+  .pcq-field input:focus,
+  .pcq-field select:focus,
+  textarea.pcq-textarea:focus,
+  .pcq-q textarea:focus {
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 0 0 3px var(--ikf-yellow-dim);
+  }
+  textarea.pcq-textarea, .pcq-q textarea { resize: vertical; min-height: 100px; }
+  .pcq-req { color: var(--coral); }
+  .pcq-err {
+    display: none;
+    font-size: 12px;
+    color: var(--coral);
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  .pcq-two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 540px) { .pcq-two { grid-template-columns: 1fr; } }
+
+  .pcq-bridge {
+    background: var(--ikf-yellow-soft);
+    border-left: 4px solid var(--ikf-yellow);
+    padding: 14px 18px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin-bottom: 26px;
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+  .pcq-bridge strong { color: var(--ink); font-weight: 700; }
+
+  .pcq-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    gap: 12px;
+  }
+  .pcq-nav__step {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    font-weight: 700;
+  }
+  .pcq-btn-next {
+    background: var(--ikf-yellow);
+    color: var(--ink);
+    border: none;
+    padding: 12px 26px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: opacity .15s, transform .1s;
+    letter-spacing: .02em;
+  }
+  .pcq-btn-next:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+  .pcq-btn-next:disabled { opacity: .35; cursor: not-allowed; transform: none; box-shadow: none; }
+  .pcq-btn-back {
+    background: transparent;
+    color: var(--ink-2);
+    border: 1px solid var(--line);
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .pcq-btn-back:hover { border-color: var(--ink-2); }
+
+  /* Pages */
+  .pcq-form-page { display: none; }
+  .pcq-form-page.active { display: block; }
+
+  /* Outcome */
+  #pcq-outcome { display: none; }
+  #pcq-outcome.visible { display: block; }
+  .pcq-outcome-header { text-align: center; padding: 8px 0 24px; }
+  .pcq-badge {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+  .pcq-badge--aligned   { background: #e1f5ee; color: var(--green-dark); border: 1px solid rgba(29,158,117,.3); }
+  .pcq-badge--potential { background: var(--ikf-yellow-soft); color: #8c5a00; border: 1px solid var(--ikf-yellow-border); }
+  .pcq-badge--atrisk    { background: #faece7; color: var(--coral); border: 1px solid rgba(216,90,48,.3); }
+  .pcq-outcome-title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--ink);
+    margin: 0 0 10px;
+    line-height: 1.3;
+    letter-spacing: -.3px;
+  }
+  .pcq-outcome-sub {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .pcq-summary {
+    background: var(--ikf-yellow-soft);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-sm);
+    padding: 12px 18px;
+    margin-bottom: 18px;
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.6;
+  }
+  .pcq-summary strong { font-weight: 700; color: var(--ink); }
+  .pcq-obs-block {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 18px 22px;
+    margin-bottom: 16px;
+  }
+  .pcq-obs-block h3, .pcq-next-block h3 {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    margin: 0 0 12px;
+    font-weight: 800;
+  }
+  .pcq-obs {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.6;
+  }
+  .pcq-obs:last-child { margin-bottom: 0; }
+  .pcq-obs__dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--ikf-yellow);
+    margin-top: 9px;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px var(--ikf-yellow-dim);
+  }
+  .pcq-next-block {
+    border: 1px solid var(--ikf-yellow-border);
+    background: #fffdf3;
+    border-radius: var(--radius-md);
+    padding: 18px 22px;
+    margin-bottom: 22px;
+  }
+  .pcq-next-block p {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    color: var(--ink);
+    line-height: 1.65;
+    margin: 0;
+  }
+  .pcq-cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: var(--ikf-yellow);
+    color: var(--ink);
+    border: none;
+    padding: 14px 28px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    margin-bottom: 10px;
+    text-decoration: none;
+    letter-spacing: .02em;
+    transition: transform .12s, box-shadow .12s;
+  }
+  .pcq-cta:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); color: var(--ink); }
+  .pcq-cta-sec {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: transparent;
+    color: var(--ink-2);
+    border: 1px solid var(--line);
+    padding: 12px 28px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .pcq-final {
+    text-align: center;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 13.5px;
+    color: var(--muted-2);
+    margin-top: 24px;
+    padding: 18px 0 4px;
+    border-top: 1px solid var(--line);
+    font-weight: 500;
+  }
+
+  @media (max-width: 540px) {
+    .pcq-page { padding: 16px 8px 60px; }
+    .pcq-shell { border-radius: var(--radius-md); }
+    .pcq-inner { padding: 22px 18px 18px; }
+    .pcq-banner { padding: 14px 18px; }
+    .pcq-header h1 { font-size: 24px; }
+    .pcq-nav { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="pcq-page">
+  <div class="pcq-shell">
+
+    <div class="pcq-banner">
+      <span class="pcq-banner__left">India Khelo Football  </span>
+      <span class="pcq-banner__mark">IKF</span>
+    </div>
+
+    <div class="pcq-progress"><div class="pcq-progress__fill" id="pcq-progress"></div></div>
+
+    <div class="pcq-inner">
+
+      <!-- ===== PAGE 0: INTAKE ===== -->
+      <div class="pcq-form-page active" id="pcq-page-0">
+        <div class="pcq-header">
+          <h1>The Parent Conversation</h1>
+          <p>Your child has chosen football. That alone tells you something about them.<br>
+          This is a short, honest conversation — built around one question: how do we make this journey better for your child and for you?</p>
+          <span class="pcq-time-note">8 min &nbsp;·&nbsp; Private &nbsp;·&nbsp; No right answers</span>
+        </div>
+
+        <div class="pcq-movement-label">Before we begin</div>
+        <div class="pcq-movement-title">Tell us about yourself</div>
+
+        <div class="pcq-field">
+          <label class="pcq-field__label" for="pcq-name">Your full name <span class="pcq-req">*</span></label>
+          <input type="text" id="pcq-name" placeholder="e.g. Ramesh Sharma" autocomplete="name">
+          <div class="pcq-err" id="pcq-err-name">Please enter your name.</div>
+        </div>
+
+        <div class="pcq-field">
+          <label class="pcq-field__label" for="pcq-email">Your email address <span class="pcq-req">*</span></label>
+          <input type="email" id="pcq-email" placeholder="e.g. ramesh@example.com" autocomplete="email">
+          <div class="pcq-err" id="pcq-err-email">Please enter a valid email address.</div>
+        </div>
+
+        <div class="pcq-two">
+          <div class="pcq-field">
+            <label class="pcq-field__label" for="pcq-age">Child's age <span class="pcq-req">*</span></label>
+            <input type="number" id="pcq-age" placeholder="e.g. 14" min="5" max="25">
+            <div class="pcq-err" id="pcq-err-age">Please enter a valid age (5–25).</div>
+          </div>
+          <div class="pcq-field">
+            <label class="pcq-field__label" for="pcq-gender">Child's gender <span class="pcq-req">*</span></label>
+            <select id="pcq-gender">
+              <option value="">Select</option>
+              <option value="boy">Boy</option>
+              <option value="girl">Girl</option>
+              <option value="other">Other</option>
+            </select>
+            <div class="pcq-err" id="pcq-err-gender">Please select an option.</div>
+          </div>
+        </div>
+
+        <div class="pcq-nav">
+          <span class="pcq-nav__step">Page 1 of 6</span>
+          <button class="pcq-btn-next" onclick="pcqValidateIntake()">Continue</button>
+        </div>
+      </div>
+
+      <!-- ===== PAGE 1: Q1 + Q2 ===== -->
+      <div class="pcq-form-page" id="pcq-page-1">
+        <div class="pcq-movement-label">Movement 1</div>
+        <div class="pcq-movement-title">Your child's story</div>
+
+        <div class="pcq-q">
+          <div class="pcq-q__num">Question 1 of 8</div>
+          <div class="pcq-q__text">How did your child first fall in love with football?</div>
+          <div class="pcq-options" data-q="q1">
+            <button class="pcq-opt" data-val="A">My child just started playing one day and never stopped.</button>
+            <button class="pcq-opt" data-val="B">We introduced them to it — and they took it from there.</button>
+            <button class="pcq-opt" data-val="C">A coach or school spotted something in them.</button>
+            <button class="pcq-opt" data-val="D_open">It's a longer story —</button>
+          </div>
+          <textarea id="pcq-q1-open" placeholder="Tell us your story..." style="display:none; margin-top:10px;"></textarea>
+        </div>
+
+        <div class="pcq-q">
+          <div class="pcq-q__num">Question 2 of 8</div>
+          <div class="pcq-q__text">When your child talks about football, what do you hear most?</div>
+          <div class="pcq-options" data-q="q2">
+            <button class="pcq-opt" data-val="A">I want to play professionally. This is my life.</button>
+            <button class="pcq-opt" data-val="B">I love football. I don't know where it leads yet.</button>
+            <button class="pcq-opt" data-val="C">I play because it makes me happy — nothing more.</button>
+            <button class="pcq-opt" data-val="D">Honestly, I'm not sure. They haven't said.</button>
+          </div>
+        </div>
+
+        <div class="pcq-nav">
+          <button class="pcq-btn-back" onclick="pcqGoTo(0)">Back</button>
+          <span class="pcq-nav__step">Page 2 of 6</span>
+          <button class="pcq-btn-next" id="pcq-next-1" onclick="pcqGoTo(2)" disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- ===== PAGE 2: Q3 + Q4 ===== -->
+      <div class="pcq-form-page" id="pcq-page-2">
+        <div class="pcq-q">
+          <div class="pcq-q__num">Question 3 of 8</div>
+          <div class="pcq-q__text">Your child is 22. Football has given them everything it can. What would make you feel the journey was worth it?</div>
+          <div class="pcq-options" data-q="q3">
+            <button class="pcq-opt" data-val="A">They're playing at a professional or semi-professional level.</button>
+            <button class="pcq-opt" data-val="B">They're earning a living inside football — coaching, management, media.</button>
+            <button class="pcq-opt" data-val="C">They grew into a confident, disciplined, resilient person — football did that.</button>
+            <button class="pcq-opt" data-val="D">All three. I won't settle for less.</button>
+          </div>
+        </div>
+
+        <div class="pcq-movement-label" style="margin-top:18px;">Movement 2</div>
+        <div class="pcq-movement-title">Your story as a parent</div>
+
+        <div class="pcq-q">
+          <div class="pcq-q__num">Question 4 of 8</div>
+          <div class="pcq-q__text">On a normal week, what does your support look like?</div>
+          <div class="pcq-options" data-q="q4">
+            <button class="pcq-opt" data-val="A">I'm there — planning, tracking, making sure everything lines up.</button>
+            <button class="pcq-opt" data-val="B">I provide what's needed — fees, travel, kit — but day-to-day is their responsibility.</button>
+            <button class="pcq-opt" data-val="C">I show up for matches and big moments. The rest is up to them.</button>
+            <button class="pcq-opt" data-val="D">Honestly, I'm still figuring out what support should look like.</button>
+          </div>
+        </div>
+
+        <div class="pcq-nav">
+          <button class="pcq-btn-back" onclick="pcqGoTo(1)">Back</button>
+          <span class="pcq-nav__step">Page 3 of 6</span>
+          <button class="pcq-btn-next" id="pcq-next-2" onclick="pcqGoTo(3)" disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- ===== PAGE 3: Q5 + Bridge + Q6 ===== -->
+      <div class="pcq-form-page" id="pcq-page-3">
+        <div class="pcq-q">
+          <div class="pcq-q__num">Question 5 of 8</div>
+          <div class="pcq-q__text">What is the hardest part of supporting your child's football journey right now?</div>
+          <textarea id="pcq-q5-open" class="pcq-textarea" placeholder="Be as honest as you want. This is private."></textarea>
+        </div>
+
+        <div class="pcq-movement-label" style="margin-top:18px;">Movement 3</div>
+        <div class="pcq-movement-title">The honest conversation</div>
+
+        <div class="pcq-bridge">
+          Now for the part most football programmes never talk about. We think it's the most important part.
+        </div>
+
+        <div class="pcq-q">
+          <div class="pcq-q__num">Question 6 of 8</div>
+          <div class="pcq-q__text">Of every 100 children who play football seriously in India — how many do you think turn professional?</div>
+          <div class="pcq-options" data-q="q6">
+            <button class="pcq-opt" data-val="A">Fewer than 1</button>
+            <button class="pcq-opt" data-val="B">Around 5</button>
+            <button class="pcq-opt" data-val="C">Around 10</button>
+            <button class="pcq-opt" data-val="D">More than 10</button>
+          </div>
+        </div>
+
+        <div class="pcq-nav">
+          <button class="pcq-btn-back" onclick="pcqGoTo(2)">Back</button>
+          <span class="pcq-nav__step">Page 4 of 6</span>
+          <button class="pcq-btn-next" id="pcq-next-3" onclick="pcqGoTo(4)" disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- ===== PAGE 4: Q7 + Q8 ===== -->
+      <div class="pcq-form-page" id="pcq-page-4">
+        <div class="pcq-bridge">
+          <strong>Here is something we believe at IKF</strong> — and we want to know if you believe it too.<br><br>
+          Football will not make every child a professional. But football can make every child better — more disciplined, more resilient, more confident, more employable, more human.
+        </div>
+
+        <div class="pcq-q">
+          <div class="pcq-q__num">Question 7 of 8</div>
+          <div class="pcq-q__text">If your child gives ten years to this game and does not play professionally — what would you want football to have given them?</div>
+          <div class="pcq-options" data-q="q7">
+            <button class="pcq-opt" data-val="A">A career inside football — coaching, scouting, sports management, media.</button>
+            <button class="pcq-opt" data-val="B">The values. Discipline, teamwork, resilience. Those will serve them anywhere.</button>
+            <button class="pcq-opt" data-val="C">Both. A connection to the game and the character it builds.</button>
+            <button class="pcq-opt" data-val="D">Honestly — if they don't play professionally, I'll need time to think about what comes next.</button>
+          </div>
+        </div>
+
+        <div class="pcq-q">
+          <div class="pcq-q__num">Question 8 of 8</div>
+          <div class="pcq-q__text">IKF Pathway 360 exists because we made a decision early — we would not build a programme that only serves the 1%. Every child in our ecosystem has a pathway. On the field and beyond it. Does that matter to you?</div>
+          <div class="pcq-options" data-q="q8">
+            <button class="pcq-opt" data-val="A">Yes — that's exactly the kind of programme I want my child in.</button>
+            <button class="pcq-opt" data-val="B">I hadn't thought about it this way — but yes, it matters.</button>
+            <button class="pcq-opt" data-val="C">My focus right now is on the professional pathway. We can think about the rest later.</button>
+          </div>
+        </div>
+
+        <div class="pcq-nav">
+          <button class="pcq-btn-back" onclick="pcqGoTo(3)">Back</button>
+          <span class="pcq-nav__step">Page 5 of 6</span>
+          <button class="pcq-btn-next" id="pcq-next-4" onclick="pcqShowOutcome()" disabled>See my result</button>
+        </div>
+      </div>
+
+      <!-- ===== OUTCOME PAGE ===== -->
+      <div id="pcq-outcome">
+        <div class="pcq-bridge" style="margin-bottom:22px; font-style:italic;">
+          Thank you for being honest. Most parents aren't — not because they mean to hide anything, but because nobody has ever asked them these questions before.<br><br>
+          Here is what we heard.
+        </div>
+        <div id="pcq-outcome-content"></div>
+        <div class="pcq-final">Football chose your child. Now let's make sure the journey is worthy of that choice.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const PCQ_SUBMIT_URL = "{% url 'parent_conversation_submit' %}";
+  const pcqAnswers = {};
+
+  function pcqGoTo(page) {
+    document.querySelectorAll('.pcq-form-page').forEach(p => p.classList.remove('active'));
+    const el = document.getElementById('pcq-page-' + page);
+    if (el) {
+      el.classList.add('active');
+      pcqUpdateProgress(page);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  function pcqUpdateProgress(page) {
+    const pct = (page / 5) * 100;
+    document.getElementById('pcq-progress').style.width = Math.min(pct, 100) + '%';
+  }
+
+  function pcqValidateIntake() {
+    let valid = true;
+    const name   = document.getElementById('pcq-name').value.trim();
+    const email  = document.getElementById('pcq-email').value.trim();
+    const age    = parseInt(document.getElementById('pcq-age').value);
+    const gender = document.getElementById('pcq-gender').value;
+    const showErr = (id, show) => { document.getElementById(id).style.display = show ? 'block' : 'none'; };
+
+    if (!name) { showErr('pcq-err-name', true); valid = false; } else showErr('pcq-err-name', false);
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('pcq-err-email', true); valid = false; } else showErr('pcq-err-email', false);
+    if (!age || age < 5 || age > 25) { showErr('pcq-err-age', true); valid = false; } else showErr('pcq-err-age', false);
+    if (!gender) { showErr('pcq-err-gender', true); valid = false; } else showErr('pcq-err-gender', false);
+
+    if (valid) {
+      pcqAnswers.parentName  = name;
+      pcqAnswers.parentEmail = email;
+      pcqAnswers.childAge    = age;
+      pcqAnswers.childGender = gender;
+      pcqGoTo(1);
+    }
+  }
+
+  document.querySelectorAll('.pcq-options').forEach(group => {
+    const q = group.dataset.q;
+    group.querySelectorAll('.pcq-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        group.querySelectorAll('.pcq-opt').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        pcqAnswers[q] = btn.dataset.val;
+        if (q === 'q1') {
+          const openBox = document.getElementById('pcq-q1-open');
+          openBox.style.display = btn.dataset.val === 'D_open' ? 'block' : 'none';
+        }
+        const pageMap = { q1: 1, q2: 1, q3: 2, q4: 2, q6: 3, q7: 4, q8: 4 };
+        if (pageMap[q]) pcqCheckPage(pageMap[q]);
+      });
+    });
+  });
+
+  document.getElementById('pcq-q5-open').addEventListener('input', () => pcqCheckPage(3));
+
+  function pcqCheckPage(pageNum) {
+    const nextBtn = document.getElementById('pcq-next-' + pageNum);
+    if (!nextBtn) return;
+    const pageEl = document.getElementById('pcq-page-' + pageNum);
+    const qGroups = pageEl.querySelectorAll('[data-q]');
+    let allAnswered = true;
+    qGroups.forEach(g => { if (!pcqAnswers[g.dataset.q]) allAnswered = false; });
+    if (pageNum === 3) {
+      if (!document.getElementById('pcq-q5-open').value.trim()) allAnswered = false;
+    }
+    nextBtn.disabled = !allAnswered;
+  }
+
+  function pcqComputeProfile() {
+    let aligned = 0, potential = 0, atrisk = 0;
+    const { q3, q4, q6, q7, q8 } = pcqAnswers;
+
+    if (q3 === 'B' || q3 === 'C') aligned += 2;
+    if (q3 === 'D') atrisk += 1;
+    if (q3 === 'A') potential += 1;
+
+    if (q4 === 'A' || q4 === 'B') aligned += 1;
+    if (q4 === 'D') potential += 2;
+
+    if (q6 === 'A') aligned += 2;
+    if (q6 === 'B') aligned += 1;
+    if (q6 === 'C' || q6 === 'D') atrisk += 2;
+
+    if (q7 === 'B' || q7 === 'C') aligned += 2;
+    if (q7 === 'A') aligned += 1;
+    if (q7 === 'D') atrisk += 3;
+
+    if (q8 === 'A') aligned += 2;
+    if (q8 === 'B') potential += 2;
+    if (q8 === 'C') atrisk += 2;
+
+    if (aligned >= atrisk && aligned >= potential) return 'aligned';
+    if (atrisk > aligned && atrisk >= potential) return 'atrisk';
+    return 'potential';
+  }
+
+  function pcqSubmit(profile) {
+    const payload = {
+      profile,
+      parentName:   pcqAnswers.parentName,
+      parentEmail:  pcqAnswers.parentEmail,
+      childAge:     pcqAnswers.childAge,
+      childGender:  pcqAnswers.childGender,
+      q1:     pcqAnswers.q1 || '',
+      q1Open: document.getElementById('pcq-q1-open').value.trim(),
+      q2:     pcqAnswers.q2 || '',
+      q3:     pcqAnswers.q3 || '',
+      q4:     pcqAnswers.q4 || '',
+      q5Open: document.getElementById('pcq-q5-open').value.trim(),
+      q6:     pcqAnswers.q6 || '',
+      q7:     pcqAnswers.q7 || '',
+      q8:     pcqAnswers.q8 || ''
+    };
+    fetch(PCQ_SUBMIT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(err => console.warn('Submit failed:', err));
+  }
+
+  function pcqShowOutcome() {
+    const profile = pcqComputeProfile();
+    pcqSubmit(profile);
+
+    const name       = (pcqAnswers.parentName || '').split(' ')[0];
+    const childAge   = pcqAnswers.childAge;
+    const childGender = pcqAnswers.childGender;
+    const childRef   = childGender === 'girl' ? 'daughter' : childGender === 'boy' ? 'son' : 'child';
+
+    document.querySelectorAll('.pcq-form-page').forEach(p => p.classList.remove('active'));
+
+    const profiles = {
+      aligned: {
+        badge: 'Aligned Parent', badgeClass: 'pcq-badge--aligned',
+        title: 'You are a long-term thinker.',
+        subtitle: `You came into this conversation with clarity most parents take years to find. You understand that this journey is about your ${childRef}'s whole life — not just one outcome. That is rare. And it is exactly the kind of partnership IKF is built for.`,
+        observations: [
+          'You think beyond the professional pathway',
+          'You are honest about where your support has limits',
+          `You are open to your ${childRef}'s journey looking different from what you imagined`
+        ],
+        nextStep: `You're ready for IKF's full ecosystem. Let's get you connected to a mentor who will work with you — not just your ${childRef}.`,
+        cta: 'Join the IKF Parent Network'
+      },
+      potential: {
+        badge: 'Potential Parent', badgeClass: 'pcq-badge--potential',
+        title: 'You care deeply. You\'re still finding your footing.',
+        subtitle: `That is not a weakness — it is where most good parents are. You have the intent. What you need is clarity. About the pathway. About your role in it. About what realistic support looks like for a ${childAge}-year-old.`,
+        observations: [
+          'Your commitment to your child is genuine',
+          'You are open to learning — you just haven\'t had the right guidance yet',
+          'There are one or two questions you\'re not ready to answer yet — and that\'s okay'
+        ],
+        nextStep: 'Join an IKF Parent Session. One conversation with our team will answer more than this form ever could.',
+        cta: 'Register for an IKF Parent Session'
+      },
+      atrisk: {
+        badge: 'At-Risk Parent', badgeClass: 'pcq-badge--atrisk',
+        title: 'You love your child. This journey is also carrying some weight.',
+        subtitle: 'We noticed some tension in your answers — between what you hope for and what the pathway actually looks like. That tension is normal. But left unaddressed, it can make this journey harder for your child than it needs to be.',
+        observations: [
+          'Your hopes for your child are high — and that comes from love',
+          'There may be some gaps in understanding what the professional pathway actually requires',
+          'This is exactly the conversation IKF exists to have with you'
+        ],
+        nextStep: 'Speak with an IKF Advisor — one on one, no group session. This conversation deserves that.',
+        cta: 'Book a 1-on-1 with an IKF Advisor'
+      }
+    };
+
+    const p = profiles[profile];
+    const genderLabel = childGender === 'girl' ? 'Girl' : childGender === 'boy' ? 'Boy' : 'Child';
+
+    document.getElementById('pcq-outcome-content').innerHTML = `
+      <div class="pcq-outcome-header">
+        <div class="pcq-badge ${p.badgeClass}">${p.badge}</div>
+        <div class="pcq-outcome-title">${p.title}</div>
+        <div class="pcq-outcome-sub">${p.subtitle}</div>
+      </div>
+      <div class="pcq-summary">
+        <strong>${pcqAnswers.parentName}</strong> &nbsp;·&nbsp; ${genderLabel}, ${childAge} years old &nbsp;·&nbsp; ${pcqAnswers.parentEmail}
+      </div>
+      <div class="pcq-obs-block">
+        <h3>Three things we noticed about you</h3>
+        ${p.observations.map(o => `<div class="pcq-obs"><div class="pcq-obs__dot"></div><span>${o}</span></div>`).join('')}
+      </div>
+      <div class="pcq-next-block">
+        <h3>Your next step</h3>
+        <p>${p.nextStep}</p>
+      </div>
+      <a class="pcq-cta" href="/parent_sop">${p.cta}</a>
+      <button class="pcq-cta-sec" onclick="pcqRestart()">Start over</button>
+    `;
+
+    document.getElementById('pcq-outcome').classList.add('visible');
+    pcqUpdateProgress(5);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function pcqRestart() {
+    Object.keys(pcqAnswers).forEach(k => delete pcqAnswers[k]);
+    document.querySelectorAll('.pcq-opt').forEach(b => b.classList.remove('selected'));
+    document.querySelectorAll('textarea').forEach(t => t.value = '');
+    document.querySelectorAll('input[type="text"], input[type="email"], input[type="number"]').forEach(i => i.value = '');
+    document.querySelectorAll('select').forEach(s => s.value = '');
+    document.getElementById('pcq-q1-open').style.display = 'none';
+    document.querySelectorAll('.pcq-btn-next[id]').forEach(b => b.disabled = true);
+    document.getElementById('pcq-outcome').classList.remove('visible');
+    pcqGoTo(0);
+  }
+</script>
+
+</body>
+</html>

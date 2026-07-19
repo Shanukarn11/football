@@ -1,0 +1,442 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<script>
+  document.documentElement.classList.add('dp-project-page');
+</script>
+<style>
+:root{
+  --ikf-yellow:#ffc107;
+  --ikf-yellow-dark:#e0a800;
+  --ikf-yellow-soft:#fff8e1;
+  --ink:#1a1a1a;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --soft:#fffaf0;
+}
+
+.dp-wrap{
+  box-sizing:border-box;
+  max-width:min(1240px, 100%);
+  margin:0 auto;
+  padding:28px 24px 100px;
+  font-family:'Avenir', sans-serif;
+  color:var(--ink);
+  position:relative;
+  overflow:hidden;
+  width:100%;
+}
+.dp-wrap *,
+.dp-wrap *::before,
+.dp-wrap *::after{
+  box-sizing:border-box;
+  min-width:0;
+}
+
+/* Soft yellow halo behind hero */
+.dp-wrap::before{
+  content:"";
+  position:absolute;
+  top:0;
+  right:-100px;
+  width:600px;
+  height:600px;
+  background: radial-gradient(circle at center, rgba(255, 232, 154, .35) 0%, rgba(255, 248, 225, 0) 70%);
+  z-index:-1;
+  pointer-events:none;
+}
+
+.dp-breadcrumb{
+  font-size:13px;
+  color:var(--muted);
+  margin:0 0 28px;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.dp-breadcrumb a{
+  color:var(--ikf-yellow-dark);
+  text-decoration:none;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 12px;
+  border-radius:20px;
+  background:var(--ikf-yellow-soft);
+  border:1px solid #f0d97a;
+  transition:all .2s ease;
+}
+.dp-breadcrumb a:hover{
+  background:var(--ikf-yellow);
+  color:#1a1a1a;
+}
+
+/* Hero */
+.dp-hero{
+  display:grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap:64px;
+  align-items:center;
+  margin-bottom:32px;
+  padding:24px 0 40px;
+}
+
+.dp-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.6px;
+  text-transform:uppercase;
+  color:#7a5a00;
+  margin:0 0 18px;
+  padding:6px 14px;
+  background: linear-gradient(135deg, #fff8d6 0%, #ffe89a 100%);
+  border:1px solid #ecc34a;
+  border-radius:20px;
+}
+.dp-eyebrow::before{
+  content:"";
+  width:6px; height:6px;
+  background:#7a5a00;
+  border-radius:50%;
+}
+
+.dp-hero-copy h1{
+  font-size:44px;
+  font-weight:800;
+  margin:0 0 18px;
+  line-height:1.1;
+  letter-spacing:-0.5px;
+  color:var(--ink);
+}
+
+.dp-tagline{
+  font-size:16px;
+  font-weight:700;
+  color:var(--ikf-yellow-dark);
+  margin:0 0 20px;
+  letter-spacing:.3px;
+  display:inline-block;
+  padding-bottom:10px;
+  border-bottom:2px solid var(--ikf-yellow);
+}
+
+.dp-lead{
+  font-size:16px;
+  line-height:1.75;
+  color:#444;
+  margin:0 0 32px;
+  white-space:pre-line;
+  max-width:560px;
+}
+
+.dp-cta{
+  background:var(--ikf-yellow);
+  color:#1a1a1a;
+  border:none;
+  padding:15px 36px;
+  font-size:15px;
+  font-weight:700;
+  border-radius:12px;
+  cursor:pointer;
+  box-shadow:0 10px 24px -8px rgba(245, 201, 74, .7);
+  transition:all .2s ease;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  letter-spacing:.3px;
+}
+.dp-cta::after{
+  content:"\2192";
+  font-size:18px;
+  transition:transform .2s ease;
+}
+.dp-cta:hover{
+  background:var(--ikf-yellow-dark);
+  transform:translateY(-2px);
+  box-shadow:0 14px 28px -8px rgba(245, 201, 74, .8);
+}
+.dp-cta:hover::after{ transform:translateX(4px); }
+
+.dp-hero-img-wrap{
+  position:relative;
+}
+.dp-hero-img{
+  width:100%;
+  border-radius:18px;
+  display:block;
+  aspect-ratio: 4/3;
+  object-fit:cover;
+  box-shadow:0 18px 40px -24px rgba(0,0,0,.22);
+}
+.dp-hero-placeholder{
+  width:100%;
+  aspect-ratio: 4/3;
+  border-radius:18px;
+  background: linear-gradient(135deg, var(--ikf-yellow-soft) 0%, #ffe89a 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--ikf-yellow-dark);
+  font-weight:800;
+  font-size:96px;
+  letter-spacing:1px;
+  box-shadow:0 18px 40px -24px rgba(0,0,0,.15);
+}
+
+/* Sections as cards */
+.dp-sections{
+  margin-top:32px;
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+.dp-section{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:0 6px 18px -12px rgba(0,0,0,.12);
+  padding:32px;
+  display:grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap:36px;
+  align-items:center;
+  transition:box-shadow .25s ease, transform .2s ease, border-color .25s ease;
+}
+.dp-section:hover{
+  box-shadow:0 14px 34px -16px rgba(0,0,0,.18);
+  border-color:#e0d9c4;
+}
+.dp-section:nth-child(even) .dp-section-copy{ order:2; }
+.dp-section:nth-child(even) .dp-section-img-wrap{ order:1; }
+
+.dp-section--text-only{
+  grid-template-columns: 1fr;
+}
+
+.dp-section h2{
+  font-size:24px;
+  font-weight:800;
+  margin:0 0 14px;
+  color:var(--ink);
+  line-height:1.25;
+  letter-spacing:-0.2px;
+  position:relative;
+  padding-left:14px;
+}
+.dp-section h2::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:6px;
+  bottom:6px;
+  width:4px;
+  border-radius:3px;
+  background:var(--ikf-yellow);
+}
+
+.dp-section .body{
+  font-size:15px;
+  line-height:1.75;
+  color:#3a3a3a;
+  white-space:pre-line;
+}
+
+.dp-section-img-wrap{ position:relative; }
+.dp-section-img{
+  width:100%;
+  border-radius:12px;
+  display:block;
+  aspect-ratio: 4/3;
+  object-fit:cover;
+}
+
+/* Bottom support strip */
+.dp-bottom-cta{
+  margin-top:48px;
+  padding:40px 32px;
+  background: linear-gradient(135deg, #fff8d6 0%, #ffe89a 60%, #f5c94a 100%);
+  border:1px solid #ecc34a;
+  border-radius:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:24px;
+  flex-wrap:wrap;
+}
+.dp-bottom-cta-text h3{
+  font-size:22px;
+  font-weight:800;
+  margin:0 0 6px;
+  color:var(--ink);
+}
+.dp-bottom-cta-text p{
+  margin:0;
+  color:#5d4f1a;
+  font-size:14px;
+}
+.dp-bottom-cta .dp-cta{
+  background:#1a1a1a;
+  color:#fff;
+  box-shadow:0 10px 24px -8px rgba(0,0,0,.4);
+}
+.dp-bottom-cta .dp-cta:hover{
+  background:#000;
+  box-shadow:0 14px 28px -8px rgba(0,0,0,.5);
+}
+
+@media (max-width:900px){
+  html.dp-project-page,
+  html.dp-project-page body{
+    max-width:100%;
+    overflow-x:hidden !important;
+  }
+  html.dp-project-page .page-wraper,
+  html.dp-project-page main,
+  html.dp-project-page .ikf-footer,
+  html.dp-project-page .ikf-footer-inner,
+  html.dp-project-page .ikf-footer-legal,
+  html.dp-project-page .ikf-footer-legal-inner{
+    max-width:100vw !important;
+    overflow-x:hidden !important;
+  }
+  html.dp-project-page .ikf-qab-fixed-wrap{
+    box-sizing:border-box !important;
+    left:10px !important;
+    max-width:calc(100vw - 20px) !important;
+    right:auto !important;
+    width:calc(100vw - 20px) !important;
+  }
+  .dp-wrap{
+    max-width:100vw;
+    overflow:hidden;
+    padding:20px 18px 96px;
+  }
+  .dp-wrap::before{
+    display:none;
+  }
+  .dp-hero{
+    grid-template-columns: 1fr;
+    gap:28px;
+    padding:8px 0 24px;
+    margin-bottom:16px;
+  }
+  .dp-hero-copy h1{ font-size:30px; }
+  .dp-tagline{ font-size:14px; }
+  .dp-lead{ font-size:15px; }
+  .dp-hero-img-wrap{ order:-1; }
+  .dp-hero-img, .dp-hero-placeholder{ aspect-ratio: 16/11; }
+  .dp-hero-placeholder{ font-size:60px; }
+
+  .dp-sections{ gap:18px; }
+  .dp-section{
+    grid-template-columns: 1fr;
+    gap:18px;
+    padding:22px;
+  }
+  .dp-section:nth-child(even) .dp-section-copy{ order:0; }
+  .dp-section:nth-child(even) .dp-section-img-wrap{ order:0; }
+  .dp-section h2{ font-size:20px; }
+  .dp-section-img{ aspect-ratio: 16/10; }
+
+  .dp-cta{ width:100%; justify-content:center; padding:14px 18px; }
+
+  .dp-bottom-cta{
+    padding:24px 20px;
+    text-align:center;
+    flex-direction:column;
+    margin-top:32px;
+  }
+  .dp-bottom-cta .dp-cta{ width:100%; justify-content:center; }
+}
+</style>
+{% include 'html/_donor_panel_styles.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="dp-wrap">
+
+  <p class="dp-breadcrumb">
+    <a href="{% url 'Donate' %}">&larr; Back to all projects</a>
+  </p>
+
+  <section class="dp-hero">
+    <div class="dp-hero-copy">
+      <h1>{{ project.name }}</h1>
+      {% with intro=project.detail_intro|default:project.description %}
+        {% with intro_lines=intro.splitlines %}
+          {% if intro_lines|length > 1 %}
+            <p class="dp-tagline">{{ intro_lines.0 }}</p>
+            <p class="dp-lead">{% for line in intro_lines|slice:"1:" %}{{ line }}{% if not forloop.last %}
+{% endif %}{% endfor %}</p>
+          {% else %}
+            <p class="dp-lead">{{ intro }}</p>
+          {% endif %}
+        {% endwith %}
+      {% endwith %}
+      <button type="button" class="dp-cta support-btn"
+              data-project="{{ project.name }}"
+              data-razorpay="{{ project.razorpay_enabled|yesno:'1,0' }}"
+              data-upi="{{ project.upi_enabled|yesno:'1,0' }}"
+              data-bank="{{ project.bank_enabled|yesno:'1,0' }}"
+              data-presets="{{ project.preset_amounts }}">
+        Support This
+      </button>
+    </div>
+    <div class="dp-hero-img-wrap">
+      {% if project.detail_banner %}
+        <img class="dp-hero-img" src="{{ project.detail_banner.url }}" alt="{{ project.name }}" loading="eager">
+      {% else %}
+        <div class="dp-hero-placeholder">{{ project.name|first|upper }}</div>
+      {% endif %}
+    </div>
+  </section>
+
+  {% if sections %}
+    <div class="dp-sections">
+      {% for section in sections %}
+        <section class="dp-section{% if not section.image %} dp-section--text-only{% endif %}">
+          <div class="dp-section-copy">
+            <h2>{{ section.heading }}</h2>
+            <div class="body">{{ section.content|safe }}</div>
+          </div>
+          {% if section.image %}
+            <div class="dp-section-img-wrap">
+              <img class="dp-section-img" src="{{ section.image.url }}" alt="{{ section.heading }}" loading="lazy">
+            </div>
+          {% endif %}
+        </section>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="dp-bottom-cta">
+    <div class="dp-bottom-cta-text">
+      <h3>Ready to back {{ project.name }}?</h3>
+      <p>Every contribution goes directly into this project. 80G tax exemption applicable.</p>
+    </div>
+    <button type="button" class="dp-cta support-btn"
+            data-project="{{ project.name }}"
+            data-razorpay="{{ project.razorpay_enabled|yesno:'1,0' }}"
+            data-upi="{{ project.upi_enabled|yesno:'1,0' }}"
+            data-bank="{{ project.bank_enabled|yesno:'1,0' }}"
+            data-presets="{{ project.preset_amounts }}">
+      Support This
+    </button>
+  </div>
+
+</div>
+
+{% include 'html/_donor_panel.html' %}
+
+<script>
+  (function () {
+    if (window.scrollX) window.scrollTo(0, window.scrollY);
+  })();
+</script>
+
+{% endblock %}

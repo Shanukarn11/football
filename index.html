@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Khelo Football Navigation</title>
+    <style>
+      body {
+        background: #f8f8f1;
+        font-family: Montserrat, Arial, sans-serif;
+        margin: 0;
+      }
+
+      .ikf-navbar {
+        border-bottom: 1px solid rgba(21, 33, 28, 0.12);
+        box-shadow: 0 10px 30px rgba(26, 37, 31, 0.08);
+        padding: 8px 18px;
+      }
+
+      .ikf-navbar__list {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(7, minmax(92px, 1fr));
+        list-style: none;
+        margin: 0 auto;
+        max-width: 1180px;
+        padding: 0;
+      }
+
+      .ikf-navbar__link {
+        align-items: center;
+        background: #f5f4ed;
+        border: 1px solid rgba(36, 49, 42, 0.22);
+        border-radius: 8px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+        color: #222722;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 1.2;
+        min-height: 64px;
+        padding: 8px 9px;
+        text-align: center;
+        text-decoration: none;
+        transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, color 180ms ease, transform 180ms ease;
+      }
+
+      .ikf-navbar__title {
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.15;
+        margin-bottom: 3px;
+      }
+
+      .ikf-navbar__subtitle {
+        color: #5e655f;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 1.16;
+      }
+
+      .ikf-navbar__link:hover,
+      .ikf-navbar__link[aria-current="page"] {
+        background: #eaf5fb;
+        border-color: #3b83a8;
+        box-shadow: 0 8px 18px rgba(44, 104, 136, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+        color: #1e648b;
+        transform: translateY(-1px);
+      }
+
+      .ikf-navbar__link:hover .ikf-navbar__subtitle,
+      .ikf-navbar__link[aria-current="page"] .ikf-navbar__subtitle {
+        color: #276a8c;
+      }
+
+      @media (max-width: 1120px) {
+        .ikf-navbar__list {
+          grid-template-columns: repeat(4, minmax(120px, 1fr));
+        }
+      }
+
+      @media (max-width: 900px) {
+        .ikf-navbar__list {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 560px) {
+        .ikf-navbar {
+          padding: 8px 10px;
+        }
+
+        .ikf-navbar__list {
+          gap: 7px;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+</head>
+<body>
+    <nav class="ikf-navbar" aria-label="Primary navigation">
+      <ul class="ikf-navbar__list">
+        <li><a class="ikf-navbar__link" href="https://indiakhelofootball.com/" aria-current="page"><span class="ikf-navbar__title">Home</span><span class="ikf-navbar__subtitle">Where it all begins</span></a></li>
+        <li><a class="ikf-navbar__link" href="https://indiakhelofootball.com/about-us/"><span class="ikf-navbar__title">About IKF</span><span class="ikf-navbar__subtitle">What we are &amp; why</span></a></li>
+        <li><a class="ikf-navbar__link" href="https://indiakhelofootball.com/ikf-trials/"><span class="ikf-navbar__title">What We Do</span><span class="ikf-navbar__subtitle">Programmes &amp; projects</span></a></li>
+        <li><a class="ikf-navbar__link" href="https://indiakhelofootball.com/register-now/"><span class="ikf-navbar__title">Your Path</span><span class="ikf-navbar__subtitle">Player, parent, scout, donor</span></a></li>
+        <li><a class="ikf-navbar__link" href="https://indiakhelofootball.com/season-1/"><span class="ikf-navbar__title">Our Impact</span><span class="ikf-navbar__subtitle">Stories, data, proof</span></a></li>
+        <li><a class="ikf-navbar__link" href="https://indiakhelofootball.com/our-international-partner/"><span class="ikf-navbar__title">Partners</span><span class="ikf-navbar__subtitle">Clubs, states, REPs, legal</span></a></li>
+        <li><a class="ikf-navbar__link" href="https://indiakhelofootball.com/donate/"><span class="ikf-navbar__title">Donate</span><span class="ikf-navbar__subtitle">Support the mission</span></a></li>
+      </ul>
+    </nav>
+</body>
+</html>

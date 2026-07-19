@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<!-- header END -->
+<!-- Content -->
+<div class="page-content bg-white">
+    <!-- inner page banner -->
+    <div class="dez-bnr-inr overlay-black-middle"
+        style="background-image:url('{{Associate_Corporates_Image.BannerOfCorporate}}');">
+        <div class="container">
+            <div class="dez-bnr-inr-entry">
+                <h1 class="text-white">{{ Heading1_Associate_Corporate}}</h1>
+            </div>
+        </div>
+    </div>
+    <!-- inner page banner END -->
+    <!-- Breadcrumb row -->
+    <div class="breadcrumb-row">
+        <div class="container">
+            <ul class="list-inline">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li>{{Heading1_Associate_Corporate}}</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Breadcrumb row END -->
+    <!-- contact area -->
+    <div class="section-full content-inner">
+        <!-- Career -->
+        <div class="container">
+            <div class="row">
+                <!-- Left part start -->
+                <div class="col-lg-9 m-b30">
+
+                    <h1 class="m-b20 m-t0">{{heading1_Corporate}}</h1>
+                    <div class="dez-separator bg-primary"></div>
+                    <p><strong>{{paragraph1_Corporate|safe}}</strong></p>
+                    <h2 class="m-t30 m-b10 ">{{heading2_Corporate}}</h2>
+                    <p>{{paragraph2_Corporate|safe}} </p>
+                    <h3>{{heading3_Corporate}}</h3>
+                    <ul class="list-check-circle primary">
+                        {% for Takeaway1 in TakeWay1 %}
+                        <li>{{Takeaway1.paragraph}}</li>
+                        {%endfor%}
+                    </ul>
+                    <h2 class="m-t30 m-b10 ">{{heading4_Corporate}}</h2>
+                    <p> {{paragraph3_Corporate|safe}} </p>
+                    <h3>{{heading3_Corporate}}</h3>
+                    <ul class="list-check-circle mb-0 primary">
+                        {% for Takeaway2 in TakeWay2 %}
+                        <li>{{Takeaway2.paragraph}}</li>
+                        {%endfor%}
+                    </ul>
+                </div>
+                <!-- Left part start END -->
+                <!-- Right part start -->
+                <div class="col-lg-3 m-b30">
+                    {% for Corporate_Rights in Corporate_Right %}
+                    <div class="icon-bx-wraper bx-style-1 p-a30 center m-b15">
+                        <div class="icon-bx-sm text-primary bg-white radius border-2 m-b20"> <a href="#"
+                                class="icon-cell"><i class="fa fa-building-o"></i></a> </div>
+                        <div class="icon-content">
+                            <h5 class="dez-tilte text-uppercase">{{Corporate_Rights.heading2}}</h5>
+                            <p>{{Corporate_Rights.paragraph2}}</p>
+                            <div class="m-tb30"><a href="{{Corporate_Rights.href}}"target=”_blank”
+                                    class="site-button bold black border-40"> {{Corporate_Rights.button_text}} </a>
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+                <!-- Right part start END -->
+            </div>
+        </div>
+        <!-- Career END -->
+    </div>
+    <!-- contact area END -->
+</div>
+<!-- Content END-->
+<!-- Footer -->
+{% endblock content %}

@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}IKF Pathway 360 Career: Beyond Playing Years | India Khelo Football{% endblock %}
+
+{% block content %}
+{% include 'html/ikf360/_base_styles.html' %}
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="ikf-section i360-hero">
+  <div class="ikf-wrap">
+    <div class="i360-hero__grid">
+      <div class="i360-hero__left">
+        <div class="i360-hero__eyebrow">IKF Pathway 360 · Career</div>
+        <h1 class="i360-hero__title">
+          IKF Pathway 360 Career: Beyond Playing Years. <span>Football Does Not End at 18. It Evolves</span>
+        </h1>
+        <p class="i360-hero__lead">
+          Not every player will become a professional athlete, but every player deserves a future within the ecosystem. IKF Pathway 360 Career is built especially for underprivileged and grassroots players.
+        </p>
+        <div class="i360-ctas">
+          <a class="i360-btn primary" href="{% url 'playabroad' %}">Apply for Opportunities</a>
+          <a class="i360-btn" href="{% url 'discovery_call' %}">Become an IKF Scout</a>
+        </div>
+      </div>
+      <div class="i360-hero__right">
+        <div class="i360-hero__media">
+          <img src="{% if hero_image and hero_image.image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/ikf360.jpg' %}{% endif %}"
+               alt="IKF Pathway 360 Career"
+               loading="eager" />
+          {% if hero_image and hero_image.caption %}
+            <div class="i360-hero__caption">{{ hero_image.caption }}</div>
+          {% else %}
+            <div class="i360-hero__caption">IKF Pathway 360 Career</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ WHAT IT ENSURES ═══════════════════════ -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">IKF Pathway 360 Career ensures</h2>
+    <div class="ikf-soft">
+      <ul class="i360-bullets">
+        <li>Post 18, they remain connected to football.</li>
+        <li>They can continue playing competitively.</li>
+        <li>They gain access to livelihood opportunities within the ecosystem.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ PATHWAYS GRID ═══════════════════════ -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Career <span>Pathways</span></h2>
+
+    <div class="i360-grid">
+      <div class="i360-card" data-step="01">
+        <h3 class="i360-card__title">Coach</h3>
+      </div>
+      <div class="i360-card" data-step="02">
+        <h3 class="i360-card__title">Scout</h3>
+      </div>
+      <div class="i360-card" data-step="03">
+        <h3 class="i360-card__title">Sports Operations</h3>
+      </div>
+      <div class="i360-card" data-step="04">
+        <h3 class="i360-card__title">Corporate Sector</h3>
+      </div>
+      <div class="i360-card" data-step="05">
+        <h3 class="i360-card__title">Community Leadership</h3>
+      </div>
+      <div class="i360-card" data-step="06">
+        <h3 class="i360-card__title">Event Management</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ BOTTOM CTA ═══════════════════════ -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <div class="i360-banner">
+      <div class="i360-ctas">
+        <a class="i360-btn primary" href="{% url 'playabroad' %}">Apply for Opportunities in Corporate</a>
+        <a class="i360-btn" href="{% url 'discovery_call' %}">Apply to Become an IKF Scout</a>
+        <a class="i360-btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=careers@indiakhelofootball.com&su=IKF%20Internship" target="_blank" rel="noopener">Apply to Intern with IKF</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

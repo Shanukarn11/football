@@ -1,0 +1,1036 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow: #ffc300;
+    --ikf-yellow-dim: rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink: #0b1120;
+    --ink-2: #1e293b;
+    --muted: #5a6478;
+    --muted-2: #8896aa;
+    --line: #e8ecf2;
+    --surface: #ffffff;
+    --surface-2: #f8f9fb;
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
+    --shadow-sm: 0 2px 8px rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md: 0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg: 0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Lato', sans-serif;
+  }
+
+  /* ── Base ── */
+  .ikf-wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+
+  .ikf-section {
+    padding: 36px 0 44px;
+  }
+
+  /* ── Soft card ── */
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 28px;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  /* subtle top accent stripe */
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* ── Section heading ── */
+  .ikf-h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 18px;
+    text-align: left;
+    letter-spacing: -.3px;
+  }
+
+  /* pill label before heading */
+  .ikf-label {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ikf-yellow);
+    background: var(--ikf-yellow-dim);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: 20px;
+    padding: 3px 12px;
+    margin-bottom: 10px;
+  }
+
+  /* ═══════════════════════════════════
+     HERO
+  ════════════════════════════════════ */
+  .trials-hero {
+    padding-top: 24px;
+  }
+
+  .trials-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  @media (min-width: 900px) {
+    .trials-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .trials-hero__left {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .trials-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .trials-hero__eyebrow::before {
+    content: '';
+    width: 22px;
+    height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .trials-hero__title {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    margin: 0 0 10px;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .trials-hero__title em {
+    font-style: normal;
+    color: var(--ikf-yellow);
+  }
+
+  .trials-hero__subtitle {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0 0 14px;
+    color: var(--muted);
+  }
+
+  .trials-hero__lead {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 12px;
+  }
+
+  .trials-hero__actions {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Buttons ── */
+  .career360-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    text-decoration: none;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+
+  .yellow-btn {
+    background: var(--ikf-yellow);
+    color: #000;
+    padding: 0 28px;
+    font-size: 15px;
+    letter-spacing: .01em;
+    min-width: 200px;
+    box-shadow: 0 4px 14px rgba(255,195,0,.35);
+  }
+
+  .yellow-btn:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.45);
+  }
+
+  .icon-btn {
+    background: var(--surface);
+    border: 1.5px solid var(--line) !important;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .icon-btn:hover {
+    border-color: var(--ikf-yellow) !important;
+    box-shadow: 0 4px 14px rgba(255,195,0,.2);
+    transform: translateY(-1px);
+  }
+
+  .icon-btn img {
+    width: 20px;
+    height: 20px;
+    opacity: .75;
+  }
+
+  /* ── Hero image ── */
+  .trials-hero__right { width: 100%; }
+
+  .trials-hero__media {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+
+  .trials-hero__img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform .4s ease;
+  }
+
+  .trials-hero__media:hover .trials-hero__img {
+    transform: scale(1.02);
+  }
+
+  .trials-hero__caption {
+    position: absolute;
+    right: 14px;
+    bottom: 12px;
+    z-index: 2;
+    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: rgba(255,255,255,.85);
+    text-align: right;
+    max-width: 85%;
+    pointer-events: none;
+  }
+
+  .trials-hero__caption::before {
+    content: '';
+    position: absolute;
+    inset: -6px -10px;
+    background: rgba(0,0,0,.5);
+    z-index: -1;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ═══════════════════════════════════
+     ABOUT + WHY (2 COL)
+  ════════════════════════════════════ */
+  .trials-two-col {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: space-between;
+  }
+
+  .trials-two-col .trials-col {
+    flex: 1 1 48%;
+    min-width: 280px;
+  }
+
+  .ikf-p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .pillar {
+    margin-bottom: 22px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .pillar:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .pillar h4 {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    color: var(--ink-2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pillar h4::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--ikf-yellow);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ═══════════════════════════════════
+     JOURNEY (3 COL)
+  ════════════════════════════════════ */
+  .journey-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .journey-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 32px 26px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+  }
+
+  /* neutralise any inner card wrapper from journey_steps.html */
+  .journey-card > * {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .journey-card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+
+  .journey-card:hover * { color: #000 !important; background: transparent !important; }
+
+  /* step number watermark */
+  .journey-card::before {
+    content: attr(data-step);
+    position: absolute;
+    bottom: 14px;
+    right: 20px;
+    font-family: var(--font-display);
+    font-size: 56px;
+    font-weight: 800;
+    color: rgba(0,0,0,.05);
+    line-height: 1;
+    pointer-events: none;
+    transition: color .25s ease;
+  }
+
+  .journey-card:hover::before {
+    color: rgba(0,0,0,.08);
+  }
+
+  /* ═══════════════════════════════════
+     SUPPORTERS CAROUSEL
+  ════════════════════════════════════ */
+  .supporters-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0;
+  }
+
+  .supporter-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    transition: border-color .2s, box-shadow .2s, transform .2s;
+    min-width: 140px;
+    flex: 0 0 auto;
+  }
+
+  .supporter-item:hover {
+    border-color: var(--ikf-yellow-border);
+    box-shadow: 0 6px 20px rgba(255,195,0,.15);
+    transform: translateY(-2px);
+  }
+
+  .supporter-item img {
+    width: 90px !important;
+    height: 90px !important;
+    object-fit: contain;
+    filter: grayscale(20%);
+    transition: filter .2s ease;
+  }
+
+  .supporter-item:hover img {
+    filter: grayscale(0%);
+  }
+
+  .supporter-item .ow-entry-title {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  /* ═══════════════════════════════════
+     SEASON HIGHLIGHT
+  ════════════════════════════════════ */
+  .season-highlight .title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: var(--ink);
+  }
+
+  .season-highlight .feature-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 24px;
+  }
+
+  .season-highlight .dot { color: var(--ikf-yellow); margin-right: 3px; }
+
+  /* card stat numbers */
+  .ikf-card-stats span {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+
+  /* ═══════════════════════════════════
+     SEASON GRID + CARD — EXACT SELECTORS
+  ════════════════════════════════════ */
+
+  .season-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+  }
+
+  /* ── Each card ── */
+  .ikf-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 36px 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    min-height: 280px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .2s ease;
+  }
+
+  .ikf-card:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+    transform: translateY(-3px);
+  }
+
+  .ikf-card:hover .ikf-card-title { color: #000 !important; }
+  .ikf-card:hover .ikf-card-year { color: rgba(0,0,0,.6) !important; }
+  .ikf-card:hover .ikf-card-text { color: rgba(0,0,0,.7) !important; }
+  .ikf-card:hover .ikf-card-stats { border-top-color: rgba(0,0,0,.15); }
+  .ikf-card:hover .ikf-card-stats > div { border-right-color: rgba(0,0,0,.15); }
+  .ikf-card:hover .ikf-card-stats span { color: #000 !important; }
+  .ikf-card:hover .ikf-card-stats small { color: rgba(0,0,0,.6) !important; }
+
+  /* ── Top box: label + description side by side ── */
+  .ikf-box {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .ikf-season-label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .ikf-card-title {
+    font-family: var(--font-display) !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: var(--ink) !important;
+    margin: 0 !important;
+    line-height: 1.2;
+  }
+
+  .ikf-card-year {
+    font-family: var(--font-body) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--ikf-yellow) !important;
+    margin: 0 !important;
+  }
+
+  .ikf-season-desc .ikf-card-text {
+    font-family: var(--font-body) !important;
+    font-size: 15px !important;
+    line-height: 1.7 !important;
+    color: var(--muted) !important;
+    margin: 0 !important;
+  }
+
+  /* ── Stats: 3×2 chip grid, roomy and readable ── */
+  .ikf-card-stats {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px !important;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+    margin-top: auto;
+  }
+
+  .ikf-card-stats > div {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 4px;
+    padding: 12px 14px;
+    background: rgba(255, 195, 0, 0.06);
+    border: 1px solid rgba(255, 195, 0, 0.18);
+    border-radius: 12px;
+    min-width: 0;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .ikf-card:hover .ikf-card-stats > div {
+    background: rgba(255, 195, 0, 0.12);
+    border-color: rgba(255, 195, 0, 0.32);
+  }
+
+  .ikf-card-stats span {
+    font-family: var(--font-display) !important;
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    color: var(--ink) !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.01em;
+  }
+
+  .ikf-card-stats small {
+    font-family: var(--font-body) !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    color: var(--muted-2) !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: normal;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 768px) {
+    .ikf-card-stats {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 8px !important;
+    }
+    .ikf-card-stats span { font-size: 20px !important; }
+    .ikf-card-stats small { font-size: 9.5px !important; }
+  }
+
+  /* When yellow Season 2 card is featured — invert the chip palette */
+  .ikf-card.is-featured .ikf-card-stats > div {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.18);
+  }
+
+  @media (max-width: 768px) {
+    .season-grid {
+      grid-template-columns: 1fr;
+    }
+    .ikf-box {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+
+  /* ═══════════════════════════════════
+     FAQ
+  ════════════════════════════════════ */
+  .fod-faq-container {
+    border-top: 1px solid var(--line);
+    margin-top: 4px;
+  }
+
+  .fod-faq-item {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .fod-faq-q {
+    padding: 16px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink-2);
+    transition: color .15s ease;
+    gap: 16px;
+  }
+
+  .fod-faq-q span {
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--muted-2);
+    flex-shrink: 0;
+    width: 24px;
+    text-align: center;
+    transition: transform .25s ease, color .15s ease;
+  }
+
+  .fod-faq-q:hover { color: var(--ink); }
+  .fod-faq-q:hover span { color: var(--ikf-yellow); }
+
+  .fod-faq-q.open { color: var(--ink); }
+  .fod-faq-q.open span {
+    color: var(--ikf-yellow);
+    transform: rotate(45deg);
+  }
+
+  .fod-faq-a {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    transition: max-height .3s ease, padding .3s ease;
+  }
+
+  .fod-faq-q.open + .fod-faq-a {
+    max-height: 320px;
+    padding: 4px 4px 16px;
+  }
+
+  .fod-faq-a p,
+  .fod-faq-a ul {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  .fod-faq-a ul {
+    padding-left: 20px;
+    list-style: disc;
+  }
+
+  /* ═══════════════════════════════════
+     RESPONSIVE
+  ════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .ikf-wrap { padding: 0 18px; }
+    .trials-hero__title { font-size: 38px; letter-spacing: -1px; }
+    .trials-two-col .trials-col { flex: 1 1 100%; }
+    .journey-steps { grid-template-columns: 1fr; }
+    .ikf-soft { padding: 22px 18px; }
+  }
+
+  @media (max-width: 768px) {
+    .ikf-wrap {
+      width: 100%;
+      max-width: 100%;
+      padding: 0 16px;
+    }
+
+    .ikf-section {
+      padding: 28px 0 34px;
+    }
+
+    .trials-hero {
+      padding-top: 8px;
+    }
+
+    .trials-hero__title { font-size: 32px; }
+    .trials-two-col {
+      display: block;
+    }
+
+    .trials-two-col .trials-col {
+      width: 100%;
+      min-width: 0;
+      margin-bottom: 28px;
+    }
+
+    .trials-two-col .trials-col:last-child {
+      margin-bottom: 0;
+    }
+
+    .ikf-soft {
+      width: 100%;
+      max-width: 100%;
+      padding: 20px 16px;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .ikf-soft::before {
+      left: 18px;
+      right: 18px;
+    }
+
+    .journey-card,
+    .ikf-card,
+    .supporter-item {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .journey-card {
+      padding: 24px 18px;
+    }
+
+    .season-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ikf-card {
+      padding: 26px 18px 24px;
+      gap: 24px;
+      min-height: 0;
+    }
+
+    .ikf-card-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      row-gap: 14px;
+    }
+
+    .ikf-card-stats > div,
+    .ikf-card-stats > div:last-child,
+    .ikf-card-stats > div:not(:first-child):not(:last-child) {
+      border-right: 0;
+      padding-left: 0;
+      padding-right: 10px;
+    }
+
+    .ikf-card-stats span {
+      font-size: 18px !important;
+    }
+
+    .ikf-card-stats small {
+      white-space: normal;
+    }
+
+    .fod-faq-section {
+      padding-bottom: calc(170px + env(safe-area-inset-bottom));
+    }
+
+    .fod-table-shell { overflow: auto; }
+    .fod-table { min-width: 560px; }
+  }
+</style>
+
+<!-- =============== HERO ================= -->
+<section class="ikf-section trials-hero">
+  <div class="ikf-wrap">
+    <div class="trials-hero__grid">
+      <div class="trials-hero__left">
+        
+        <h1 class="trials-hero__title">IKF Trials</h1>
+        <p class="trials-hero__subtitle">Opening Doors to Football Dreams</p>
+        <p class="trials-hero__lead">
+          India Khelo Football's national trials give every motivated player a chance to be seen by professional clubs — no geography or cost barriers, just pure football and opportunity.
+        </p>
+        <div class="trials-hero__actions">
+          <a id="anchorforregister" href="https://indiakhelofootball.com/season6" class="career360-btn yellow-btn">
+            TRIAL REGISTRATION
+          </a>
+          <a href="https://indiakhelofootball.com/noticeboard" target="_blank" class="career360-btn yellow-btn">
+            Noticeboard
+          </a>
+          <a href="https://www.youtube.com/shorts/o2izW4vxbKU" target="_blank" class="career360-btn yellow-btn">
+            How to Register
+          </a>
+        </div>
+      </div>
+
+      <div class="trials-hero__right">
+        <div class="trials-hero__media">
+          <img loading="lazy"
+            src="{% if hero_image %}{{ hero_image.image.url }}{% else %}{% static 'images/banners/about1.png' %}{% endif %}"
+            alt="{% if hero_image and hero_image.caption %}{{ hero_image.caption }}{% else %}IKF Trials{% endif %}"
+            class="trials-hero__img" />
+          <div class="trials-hero__caption">
+            {% if hero_image and hero_image.caption %}
+              {{ hero_image.caption }}
+            {% else %}
+              IKF Trials
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== ABOUT + WHY IT MATTERS (TWO COL) ================= -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <div class="trials-two-col">
+      <div class="trials-col">
+        
+        <h2 class="ikf-h2">About IKF Trials</h2>
+        <div class="ikf-soft">
+          <p class="ikf-p">
+            India Khelo Football (IKF) bridges the gap between grassroots passion and professional opportunity through its non-profit, data-driven National Trials. Guided by the vision <strong>"Aap Khelo, Mauka Hum Denge!"</strong>, IKF provides a fair and transparent platform where players aged 10–17 (boys and girls) can showcase their talent in front of certified scouts and professional clubs — without geographical or financial barriers.
+          </p>
+          <p class="ikf-p" style="margin-top:14px;">
+            IKF is committed to creating equal opportunities in football. Participation in trials remains <strong>free for girls</strong>, ensuring wider access and encouraging greater female participation in the sport. This season, IKF introduces <strong>Project IKF Naari Shakti</strong>, a dedicated initiative featuring all-girls trials designed to empower young female footballers and create stronger pathways for their growth across India.
+          </p>
+          <p class="ikf-p" style="margin-top:16px; font-weight:600; color: var(--ink);">By the girls &nbsp;|&nbsp; For the girls &nbsp;|&nbsp; Of the girls</p>
+          <p class="ikf-p" style="font-style:italic; color: var(--muted);">An IKF Initiative</p>
+        </div>
+      </div>
+      <div class="trials-col">
+        
+        <h2 class="ikf-h2">Football Opportunities Without Barriers</h2>
+        <div class="ikf-soft">
+          <div class="pillar">
+            <p class="ikf-p">IKF brings trials directly to players across India, removing distance and cost barriers so talent can shine anywhere.</p>
+          </div>
+          <div class="pillar">
+            <h4>17 Pilot Cities &rarr; 135+ Nationwide (Across Seasons)</h4>
+            <p class="para ikf-p"><em>Ensuring no talent goes unseen.</em></p>
+          </div>
+          <div class="pillar">
+            <h4>No academies. No agents. No fees.</h4>
+            <p class="para ikf-p"><em>Only fair, transparent, performance-based evaluation.</em></p>
+          </div>
+          <div class="pillar" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">
+            <p class="ikf-p" style="font-weight:700; color: var(--ink);">Pure Talent. Real Opportunity.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== THE JOURNEY (3 COL INSIDE IKF-SOFT) ================= -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    
+    <h2 class="ikf-h2">The Journey</h2>
+    <div class="ikf-soft">
+      <div class="journey-steps">
+        <div class="journey-card" data-step="01">
+          {% include "./Components/journey_steps.html" with title_line_1="City" title_line_2="Trials" subtitle="Nominal One Time Fee / Free for Girls" desc="Register online → Play for on-site scouts" %}
+        </div>
+        <div class="journey-card" data-step="02">
+          {% include "./Components/journey_steps.html" with title_line_1="Zonal" title_line_2="Finals" subtitle="Free" desc="Short-listed players compete at regional hubs" %}
+        </div>
+        <div class="journey-card" data-step="03">
+          {% include "./Components/journey_steps.html" with title_line_1="National" title_line_2="Finals" subtitle="Free" desc="Top talents face ISL & I-League clubs" %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== SEASON HIGHLIGHT (IKF-SOFT WRAPPER) ================= -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+   
+    <h2 class="ikf-h2">Season Highlight</h2>
+    <div class="ikf-soft">
+      <section class="season-highlight">
+        <div class="season-grid">
+          {% if trial_seasons %}
+            {% for s in trial_seasons %}
+              {% if s.title %}
+                {% include "./Components/season_card.html" with title=s.title year=s.year_range description=s.description cities=s.cities participants=s.participants shortlisted=s.shortlisted_count scouted=s.scouted_count scholarship=s.international_scholarship_count clubs=s.clubs %}
+              {% else %}
+                {% include "./Components/season_card.html" with title="Season "|add:s.season year=s.year_range description=s.description cities=s.cities participants=s.participants shortlisted=s.shortlisted_count scouted=s.scouted_count scholarship=s.international_scholarship_count clubs=s.clubs %}
+              {% endif %}
+            {% endfor %}
+          {% else %}
+            {% include "./Components/season_card.html" with title="Season 1" year="2021 - 22" description="Proved that village-level talent thrives when given a stage." cities="17" participants="1665" shortlisted="20" scouted="0" scholarship="0" clubs="8" %}
+            {% include "./Components/season_card.html" with title="Season 2" year="2022 - 23" description="Launched satellite trials in 40 cities, with 16 clubs short-listing 25+ players on the spot." cities="40" participants="1700" shortlisted="24" scouted="0" scholarship="1" clubs="16" %}
+            {% include "./Components/season_card.html" with title="Season 3" year="2023 - 24" description="Debuted our Pathway 360 to guide families beyond the pitch, with 116 prospects identified." cities="58" participants="6421" shortlisted="114" scouted="3" scholarship="2" clubs="20" %}
+            {% include "./Components/season_card.html" with title="Season 4" year="2024 - 25" description="Concluded 100-city trials at Pune's Balewadi Stadium on Republic Day, showcasing India's deepest grassroots talent." cities="100" participants="12602" shortlisted="98" scouted="30" scholarship="6" clubs="25" %}
+            {% include "./Components/season_card.html" with title="Season 5" year="2025 - 26" description="After 135 city trials, the National Finals at Cooperage Football Ground, Mumbai celebrated the best of India's grassroots football talent." cities="135" participants="18712" shortlisted="30" scouted="3" scholarship="2" clubs="25" %}
+          {% endif %}
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+
+{% if finalists %}
+<div class="p-b30">
+  <div class="section-head inner-haed">
+    <h2 class="col-lg-12 text-center section-head" style="padding-top: 50px"></h2>
+  </div>
+  <div class="section-content">
+    <div class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr">
+      {% for finalist in finalists %}
+      <div class="item">
+        <div class="ow-carousel-entry">
+          <div class="ow-entry-media dez-img-effect zoom-slow">
+            <img loading="lazy" src="{{finalist.pic}}" alt="" />
+          </div>
+          <div class="dez-info p-a20 p-t40 border-1">
+            <h4 class="dez-title m-tb0">{{finalist.name}}</h4>
+            <div class="bg-primary skew-content-box">
+              <ul class="dez-social-icon">
+                <li><a class="fa fa-linkedin" href="{{finalist.link}}" target="_blank"></a></li>
+              </ul>
+            </div>
+            <p class="m-t10 m-b0">{{Team1.about}}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<section class="ikf-section">
+  <div class="text-center m-b30 m-t60">
+    <h2 class="h3">Our Supporters for this Season</h2>
+    <div class="dez-separator bg-primary"></div>
+  </div>
+  <div class="ikf-soft">
+    <div class="supporters-grid">
+      {% for clubs in PartnerSeasonSupportIKF %}
+      <div class="supporter-item">
+        <img loading="lazy" src="{{ clubs.pic }}" alt="{{ clubs.name }}" />
+        <div class="ow-entry-title">{{ clubs.name }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="ikf-section fod-faq-section">
+  <div class="ikf-wrap">
+    
+    <h2 class="ikf-h2">Frequently Asked Questions</h2>
+    <div class="ikf-soft">
+      <div class="fod-faq-container">
+        {% if faqs %}
+          {% for f in faqs %}
+          <div class="fod-faq-item">
+            <div class="fod-faq-q" onclick="fodxToggle(this)">
+              {{ f.question }}<span>+</span>
+            </div>
+            <div class="fod-faq-a">
+              <p>{{ f.answer|linebreaksbr }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="fod-faq-item">
+            <div class="fod-faq-q">No FAQs added yet.<span>+</span></div>
+            <div class="fod-faq-a"><p>Please check back later.</p></div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  window.onload = function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const refer = urlParams.get("refer");
+    const registerButton = document.getElementById("anchorforregister");
+    if (!registerButton) return;
+    if (refer) {
+      registerButton.href = `https://openinapp.link/m6b42?refer=${refer}`;
+    } else {
+      registerButton.href = `https://openinapp.link/m6b42`;
+    }
+  };
+</script>
+
+<script>
+  function fodxToggle(el) {
+    el.classList.toggle('open');
+    const icon = el.querySelector('span');
+    icon.textContent = el.classList.contains('open') ? '+' : '+';
+  }
+</script>
+
+{% endblock content %}

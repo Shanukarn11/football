@@ -1,0 +1,559 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ikf-yellow:        #ffc300;
+    --ikf-yellow-dim:    rgba(255,195,0,.12);
+    --ikf-yellow-border: rgba(255,195,0,.28);
+    --ink:               #0b1120;
+    --ink-2:             #1e293b;
+    --muted:             #5a6478;
+    --muted-2:           #8896aa;
+    --line:              #e8ecf2;
+    --surface:           #ffffff;
+    --surface-2:         #f8f9fb;
+    --radius-sm:         10px;
+    --radius-md:         16px;
+    --radius-lg:         22px;
+    --shadow-sm:         0 2px 8px  rgba(11,17,32,.05), 0 1px 2px rgba(11,17,32,.04);
+    --shadow-md:         0 8px 28px rgba(11,17,32,.07), 0 2px 6px rgba(11,17,32,.04);
+    --shadow-lg:         0 18px 50px rgba(11,17,32,.09), 0 4px 12px rgba(11,17,32,.05);
+    --font-display:      'Plus Jakarta Sans', sans-serif;
+    --font-body:         'Lato', sans-serif;
+  }
+
+  /* ── Layout ── */
+  .ikf-wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .ikf-section { padding: 36px 0 44px; }
+  .ikf-section + .ikf-section { padding-top: 18px; }
+
+  /* ── Soft panel ── */
+  .ikf-soft {
+    background: var(--surface);
+    border: 1px solid var(--ikf-yellow-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 28px 28px;
+    position: relative;
+  }
+  .ikf-soft::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ikf-yellow) 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* ── Headings ── */
+  .ikf-h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 18px;
+    letter-spacing: -.3px;
+  }
+
+  /* ── Body copy ── */
+  .global-intro {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 14px;
+    max-width: 70ch;
+  }
+
+  /* ── Yellow-dot bullets ── */
+  .trusted-list,
+  .rep-two-col ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0 0 10px;
+  }
+  .trusted-list li,
+  .rep-two-col li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .trusted-list li::before,
+  .rep-two-col li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #facc15;
+    box-shadow: 0 0 0 3px rgba(250,204,21,.25);
+    transition: background .25s ease, box-shadow .25s ease;
+  }
+
+  /* ═══════════════════════
+     HERO — Season 6 layout
+  ════════════════════════ */
+  .rep-hero { padding-top: 24px; }
+
+  .rep-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  @media (min-width: 900px) {
+    .rep-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 52px;
+      align-items: center;
+    }
+  }
+
+  .rep-title { display: flex; flex-direction: column; }
+
+  /* eyebrow dash */
+  .rep-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .rep-eyebrow::before {
+    content: '';
+    width: 22px;
+    height: 2px;
+    background: var(--ikf-yellow);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .rep-title h1 {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    margin: 0 0 10px;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+
+  .rep-title .subtitle {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0 0 14px;
+    color: var(--muted);
+  }
+
+  .rep-title p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 10px;
+    max-width: 70ch;
+  }
+
+  /* hero media */
+  .rep-heroimg {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--ink-2);
+    width: 100%;
+    aspect-ratio: 4 / 2.5;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .rep-heroimg img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .rep-heroimg:hover img { transform: scale(1.02); }
+
+  /* ═══════════════════════
+     REP CAROUSEL SECTION
+  ════════════════════════ */
+  .rep-season-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+  .rep-season-head h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: -.3px;
+  }
+  .rep-view-all {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--ink-2);
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--ikf-yellow-border);
+    background: var(--ikf-yellow-dim);
+    transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
+    white-space: nowrap;
+  }
+  .rep-view-all:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 4px 14px rgba(255,195,0,.3);
+    transform: translateY(-1px);
+  }
+
+  /* rep card */
+  .rep-card {
+    background: rgba(255, 255, 255, 0.905) ;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+    cursor: default;
+  }
+  .rep-card:hover {
+    transform: translateY(-3px);
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    box-shadow: 0 10px 30px rgba(255,195,0,.35);
+  }
+  .rep-card:hover .dez-title { color: #000 !important; }
+
+  .rep-logo { padding: 18px 18px 8px; }
+  .rep-logo img {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+  }
+
+  .rep-caption { padding: 12px 18px 18px; text-align: center; }
+  .rep-caption .dez-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink-2);
+    transition: color .2s ease;
+  }
+
+  /* owl nav buttons */
+  .rep-owl .owl-nav [class*='owl-'] {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-sm);
+    display: grid;
+    place-items: center;
+    transition: background .2s ease, transform .15s ease, box-shadow .15s ease;
+  }
+  .rep-owl .owl-nav [class*='owl-']:hover {
+    background: var(--ikf-yellow);
+    border-color: var(--ikf-yellow);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(255,195,0,.3);
+  }
+
+  /* static grid (≤5 reps) */
+  .rep-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .rep-grid-item { flex: 1 1 180px; max-width: 220px; }
+
+  /* ═══════════════════════
+     TWO-COL LISTS
+  ════════════════════════ */
+  .rep-two-col {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+  .rep-two-col ul { flex: 1 1 260px; }
+
+  /* ═══════════════════════
+     CTA
+  ════════════════════════ */
+  .rep-cta-box { text-align: center; }
+
+  .rep-apply-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    padding: 0 32px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    background: var(--ikf-yellow);
+    color: #000;
+    box-shadow: 0 4px 14px rgba(255,195,0,.35);
+    transition: all .2s ease;
+    margin-top: 20px;
+  }
+  .rep-apply-btn:hover {
+    background: #f5bb00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255,195,0,.45);
+  }
+
+  /* ═══════════════════════
+     RESPONSIVE
+  ════════════════════════ */
+  @media (max-width: 900px) {
+    .ikf-wrap { padding: 0 18px; }
+    .rep-title h1 { font-size: 38px; letter-spacing: -1px; }
+    .ikf-soft { padding: 22px 18px; }
+    .rep-season-head { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 640px) {
+    .rep-title h1 { font-size: 32px; }
+    .rep-two-col { gap: 16px; }
+  }
+</style>
+
+
+<!-- =============== HERO =============== -->
+<section class="ikf-section rep-hero">
+  <div class="ikf-wrap">
+    <div class="rep-hero__grid">
+      <div class="rep-title">
+        
+        <h1>Regional Execution Partner</h1>
+        <p class="subtitle">City–by–city partners powering grassroots football</p>
+        <p>
+          At India Khelo Football (IKF), we believe that real change happens on the ground —
+          city by city, community by community. That's why our Regional Execution Partners (REPs)
+          play a vital role in turning our vision into action.
+        </p>
+        <p>
+          REPs help us identify hidden talent, engage local communities, and ensure smooth,
+          on-ground execution. With their passion and commitment, we're able to take football
+          to places it's never been before — truly democratizing the sport.
+        </p>
+      </div>
+
+      <div class="rep-heroimg">
+        <img loading="lazy" src="{% static 'images/banners/rep-hero3.png' %}" alt="IKF Regional Execution Partners">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== OUR REGIONAL PARTNERS =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+
+    <div class="rep-season-head">
+      <h2>Our Regional Partners For Season 6</h2>
+      <a href="{% url 'rep_index' %}" class="rep-view-all">View full REP network →</a>
+    </div>
+
+    {% if reps %}
+      {% with reps|length as rep_count %}
+        {% if rep_count <= 5 %}
+          <div class="rep-grid">
+            {% for r in reps %}
+              <div class="rep-grid-item">
+                <div class="ow-carousel-entry rep-card">
+                  <div class="ow-entry-media rep-logo">
+                    <a href="/rep/{{ r.template_link }}/" title="{{ r.rep_name }}">
+                      {% if r.rep_logo %}
+                        <img loading="lazy" src="{{ r.rep_logo.url }}" alt="{{ r.rep_name }}">
+                      {% else %}
+                        <img loading="lazy" src="{% static 'images/placeholder.png' %}" alt="{{ r.rep_name }}">
+                      {% endif %}
+                    </a>
+                  </div>
+                  <div class="dez-info rep-caption">
+                    <h4 class="dez-title">{{ r.rep_name }}</h4>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="rep-carousel-wrap scrollable-view">
+            <div class="section-content">
+              <div class="owl-carousel owl-theme img-carousel-content mfp-gallery gallery owl-btn-center-lr rep-owl">
+                {% for r in reps %}
+                  <div class="item">
+                    <div class="ow-carousel-entry rep-card">
+                      <div class="ow-entry-media rep-logo">
+                        <a href="/rep/{{ r.template_link }}/" title="{{ r.rep_name }}">
+                          {% if r.rep_logo %}
+                            <img loading="lazy" src="{{ r.rep_logo.url }}" alt="{{ r.rep_name }}">
+                          {% else %}
+                            <img loading="lazy" src="{% static 'images/placeholder.png' %}" alt="{{ r.rep_name }}">
+                          {% endif %}
+                        </a>
+                      </div>
+                      <div class="dez-info rep-caption">
+                        <h4 class="dez-title">{{ r.rep_name }}</h4>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endwith %}
+    {% else %}
+      <p class="global-intro">Season 5 REP list will be announced soon.</p>
+    {% endif %}
+
+    <!-- BECOME A PARTNER button sits directly below the carousel -->
+    <div style="display:flex; justify-content:flex-start; margin-top:24px;">
+      <a href="{% url 'rep_become_partner' %}"
+         style="display:inline-flex; align-items:center; justify-content:center;
+                height:52px; padding:0 36px;
+                background:var(--ikf-yellow); color:#000;
+                font-family:var(--font-body); font-size:15px; font-weight:700;
+                border-radius:10px; text-decoration:none;
+                box-shadow:0 4px 16px rgba(255,195,0,.38);
+                transition:background .2s, transform .2s, box-shadow .2s;"
+         onmouseover="this.style.background='#f5bb00';this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(255,195,0,.5)';"
+         onmouseout="this.style.background='var(--ikf-yellow)';this.style.transform='translateY(0)';this.style.boxShadow='0 4px 16px rgba(255,195,0,.38)';">
+        Become an IKF Regional Partner
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- =============== WHO CAN BECOME A REP? =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Who Can Become a Regional Execution Partner?</h2>
+    <div class="ikf-soft">
+      <p class="global-intro">
+        We collaborate with partners who share a similar vision of developing the Indian football grassroots system.
+      </p>
+      <div class="rep-two-col">
+        <ul>
+          <li>Have your own football ground for hosting trials and training.</li>
+          <li>Run a football academy or be actively engaged with the footballing community.</li>
+          <li>Have a minimum of 3+ years of experience in football development.</li>
+        </ul>
+        <ul>
+          <li>Have an operational team of at least 5–6 members.</li>
+          <li>Be committed to long–term player development and community engagement.</li>
+        </ul>
+      </div>
+      <p class="global-intro" style="margin-top: 14px; margin-bottom: 0;">
+        If you meet these criteria and want to grow football in your region, IKF is your ideal partner.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== WHY PARTNER WITH IKF? =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Why Partner with IKF?</h2>
+    <div class="ikf-soft">
+      <p class="global-intro">
+        With a presence in over 125 cities, IKF is India's leading grassroots football platform—offering
+        structured trials, talent scouting, and the IKF Pathway 360 program. As a Regional Partner, you become
+        part of a national movement that is changing how football dreams are nurtured in India.
+      </p>
+      <ul class="trusted-list">
+        <li>Access to structured trial formats, scouting frameworks and central support.</li>
+        <li>Integration into IKF's national communication, branding, and marketing channels.</li>
+        <li>Support in planning, executing and reviewing football activities in your region.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== ROLE & BENEFITS =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <h2 class="ikf-h2">Role &amp; Benefits of a Regional Partner</h2>
+    <div class="ikf-soft">
+      <p class="global-intro">
+        As an IKF Regional Execution Partner, you play a crucial role in making football accessible to every
+        aspiring player in your region.
+      </p>
+      <div class="rep-two-col">
+        <ul>
+          <li>Host IKF Football Trials in your region.</li>
+          <li>Help talented players access real football career pathways with IKF Pathway 360.</li>
+          <li>Build strong local football ecosystems with schools, academies and communities.</li>
+        </ul>
+        <ul>
+          <li>Get access to exclusive IKF resources, playbooks and operational support.</li>
+          <li>Collaborate with IKF's central team for seamless execution of football activities.</li>
+          <li>Strengthen your own brand as a trusted football institution in your region.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============== CTA =============== -->
+<section class="ikf-section">
+  <div class="ikf-wrap">
+    <div class="ikf-soft rep-cta-box">
+      <h2 class="ikf-h2" style="text-align: center;">Ready to Grow Football in Your Region?</h2>
+      <p class="global-intro" style="margin: 0 auto; text-align: center;">
+        If you meet the eligibility criteria and share our vision, apply now to become an official
+        IKF Regional Execution Partner.
+      </p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfqF8vhpVEvs_dSS03f9Tx5a4_U8xaoRrMaomlya8dRZRVfAQ/viewform" class="rep-apply-btn">
+        Apply Now
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

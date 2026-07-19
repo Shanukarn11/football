@@ -1,0 +1,1279 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+/* Reset all bold styles */
+* {
+  font-weight: normal !important;
+  font-family: 'Avenir LT Std', sans-serif;
+}
+
+/* Only keep "Value behind the Fee" heading bold */
+
+.right-box .big-number,
+.section-head,
+.fee-box h1,
+.left-text h2,
+.right-text h2,
+.right-text h3,
+.profit-text {
+  font-weight: normal !important;
+}
+/* Equal spacing for all sections below the image */
+/* Standard vertical spacing between sections */
+.image-breakout,
+.bottom-row,
+.greatness-section,
+.costs-section,
+.fee-section,
+.vow-section,
+.renaissance-section {
+  margin-top: 60px;
+}
+.value-section,
+.greatness-section,
+.costs-section,
+.fee-section,
+.vow-section,
+.renaissance-section,
+.cta-wrapper {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+
+/* Global Container */
+.value-section,
+.greatness-section,
+.costs-section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 10px 0;
+  font-family: 'Avenir LT Std', 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Top Section: Heading + Quote */
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  margin-bottom: 30px;
+  gap: 40px;
+}
+.main-heading {
+  font-size: 52px; /* smaller than before */
+  font-weight: 900 !important;
+  margin: 0;
+  
+  flex-shrink: 0;
+}
+
+.quote {
+  font-size: 16px; /* smaller quote */
+  
+  text-align: right;
+  line-height: 1.4;
+  margin: 0 0 12px; /* nudge it slightly down */
+  max-width: 460px; /* tighter width */
+}
+
+.greatness-section {
+  max-width: 1000px;
+  margin: 60px auto 20px; /* 👈 previously likely 40px+ */
+  padding: 0 20px;
+}
+
+
+
+
+
+
+/* Image Section */
+.image-container {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.image-container img {
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  max-height: 450px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid #007bff;
+}
+
+/* Grassroots + Stat Box */
+.bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  margin-bottom: 60px;
+  margin-top: 30px; /* 👈 Add this or reduce if it already exists */
+}
+
+
+.left-text {
+  flex: 1;
+  min-width: 300px;
+}
+
+.left-text h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.left-text h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.left-text p {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Stat Box */
+.right-box {
+  width: 280px; /* Increased box width */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: center;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-box .big-number {
+  font-size: 36px; /* Slightly bigger for emphasis */
+  font-weight: 600;
+  margin: 0;
+}
+
+.right-box .small-desc {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  margin-top: 8px;
+  white-space: nowrap; /* Keep in one line */
+}
+.right-box .year-highlight {
+  font-size: 30px;
+  font-weight: 600;
+  margin-top: 4px;       /* reduced from 10px */
+  margin-bottom: 0;
+  line-height: 1.1;
+}
+.costs-section {
+  max-width: 1000px;
+  margin: 80px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+.costs-section table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #ddd;
+}
+
+.costs-section table thead th {
+  background-color: #f9f9f9;
+  font-weight: 600;
+  text-align: left;
+  padding: 16px;
+  border: 1px solid #ddd;
+}
+
+.costs-section table tbody td,
+.costs-section table tbody th {
+  padding: 16px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+
+
+
+
+
+
+/* Greatness Grid: Table + Text Side by Side */
+.greatness-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.left-table,
+.right-text {
+  flex: 1;
+  min-width: 300px;
+}
+
+.right-text h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.right-text h3 {
+  font-size: 20px;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+.right-text p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.right-text .quote {
+  font-style: italic;
+  margin-top: 20px;
+  max-width: 400px;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+table th {
+  background-color: #f9f9f9;
+  
+}
+
+/* Costs Section */
+.costs-section h2 {
+  font-size: 26px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+.image-breakout {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.image-breakout img {
+  display: block;
+margin-bottom: 0;
+width: 100%;
+border-radius: 12px;
+object-fit: cover;
+max-height: 460px;
+box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+padding-bottom: 0;
+  
+}
+/* Fee Section */
+.fee-section {
+  max-width: 1000px;
+  margin: 60px auto 40px;
+  padding: 0 20px;
+}
+
+.fee-section h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.fee-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.fee-text {
+  flex: 1;
+  font-size: 16px;
+  line-height: 1.6;
+  min-width: 300px;
+}
+
+.fee-box {
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  min-width: 180px;
+  max-width: 220px;
+  font-size: 16px;
+  align-self: flex-start;
+  transform: translate(-40px, -30px);
+}
+
+.fee-box h1 {
+  margin: 0;
+  font-size: 32px;
+}
+
+.fee-box hr {
+  margin: 12px 0;
+}
+.greatness-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.greatness-left {
+  flex: 1;
+  min-width: 300px;
+}
+
+.greatness-left h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.greatness-left h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.greatness-left p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.greatness-right {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.air-quote {
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.6;
+  font-weight: 500;
+  margin: 0;
+  padding-top: 60px; /* 👈 This brings it beside the subheading */
+  text-align: right;
+}
+
+
+
+.greatness-table {
+  margin-top: 30px;
+}
+
+.greatness-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #ddd;
+}
+
+.greatness-table th,
+.greatness-table td {
+  padding: 14px 16px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+  vertical-align: top;
+}
+
+.greatness-table thead th {
+  background-color: #f9f9f9;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .greatness-flex {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .greatness-right {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .air-quote {
+    font-size: 18px;
+  }
+}
+
+/* Vow Section */
+.vow-section {
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.vow-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.vow-text {
+  flex: 1;
+  min-width: 300px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.vow-text h3 {
+  font-size: 24px ;
+  margin-bottom: 45px;
+}
+
+.vow-chart {
+  flex: 1;
+  min-width: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px; /* Adjust this for alignment */
+}
+
+.vow-chart img {
+  width: 100%;
+  max-width: 450px; /* increased size */
+  height: auto;
+  object-fit: contain;
+  margin-top: 0px;
+  margin-left: -10px; /* shifts left for better alignment */
+}
+
+.profit-text {
+  font-size: 30px;
+  font-weight: 6900 !important;
+  text-align: left;
+  margin-top: 50px;
+}
+
+.renaissance-section {
+  max-width: 1000px;
+  margin: 100px auto 60px;
+  padding: 0 20px;
+  text-align: left; /* align text to the left */
+}
+
+.renaissance-section h2 {
+  font-size: 26px;
+  margin-bottom: 6px;
+  font-weight: 300;
+} 
+
+.cta-wrapper {
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 0 20px;
+  text-align: left; /* Aligns everything to the left */
+}
+
+.cta-wrapper h2 {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 6px !important;  /* Reduce to a very small gap */
+}
+
+
+
+.closing-quote {
+  margin-top: 0 ; 
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 6px;
+  color: #222;
+  
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+
+}
+
+
+
+.ikf-signature {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.cta-buttons button {
+  background-color: #FFC300;
+  color: #000;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  padding: 18px 0;
+  border-radius: 14px;
+  cursor: pointer;
+  flex: 1;              /* 👈 Each button will grow equally */
+  min-width: 260px;     /* 👈 Makes them noticeably longer */
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+
+.cta-buttons button:hover {
+  background-color: #e5e500;
+}
+
+@media (max-width: 768px) {
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-buttons button {
+    width: 100%;
+  }
+
+  .cta-wrapper {
+    text-align: center;
+  }
+
+  .closing-quote,
+  .ikf-signature {
+    text-align: center;
+  }
+}
+
+
+
+
+
+.closing-quote {
+  font-size: 18px;         /* 👈 Increased from 16px */
+  line-height: 1.6;
+  margin: 8px 0 2px;       /* 👈 Reduced top margin to move it up */
+  color: #222;
+  font-weight: 500;
+}
+
+
+.ikf-signature {
+  font-size: 17px;         /* 👈 Slightly larger */
+  font-weight: 500;
+  margin-bottom: 20px;     /* 👈 Keeps it close to buttons */
+  margin-top: 0;           /* 👈 Pulls it closer to the quote */
+}
+
+
+
+
+.costs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  margin-top: 30px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #ddd;
+}
+
+.costs-table th,
+.costs-table td {
+  padding: 14px 16px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+  vertical-align: top;
+}
+
+.costs-table thead th {
+  background-color: #f9f9f9;
+  font-weight: 700;
+}
+
+.costs-table tbody th {
+  font-weight: 700;
+  background-color: #fff;
+}
+
+
+.quote-open {
+  width: 24px;
+  height: auto;
+  margin-bottom: 8px;   /* ⬅️ give space below image */
+  margin-left: -24px;   /* ⬅️ adjust horizontal offset */
+  align-self: flex-start;
+}
+
+.quote-text-block {
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.6;
+  max-width: 90%;
+  padding: 0;
+}
+
+.quote-line {
+  margin: 0;
+}
+
+.quote-close {
+  width: 24px;
+  height: auto;
+  margin-top: 8px;     /* ⬅️ space above bottom quote image */
+  margin-right: -24px; /* ⬅️ horizontal offset to the right */
+  align-self: flex-end;
+}
+.deliverables-heading {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.deliverables-list {
+  font-size: 16px;       /* smaller than heading */
+  padding-left: 24px;    /* indent the bullets */
+  margin-top: 0;
+}
+
+  
+
+
+
+/* Responsive Layout for fee-grid */
+@media (max-width: 768px) {
+  .fee-grid {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .fee-text, .fee-box {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .fee-box {
+    transform: none;
+    margin-top: 20px;
+  }
+
+  .top-row {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 16px;
+  }
+
+  .top-row h1.main-heading {
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+
+  .quote {
+    font-size: 16px;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .bottom-row,
+  .greatness-grid,
+  .vow-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .right-box,
+  .left-text,
+  .left-table,
+  .right-text,
+  .vow-chart,
+  .vow-text {
+    width: 100%;
+    text-align: center;
+  }
+
+  .image-breakout img {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .cta-buttons button {
+    width: 100%;
+  }
+ 
+  
+
+
+  /* Fix main header responsiveness */
+@media (max-width: 768px) {
+ 
+
+    .main-heading {
+    font-size: 32px;
+    white-space: normal;
+    text-align: left;
+  }
+
+  .quote {
+    font-size: 16px !important;
+    max-width: 100%;
+    text-align: left;
+    line-height: 1.5;
+  }
+}
+
+}
+
+
+
+/* All your current CSS remains as-is */
+
+/* Add/Update Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  c {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+
+
+  .quote {
+    font-size: 16px;
+    text-align: left;
+    max-width: 100%;
+    line-height: 1.5;
+  }
+
+  .image-container img,
+  .image-breakout img {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .bottom-row,
+  .greatness-grid,
+  .vow-grid,
+  .fee-grid,
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .left-text,
+  .right-box,
+  .left-table,
+  .right-text,
+  .vow-text,
+  .vow-chart,
+  .fee-text,
+  .fee-box,
+  .cta-buttons button {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .fee-box {
+    transform: none;
+    margin-top: 20px;
+  }
+  .quote-container {
+    padding: 0 20px;
+    align-items: center;
+  }
+  .quote-open,
+  .quote-close {
+    width: 20px;
+    margin: 4px 0;
+  }
+  .quote-line {
+    margin: 0;
+  }
+
+  .quote-text-block {
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .closing-quote,
+  .ikf-signature {
+    text-align: center;
+  }
+
+  .cta-buttons button {
+    width: 100%;
+    padding: 16px 0;
+    font-size: 16px;
+  }
+
+  .costs-section table,
+  .greatness-table table {
+    font-size: 14px;
+  }
+}
+
+/* ✅ Place this in your global styles — OUTSIDE media query */
+.quote-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 30px auto;
+  max-width: 600px;
+}
+
+.quote-open,
+.quote-close {
+  width: 24px;
+  height: auto;
+  margin: 8px 0;
+}
+
+.quote-text-block {
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.6;
+  padding: 0 12px;
+}
+.custom-costs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #ddd;
+  table-layout: fixed; /* ✅ force equal column widths */
+}
+
+.custom-costs-table th,
+.custom-costs-table td {
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+  vertical-align: top;
+  word-wrap: break-word;      /* ✅ wrap long words */
+  white-space: normal;        /* ✅ allow multiple lines */
+}
+
+.custom-costs-table thead th {
+  background-color: #f9f9f9;
+  font-weight: 700;
+}
+
+
+
+@media (max-width: 768px) {
+  .custom-costs-table {
+    font-size: 14px;
+  }
+
+  .custom-costs-table th,
+  .custom-costs-table td {
+    padding: 12px;
+  }
+}
+@media (max-width: 768px) {
+  .fee-text,
+  .fee-text h4,
+  .deliverables-heading,
+  .deliverables-list {
+    text-align: left !important;
+    align-items: flex-start !important;
+  }
+
+  .fee-text ul {
+    padding-left: 20px; /* keep bullet indentation */
+  }
+
+  .fee-section h2 {
+    text-align: left !important;
+  }
+}
+@media (max-width: 768px) {
+  .vow-text,
+  .vow-text h3,
+  .vow-text p,
+  .vow-text .profit-text {
+    text-align: left !important;
+  }
+
+  .vow-grid {
+    align-items: flex-start !important;
+  }
+}
+
+/* Full center alignment for final section */
+.renaissance-section {
+  max-width: 1000px;
+  margin: 100px auto 60px;
+  padding: 0 20px;
+  text-align: center; /* ✅ center align all content */
+}
+
+.renaissance-section h2 {
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.cta-wrapper.center-align {
+  text-align: center;
+}
+
+.closing-quote {
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 10px 0;
+  color: #222;
+  font-weight: 500;
+}
+
+.ikf-signature {
+  font-size: 17px;
+  font-weight: 500;
+  margin: 0 0 30px;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.cta-buttons button {
+  background-color: #FFC300;
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  padding: 16px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  min-width: 160px;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.cta-buttons button:hover {
+  background-color: #e5e500;
+}
+.deliverables-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  list-style: none;
+  gap: 10px 60px;  /* ⬅️ Increased horizontal space between the two columns */
+}
+
+
+.deliverables-list li {
+  width: calc(50% - 30px); /* half width minus half the horizontal gap */
+  font-size: 14px;
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.right-box:hover {
+  background: linear-gradient(to top, #FFC300 0%, #FFF8E1 100%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: none;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.deliverables-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #000;
+}
+
+/* Optional: adjust order */
+.deliverables-list li:nth-child(1),
+.deliverables-list li:nth-child(2),
+.deliverables-list li:nth-child(3) {
+  order: 1;
+}
+
+.deliverables-list li:nth-child(4),
+.deliverables-list li:nth-child(5) {
+  order: 2;
+}
+.mission-columns {
+  display: flex;
+  gap: 90px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 0;
+  margin-top: 20px;
+}
+
+.mission-columns ul {
+  flex: 1 1 45%;
+  padding-left: 20px;
+}
+
+.mission-columns li {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 12px;
+  font-weight: 400 !important;
+}
+
+  
+
+
+
+
+
+
+</style>
+
+<div class="value-section">
+    <div class="top-row">
+        <h1 class="main-heading">Why you must Invest</h1>
+        <p class="quote">
+          "Our trials discover India’s hidden gems.<br>
+          Our workshops polish them for the world stage"
+        </p>
+      </div>
+      
+
+  <div class="image-breakout">
+    <img loading="lazy" src="{% static 'images/banners/fee1.png' %}" alt="Anaya Playing Football">
+
+  </div>
+  
+
+  <div class="bottom-row">
+    <div class="left-text">
+      <h2>Grassroots Access for All</h2>
+      <h3>Nationwide Trials — Free or Minimal Cost</h3>
+      <p>
+        Because every child deserves a chance, IKF conducts free trials across India —
+        in villages, towns, and metros — with travel and logistics funded by sponsors.
+      </p>
+      <p><strong>No player is ever turned away for lack of funds.</strong></p>
+    </div>
+
+    <div class="right-box">
+        <h1 class="big-number">48,000+</h1>
+        <p class="small-desc">talents discovered since</p>
+        <h2 class="year-highlight">2020</h2>
+      </div>
+      
+  </div>
+</div>
+<div class="greatness-section">
+    <div class="greatness-flex">
+      <div class="greatness-left">
+        <h2>Leap to Greatness</h2>
+        <h3>Why Our Workshops Have a Fee</h3>
+        <p>
+          IKF’s international workshops are professionally structured with a nominal fee
+          because of the elite-level value they provide.
+        </p>
+      </div>
+      <div class="quote-container">
+        <img loading="lazy" src="{% static 'images/fees/open.png' %}" class="quote-open" alt="Opening quote">
+        <div class="quote-text-block">
+          <p class="quote-line">We don’t charge for dreams.</p>
+          <p class="quote-line">We invest in revolutions.</p>
+        </div>
+        <img loading="lazy" src="{% static 'images/fees/close.png' %}" class="quote-close" alt="Closing quote">
+      </div>
+      
+      
+    </div>
+  
+    <div class="greatness-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Area</th>
+            <th>Why It Matters</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>World-Class Coaches</td>
+            <td>UEFA/FIFA-certified mentors who’ve worked with the best—Messi, Mbappé, Kerr</td>
+          </tr>
+          <tr>
+            <td>Premier Facilities</td>
+            <td>Scouts expect professional grounds—we use top-tier turfs in Mumbai & Delhi</td>
+          </tr>
+          <tr>
+            <td>1:10 Coach Ratio</td>
+            <td>Personalized feedback—not possible in mass trials</td>
+          </tr>
+          <tr>
+            <td>Global Exposure</td>
+            <td>Each player’s profile is shared with 100+ international clubs/academies</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  
+  <div class="costs-section">
+    <h2>Truth About Costs</h2>
+    <table class="custom-costs-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Free Trials</th>
+          <th>Nominal Charges</th>
+          <th>Workshops</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Funded By</strong></td>
+          <td>100% Donors</td>
+          <td>80% Donors + 20% IKF</td>
+          <td>85% You + 15% IKF</td>
+        </tr>
+        <tr>
+          <td><strong>Impact</strong></td>
+          <td>Discovery</td>
+          <td>Transformation</td>
+          <td>International Pathway</td>
+        </tr>
+        <tr>
+          <td><strong>Reach</strong></td>
+          <td colspan="2">12,000+ players/year</td>
+          <td>120 players/workshop (curated)</td>
+        </tr>
+        <tr class="no-border">
+          <td><strong>Value</strong></td>
+          <td colspan="2">Opportunity</td>
+          <td>Life-changing pathways</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  
+   
+  
+ 
+
+  <div class="fee-section">
+    <h2>What You Get: 5 High-Value Deliverables</h2>
+    <div class="fee-grid">
+      <div class="fee-text">
+        <h4 class="deliverables-heading">Imagine this:</h4>
+        <div class="mission-columns">
+          <ul>
+            <li>Expert Assessment by International Scouts & Coaches</li>
+            <li>One-on-One Feedback & Interaction</li>
+            <li>Comprehensive Player Assessment Report</li>
+          </ul>
+          <ul>
+            <li>Digital Player Profile on MyFirstKick</li>
+            <li>Opportunity to Win International Scholarships</li>
+          </ul>
+        </div>
+        
+        <h4>This happens because you believed she deserved better.</h4>
+      </div>
+  
+  
+      
+    </div>
+  </div>
+  
+  <div class="vow-section">
+    <div class="vow-grid">
+      <div class="vow-text">
+        <h3>The IKF Vow</h3>
+        <p>Can’t afford it? We’ve funded 127 players through donor angels.</p>
+        <p>Apply confidentially at workshop@indiakhelofootball.com</p>
+        <p>If we get funds, we will inform you.</p>
+        <h2 class="profit-text">0% Profit — 100% Purpose</h2>
+      </div>
+  
+      <div class="vow-chart">
+        <img loading="lazy" src="{% static 'images/fees/pi.png' %}" alt="Anaya Playing Football">
+
+      </div>
+    </div>
+    
+  </div>
+  <div class="renaissance-section">
+    <h2>Join India’s Football Renaissance</h2>
+  
+    <div class="cta-wrapper center-align">
+      <p class="closing-quote">
+        "Together, we won’t just find players.<br>
+        We’ll forge legends who’ll make 1.4 billion hearts roar."
+      </p>
+      <p class="ikf-signature">– IKF Team</p>
+  
+      <div class="cta-buttons">
+        <a href="{% url 'workshops' %}" ><button>Register Now</button></a>
+        <a href="{% url 'Donate' %}" target="_blank"><button>Support Us</button></a>
+      </div>
+    </div>
+  </div>
+  
+  
+      
+      
+       
+    
+  
+  
+{% endblock content %}
+
+

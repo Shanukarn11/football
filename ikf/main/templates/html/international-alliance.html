@@ -1,0 +1,328 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block content %}
+<style>
+.impact-grid-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(11, 130px);
+  gap: 10px;
+  padding: 0 10px;
+  max-width: 100%;
+  margin: auto;
+  box-sizing: border-box;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.grid-item {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: none;
+}
+
+.grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.grid-item a.hover-link:hover img {
+  transform: scale(1.05);
+  transition: transform 0.3s ;
+}
+
+@media (max-width: 768px) {
+  .impact-grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 0 16px;
+    grid-auto-flow: dense;
+  }
+
+  .grid-item {
+    all: unset;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+
+  .grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  #mobile-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .popup-content {
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 300px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+  }
+
+  .popup-content button {
+    margin-top: 15px;
+    background-color: #FFC107;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #000;
+  }
+}
+/* POPUP for screens up to iPad width */
+@media (max-width: 1024px) {
+  #mobile-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .popup-content {
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 300px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+  }
+
+  .popup-content button {
+    margin-top: 15px;
+    background-color: #FFC107;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #000;
+  }
+}
+/* For phones */
+@media (max-width: 768px) {
+  .impact-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 0 16px;
+    grid-auto-flow: dense;
+  }
+
+  .grid-item {
+    all: unset;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+
+  .grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+    display: block;
+  }
+}
+
+/* For iPads and small laptops */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .impact-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    padding: 0 24px;
+    grid-auto-flow: dense;
+  }
+
+  .grid-item {
+    all: unset;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+
+  .grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+    display: block;
+  }
+}
+
+</style>
+
+
+
+<div class="impact-grid-container">
+  <!-- Column 1 -->
+  <div class="grid-item" style="grid-column: 1; grid-row: 1;"> <img loading="lazy" src="{% static 'images/change/f2.png' %}" alt="" /> </div>
+  <div class="grid-item" style="grid-column: 1; grid-row: 2;"> <img loading="lazy" src="{% static 'images/change/f3.png' %}" alt="" /> </div>
+  <div class="grid-item" style="grid-column: 1; grid-row: 3;"> <img loading="lazy" src="{% static 'images/change/f4.png' %}" alt="" /> </div>
+  <div class="grid-item" style="grid-column: 1; grid-row: 4;"> <img loading="lazy" src="{% static 'images/change/f5.png' %}" alt="" /> </div>
+  <div class="grid-item" style="grid-column: 1; grid-row: 5;"> <img loading="lazy" src="{% static 'images/change/f6.png' %}" alt="" /> </div>
+
+  <!-- YouTube (spanning) -->
+  <div class="grid-item" style="grid-column: 1 / span 2; grid-row: 6 / span 2;"> 
+    <a href="https://www.youtube.com/watch?v=RTgGg2IUQdc" target="_blank" class="hover-link"><img loading="lazy" src="{% static 'images/change/y4.png' %}" alt="YouTube Video" /></a>
+  </div>
+
+  <!-- 1x1 -->
+  <div class="grid-item" style="grid-column: 1; grid-row: 8;"> <img loading="lazy" src="{% static 'images/change/f7.png' %}" alt="" /> </div>
+
+  <!-- Amarjeet Journey (spanning) -->
+  <div class="grid-item tall-card" style="grid-column: 1; grid-row: 9 / span 3;"> 
+    <a href="https://www.instagram.com/reel/DIRUxe3o4yA/?igsh=MXJhazZkYW81Nmh3aQ%3D%3D" target="_blank" class="hover-link"><img loading="lazy" src="{% static 'images/change/g4.png' %}" alt="Amarjeet's Journey" /></a>
+  </div>
+
+  <!-- Column 2 -->
+  <div class="grid-item" style="grid-column: 2; grid-row: 1 / span 3;">
+    <a href="https://www.instagram.com/reel/DHQ1wfhSpdX/?igsh=YnQxOW1xM3N6ZnRm" target="_blank" class="hover-link"><img loading="lazy" src="{% static 'images/change/g3.png' %}" alt="" /></a>
+  </div>
+
+  <div class="grid-item" style="grid-column: 2; grid-row: 4;">
+    <img loading="lazy" src="{% static 'images/change/f8.png' %}" alt="" />
+  </div>
+  <div class="grid-item" style="grid-column: 2; grid-row: 5;">
+    <img loading="lazy" src="{% static 'images/change/f9.png' %}" alt="" />
+  </div>
+  <div class="grid-item" style="grid-column: 2; grid-row: 8;">
+    <img loading="lazy" src="{% static 'images/change/f10.png' %}" alt="" />
+  </div>
+  <div class="grid-item" style="grid-column: 2; grid-row: 9;">
+    <img loading="lazy" src="{% static 'images/change/f11.png' %}" alt="" />
+  </div>
+  <div class="grid-item" style="grid-column: 2; grid-row: 10;">
+    <img loading="lazy" src="{% static 'images/change/f12.png' %}" alt="" />
+  </div>
+  <div class="grid-item" style="grid-column: 2; grid-row: 11;">
+    <img loading="lazy" src="{% static 'images/change/f13.png' %}" alt="" />
+  </div>
+
+  <!-- Maidaan (spanning) -->
+  <div class="grid-item" style="grid-column: 3 / span 2; grid-row: 1 / span 2;">
+    <a href="https://www.youtube.com/watch?v=BA1AsI9LSsA" target="_blank" class="hover-link"><img loading="lazy" src="{% static 'images/change/y2.png' %}" alt="Maidaan Video" /></a>
+  </div>
+
+  <!-- Characters (spanning) -->
+  <div class="grid-item" style="grid-column: 3 / span 2; grid-row: 3 / span 5;">
+    <img loading="lazy" src="{% static 'images/change/ch2.png' %}" alt="IKF Characters" />
+  </div>
+
+  <!-- 1x1 cards -->
+  <div class="grid-item" style="grid-column: 3; grid-row: 8;">
+    <img loading="lazy" src="{% static 'images/change/f14.png' %}" alt="Participant 1" />
+  </div>
+  <div class="grid-item" style="grid-column: 4; grid-row: 8;">
+    <img loading="lazy" src="{% static 'images/change/f15.png' %}" alt="Participant 2" />
+  </div>
+
+  <!-- Haokip Journey (spanning) -->
+  <div class="grid-item" style="grid-column: 3 / span 2; grid-row: 9 / span 2;">
+    <a href="https://www.youtube.com/watch?v=ZqKMc61qP7Q" target="_blank" class="hover-link"><img loading="lazy" src="{% static 'images/change/y1.png' %}" alt="Haokip Journey" /></a>
+  </div>
+
+  <!-- More 1x1 cards -->
+  <div class="grid-item" style="grid-column: 3; grid-row: 11;">
+    <img loading="lazy" src="{% static 'images/change/f16.png' %}" alt="Participant 3" />
+  </div>
+  <div class="grid-item" style="grid-column: 4; grid-row: 11;">
+    <img loading="lazy" src="{% static 'images/change/f17.png' %}" alt="Participant 4" />
+  </div>
+
+  <!-- Column 5 -->
+  <div class="grid-item" style="grid-column: 5; grid-row: 1;"> <img loading="lazy" src="{% static 'images/change/f18.png' %}" alt="" /> </div>
+  <div class="grid-item" style="grid-column: 5; grid-row: 2;"> <img loading="lazy" src="{% static 'images/change/f19.png' %}" alt="" /> </div>
+  <div class="grid-item" style="grid-column: 5; grid-row: 3;"> <img loading="lazy" src="{% static 'images/change/f20.png' %}" alt="" /> </div>
+  <div class="grid-item" style="grid-column: 5; grid-row: 4;"> <img loading="lazy" src="{% static 'images/change/f21.png' %}" alt="" /> </div>
+  <div class="grid-item" style="grid-column: 5; grid-row: 5;"> <img loading="lazy" src="{% static 'images/change/f22.png' %}" alt="" /> </div>
+  <div class="grid-item" style="grid-column: 5; grid-row: 6;"> <img loading="lazy" src="{% static 'images/change/f23.png' %}" alt="" /> </div>
+  <div class="grid-item" style="grid-column: 5; grid-row: 7;"> <img loading="lazy" src="{% static 'images/change/f24.png' %}" alt="" /> </div>
+  <div class="grid-item" style="grid-column: 5; grid-row: 8;"> <img loading="lazy" src="{% static 'images/change/f25.png' %}" alt="" /> </div>
+
+  <div class="grid-item" style="grid-column: 6; grid-row: 8;"> <img loading="lazy" src="{% static 'images/change/f26.png' %}" alt="" /> </div>
+  <div class="grid-item" style="grid-column: 7; grid-row: 8;"> <img loading="lazy" src="{% static 'images/change/f27.png' %}" alt="" /> </div>
+  <div class="grid-item" style="grid-column: 7; grid-row: 3;"> <img loading="lazy" src="{% static 'images/change/f28.png' %}" alt="" /> </div>
+  <div class="grid-item" style="grid-column: 7; grid-row: 4;"> <img loading="lazy" src="{% static 'images/change/f29.png' %}" alt="" /> </div>
+  <div class="grid-item" style="grid-column: 7; grid-row: 5;"> <img loading="lazy" src="{% static 'images/change/f30.png' %}" alt="" /> </div>
+
+  <!-- Spanning images -->
+  <div class="grid-item" style="grid-column: 6 / span 2; grid-row: 1 / span 2;">
+    <a href="https://www.youtube.com/watch?v=LEBxnY7nAn4" target="_blank" class="hover-link"><img loading="lazy" src="{% static 'images/change/y5.png' %}" alt="Shubham" /></a>
+  </div>
+  <div class="grid-item" style="grid-column: 6; grid-row: 3 / span 3;">
+    <a href="https://www.youtube.com/watch?v=L92JJ8z1UBM" target="_blank" class="hover-link"><img loading="lazy" src="{% static 'images/change/g2.png' %}" alt="shabhir" /></a>
+  </div>
+  <div class="grid-item" style="grid-column: 6 / span 2; grid-row: 6 / span 2;"> 
+    <a href="https://www.youtube.com/watch?v=UjU-lha5sv4" target="_blank"class="hover-link"><img loading="lazy" src="{% static 'images/change/y3.png' %}" alt="Anaya Shehgal" /></a> 
+  </div>
+  <div class="grid-item" style="grid-column: 7; grid-row: 9 / span 3;">
+    <a href="https://www.instagram.com/reel/C8RyqNYSFTZ/?igsh=eWU4dGI0NDNoa3lh" target="_blank" class="hover-link"><img loading="lazy" src="{% static 'images/change/g1.png' %}" alt="suren hasida" /></a>
+  </div>
+  <div class="grid-item" style="grid-column: 5 / span 2; grid-row: 9 / span 3;">
+    <img loading="lazy" src="{% static 'images/change/ch1.png' %}" alt="kids character" />
+  </div>
+</div>
+<script>
+  if (window.innerWidth <= 768) {
+    document.write(`
+      <div id="mobile-popup">
+        <div class="popup-content">
+          <p>For a better experience,<br>please access this page on a larger screen.</p>
+          <button id="close-popup">Got it</button>
+        </div>
+      </div>
+    `);
+  }
+</script>
+
+<script>
+  document.getElementById("close-popup").addEventListener("click", function () {
+    document.getElementById("mobile-popup").style.display = "none";
+  });
+</script>
+
+{% endblock content %}
