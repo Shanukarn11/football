@@ -1,6 +1,6 @@
-# Runtime dependencies for Python 3.12 / Django 6.
+# Runtime dependencies for Python 3.12 / Django 5.2 LTS.
 # Keep operating-system and Certbot packages out of this file.
-Django==6.0.7
+Django==5.2.16
 django-cors-headers>=4.7,<5
 
 mysqlclient>=2.2.1,<3

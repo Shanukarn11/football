@@ -12,8 +12,8 @@ ikf/main/media/ui/.DS_Store
 ikf/main/.DS_Store
 .DS_Store
 ikf/ikf/settings.py
-ikf/courses/
-settings.py
+# ikf/courses/
+# settings.py
 ikf/.env
 
 
@@ -23,6 +23,6 @@ ikf/.env
 ikf/.env
 
 # Ignore settings.py anywhere
-settings.py
-**/settings.py
-ikf/ikf/settings.py
+# settings.py
+# **/settings.py
+# ikf/ikf/settings.py
