@@ -2,6 +2,8 @@
 # Keep operating-system and Certbot packages out of this file.
 Django==5.2.16
 django-cors-headers>=4.7,<5
+# Razorpay currently imports pkg_resources, which was removed in setuptools 82.
+setuptools<82
 
 mysqlclient>=2.2.1,<3
 PyMySQL>=1.1,<2

@@ -17,7 +17,7 @@ RUN python -m venv "$VIRTUAL_ENV"
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 COPY requirements-py312.txt /tmp/requirements.txt
-RUN python -m pip install --upgrade pip setuptools wheel \
+RUN python -m pip install --upgrade pip 'setuptools<82' wheel \
     && python -m pip install -r /tmp/requirements.txt
 
 
