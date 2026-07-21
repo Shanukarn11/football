@@ -40,6 +40,7 @@ IKF Docker helper
 Development:
   ./ikfctl init                 Create local folders and .env
   ./ikfctl setup                Build, start, and verify the complete local stack
+  ./ikfctl start                Start development without rebuilding
   ./ikfctl dev                  Build and start development
   ./ikfctl stop                 Stop development containers
   ./ikfctl logs                 Follow web logs
@@ -83,6 +84,11 @@ case "$command" in
         run_container_checks
         "${DEV[@]}" ps
         echo "Local IKF Docker setup verified successfully."
+        ;;
+    start)
+        ensure_env
+        "${DEV[@]}" up -d
+        "${DEV[@]}" ps
         ;;
     dev)
         ensure_env
