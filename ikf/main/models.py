@@ -4041,7 +4041,7 @@ class WorkshopLocation(models.Model):
     dates = models.CharField(max_length=100)
     venue = models.TextField()
     maps_link = models.URLField()
-    price = models.DecimalField(max_digits=200, decimal_places=2, null=True, blank=True)  # 💰 New
+    price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)  # 💰 New
     priority = models.PositiveIntegerField(default=1)  # 🏷️ New
 
     class Meta:
