@@ -51,6 +51,7 @@ Django:
   ./ikfctl test                 Run Django tests
   ./ikfctl makemigrations [app] Generate migrations (development only)
   ./ikfctl migrate              Apply migrations
+  ./ikfctl dbclean              Recreate the local DB and main initial migration
   ./ikfctl static               Run collectstatic
   ./ikfctl shell                Open Django shell
   ./ikfctl createsuperuser      Create a Django administrator
@@ -120,6 +121,38 @@ case "$command" in
     migrate)
         ensure_env
         "${DEV[@]}" run --rm --no-deps web python manage.py migrate "$@"
+        ;;
+    dbclean)
+        ensure_env
+
+        db_name="$("${DEV[@]}" run --rm --no-deps web python -c \
+            "import os; print(os.environ.get('DB_NAME', ''))" | tail -n 1)"
+        debug_value="$("${DEV[@]}" run --rm --no-deps web python -c \
+            "import os; print(os.environ.get('DEBUG', ''))" | tail -n 1)"
+
+        if [[ ! "$db_name" =~ ^[A-Za-z0-9_]+$ ]]; then
+            echo "Refusing dbclean: DB_NAME is empty or unsafe: '$db_name'" >&2
+            exit 1
+        fi
+        if [[ ! "$debug_value" =~ ^([Tt][Rr][Uu][Ee]|1|[Yy][Ee][Ss]|[Oo][Nn])$ ]]; then
+            echo "Refusing dbclean because DEBUG is not enabled." >&2
+            exit 1
+        fi
+
+        echo "WARNING: this permanently deletes every table in database '$db_name'."
+        read -r -p "Type the database name to continue: " confirmation
+        if [[ "$confirmation" != "$db_name" ]]; then
+            echo "Database name did not match; nothing was changed."
+            exit 1
+        fi
+
+        "${DEV[@]}" run --rm --no-deps web python -c \
+            'import os, MySQLdb; name=os.environ["DB_NAME"]; conn=MySQLdb.connect(host=os.environ["DB_HOST"], port=int(os.environ.get("DB_PORT", "3306")), user=os.environ["DB_USER"], passwd=os.environ["DB_PASSWORD"], charset="utf8mb4"); cur=conn.cursor(); cur.execute(f"DROP DATABASE IF EXISTS `{name}`"); cur.execute(f"CREATE DATABASE `{name}` CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci"); cur.close(); conn.close(); print(f"Recreated database: {name}")'
+
+        rm -f ikf/main/migrations/0001_initial.py
+        "${DEV[@]}" run --rm --no-deps web python manage.py makemigrations main
+        "${DEV[@]}" run --rm --no-deps web python manage.py migrate --noinput
+        echo "Local database and main initial migration recreated successfully."
         ;;
     static)
         ensure_env

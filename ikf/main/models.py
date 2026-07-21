@@ -2176,8 +2176,7 @@ class Playabroad(models.Model):
     keydata = models.CharField(max_length=200, null=True, db_index=True)
     button_text = models.CharField(max_length=200, null=True, db_index=True)
     button_href = models.CharField(max_length=200, null=True, db_index=True)
-    content_of_button = models.CharField(
-        max_length=10000, null=True, db_index=True)
+    content_of_button = models.TextField(null=True, blank=True)
     lang = models.ForeignKey(
         Lang, null=True, verbose_name="language21", on_delete=models.SET_NULL, db_index=True)
 
@@ -2469,8 +2468,7 @@ class Season1_Button(models.Model):
     keydata = models.CharField(max_length=200, null=True, db_index=True)
     button_text = models.CharField(max_length=200, null=True, db_index=True)
     button_href = models.CharField(max_length=200, null=True, db_index=True)
-    content_of_button = models.CharField(
-        max_length=10000, null=True, db_index=True)
+    content_of_button = models.TextField(null=True, blank=True)
     lang = models.ForeignKey(
         Lang, null=True, verbose_name="language21", on_delete=models.SET_NULL, db_index=True)
 
