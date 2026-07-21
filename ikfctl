@@ -15,16 +15,36 @@ ensure_env() {
     fi
 }
 
+run_container_checks() {
+    echo "==> Python version"
+    "${DEV[@]}" run --rm --no-deps web python --version
+
+    echo "==> Django version"
+    "${DEV[@]}" run --rm --no-deps web python -m django --version
+
+    echo "==> Python dependency check"
+    "${DEV[@]}" run --rm --no-deps web python -m pip check
+
+    echo "==> Django system check"
+    "${DEV[@]}" run --rm --no-deps web python manage.py check
+
+    echo "==> Default database connection"
+    "${DEV[@]}" run --rm --no-deps web python manage.py shell -c \
+        "from django.db import connection; connection.ensure_connection(); print('MySQL:', connection.mysql_version, 'Database:', connection.settings_dict['NAME'])"
+}
+
 usage() {
     cat <<'EOF'
 IKF Docker helper
 
 Development:
   ./ikfctl init                 Create local folders and .env
+  ./ikfctl setup                Build, start, and verify the complete local stack
   ./ikfctl dev                  Build and start development
   ./ikfctl stop                 Stop development containers
   ./ikfctl logs                 Follow web logs
   ./ikfctl update               Git pull and rebuild development
+  ./ikfctl verify               Repeat all compatibility and database checks
 
 Django:
   ./ikfctl check                Run Django checks
@@ -33,6 +53,7 @@ Django:
   ./ikfctl migrate              Apply migrations
   ./ikfctl static               Run collectstatic
   ./ikfctl shell                Open Django shell
+  ./ikfctl createsuperuser      Create a Django administrator
   ./ikfctl bash                 Open a container shell
 
 Production:
@@ -53,6 +74,14 @@ case "$command" in
         else
             echo ".env already exists."
         fi
+        ;;
+    setup)
+        ensure_env
+        mkdir -p docker-data/static docker-data/media
+        "${DEV[@]}" up -d --build
+        run_container_checks
+        "${DEV[@]}" ps
+        echo "Local IKF Docker setup verified successfully."
         ;;
     dev)
         ensure_env
@@ -75,6 +104,10 @@ case "$command" in
         ensure_env
         "${DEV[@]}" run --rm --no-deps web python manage.py check
         ;;
+    verify)
+        ensure_env
+        run_container_checks
+        ;;
     test)
         ensure_env
         "${DEV[@]}" run --rm --no-deps web python manage.py test "$@"
@@ -95,6 +128,10 @@ case "$command" in
     shell)
         ensure_env
         "${DEV[@]}" run --rm --no-deps web python manage.py shell
+        ;;
+    createsuperuser)
+        ensure_env
+        "${DEV[@]}" run --rm --no-deps web python manage.py createsuperuser
         ;;
     bash)
         ensure_env

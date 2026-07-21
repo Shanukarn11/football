@@ -161,12 +161,18 @@ commands. The common workflow is:
 ```bash
 ./ikfctl init
 # Edit .env once.
-./ikfctl dev
-./ikfctl check
+./ikfctl setup
 ./ikfctl makemigrations main
 ./ikfctl migrate
 ./ikfctl logs
 ```
+
+`./ikfctl setup` performs the repetitive non-destructive preparation in one
+command: it builds and starts the development container, reports Python and
+Django versions, checks installed dependencies, runs Django system checks,
+verifies the default MySQL connection, and prints container status. Migration
+generation, schema changes, data import, and administrator creation remain
+explicit commands because they modify persistent state.
 
 If application dependencies change:
 
