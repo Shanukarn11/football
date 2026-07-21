@@ -1,0 +1,8 @@
+services:
+  web:
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./ikf:/app
+      - ./docker-data/static:/app/assets
+      - ./docker-data/media:/app/media
+    restart: "no"

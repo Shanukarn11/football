@@ -1,5 +1,8 @@
 # How to setup IKF Repo
 
+The agreed development and production container workflow is documented in
+[`DOCKER_WORKFLOW.md`](DOCKER_WORKFLOW.md).
+
 - Install Python 10.1.0
 - Install MySQL Community Server and setup
 
