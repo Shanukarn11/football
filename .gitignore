@@ -5,7 +5,7 @@ ikf/media/
 **/__pycache__/
 **/__pycache__/*.py
 **/__pycache__/*.pyc
-/ikf/main/migration
+# /ikf/main/migration
 ikf/main/media/.DS_Store
 ikf/main/media/ui/.DS_Store
 ikf/main/.DS_Store
