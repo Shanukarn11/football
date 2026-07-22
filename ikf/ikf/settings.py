@@ -14,6 +14,13 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 load_dotenv()
+
+
+def env_bool(name, default=False):
+    """Read a boolean environment setting consistently."""
+    return os.getenv(name, str(default)).strip().lower() in {'1', 'true', 'yes', 'on'}
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,7 +35,7 @@ SECRET_KEY = os.getenv(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False').lower() in {'1', 'true', 'yes', 'on'}
+DEBUG = env_bool('DEBUG', False)
 
 app_allowed_url = os.getenv('APP_ALLOWED_URL', 'localhost').strip()
 ALLOWED_HOSTS = [app_allowed_url]
@@ -36,6 +43,23 @@ if app_allowed_url not in {'localhost', '127.0.0.1'}:
     ALLOWED_HOSTS.append(f'www.{app_allowed_url}')
 if DEBUG:
     ALLOWED_HOSTS.extend(['127.0.0.1', 'localhost'])
+
+# Nginx terminates HTTPS and forwards the original scheme to Gunicorn.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = env_bool('SECURE_SSL_REDIRECT', False)
+SESSION_COOKIE_SECURE = env_bool('SESSION_COOKIE_SECURE', False)
+CSRF_COOKIE_SECURE = env_bool('CSRF_COOKIE_SECURE', False)
+SECURE_HSTS_SECONDS = int(os.getenv('SECURE_HSTS_SECONDS', '0'))
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env_bool('SECURE_HSTS_INCLUDE_SUBDOMAINS', False)
+SECURE_HSTS_PRELOAD = env_bool('SECURE_HSTS_PRELOAD', False)
+
+csrf_trusted_origins = os.getenv('CSRF_TRUSTED_ORIGINS', '').strip()
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in csrf_trusted_origins.split(',')
+    if origin.strip()
+]
+
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 YOUTUBE_CHANNEL_ID = os.getenv("YOUTUBE_CHANNEL_ID")
 
