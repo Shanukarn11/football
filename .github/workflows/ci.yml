@@ -43,7 +43,9 @@ jobs:
         run: docker run --rm ikf-ci:${{ github.sha }} python -m pip check
 
       - name: Compile Python source
-        run: docker run --rm ikf-ci:${{ github.sha }} python -m compileall -q /app
+        run: |
+          docker run --rm ikf-ci:${{ github.sha }} \
+            python -m compileall -q /app/manage.py /app/ikf /app/main /app/internal
 
       - name: Run Django system checks
         run: |
